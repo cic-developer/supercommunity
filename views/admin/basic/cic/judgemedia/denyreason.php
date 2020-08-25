@@ -30,6 +30,7 @@
 						<a href="<?php echo element('denyreason_url', $view); ?>" class="btn btn-outline btn-default btn-sm">전체목록</a>
 						<button type="button" class="btn btn-outline btn-default btn-sm btn-list-delete btn-list-selected disabled" data-list-delete-url = "<?php echo element('list_delete_url', $view); ?>" >선택삭제</button>
 						<a href="<?php echo element('whitelist_url', $view); ?>" class="btn btn-outline btn-default btn-sm">화이트리스트</a>
+						<a href="<?php echo element('mediatype_url', $view); ?>" class="btn btn-outline btn-default btn-sm">미디어성격</a>
 						<a href="<?php echo element('denyreason_url', $view); ?>" class="btn btn-outline btn-success btn-sm">반려사유</a>
 						<a href="<?php echo element('write_url', $view); ?>" class="btn btn-outline btn-danger btn-sm">추가</a>
 					</div>

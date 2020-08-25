@@ -30,6 +30,7 @@ class Judgemission extends CB_Controller
 	 * 이 컨트롤러의 메인 모델 이름입니다
 	 */
 	protected $modelname = 'RS_judge_model';
+	protected $jug_id 	 = 1; 
 
 	/**
 	 * 헬퍼를 로딩합니다
@@ -100,15 +101,16 @@ class Judgemission extends CB_Controller
 				$where['jud_med_wht_id'] = $wht_id;
 			}
 		}
+		$join = array('table' => 'rs_missionlist', 'on' => 'rs_judge.jud_mis_id = rs_missionlist.mis_id', 'type' => 'inner');
 		$result = $this->{$this->modelname}
-			->get_judge_list(1,$per_page, $offset, $where, '', $findex, $forder, $sfield, $skeyword);
+			->get_judge_list($this->jug_id,$per_page, $offset, $where, '', $findex, $forder, $sfield, $skeyword,'','', $join);
 		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {
 				$result['list'][$key]['member'] = $dbmember = $this->Member_model->get_by_memid(element('jud_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
 				$result['list'][$key]['display_name'] = display_username(
 					element('mem_userid', $dbmember),
-					element('mem_nickname', $dbmember),
+					element('jud_mem_nickname', $val).'('.(element('mem_userid', $dbmember) ? element('mem_userid', $dbmember) : '탈퇴회원').')',
 					element('mem_icon', $dbmember)
 				);
 				$result['list'][$key]['num'] = $list_num--;
@@ -200,7 +202,7 @@ class Judgemission extends CB_Controller
 		$this->RS_judge_denyreason_model->search_field_equal = array(); // 검색중 like 가 아닌 = 검색을 하는 필드
 		$this->RS_judge_denyreason_model->allow_order_field = array('judr_id'); // 정렬이 가능한 필드
 		$result = $this->RS_judge_denyreason_model
-			->get_list($per_page, $offset, array('judr_jug_id'=>1), '', $findex, $forder, $sfield, $skeyword);
+			->get_list($per_page, $offset, array('judr_jug_id'=>$this->jug_id), '', $findex, $forder, $sfield, $skeyword);
 		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {
@@ -347,7 +349,7 @@ class Judgemission extends CB_Controller
 			$view['view']['event']['formruntrue'] = Events::trigger('formruntrue', $eventname);
 
 			$updatedata = array(
-				'judr_jug_id' => 1,
+				'judr_jug_id' => $this->jug_id,
 				'judr_title' => $this->input->post('judr_title', null, ''),
 				'judr_reason' => $this->input->post('judr_reason', null, ''),
 			);
@@ -467,18 +469,23 @@ class Judgemission extends CB_Controller
 		 */
 		$getdata = array();
 		if ($jid) {
-			$getdata = $this->{$this->modelname}->get_one_judge($jid);
-			if(empty($getdata) || element('jud_jug_id',$getdata) != 1) show_404();
+			$join = array('table' => 'rs_missionlist', 'on' => 'rs_judge.jud_mis_id = rs_missionlist.mis_id', 'type' => 'inner');
+			$getdata = $this->{$this->modelname}->get_one_judge($this->jug_id, $jid,'','',$join);
+			if(empty($getdata) || element('jud_jug_id',$getdata) != $this->jug_id) {
+				$this->session->set_flashdata('message','비정상적인접근입니다.(404)');
+				$redirecturl = admin_url($this->pagedir . '?' . $this->querystring->output());
+				redirect($redirecturl);
+			}
 		}
 
 			$view['view']['data'] = $getdata;
 			$view['view']['data']['member'] = $dbmember = $this->Member_model->get_by_memid(element('jud_mem_id', $getdata), 'mem_id, mem_userid, mem_nickname, mem_icon');
 			$view['view']['data']['display_name'] = display_username(
 				element('mem_userid', $dbmember),
-				element('mem_nickname', $dbmember),
+				element('jud_mem_nickname', $getdata).'('.(element('mem_userid', $dbmember) ? element('mem_userid', $dbmember) : '탈퇴회원').')',
 				element('mem_icon', $dbmember)
 			);
-			$view['view']['all_denyreason'] = $this->RS_judge_denyreason_model->get_list();
+			$view['view']['all_denyreason'] = $this->RS_judge_denyreason_model->get_list('','',array('judr_jug_id' => $this->jug_id));
 			$view['view']['this_denied_reason'] = $this->RS_judge_denied_model->get_one('','',array('judn_jud_id'=>$jid));
 
 			/**
@@ -626,7 +633,7 @@ class Judgemission extends CB_Controller
 
 		} else {
 			$jud_id = $this->input->post('jud_id');
-			$getdata = $this->{$this->modelname}->get_one_judge($jud_id);
+			$getdata = $this->{$this->modelname}->get_one_judge($this->jug_id, $jud_id);
 			/*
 			** mis_id 값에 해당하는 미션이 없는 경우
 			*/
@@ -642,7 +649,8 @@ class Judgemission extends CB_Controller
 			/*
 			** 이미 처리된 경우
 			*/
-			if(element('jud_state',$getdata) == $this->input->post('state')){
+			// if(element('jud_state',$getdata) == $this->input->post('state')){
+			if(element('jud_state',$getdata) != 1){
 				$return = array(
 					'type' => 'error',
 					'data' => 'already_done'
@@ -651,10 +659,14 @@ class Judgemission extends CB_Controller
 				exit;
 			}
 
+			$datetime = cdate('Y-m-d H:i:s');
 			$update = array(
-				'jud_state' => $this->input->post('state')
+				'jud_state' => $this->input->post('state'),
+				'jud_mdate' => $datetime,
+				'jud_modifier_mem_id' => $this->session->userdata('mem_id'),
+				'jud_modifier_ip' => $this->input->ip_address(),
 			);
-			if($this->{$this->modelname}->update($mid, $update)){
+			if($this->{$this->modelname}->update(element('jud_id',$getdata), $update)){
 				$warn_count = 0;
 				$getuserdata = $this->Member_model->get_by_memid(element('jud_mem_id',$getdata), 'mem_id, mem_userid, mem_denied');
 				if($this->input->post('value') == 'deny' || $this->input->post('value') == 'warn'){

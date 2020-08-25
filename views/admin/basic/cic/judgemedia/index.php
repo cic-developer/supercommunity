@@ -29,6 +29,7 @@
 						<button type="button" class="btn btn-outline btn-success btn-sm" id="export_to_excel"><i class="fa fa-file-excel-o"></i> 엑셀 다운로드</button>
 						<a href="<?php echo element('listall_url', $view); ?>" class="btn btn-outline btn-default btn-sm">전체목록</a>
 						<a href="<?php echo element('denyreason_url', $view); ?>" class="btn btn-outline btn-default btn-sm">반려사유</a>
+						<a href="<?php echo element('mediatype_url', $view); ?>" class="btn btn-outline btn-default btn-sm">미디어성격</a>
 						<a href="<?php echo element('whitelist_url', $view); ?>" class="btn btn-outline btn-default btn-sm">화이트리스트</a>
 					</div>
 				<?php
@@ -42,7 +43,7 @@
 					<thead>
 						<tr>
 							<th><a href="<?php echo element('jud_id', element('sort', $view)); ?>">번호</a></th>
-							<th><a href="<?php echo element('mis_title', element('sort', $view)); ?>">미션제목</a></th>
+							<th>유형</th>
 							<th><a href="<?php echo element('jud_med_wht_id', element('sort', $view)); ?>">미디어플랫폼</a></th>
 							<th>관리자명</th>
 							<th>링크</th>
@@ -50,7 +51,7 @@
 							<th><a href="<?php echo element('jud_state', element('sort', $view)); ?>">상태</a></th>
 							<th>신청자</th>
 							<th><a href="<?php echo element('jud_wdate', element('sort', $view)); ?>">신청일</a></th>
-							<th>승인</th>
+							<!-- <th>승인</th> -->
 							<th>자세히</th>
 						</tr>
 					</thead>
@@ -61,15 +62,15 @@
 					?>
 						<tr>
 							<td><?php echo number_format(element('num', $result)); ?></td>
-							<td><?php echo html_escape(element('mis_title', $result)); ?></td>
+							<td><?php echo element('jud_jug_id', $result) == 2 ? '신규' : '증액'; ?></td>
 							<td><?php echo html_escape(element('wht_title', $result)); ?></td>
 							<td><?php echo html_escape(element('jud_med_admin', $result)); ?></td>
-							<td><a href="<?php echo element('jud_med_url', $result); ?>" target="_blank"><?php echo mb_strlen(element('jud_med_url', $result)) > 15 ? substr(element('jud_med_url', $result),0,15).'...' : element('jud_med_url', $result); ?></a></td>
-							<td><img class="img_modal" src="<?php echo thumb_url('judge_img', element('jud_attach', element('data', $view)), 200, 160); ?>" alt="제출이미지" title="제출이미지" style="cursor:pointer;" data-img="<?=thumb_url('judge_img', element('jud_attach', element('data', $view)), 800, 600)?>"/></td>
+							<td><a href="<?php echo element('jud_med_url', $result); ?>" target="_blank"><?php echo mb_strlen(element('jud_med_url', $result)) > 15 ? mb_substr(element('jud_med_url', $result),0,15).'...' : element('jud_med_url', $result); ?></a></td>
+							<td><img class="img_modal" src="<?php echo thumb_url('increaseMedia', element('jud_attach', $result), 200, 160); ?>" alt="제출이미지" title="제출이미지" style="cursor:pointer;" data-img="<?=thumb_url('increaseMedia', element('jud_attach', $result), 800, 600)?>"/></td>
 							<td><?php echo rs_get_state(element('jud_state', $result)); ?></td>
 							<td><?php echo element('display_name', $result); ?></td>
-							<td><?php echo display_datetime(element('jud_wdate', $result), 'full'); ?></td>
-							<td><a class="btn btn-outline btn-default btn-xs" <?=element('jud_state', $result)!=1 ? 'disabled' : ''?>><?=element('jud_state', $result)!=1 ? rs_get_state(element('jud_state', $result)) : '승인'?></a></td>
+							<td><?php echo display_datetime(element('jud_wdate', $result), 'user','Y-m-d'); ?><br/><?php echo display_datetime(element('jud_wdate', $result), 'user','H:i:s'); ?></td>
+							<!-- <td><a class="btn btn-outline btn-default btn-xs" <?=element('jud_state', $result)!=1 ? 'disabled' : ''?>><?=element('jud_state', $result)!=1 ? rs_get_state(element('jud_state', $result)) : '승인'?></a></td> -->
 							<td><a href="<?php echo admin_url($this->pagedir); ?>/detail/<?php echo element(element('primary_key', $view), $result); ?>?<?php echo $this->input->server('QUERY_STRING', null, ''); ?>" class="btn btn-outline btn-default btn-xs">자세히</a></td>
 						</tr>
 					<?php

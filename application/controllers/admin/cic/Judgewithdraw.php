@@ -19,17 +19,18 @@ class Judgewithdraw extends CB_Controller
 	 * 관리자 페이지 상의 현재 디렉토리입니다
 	 * 페이지 이동시 필요한 정보입니다
 	 */
-	public $pagedir = 'cic/judgewithdraw';
+	public $pagedir = 'cic/judgemission';
 
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('Follow');
+	protected $models = array('RS_judge','RS_whitelist','RS_judge_log','RS_judge_denied','RS_judge_denyreason','Member_extra_vars');
 
 	/**
 	 * 이 컨트롤러의 메인 모델 이름입니다
 	 */
-	protected $modelname = 'Follow_model';
+	protected $modelname = 'RS_judge_model';
+	protected $jug_id 	 = 3; 
 
 	/**
 	 * 헬퍼를 로딩합니다
@@ -52,7 +53,7 @@ class Judgewithdraw extends CB_Controller
 	public function index()
 	{
 		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_judgewithdraw_index';
+		$eventname = 'event_admin_cic_judgemission_index';
 		$this->load->event($eventname);
 
 		$view = array();
@@ -66,6 +67,13 @@ class Judgewithdraw extends CB_Controller
 		 */
 		$param =& $this->querystring;
 		$page = (((int) $this->input->get('page')) > 0) ? ((int) $this->input->get('page')) : 1;
+		$view['view']['sort'] = array(
+			'mis_title' => $param->sort('mis_title', 'asc'),
+			'jud_id' => $param->sort('jud_id', 'asc'),
+			'jud_withdraw' => $param->sort('jud_withdraw', 'asc'),
+			'jud_state' => $param->sort('jud_state', 'asc'),
+			'jud_wdate' => $param->sort('jud_wdate', 'asc'),
+		);
 		$findex = $this->input->get('findex') ? $this->input->get('findex') : $this->{$this->modelname}->primary_key;
 		$forder = $this->input->get('forder', null, 'desc');
 		$sfield = $this->input->get('sfield', null, '');
@@ -77,25 +85,27 @@ class Judgewithdraw extends CB_Controller
 		/**
 		 * 게시판 목록에 필요한 정보를 가져옵니다.
 		 */
-		$this->{$this->modelname}->allow_search_field = array('mfo_id', 'mfg_id', 'mem_id', 'target_mem_id', 'mfo_datetime'); // 검색이 가능한 필드
-		$this->{$this->modelname}->search_field_equal = array('mfo_id', 'mfg_id', 'mem_id', 'target_mem_id'); // 검색중 like 가 아닌 = 검색을 하는 필드
-		$this->{$this->modelname}->allow_order_field = array('mfo_id'); // 정렬이 가능한 필드
+		$this->{$this->modelname}->allow_search_field = array('jud_id','jud_wallet','jud_mem_nickname', 'jud_wdate'); // 검색이 가능한 필드
+		$this->{$this->modelname}->search_field_equal = array(); // 검색중 like 가 아닌 = 검색을 하는 필드
+		$this->{$this->modelname}->allow_order_field = array('jud_id','jud_mem_nickname','jud_withdraw','jud_wdate'); // 정렬이 가능한 필드
+
+		
+		$where = array();
+		if (($jud_state = (int) $this->input->get('jud_state')) || $this->input->get('jud_state') === '0') {
+			if ($jud_state >= 0) {
+				$where['jud_state'] = $jud_state;
+			}
+		}
 		$result = $this->{$this->modelname}
-			->get_admin_list($per_page, $offset, '', '', $findex, $forder, $sfield, $skeyword);
+			->get_judge_list($this->jug_id,$per_page, $offset, $where, '', $findex, $forder, $sfield, $skeyword);
 		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {
-				$result['list'][$key]['member'] = $dbmember = $this->Member_model->get_by_memid(element('mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
+				$result['list'][$key]['member'] = $dbmember = $this->Member_model->get_by_memid(element('jud_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
 				$result['list'][$key]['display_name'] = display_username(
 					element('mem_userid', $dbmember),
-					element('mem_nickname', $dbmember),
+					element('jud_mem_nickname', $val).'('.(element('mem_userid', $dbmember) ? element('mem_userid', $dbmember) : '탈퇴회원').')',
 					element('mem_icon', $dbmember)
-				);
-				$result['list'][$key]['target_member'] = $target_member = $this->Member_model->get_by_memid(element('target_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
-				$result['list'][$key]['target_display_name'] = display_username(
-					element('mem_userid', $target_member),
-					element('mem_nickname', $target_member),
-					element('mem_icon', $target_member)
 				);
 				$result['list'][$key]['num'] = $list_num--;
 			}
@@ -120,13 +130,15 @@ class Judgewithdraw extends CB_Controller
 		/**
 		 * 쓰기 주소, 삭제 주소등 필요한 주소를 구합니다
 		 */
-		$search_option = array('mfo_datetime' => '날짜');
+		$search_option = array(
+			'jud_wallet' 						=> '지갑주소',
+			'jud_mem_nickname' 	=> '닉네임',
+		);
 		$view['view']['skeyword'] = ($sfield && array_key_exists($sfield, $search_option)) ? $skeyword : '';
 		$view['view']['search_option'] = search_option($search_option, $sfield);
 		$view['view']['listall_url'] = admin_url($this->pagedir);
-		$view['view']['write_url'] = admin_url($this->pagedir . '/write');
-		$view['view']['list_update_url'] = admin_url($this->pagedir . '/listupdate/?' . $param->output());
-		$view['view']['list_delete_url'] = admin_url($this->pagedir . '/listdelete/?' . $param->output());
+		$view['view']['denyreason_url'] = admin_url($this->pagedir . '/denyreason');
+		$view['view']['detail_url'] = admin_url($this->pagedir . '/detail');
 
 		// 이벤트가 존재하면 실행합니다
 		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
@@ -139,5 +151,203 @@ class Judgewithdraw extends CB_Controller
 		$this->data = $view;
 		$this->layout = element('layout_skin_file', element('layout', $view));
 		$this->view = element('view_skin_file', element('layout', $view));
+	}
+	
+	/*
+	** 수정페이지에서 ajax로 마감하기
+	*/
+	public function ajax_set_state(){
+
+		/*
+		** Validation 라이브러리를 가져옵니다
+		*/
+
+		// mis_thumb_type 용 form_validation 데이터 저장
+		$this->{$this->modelname}->post_form_data = array(
+			'value'		=> $this->input->post('value')
+		);
+
+		$this->load->library('form_validation');
+		$config = array(
+			array(
+				'field' => 'jud_id', 
+				'label' => 'JUD_ID', 
+				'rules' => array('trim','is_natural','required','min_length[1]','max_length[11]')
+			),
+			array(
+				'field' => 'value', 
+				'label' => 'VALUE', 
+				'rules' => array('trim','required','in_list[confirm,deny,warn,withdraw]')
+			),
+			array(
+				'field' => 'state', 
+				'label' => 'STATE', 
+				'rules' => array('trim','is_natural','required','in_list[0,3,5]')
+			),
+			array(
+				'field' => 'deny', 
+				'label' => '반려사유', 
+				'rules' => array('trim', array('check_deny',array($this->{$this->modelname},'check_deny_data')))
+			),
+			array(
+				'field' => 'warn', 
+				'label' => '경고사유', 
+				'rules' => array('trim', array('check_warn',array($this->{$this->modelname},'check_warn_data')))
+			)
+		);
+		$this->form_validation->set_rules($config);
+		$form_validation = $this->form_validation->run();
+		/*
+		** jud_id 값을 전송하지 않은 경우
+		*/
+		if($form_validation === false){
+			$this->form_validation->set_error_delimiters('', '');
+			$return = array(
+				'type' => 'error',
+				'data' => $this->form_validation->error_string()
+			);
+			echo json_encode($return,JSON_UNESCAPED_UNICODE);
+			exit;
+
+		} else {
+			$jud_id = $this->input->post('jud_id');
+			$getdata = $this->{$this->modelname}->get_one_judge($this->jug_id, $jud_id);
+			/*
+			** mis_id 값에 해당하는 미션이 없는 경우
+			*/
+			if(empty($getdata)){
+				$return = array(
+					'type' => 'error',
+					'data' => 'no_data_found'
+				);
+				echo json_encode($return,JSON_UNESCAPED_UNICODE);
+				exit;
+			}
+
+			/*
+			** 이미 처리된 경우
+			*/
+			// if(element('jud_state',$getdata) == $this->input->post('state')){
+			if(element('jud_state',$getdata) != 1 && element('jud_state',$getdata) != 3){
+				$return = array(
+					'type' => 'error',
+					'data' => 'already_done'
+				);
+				echo json_encode($return,JSON_UNESCAPED_UNICODE);
+				exit;
+			}
+
+			if(($this->input->post('state') === '5' && element('jud_state',$getdata) != 3)
+				|| ($this->input->post('state') === '3' && element('jud_state',$getdata) != 1)
+				|| ($this->input->post('state') === '0' && element('jud_state',$getdata) != 1)){
+				$return = array(
+					'type' => 'error',
+					'data' => 'data_wrong'
+				);
+				echo json_encode($return,JSON_UNESCAPED_UNICODE);
+				exit;
+			}
+
+			$datetime = cdate('Y-m-d H:i:s');
+			$update = array(
+				'jud_state' => $this->input->post('state'),
+				'jud_mdate' => $datetime,
+				'jud_modifier_mem_id' => $this->session->userdata('mem_id'),
+				'jud_modifier_ip' => $this->input->ip_address(),
+			);
+			if($this->{$this->modelname}->update(element('jud_id',$getdata), $update)){
+				$warn_count = 0;
+				$getuserdata = $this->Member_model->get_by_memid(element('jud_mem_id',$getdata), 'mem_id, mem_userid, mem_denied');
+				if($this->input->post('value') == 'deny' || $this->input->post('value') == 'warn'){
+					$extradata = $this->Member_extra_vars_model->get_all_meta(element('jud_mem_id',$getdata));
+					// $is_warn_1 = element('mem_warn_1',$extradata);
+					$is_warn_1 = $this->Member_extra_vars_model->item(element('jud_mem_id',$getdata),'mem_warn_1');
+					if($is_warn_1) $warn_count ++;
+					// $is_warn_2 = element('mem_warn_2',$extradata);
+					$is_warn_2 = $this->Member_extra_vars_model->item(element('jud_mem_id',$getdata),'mem_warn_2');
+					if($is_warn_2) $warn_count ++;
+					/*
+					** 반려 / 경고 사유 기록
+					*/
+						$insert = array(
+							'judn_jud_id' => element('jud_id',$getdata),
+							'judn_reason' => $this->input->post('deny')
+						);
+						$this->RS_judge_denied_model->insert($insert);
+
+						if($this->input->post('value') == 'warn'){
+							if(!$is_warn_1){
+								$insert = array(
+									'mem_warn_1' => $this->input->post('warn')
+								);
+								$this->Member_extra_vars_model->save(element('jud_mem_id',$getdata), $insert);
+								$warn_count ++;
+							} else if(!$is_warn_2){
+								/*
+								** 경고 2회시 차단적용
+								*/
+								$insert = array(
+									'mem_warn_2' => $this->input->post('warn')
+								);
+								$this->Member_extra_vars_model->save(element('jud_mem_id',$getdata), $insert);
+
+								$update = array(
+									'mem_denied' => 1
+								);
+								$this->Member_model->update(element('jud_mem_id',$getdata),$update);
+								$warn_count ++;
+							} else {
+								/*
+								** 이미 2회 차단되있을 시 그냥 반려처리
+								*/
+								if(!element('mem_denied',$getuserdata)){
+									$update = array(
+										'mem_denied' => 1
+									);
+									$this->Member_model->update(element('jud_mem_id',$getdata),$update);
+								}
+							}
+						}
+				}
+
+				/*
+				** 로그 쌓기
+				*/
+				$insert = array(
+					'jul_jug_id' 		=> element('jud_jug_id',$getdata),
+					'jul_jud_id' 		=> element('jud_id',$getdata),
+					'jul_state'  		=> $this->input->post('state'),
+					'jul_mem_id'  	=> element('jud_mem_id',$getdata),
+					'jul_user_id' 	=> element('mem_userid',$getuserdata),
+					'jul_datetime'  => cdate('Y-m-d H:i:s'),
+					'jul_ip'  	  	=> $this->input->ip_address(),
+					'jul_useragent' => $this->agent->agent_string(),
+				);
+				$this->RS_judge_log_model->insert($insert);
+				/*
+				** 정상 마감처리 된 경우
+				*/
+				$return = array(
+					'type' => 'success',
+					'data' => 'updated',
+					'warn_count' => $warn_count
+				);
+				echo json_encode($return,JSON_UNESCAPED_UNICODE);
+				exit;
+
+			} else {
+
+				/*
+				** 마감 update 중 오류가 발생한 경우
+				*/
+				$return = array(
+					'type' => 'error',
+					'data' => 'error_occur'
+				);
+				echo json_encode($return,JSON_UNESCAPED_UNICODE);
+				exit;
+
+			}
+		}
 	}
 }

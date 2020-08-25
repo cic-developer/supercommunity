@@ -63,12 +63,12 @@
 							<td><?php echo html_escape(element('mis_title', $result)); ?></td>
 							<td><?php echo html_escape(element('wht_title', $result)); ?></td>
 							<td><?php echo html_escape(element('jud_med_admin', $result)); ?></td>
-							<td><a href="<?php echo element('jud_med_url', $result); ?>" target="_blank"><?php echo mb_strlen(element('jud_med_url', $result)) > 15 ? substr(element('jud_med_url', $result),0,15).'...' : element('jud_med_url', $result); ?></a></td>
+							<td><a href="<?php echo element('jud_med_url', $result); ?>" target="_blank"><?php echo mb_strlen(element('jud_med_url', $result)) > 15 ? mb_substr(element('jud_med_url', $result),0,15).'...' : element('jud_med_url', $result); ?></a></td>
 							<td><img class="img_modal" src="<?php echo thumb_url('judge_img', element('jud_attach', element('data', $view)), 200, 160); ?>" alt="제출이미지" title="제출이미지" style="cursor:pointer;" data-img="<?=thumb_url('judge_img', element('jud_attach', element('data', $view)), 800, 600)?>"/></td>
 							<td><?php echo rs_get_state(element('jud_state', $result)); ?></td>
 							<td><?php echo element('display_name', $result); ?></td>
-							<td><?php echo display_datetime(element('jud_wdate', $result), 'full'); ?></td>
-							<td><a class="btn btn-outline btn-default btn-xs" <?=element('jud_state', $result)!=1 ? 'disabled' : ''?>><?=element('jud_state', $result)!=1 ? rs_get_state(element('jud_state', $result)) : '승인'?></a></td>
+							<td><?php echo display_datetime(element('jud_wdate', $result), 'user', 'Y-m-d'); ?><br/><?php echo display_datetime(element('jud_wdate', $result), 'user', 'H:i:s'); ?></td>
+							<td><a class="btn btn-outline btn-default btn-xs set_confirm" data-judid="<?php echo element(element('primary_key', $view), $result); ?>" data-value="confirm" <?=element('jud_state', $result)!=1 ? 'disabled' : ''?>><?=element('jud_state', $result)!=1 ? rs_get_state(element('jud_state', $result)) : '승인'?></a></td>
 							<td><a href="<?php echo admin_url($this->pagedir); ?>/detail/<?php echo element(element('primary_key', $view), $result); ?>?<?php echo $this->input->server('QUERY_STRING', null, ''); ?>" class="btn btn-outline btn-default btn-xs">자세히</a></td>
 						</tr>
 					<?php
@@ -140,13 +140,45 @@
 $(document).on('click', '#export_to_excel', function(){
 	exporturl = '<?php echo admin_url($this->pagedir . '/excel' . '?' . $this->input->server('QUERY_STRING', null, '')); ?>';
 	document.location.href = exporturl;
-})
+});
 
 $(document).on('click', '.img_modal', function(){
 	$(".modal-body").html("<img src='"+$(this).attr('data-img')+"' alt='제출이미지' style='width:100%;height:auto;'/>" );
 	$("#myModal").modal({
 		backdrop:false
 	});
-})
+});
+
+$(document).on('click','.set_confirm',function(){
+  if(!confirm('정말 승인처리 하시겠습니까?')) return false;
+	let csrfName  = '<?php echo $this->security->get_csrf_token_name(); ?>';
+  let csrfHash  = '<?php echo $this->security->get_csrf_hash(); ?>';
+  let _jul_id   = $(this).attr('data-judid');;
+  let _value    = $(this).attr('data-value');
+  let _state    = 3;
+  $.ajax({
+		type: 'post',
+		dataType: "json",
+		url:'/admin/cic/judgemission/ajax_set_state',
+		data:{
+			[csrfName]: csrfHash,
+			jud_id:_jul_id,
+      value:_value,
+      state:_state
+		},
+		success(result){
+			if(result.type == 'success'){
+        alert('승인되었습니다.');
+				location.reload();
+			} else if (result.type == 'error'){
+				alert(result.data);
+				return;
+			} else {
+				throw new error('unhandled error occur');
+			}
+			
+		}
+	});
+});
 //]]>
 </script>

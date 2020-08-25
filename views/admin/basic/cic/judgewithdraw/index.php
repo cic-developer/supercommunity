@@ -7,11 +7,11 @@
 		?>
 			<div class="box-table-header">
 				<div class="btn-group btn-group-sm" role="group">
-					<a href="?" class="btn btn-sm <?php echo ( ! $this->input->get('mem_is_admin') && ! $this->input->get('mem_denied')) ? 'btn-success' : 'btn-default'; ?>">전체목록</a>
-					<a href="?mem_is_admin=1" class="btn btn-sm <?php echo ($this->input->get('mem_is_admin')) ? 'btn-success' : 'btn-default'; ?>">대기목록</a>
-					<a href="?mem_is_admin=1" class="btn btn-sm <?php echo ($this->input->get('mem_is_admin')) ? 'btn-success' : 'btn-default'; ?>">승인 - 미지급 목록</a>
-					<a href="?mem_is_admin=1" class="btn btn-sm <?php echo ($this->input->get('mem_is_admin')) ? 'btn-success' : 'btn-default'; ?>">승인 - 지급 목록</a>
-					<a href="?mem_denied=1" class="btn btn-sm <?php echo ($this->input->get('mem_denied')) ? 'btn-success' : 'btn-default'; ?>">반려목록</a>
+					<a href="?" class="btn btn-sm <?php echo ( $this->input->get('jud_state') !== '0' && $this->input->get('jud_state') !== '1' && $this->input->get('jud_state') !== '3' && $this->input->get('jud_state') !== '5' ) ? 'btn-success' : 'btn-default'; ?>">전체목록</a>
+					<a href="?jud_state=1" class="btn btn-sm <?php echo ($this->input->get('jud_state') === '1') ? 'btn-success' : 'btn-default'; ?>">대기목록</a>
+					<a href="?jud_state=3" class="btn btn-sm <?php echo ($this->input->get('jud_state') === '3') ? 'btn-success' : 'btn-default'; ?>">승인 - 지급대기</a>
+					<a href="?jud_state=5" class="btn btn-sm <?php echo ($this->input->get('jud_state') === '5') ? 'btn-success' : 'btn-default'; ?>">지급완료</a>
+					<a href="?jud_state=0" class="btn btn-sm <?php echo ($this->input->get('jud_state') === '0') ? 'btn-success' : 'btn-default'; ?>">반려목록</a>
 				</div>
 				<?php
 				ob_start();
@@ -31,22 +31,13 @@
 				<table class="table table-hover table-striped table-bordered">
 					<thead>
 						<tr>
-							<th><a href="<?php echo element('mem_id', element('sort', $view)); ?>">번호</a></th>
-							<th><a href="<?php echo element('mem_userid', element('sort', $view)); ?>">아이디</a></th>
-							<th><a href="<?php echo element('mem_username', element('sort', $view)); ?>">실명</a></th>
-							<th><a href="<?php echo element('mem_nickname', element('sort', $view)); ?>">닉네임</a></th>
-							<th><a href="<?php echo element('mem_email', element('sort', $view)); ?>">이메일</a></th>
-							<?php if ($this->cbconfig->item('use_sociallogin')) { ?>
-								<th>소셜연동</th>
-							<?php } ?>
-							<th><a href="<?php echo element('mem_point', element('sort', $view)); ?>">포인트</a></th>
-							<th><a href="<?php echo element('mem_register_datetime', element('sort', $view)); ?>">가입일</a></th>
-							<th><a href="<?php echo element('mem_lastlogin_datetime', element('sort', $view)); ?>">최근로그인</a></th>
-							<th>회원그룹</th>
-							<th><a href="<?php echo element('mem_level', element('sort', $view)); ?>">회원레벨</a></th>
-							<th>메일인증/공개/메일/쪽지/문자</th>
-							<th>승인</th>
-							<th>반려</th>
+							<th><a href="<?php echo element('jud_id', element('sort', $view)); ?>">번호</a></th>
+							<th>지갑주소</th>
+							<th><a href="<?php echo element('jud_withdraw', element('sort', $view)); ?>">수량</a></th>
+							<th><a href="<?php echo element('jud_state', element('sort', $view)); ?>">상태</a></th>
+							<th><a href="<?php echo element('jud_mem_nickname', element('sort', $view)); ?>">신청자</a></th>
+							<th><a href="<?php echo element('jud_wdate', element('sort', $view)); ?>">신청일</a></th>
+							<th>버튼</th>
 							<th><input type="checkbox" name="chkall" id="chkall" /></th>
 						</tr>
 					</thead>
@@ -57,48 +48,26 @@
 					?>
 						<tr>
 							<td><?php echo number_format(element('num', $result)); ?></td>
-							<td><?php echo html_escape(element('mem_userid', $result)); ?></td>
-							<td>
-								<span><?php echo html_escape(element('mem_username', $result)); ?></span>
-								<?php echo element('mem_is_admin', $result) ? '<span class="label label-primary">최고관리자</span>' : ''; ?>
-								<?php echo element('mem_denied', $result) ? '<span class="label label-danger">차단</span>' : ''; ?>
-							</td>
+							<td><?php echo html_escape(element('jud_wallet', $result)); ?></td>
+							<td class="text-right"><?php echo number_format(element('jud_withdraw', $result)); ?></td>
+							<td><?php echo rs_get_state(element('jud_state', $result)); ?></td>
 							<td><?php echo element('display_name', $result); ?></td>
-							<td><?php echo html_escape(element('mem_email', $result)); ?></td>
-							<?php if ($this->cbconfig->item('use_sociallogin')) { ?>
-								<td>
-									<?php if ($this->cbconfig->item('use_sociallogin_facebook') && element('facebook_id', element('social', $result))) { ?>
-										<a href="javascript:;" onClick="social_open('facebook', '<?php echo element('mem_id', $result); ?>');"><img src="<?php echo base_url('assets/images/social_facebook.png'); ?>" width="15" height="15" alt="페이스북 로그인" title="페이스북 로그인" /></a>
-									<?php } ?>
-									<?php if ($this->cbconfig->item('use_sociallogin_twitter') && element('twitter_id', element('social', $result))) { ?>
-										<a href="javascript:;" onClick="social_open('twitter', '<?php echo element('mem_id', $result); ?>');"><img src="<?php echo base_url('assets/images/social_twitter.png'); ?>" width="15" height="15" alt="트위터 로그인" title="트위터 로그인" /></a>
-									<?php } ?>
-									<?php if ($this->cbconfig->item('use_sociallogin_google') && element('google_id', element('social', $result))) { ?>
-										<a href="javascript:;" onClick="social_open('google', '<?php echo element('mem_id', $result); ?>');"><img src="<?php echo base_url('assets/images/social_google.png'); ?>" width="15" height="15" alt="구글 로그인" title="구글 로그인" /></a>
-									<?php } ?>
-									<?php if ($this->cbconfig->item('use_sociallogin_naver') && element('naver_id', element('social', $result))) { ?>
-										<a href="javascript:;" onClick="social_open('naver', '<?php echo element('mem_id', $result); ?>');"><img src="<?php echo base_url('assets/images/social_naver.png'); ?>" width="15" height="15" alt="네이버 로그인" title="네이버 로그인" /></a>
-									<?php } ?>
-									<?php if ($this->cbconfig->item('use_sociallogin_kakao') && element('kakao_id', element('social', $result))) { ?>
-										<a href="javascript:;" onClick="social_open('kakao', '<?php echo element('mem_id', $result); ?>');"><img src="<?php echo base_url('assets/images/social_kakao.png'); ?>" width="15" height="15" alt="카카오 로그인" title="카카오 로그인" /></a>
-									<?php } ?>
-								</td>
-							<?php } ?>
-							<td class="text-right"><?php echo number_format(element('mem_point', $result)); ?></td>
-							<td><?php echo display_datetime(element('mem_register_datetime', $result), 'full'); ?></td>
-							<td><?php echo display_datetime(element('mem_lastlogin_datetime', $result), 'full'); ?></td>
-							<td><?php echo element('member_group', $result); ?></td>
-							<td class="text-right"><?php echo element('mem_level', $result); ?></td>
+							<td><?php echo display_datetime(element('jud_wdate', $result), 'user', 'Y-m-d H:i:s'); ?></td>
 							<td>
-								<?php echo element('mem_email_cert', $result) ? '<i class="fa fa-check-square-o"></i>' : '<i class="fa fa-square-o"></i>';; ?>
-								<?php echo element('mem_open_profile', $result) ? '<i class="fa fa-check-square-o"></i>' : '<i class="fa fa-square-o"></i>';; ?>
-								<?php echo element('mem_receive_email', $result) ? '<i class="fa fa-check-square-o"></i>' : '<i class="fa fa-square-o"></i>';; ?>
-								<?php echo element('mem_use_note', $result) ? '<i class="fa fa-check-square-o"></i>' : '<i class="fa fa-square-o"></i>';; ?>
-								<?php echo element('mem_receive_sms', $result) ? '<i class="fa fa-check-square-o"></i>' : '<i class="fa fa-square-o"></i>';; ?>
+								<div class="btn-group">
+									<?php if(element('jud_state', $result) == 1) { ?>
+										<button type="button" class="btn btn-outline btn-success btn-xs set_state" data-text="승인" data-judid="<?php echo element(element('primary_key', $view), $result); ?>" data-value="confirm" data-state="3" >승인</button>
+										<button type="button" class="btn btn-outline btn-danger btn-xs" id="denyBtn" data-judid="<?php echo element(element('primary_key', $view), $result); ?>">반려</button>
+									<?php } else if (element('jud_state', $result) == 3) { ?>
+										<button type="button" class="btn btn-outline btn-success btn-xs set_state" data-text="지급" data-judid="<?php echo element(element('primary_key', $view), $result); ?>" data-value="withdraw" data-state="5" >지급</button>
+									<?php } else if (element('jud_state', $result) == 5) { ?>
+										<button type="button" class="btn btn-outline btn-success btn-xs" disabled >지급완료</button>
+									<?php } else { ?>
+										<button type="button" class="btn btn-outline btn-danger btn-xs" disabled >반려</button>
+									<?php } ?>
+								</div>
 							</td>
-							<td><?php echo element('mem_denied', $result) ? '<span class="label label-danger">차단</span>' : '승인'; ?></td>
-							<td><a href="<?php echo admin_url($this->pagedir); ?>/write/<?php echo element(element('primary_key', $view), $result); ?>?<?php echo $this->input->server('QUERY_STRING', null, ''); ?>" class="btn btn-outline btn-default btn-xs">수정</a></td>
-							<td><input type="checkbox" name="chk[]" class="list-chkbox" value="<?php echo element(element('primary_key', $view), $result); ?>" /></td>
+						<td><?php if(element('jud_state',$result) == 3){ ?><input type="checkbox" name="chk[]" class="list-chkbox" value="<?php echo element(element('primary_key', $view), $result); ?>" /><?php } ?></td>
 						</tr>
 					<?php
 						}
@@ -140,18 +109,134 @@
 	</form>
 </div>
 
+<style>
+  @media (min-width: 780px){ 
+    .modal-dialog{
+      margin: 150px auto;
+    }
+  }
+</style>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">반려사유입력</h4>
+			</div>
+			<div class="modal-body">
+        <select class="form-control" name="deny_reason_select" id="deny_reason_select" style="margin-bottom:7px;">
+          <option value="_self_type">직접입력</option>
+          <?php foreach(element('list', element('all_denyreason', $view)) as $r){ ?>
+            <option value="<?=html_escape(element('judr_reason',$r))?>"><?php echo html_escape(element('judr_title', $r)); ?></option>
+          <?php } ?>
+        </select>
+        <div style="text-align:right; padding-right:12px; margin-bottom:7px;"><a href="/admin/cic/judgemission/denyreason" target="_black">사유 등록</a></div>
+        <div style="padding-bottom:4px;"> - 반려사유 - </div>
+        <textarea name="deny_reason_text" id="deny_reason_text" class="form-control" rows=7 ></textarea>
+        <div style="padding-bottom:4px; padding-top:8px;"> - 경고 - </div>
+        <input name="deny_warning_text" id="deny_warning_text" class="form-control" />
+			</div>
+			<div class="modal-footer">
+        <div class="btn-group">
+          <button type="button" id="modal_warn" class="btn btn-danger set_state" data-judid="0" data-value="warn" data-state="0" data-text="경고및 반려">경고+반려</button>
+          <button type="button" id="modal_deny" class="btn btn-warning set_state" data-judid="0" data-value="deny" data-state="0" data-text="반려">반려</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+        </div>
+			</div>
+		</div>
+		
+	</div>
+</div>
+<!-- Modal End -->
+
 <script type="text/javascript">
 //<![CDATA[
-function social_open(stype, mem_id) {
-	var pop_url = cb_admin_url + '/member/members/socialinfo/' + stype + '/' + mem_id;
-	window.open(pop_url, 'win_socialinfo', 'left=100,top=100,width=730,height=500,scrollbars=1');
-	return false;
-}
 
 $(document).on('click', '#export_to_excel', function(){
 	exporturl = '<?php echo admin_url($this->pagedir . '/excel' . '?' . $this->input->server('QUERY_STRING', null, '')); ?>';
 	document.location.href = exporturl;
 })
 
+
+$(document).on('click', '#denyBtn', function(){
+	let judid = $(this).attr('data-judid');
+	$("#deny_reason_select").val('_self_type').prop("selected",true);
+	$("#deny_reason_text").val('');
+	$("#deny_warning_text").val('');
+	$('#modal_warn').attr('data-judid',judid);
+	$('#modal_deny').attr('data-judid',judid);
+	$("#myModal").modal({
+		backdrop:false
+	});
+});
+var previous = null;
+$("#deny_reason_select").on('focus', function () {
+  // Store the current value on focus and on change
+  previous = this.value;
+}).on('change',function(){
+  
+  if($('#deny_reason_text').val()){
+    if(!confirm('입력된 내용들이 삭제됩니다.')) {
+      $("#deny_reason_select").val(previous).prop("selected",true);
+      return false;
+    }
+  }
+  if($(this).val() == '_self_type'){
+    $('#deny_reason_text').val('');
+    
+    // $('#deny_reason_text').css('display','inline-block');
+  } else {
+    $('#deny_reason_text').val($(this).val());
+  }
+});
+
+$(document).on('click','.set_state',function(){
+  if(!confirm('정말 '+$(this).attr('data-text')+'처리 하시겠습니까?')) return false;
+	let csrfName  = '<?php echo $this->security->get_csrf_token_name(); ?>';
+  let csrfHash  = '<?php echo $this->security->get_csrf_hash(); ?>';
+  let _jul_id   = $(this).attr('data-judid');
+  let _value    = $(this).attr('data-value');
+  let _state    = $(this).attr('data-state');
+  let _deny     = $("#deny_reason_text").val();
+  let _warn     = $("#deny_warning_text").val();
+  let _is_block = '<?=$this->Member_extra_vars_model->get_one('','mev_value',array('mem_id' => element('jud_mem_id',$getdata), 'mev_key' => 'mem_warn_1')) && !$this->Member_model->get_by_memid(element('jud_mem_id', element('data', $view)),'mem_denied')?>'
+	if(_value == 'warn' && _is_block) {
+    if(!confirm('해당유저는 현재 경고 1회로 차단됩니다.')) return false;
+  }
+  $.ajax({
+		type: 'post',
+		dataType: "json",
+		url:'/admin/cic/judgewithdraw/ajax_set_state',
+		data:{
+			[csrfName]: csrfHash,
+			jud_id:_jul_id,
+      value:_value,
+      state:_state,
+      deny:_deny,
+      warn:_warn
+		},
+		success(result){
+			if(result.type == 'success'){
+        if(_value == 'confirm') alert('승인되었습니다.');
+        if(_value == 'deny') alert('반려되었습니다.');
+        if(_value == 'withdraw') alert('지급되었습니다.');
+        if(_value == 'warn'){
+          if(result.warn_count == 1) alert('경고 1회 및 반려처리 되었습니다.');
+          if(result.warn_count == 2) alert('경고 2회로 해당 유저 차단 및 반려처리 되었습니다.');
+        }
+				location.reload();
+				return;
+			} else if (result.type == 'error'){
+				alert(result.data);
+				return;
+			} else {
+				throw new error('unhandled error occur');
+			}
+			
+		}
+	});
+});
 //]]>
 </script>

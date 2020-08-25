@@ -30,6 +30,7 @@
 						<a href="<?php echo element('whitelist_url', $view); ?>" class="btn btn-outline btn-default btn-sm">전체목록</a>
 						<button type="button" class="btn btn-outline btn-default btn-sm btn-list-delete btn-list-selected disabled" data-list-delete-url = "<?php echo element('list_delete_url', $view); ?>" >선택삭제</button>
 						<a href="<?php echo element('denyreason_url', $view); ?>" class="btn btn-outline btn-default btn-sm">반려사유</a>
+						<a href="<?php echo element('mediatype_url', $view); ?>" class="btn btn-outline btn-default btn-sm">미디어성격</a>
 						<a href="<?php echo element('whitelist_url', $view); ?>" class="btn btn-outline btn-success btn-sm">화이트리스트</a>
 						<a href="<?php echo element('write_url', $view); ?>" class="btn btn-outline btn-danger btn-sm">추가</a>
 					</div>
@@ -65,7 +66,7 @@
 							<td><?php echo html_escape(element('memo', $result)); ?></td>
 							<td><?php echo element('display_name', $result); ?></td>
 							<td><?php echo date('Y-m-d',strtotime(element('wht_wdate', $result))); ?></td>
-							<td><a href="<?php echo admin_url($this->pagedir); ?>/write/<?php echo element(element('primary_key', $view), $result); ?>?<?php echo $this->input->server('QUERY_STRING', null, ''); ?>" class="btn btn-outline btn-default btn-xs">수정</a></td>
+							<td><a href="<?php echo admin_url($this->pagedir); ?>/whitelist_write/<?php echo element(element('primary_key', $view), $result); ?>?<?php echo $this->input->server('QUERY_STRING', null, ''); ?>" class="btn btn-outline btn-default btn-xs">수정</a></td>
 							<td><input type="checkbox" name="chk[]" class="list-chkbox" value="<?php echo element(element('primary_key', $view), $result); ?>" /></td>
 						</tr>
 					<?php

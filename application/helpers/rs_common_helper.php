@@ -20,7 +20,7 @@ if ( ! function_exists('rs_get_state')) {
         $return = '반려';
       break;
       case 1:
-        $return = '승인요청';
+        $return = '대기중';
       break;
       case 3:
         $return = '승인완료';
@@ -33,5 +33,11 @@ if ( ! function_exists('rs_get_state')) {
     }
 		return $return;
 	}
+}
+
+if( ! function_exists('rs_cal_expected_point')){
+  function rs_cal_expected_point($mis_per_token, $med_superpoint, $total_super){
+    return $mis_per_token*($med_superpoint/($total_super + $med_superpoint));
+  }
 }
 

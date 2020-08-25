@@ -1,4 +1,6 @@
 .vscode
 /application/config/config.php
 /application/config/database.php
+/application/cache
+/application/log
 /uploads

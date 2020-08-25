@@ -8,65 +8,114 @@
 		?>
 			<input type="hidden" name="<?php echo element('primary_key', $view); ?>"	value="<?php echo element(element('primary_key', $view), element('data', $view)); ?>" />
 			<div class="form-group">
-				<label class="col-sm-2 control-label">미션제목</label>
-				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-					<?php echo element('mis_title', element('data', $view)); ?>
-          <a href="" target="_blank" style="padding-left:10px;" >유저페이지 <span class="glyphicon glyphicon-new-window"></span></a>
-          <a href="/admin/cic/missionlist/write/<?=element('mis_id', element('data', $view))?>" target="_blank" style="padding-left:10px;" >관리페이지 <span class="glyphicon glyphicon-new-window"></span></a>
+				<label class="col-sm-2 control-label">사용자지정 미디어 이름</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="jud_med_name" value="<?php echo set_value('jud_med_name', element('jud_med_name', element('data', $view))); ?>" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?> />
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">승인여부</label>
-				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-					<?php echo rs_get_state(element('jud_state', element('data', $view))); ?>
+				<label class="col-sm-2 control-label">미디어플랫폼</label>
+				<div class="col-sm-10">
+					<select name="jud_med_wht_id" class="form-control" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>
+						<?php foreach(element('list',element('all_whitelist', $view)) as $l){ ?>
+							<option value="<?=element('wht_id',$l)?>" <?php echo set_select('jud_med_wht_id', element('wht_id',$l), ( element('jud_med_wht_id', element('data', $view)) == element('wht_id',$l) )); ?>><?=element('wht_title',$l)?></option>
+						<?php } ?>
+					</select>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">예상/실제 지급 PER TOKEN</label>
-				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-					<?php echo element('mis_per_token', element('data', $view)); ?>
+				<label class="col-sm-2 control-label">링크</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="jud_med_url" value="<?php echo set_value('jud_med_url', element('jud_med_url', element('data', $view))); ?>" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?> />
+					<a href="<?php echo set_value('jud_med_url', element('jud_med_url', element('data', $view))); ?>" target="_blank"><?php echo set_value('jud_med_url', element('jud_med_url', element('data', $view))); ?></a>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">미션 본문</label>
-				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-					<?php echo element('mis_content', element('data', $view)); ?>
+				<label class="col-sm-2 control-label">미디어 성격</label>
+				<div class="col-sm-10">
+				<?php 
+					foreach(element('list',element('all_mediatype', $view)) as $l){ 
+					$chkvalue = in_array(element('met_id', $l), element('all_mediatype_map', $view)) ? element('met_id', $l) : '';
+				?>
+					<label class="checkbox-inline">
+						<input type="checkbox" name="met_id[]" value="<?php echo set_value('met_id[]', element('met_id', $l)); ?>" <?=(element('met_deletion',$l) == 'Y' or element('jud_state', element('data', $view)) != 1) ? 'disabled' : ''?> <?php echo set_checkbox('met_id[]', element('met_id', $l), ($chkvalue ? true : false)); ?> />
+						<?=element('met_title',$l)?><?=element('met_deletion',$l) == 'Y' ? '(삭제)' : ''?>
+					</label>
+				<?php } ?>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">미디어 플랫폼</label>
-				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-					<?php echo element('wht_title', element('data', $view)); ?>
+				<label class="col-sm-2 control-label">관리자명</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="jud_med_admin" value="<?php echo set_value('jud_med_admin', element('jud_med_admin', element('data', $view))); ?>" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?> />
+				</div>
+			</div>
+			<?php if(element('jud_state',element('data',$view)) == 1) { ?>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">SUPERPOINT</label>
+				<div class="col-sm-10">
+					<?php if(element('jud_state', element('data', $view)) == 1) { ?>
+						<input type="text" class="form-control" name="med_superpoint" value="<?php echo set_value('med_superpoint', element('jud_jug_id', element('data', $view)) == 2 ? 0 : element('med_superpoint', element('med_data', $view))); ?>" />
+					<?php } else { ?>
+						<input type="text" style="all:unset; height:30px; display:inline-block; vertical-align:middle;" disabled value="0" />
+					<?php } ?>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">미디어 관리자명</label>
+				<label class="col-sm-2 control-label">PERFRIEND</label>
+				<div class="col-sm-10">
+					<?php if(element('jud_state', element('data', $view)) == 1) { ?>
+					<input type="text" class="form-control" name="med_member" value="<?php echo set_value('med_member', element('jud_jug_id', element('data', $view)) == 2 ? 0 : element('med_member', element('med_data', $view))); ?>" />
+					<?php } else { ?>
+					<input type="text" style="all:unset; height:30px; display:inline-block; vertical-align:middle;" disabled value="0" />
+					<?php } ?>
+				</div>
+			</div>
+			<?php } ?>
+			<?php if(element('jud_jug_id',element('data',$view)) == 4) { ?>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">유서 신청 사유</label>
 				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-					<?php echo element('jud_med_admin', element('data', $view)); ?>
+					<?php echo nl2br(html_escape(element('med_textarea',element('med_data',$view)))); ?>
+				</div>
+			</div>
+			<?php } ?>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">상태</label>
+				<div class="col-sm-10 form-inline">
+					<input type="text" style="all:unset; height:30px; display:inline-block; vertical-align:middle;" disabled value="<?=rs_get_state(element('jud_state', element('data', $view)))?>" />
+				</div>
+			</div>
+			<?php if(element('judn_reason',element('this_denied_reason',$view))) { ?>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">반려사유</label>
+				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
+					<?php echo html_escape(element('judn_reason',element('this_denied_reason',$view))); ?>
+				</div>
+			</div>
+			<?php } ?>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">회원정보</label>
+				<div class="col-sm-10">
+					<span class="form-control" style="border:0;box-shadow:none;padding:6px 0;"><?php echo element('display_name',$view); ?> </span>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">미디어 링크</label>
-				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-					<a href="<?php echo element('jud_med_url', element('data', $view)); ?>" target="_blank"><?php echo element('jud_med_url', element('data', $view)); ?></a>
+				<label class="col-sm-2 control-label">등록유저IP</label>
+				<div class="col-sm-10">
+					<input type="text" style="all:unset; height:30px; width:150px; display:inline-block; vertical-align:middle;" disabled value="<?=element('jud_register_ip', element('data', $view))?>" />
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">첨부 이미지</label>
-				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-          <img  src="<?php echo thumb_url('judge_img', element('jud_attach', element('data', $view)), 800, 600); ?>" alt="제출이미지" title="제출이미지"/>
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-sm-2 control-label">신청자</label>
-				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-					<?php echo element('display_name', element('data', $view)); ?>
+				<label class="col-sm-2 control-label">등록일</label>
+				<div class="col-sm-10 form-inline">
+					<input type="text" style="all:unset; height:30px; width:150px; display:inline-block; vertical-align:middle;" disabled value="<?=display_datetime(element('jud_wdate', element('data', $view)),'user','Y-m-d H:i:s')?>" />
 				</div>
 			</div>
 			<div class="btn-group pull-right" role="group" aria-label="...">
-				<button type="button" class="btn btn-success btn-sm set_state" data-value="confirm" data-state="3" data-text="승인" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>승인하기</button>
-        <button type="button" id="denyBtn" class="btn btn-danger btn-sm" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>반려하기</button>
-				<button type="button" class="btn btn-default btn-sm btn-history-back" >목록으로</button>
+				<button type="submit" class="btn btn-success btn-sm" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>승인하기</button>
+				<button type="button" class="btn btn-danger btn-sm" id="denyBtn" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>반려하기</button>
+				<button type="button" class="btn btn-default btn-sm btn-history-back" >취소하기</button>
 			</div>
 		<?php echo form_close(); ?>
 	</div>
@@ -114,9 +163,24 @@
 </div>
 <!-- Modal End -->
 
-
 <script type="text/javascript">
 //<![CDATA[
+$(function() {
+	$('#fadminwrite').validate({
+		rules: {
+			jud_med_name: { required: true, minlength:2, maxlength :255 },
+			jud_wht_id: { required: true, digits:true, min:1, maxlength :11 },
+			jud_url: { required: true, url:true, minlength:5, maxlength :255 },
+			<?php if(element('jud_state', element('data', $view)) == 1) { ?>
+				med_superpoint:{ required: true, digits:true, min:1, maxlength :11 },
+				med_member:{ required: true, digits:true, min:1, maxlength :11 },
+			<?php } ?>
+			jud_med_admin: { required: true}
+		}
+	});
+});
+
+
 $(document).on('click', '#denyBtn', function(){
 	$("#myModal").modal({
 		backdrop:false
@@ -159,7 +223,7 @@ $(document).on('click','.set_state',function(){
   $.ajax({
 		type: 'post',
 		dataType: "json",
-		url:'/admin/cic/judgemission/ajax_set_state',
+		url:'/admin/cic/judgemedia/ajax_set_state',
 		data:{
 			[csrfName]: csrfHash,
 			jud_id:_jul_id,

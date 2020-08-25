@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 
 /**
- * 관리자>CIC 관리>미션등록 controller 입니다.
+ * 관리자>CIC 관리>미션목록 controller 입니다.
  */
 class Missionlist extends CB_Controller
 {
@@ -256,7 +256,8 @@ class Missionlist extends CB_Controller
 			'get_mis_thumb_image' => element('mis_thumb_image',$getdata),
 			'thumb_image' 				=> $_FILES["mis_thumb_image"],
 			'thumb_youtube' 			=> $this->input->post('mis_thumb_youtube'),
-			'mis_thumb_image_del' => $this->input->post('mis_thumb_image_del')
+			'mis_thumb_image_del' => $this->input->post('mis_thumb_image_del'),
+			'mis_endtype' 				=> $this->input->post('mis_endtype'),
 		);
 		// log_message('error',$thumb_type_data);
 		$config = array(
@@ -281,9 +282,19 @@ class Missionlist extends CB_Controller
 				'rules' => 'trim|is_natural|required|min_length[1]|max_length[11]',
 			),
 			array(
+				'field' => 'mis_endtype',
+				'label' => '마감유형',
+				'rules' => 'trim|required|is_natural|exact_length[1]',
+			),
+			array(
 				'field' => 'mis_max_point',
 				'label' => '최대 슈퍼포인트',
-				'rules' => 'trim|is_natural|required|min_length[1]|max_length[11]',
+				'rules' => array('trim','is_natural','required','min_length[1]','max_length[11]', array('check_endtype_sp',array($this->{$this->modelname},'check_endtype_sp'))),
+			),
+			array(
+				'field' => 'mis_sf_percentage',
+				'label' => '슈퍼프랜드 추가지급 비율',
+				'rules' => 'trim|is_natural|required|greater_than_equal_to[0]|less_than[10000]',
 			),
 			array(
 				'field' => 'mis_allowed',
@@ -293,12 +304,12 @@ class Missionlist extends CB_Controller
 			array(
 				'field' => 'mis_opendate',
 				'label' => '오픈날짜',
-				'rules' => 'trim|min_length[9]|max_length[20]',
+				'rules' => array('trim','min_length[9]','max_length[20]', array('check_datetime',array($this->{$this->modelname},'check_datetime'))),
 			),
 			array(
 				'field' => 'mis_enddate',
-				'label' => '오픈날짜',
-				'rules' => 'trim|min_length[9]|max_length[20]',
+				'label' => '마감날짜',
+				'rules' => array('trim','min_length[9]','max_length[20]', array('check_datetime',array($this->{$this->modelname},'check_datetime')), array('check_endtype_enddate',array($this->{$this->modelname},'check_endtype_enddate'))),
 			),
 			array(
 				'field' => 'mis_content',
@@ -402,8 +413,10 @@ class Missionlist extends CB_Controller
 				'mis_title' => $this->input->post('mis_title', null, ''),
 				'mis_thumb_type' => $this->input->post('mis_thumb_type', null, 1),
 				'mis_thumb_youtube' => $this->input->post('mis_thumb_youtube', null, ''),
+				'mis_endtype' => $this->input->post('mis_endtype', null, ''),
 				'mis_per_token' => $this->input->post('mis_per_token', null, ''),
 				'mis_max_point' => $this->input->post('mis_max_point', null, ''),
+				'mis_sf_percentage' => $this->input->post('mis_sf_percentage', null, ''),
 				'mis_allowed' => $this->input->post('mis_allowed', null, 1),
 				'mis_opendate' => $this->input->post('mis_opendate', null, ''),
 				'mis_enddate' => $this->input->post('mis_enddate', null, ''),
@@ -510,10 +523,14 @@ class Missionlist extends CB_Controller
 			foreach ($this->input->post('chk') as $val) {
 				if ($val) {
 					
-					$deletewhere = array(
-						'mis_id' => $val,
+					// $deletewhere = array(
+					// 	'mis_id' => $val,
+					// );
+					// $this->{$this->modelname}->delete_where($deletewhere);
+					$update = array(
+						'met_deletion' => 'Y'
 					);
-					$this->{$this->modelname}->delete_where($deletewhere);
+					$this->{$this->modelname}->update($val,$update);
 					
 					$deletewhere = array(
 						'mip_mis_id' => $val,

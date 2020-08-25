@@ -42,15 +42,31 @@ class RS_missionlist_model extends CB_Model
     $select = array(
       'rs_missionlist.*',
       'rs_missionpoint.mip_tpoint as tpoint',
-      'CASE WHEN rs_missionlist.mis_max_point = 0 THEN 0 ELSE (rs_missionpoint.mip_tpoint/rs_missionlist.mis_max_point*100) END percentage',
-      'CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END state'
+      'CASE WHEN rs_missionlist.mis_max_point = 0 OR (rs_missionlist.mis_endtype != 1 AND rs_missionlist.mis_endtype != 3) THEN 0 ELSE (rs_missionpoint.mip_tpoint/rs_missionlist.mis_max_point*100) END percentage',
+      ' CASE WHEN rs_missionlist.mis_endtype = 1 THEN
+          CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
+        ELSE
+          CASE WHEN rs_missionlist.mis_endtype = 2 THEN
+            CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
+          ELSE
+            CASE WHEN rs_missionlist.mis_endtype = 3 THEN
+            CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
+            ELSE
+              CASE WHEN rs_missionlist.mis_endtype = 0 THEN
+              CASE WHEN rs_missionlist.mis_end = 1 THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
+              ELSE
+                "unhandled_state"
+              END
+            END
+          END
+        END state'
     );
     // join 방법
     $join[] = array('table' => 'rs_missionpoint', 'on' => 'rs_missionlist.mis_id = rs_missionpoint.mip_mis_id', 'type' => 'inner');
     $result = $this->_get_list_common($select, $join, $limit, $offset, $where, $like, $findex, $forder, $sfield, $skeyword, $sop);
 		return $result;
   }
-  public function get_one_mission($primary_value = '', $select = '', $where = '')
+  public function get_one_mission($primary_value = ''/*, $select = '', $where = ''*/)
 	{
     //get_one으로는 join이 안되서 어쩔 수 없이 위 함수를 활용
     $result = $this->get_missionlist_list(1,0,array($this->primary_key => $primary_value), '', $this->primary_key, 'desc', '', '');
@@ -82,7 +98,8 @@ class RS_missionlist_model extends CB_Model
     'get_mis_thumb_image' => '',
     'thumb_image'         => array(),
     'thumb_youtube'       => '',
-    'mis_thumb_image_del' => 0
+    'mis_thumb_image_del' => 0,
+    'mis_endtype'         => 0,
   );
 	public function check_thumb_data($value){
     $data = $this->post_thumb_data;
@@ -102,6 +119,36 @@ class RS_missionlist_model extends CB_Model
 		return true;
 	}
 
+	public function check_endtype_sp($value){
+    $endtype = element('mis_endtype',$this->post_thumb_data);
+		if(($endtype == 1 || $endtype == 3) && (int)$value<1){
+      $this->form_validation->set_message('check_endtype_sp', '선택하신 마감유형은 최대 슈퍼포인트를 필수적으로 입력하셔야합니다.');
+			return false;
+    }
+		return true;
+  }
+
+	public function check_endtype_enddate($value){
+    $endtype = element('mis_endtype',$this->post_thumb_data);
+		if(($endtype == 1 || $endtype == 2) && !$value){
+      $this->form_validation->set_message('check_endtype_enddate', '선택하신 마감유형은 마감일 필수적으로 입력하셔야합니다.');
+			return false;
+    }
+		return true;
+  }
+
+  
+	public function check_datetime($value){
+    $is_datetime = strtotime($value); // https://www.php.net/manual/en/function.strtotime.php
+		if($value && (!$is_datetime || $is_datetime == -1)){
+      $this->form_validation->set_message('check_datetime', '비정상적인 날짜 정보가 입력되었습니다.');
+			return false;
+    }
+		return true;
+  }
+
+
+
   /*
   ** 해당 미션이 마감되었는지 확인하는 Function
   */
@@ -115,5 +162,17 @@ class RS_missionlist_model extends CB_Model
     } else {
       return 'mission proceeding'; //미션 진행중
     }
+  }
+
+  public function get_mission_apply_total_superpoint($mis_id){
+    $this->db->join('rs_media','jud_med_id = med_id');
+    $this->db->where(array(
+      'jud_deletion' => 'N',
+      'jud_jug_id'  => 1,
+      'jud_mis_id'  => $mis_id,
+    ));
+    $this->db->select('SUM(med_superpoint) AS sum_superpoint');
+    $sum_superpoint = $this->db->get('rs_judge')->row()->sum_superpoint;
+    return $sum_superpoint ? $sum_superpoint : 0 ;
   }
 }

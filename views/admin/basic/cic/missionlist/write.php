@@ -46,6 +46,17 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label">마감 유형</label>
+				<div class="col-sm-10 form-inline">
+					<select name="mis_endtype" class="form-control">
+						<option value="1" <?php echo set_select('mis_endtype', '1', ( element('mis_endtype', element('data', $view)) === '1' ? true : false)); ?>>둘다 적용</option>
+						<option value="2" <?php echo set_select('mis_endtype', '2', ( element('mis_endtype', element('data', $view)) === '2' ? true : false)); ?>>마감일 마감</option>
+						<option value="3" <?php echo set_select('mis_endtype', '3', ( element('mis_endtype', element('data', $view)) === '3' ? true : false)); ?>>최대 Superpooint 마감</option>
+						<option value="0" <?php echo set_select('mis_endtype', '0', ( element('mis_endtype', element('data', $view)) === '0' ? true : false)); ?>>마감 사용 안함</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">지급 PER TOKEN</label>
 				<div class="col-sm-10 form-inline">
 					<input type="text" class="form-control" name="mis_per_token" value="<?php echo set_value('mis_per_token', element('mis_per_token', element('data', $view))); ?>" />
@@ -55,6 +66,12 @@
 				<label class="col-sm-2 control-label">최대 슈퍼포인트</label>
 				<div class="col-sm-10 form-inline">
 					<input type="text" class="form-control" name="mis_max_point" value="<?php echo set_value('mis_max_point', element('mis_max_point', element('data', $view))); ?>" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">슈퍼프랜드 추가지급 비율</label>
+				<div class="col-sm-10 form-inline">
+					<input type="text" class="form-control" name="mis_sf_percentage" value="<?php echo set_value('mis_sf_percentage', element('mis_sf_percentage', element('data', $view))); ?>" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -127,6 +144,7 @@ $("input[name=mis_enddate]").datetimepicker({
 	todayBtn: true,
 	autoclose: true
 });
+<?php if(element('data', $view)){ ?>
 $("#finish").on('click',function(){
 	let csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>';
   let csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
@@ -154,6 +172,7 @@ $("#finish").on('click',function(){
 		}
 	});
 });
+<?php } ?>
 //<![CDATA[
 $(function() {
 	$('#fadminwrite').validate({
@@ -161,8 +180,9 @@ $(function() {
 			mis_title: { required: true, minlength:2, maxlength:20 },
 			mis_thumb_type: { required :true, digits:true, range:[1,2] },
 			mis_thumb_youtube: { url :true },
-			mis_max_point: { required :true, digits :true, min :1, maxlength :11},
-			mis_max_point: { required :true, digits :true, min :1, maxlength :11},
+			mis_per_token: { required :true, digits :true, min :1, maxlength :11},
+			// mis_max_point: { required :true, digits :true, min :1, maxlength :11},
+			mis_sf_percentage: { required :true, digits :true, min :0, max :9999},
 			mis_allowed: { required :true, digits :true, range :[0,1] },
 			// mis_opendate: { date :true },
 			// mis_enddate: { date :true },

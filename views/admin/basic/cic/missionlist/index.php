@@ -35,10 +35,8 @@
 							<th>제목</th>
 							<th><a href="<?php echo element('mis_thumb_type', element('sort', $view)); ?>">썸네일 유형</a></th>
 							<th><a href="<?php echo element('mis_per_token', element('sort', $view)); ?>">지급 PER TOKEN</a></th>
-							<th><a href="<?php echo element('mis_max_point', element('sort', $view)); ?>">최대 슈퍼포인트</a></th>
 							<th><a href="<?php echo element('percentage', element('sort', $view)); ?>">진행상황(%)</a></th>
 							<th>상태</th>
-							<th>마감일자</th>
 							<th>작성자</th>
 							<th><a href="<?php echo element('mis_wdate', element('sort', $view)); ?>">작성일</a></th>
 							<th>수정</th>
@@ -55,10 +53,8 @@
 							<td><?php echo html_escape(element('mis_title', $result)); ?></td>
 							<td><?php echo element('mis_thumb_type', $result) == 1 ? '이미지' : '유튜브'; ?></td>
 							<td class="text-right"><?php echo number_format(element('mis_per_token', $result)); ?></td>
-							<td class="text-right"><?php echo number_format(element('mis_max_point', $result)); ?></td>
 							<td class="text-right"><?php echo element('percentage', $result); ?></td>
 							<td><?php echo element('state', $result); ?></td>
-							<td><?php echo (element('mis_enddate', $result) && element('mis_enddate', $result) != '0000-00-00 00:00:00') ? date('Y-m-d',strtotime(element('mis_enddate', $result))) : '미설정'; ?></td>
 							<td><?php echo element('display_name', $result); ?></td>
 							<td><?php echo date('Y-m-d',strtotime(element('mis_wdate', $result))); ?></td>
 							<td><a href="<?php echo admin_url($this->pagedir); ?>/write/<?php echo element(element('primary_key', $view), $result); ?>?<?php echo $this->input->server('QUERY_STRING', null, ''); ?>" class="btn btn-outline btn-default btn-xs">수정</a></td>
@@ -116,6 +112,5 @@ $(document).on('click', '#export_to_excel', function(){
 	exporturl = '<?php echo admin_url($this->pagedir . '/excel' . '?' . $this->input->server('QUERY_STRING', null, '')); ?>';
 	document.location.href = exporturl;
 })
-
 //]]>
 </script>
