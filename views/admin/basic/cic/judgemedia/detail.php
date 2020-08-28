@@ -28,6 +28,11 @@
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="jud_med_url" value="<?php echo set_value('jud_med_url', element('jud_med_url', element('data', $view))); ?>" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?> />
 					<a href="<?php echo set_value('jud_med_url', element('jud_med_url', element('data', $view))); ?>" target="_blank"><?php echo set_value('jud_med_url', element('jud_med_url', element('data', $view))); ?></a>
+					<?php if(element('med_duplicate', $view)){ ?>
+						<a href="/admin/cic/judgemedia?sfield=jud_med_url&skeyword=<?php echo urlencode(element('jud_med_url', element('data', $view))); ?>&search_submit=">
+							<span class="label label-danger" style="margin-left:10px;">중복된 미디어입니다.</span>
+						</a>
+					<?php } ?>
 				</div>
 			</div>
 			<div class="form-group">
@@ -113,7 +118,7 @@
 				</div>
 			</div>
 			<div class="btn-group pull-right" role="group" aria-label="...">
-				<button type="submit" class="btn btn-success btn-sm" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>승인하기</button>
+				<button type="button" class="btn btn-success btn-sm" id="confirm" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>승인하기</button>
 				<button type="button" class="btn btn-danger btn-sm" id="denyBtn" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>반려하기</button>
 				<button type="button" class="btn btn-default btn-sm btn-history-back" >취소하기</button>
 			</div>
@@ -144,7 +149,7 @@
             <option value="<?=html_escape(element('judr_reason',$r))?>"><?php echo html_escape(element('judr_title', $r)); ?></option>
           <?php } ?>
         </select>
-        <div style="text-align:right; padding-right:12px; margin-bottom:7px;"><a href="/admin/cic/judgemission/denyreason" target="_black">사유 등록</a></div>
+        <div style="text-align:right; padding-right:12px; margin-bottom:7px;"><a href="/admin/cic/setting/denyreason?judr_jug_id=2" target="_black">사유 등록</a></div>
         <div style="padding-bottom:4px;"> - 반려사유 - </div>
         <textarea name="deny_reason_text" id="deny_reason_text" class="form-control" rows=7 ></textarea>
         <div style="padding-bottom:4px; padding-top:8px;"> - 경고 - </div>
@@ -180,6 +185,13 @@ $(function() {
 	});
 });
 
+
+$("#confirm").on('click', function(){
+	if(!confirm('정말 승인처리 하시겠습니까?')){
+		return false;
+	}
+	$("#fadminwrite").submit();
+});
 
 $(document).on('click', '#denyBtn', function(){
 	$("#myModal").modal({

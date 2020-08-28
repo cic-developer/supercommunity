@@ -18,9 +18,9 @@ $config['admin_page_menu']['cic'] =
 			'missionlist'				=> array('미션등록', ''),
 			'judgemission'			=> array('미션심사', ''),
 			'medialist'					=> array('미디어목록', ''),
-			'judgemedia'				=> array('미디어심사/카테고리등록', ''),
+			'judgemedia'				=> array('미디어심사', ''),
 			'judgewithdraw'			=> array('출금심사', ''),
-			'advertisementlist'	=> array('광고등록', ''),
+			'advertisementlist'	=> array('광고', ''),
 			'setting'			=> array('CIC 설정', ''),
 		),
 	);

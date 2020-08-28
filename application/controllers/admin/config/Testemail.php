@@ -114,7 +114,7 @@ class Testemail extends CB_Controller
 			} else {
 				$view['view']['alert_message'] = '이메일을 발송하였습니다';
 			}
-			//echo $this->email->print_debugger();
+			// echo $this->email->print_debugger();
 
 		}
 

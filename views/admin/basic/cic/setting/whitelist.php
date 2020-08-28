@@ -1,4 +1,12 @@
 <div class="box">
+	<div class="box-header">
+		<ul class="nav nav-tabs">
+			<li role="presentation"><a href="<?php echo admin_url($this->pagedir); ?>" onclick="return check_form_changed();">메인페이지</a></li>
+			<li role="presentation"><a href="<?php echo admin_url($this->pagedir . '/denyreason'); ?>" onclick="return check_form_changed();">반려사유</a></li>
+			<li role="presentation"><a href="<?php echo admin_url($this->pagedir . '/mediatype'); ?>" onclick="return check_form_changed();">미디어 성격</a></li>
+			<li role="presentation" class="active"><a href="<?php echo admin_url($this->pagedir . '/whitelist'); ?>" onclick="return check_form_changed();">화이트리스트</a></li>
+		</ul>
+	</div>
 	<div class="box-table">
 		<?php
 		echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
@@ -6,22 +14,6 @@
 		echo form_open(current_full_url(), $attributes);
 		?>
 			<div class="box-table-header">
-				<div class="btn-group btn-group-sm" role="group">
-					<a href="<?php echo element('listall_url', $view); ?>" class="btn btn-sm btn-default">전체목록</a>
-					<a href="<?php echo element('listall_url', $view); ?>?wait=1" class="btn btn-sm btn-default">대기목록</a>
-					<a href="<?php echo element('listall_url', $view); ?>?allowed=1" class="btn btn-sm btn-default">승인목록</a>
-					<a href="<?php echo element('listall_url', $view); ?>?denied=1" class="btn btn-sm btn-default">반려목록</a>
-				</div>
-				<div class="btn-group btn-group-sm" role="group">
-					<a href="<?php echo element('listall_url', $view); ?>" class="btn btn-sm btn-default">화이트리스트 전체</a>
-					<?php
-					foreach (element('list',element('all_whitelist', $view)) as $wkey => $wval) {
-					?>
-						<a href="<?php echo element('listall_url', $view); ?>?wht_id=<?php echo element('wht_id', $wval); ?>" class="btn btn-sm btn-default"><?php echo element('wht_title', $wval); ?></a>
-					<?php
-					}
-					?>
-				</div>
 				<?php
 				ob_start();
 				?>
@@ -29,9 +21,6 @@
 						<button type="button" class="btn btn-outline btn-success btn-sm" id="export_to_excel"><i class="fa fa-file-excel-o"></i> 엑셀 다운로드</button>
 						<a href="<?php echo element('whitelist_url', $view); ?>" class="btn btn-outline btn-default btn-sm">전체목록</a>
 						<button type="button" class="btn btn-outline btn-default btn-sm btn-list-delete btn-list-selected disabled" data-list-delete-url = "<?php echo element('list_delete_url', $view); ?>" >선택삭제</button>
-						<a href="<?php echo element('denyreason_url', $view); ?>" class="btn btn-outline btn-default btn-sm">반려사유</a>
-						<a href="<?php echo element('mediatype_url', $view); ?>" class="btn btn-outline btn-default btn-sm">미디어성격</a>
-						<a href="<?php echo element('whitelist_url', $view); ?>" class="btn btn-outline btn-success btn-sm">화이트리스트</a>
 						<a href="<?php echo element('write_url', $view); ?>" class="btn btn-outline btn-danger btn-sm">추가</a>
 					</div>
 				<?php

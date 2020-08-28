@@ -28,7 +28,6 @@
 					<div class="btn-group pull-right" role="group" aria-label="...">
 						<button type="button" class="btn btn-outline btn-success btn-sm" id="export_to_excel"><i class="fa fa-file-excel-o"></i> 엑셀 다운로드</button>
 						<a href="<?php echo element('listall_url', $view); ?>" class="btn btn-outline btn-default btn-sm">전체목록</a>
-						<a href="<?php echo element('denyreason_url', $view); ?>" class="btn btn-outline btn-default btn-sm">반려사유</a>
 					</div>
 				<?php
 				$buttons = ob_get_contents();
@@ -64,7 +63,7 @@
 							<td><?php echo html_escape(element('wht_title', $result)); ?></td>
 							<td><?php echo html_escape(element('jud_med_admin', $result)); ?></td>
 							<td><a href="<?php echo element('jud_med_url', $result); ?>" target="_blank"><?php echo mb_strlen(element('jud_med_url', $result)) > 15 ? mb_substr(element('jud_med_url', $result),0,15).'...' : element('jud_med_url', $result); ?></a></td>
-							<td><img class="img_modal" src="<?php echo thumb_url('judge_img', element('jud_attach', element('data', $view)), 200, 160); ?>" alt="제출이미지" title="제출이미지" style="cursor:pointer;" data-img="<?=thumb_url('judge_img', element('jud_attach', element('data', $view)), 800, 600)?>"/></td>
+							<td><img class="img_modal" src="<?php echo thumb_url('judge', element('jud_attach', $result), 200, 160); ?>" alt="제출이미지" title="제출이미지" style="cursor:pointer;" data-img="<?=thumb_url('judge', element('jud_attach', $resultㅇ), 800, 600)?>"/></td>
 							<td><?php echo rs_get_state(element('jud_state', $result)); ?></td>
 							<td><?php echo element('display_name', $result); ?></td>
 							<td><?php echo display_datetime(element('jud_wdate', $result), 'user', 'Y-m-d'); ?><br/><?php echo display_datetime(element('jud_wdate', $result), 'user', 'H:i:s'); ?></td>

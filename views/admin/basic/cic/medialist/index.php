@@ -59,7 +59,14 @@
 							<td><?php echo number_format(element('num', $result)); ?></td>
 							<td><?php echo html_escape(element('wht_title', $result)); ?></td>
 							<td><?php echo html_escape(element('med_admin', $result)); ?></td>
-							<td><a href="<?php echo element('med_url', $result); ?>"><?php echo element('med_url', $result); ?></a></td>
+							<td>
+								<a href="<?php echo element('med_url', $result); ?>"><?php echo element('med_url', $result); ?></a>
+								<?php if(element('med_duplicate',$result)){ ?>
+									<a href="/admin/cic/medialist?sfield=med_url&skeyword=<?php echo urlencode(element('med_url', $result)); ?>&search_submit=">
+										<span class="label label-danger" style="margin-left:10px;">중복</span>
+									</a>
+								<?php } ?>
+							</td>
 							<td><?php echo element('state', $result); ?></td>
 							<td><?php echo element('display_name', $result); ?></td>
 							<td><a href="<?php echo admin_url($this->pagedir); ?>/detail/<?php echo element(element('primary_key', $view), $result); ?>?<?php echo $this->input->server('QUERY_STRING', null, ''); ?>" class="btn btn-outline btn-default btn-xs">자세히</a></td>

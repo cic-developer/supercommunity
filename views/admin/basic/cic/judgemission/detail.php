@@ -54,7 +54,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">첨부 이미지</label>
 				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-          <img  src="<?php echo thumb_url('judge_img', element('jud_attach', element('data', $view)), 800, 600); ?>" alt="제출이미지" title="제출이미지"/>
+          <img  src="<?php echo thumb_url('judge', element('jud_attach', element('data', $view)), 800, 600); ?>" alt="제출이미지" title="제출이미지"/>
 				</div>
 			</div>
 			<div class="form-group">
@@ -103,7 +103,7 @@
             <option value="<?=html_escape(element('judr_reason',$r))?>"><?php echo html_escape(element('judr_title', $r)); ?></option>
           <?php } ?>
         </select>
-        <div style="text-align:right; padding-right:12px; margin-bottom:7px;"><a href="/admin/cic/judgemission/denyreason" target="_black">사유 등록</a></div>
+        <div style="text-align:right; padding-right:12px; margin-bottom:7px;"><a href="/admin/cic/setting/denyreason?judr_jug_id=1" target="_black">사유 등록</a></div>
         <div style="padding-bottom:4px;"> - 반려사유 - </div>
         <textarea name="deny_reason_text" id="deny_reason_text" class="form-control" rows=7 ></textarea>
         <div style="padding-bottom:4px; padding-top:8px;"> - 경고 - </div>

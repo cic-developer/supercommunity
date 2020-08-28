@@ -1,0 +1,148 @@
+@charset "UTF-8";
+/* reset */
+body{margin:0 auto;}
+*{margin: 0; padding: 0;}
+html,body,div,span,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,blockquote,p,address,pre,cite,form,fieldset,caption,textarea,input,select,table,th,td { margin:0; padding:0;}
+html {overflow-y:scroll;}
+body {margin:0; padding:0; font-size:13px; font-family: 'Noto Sans KR', sans-serif; font-weight:normal;  color:#333; line-height: 1;}
+html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
+h1, h2, h3, h4, h5, h6 {word-break: break-all;}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav{display:block; margin:0; padding:0;}
+ul, dl, ol  {margin:0;padding:0;list-style:none;}
+legend, .hid {margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;}
+label, input, button, select, img {vertical-align:middle}
+input, button {margin:0;padding:0; font-size:15px;font-family: 'Noto Sans KR', sans-serif; font-weight:bold; color:#333;}
+input[type="text"] {font-weight: normal;}
+button, input[type="submit"], input[type="button"] {cursor:pointer; font-family: 'Noto Sans KR', sans-serif;}
+textarea, select, option {font-size:13px;font-family: 'Noto Sans KR', sans-serif; font-weight:normal;  color:#333;}
+select {margin:0;font-size:13px; font-weight:500;  color:#333;}
+p {margin:0;padding:0; word-break: break-all;}
+span {word-break: break-all;}
+a{cursor:pointer; text-decoration:none;}
+a:link, a:visited {color:#2a2a2a;}
+a:hover, a:focus, a:active {color:#2a2a2a;text-decoration:none;}
+img{display:inline-block; margin:0; padding:0;}
+i{margin:0; padding:0;}
+input::-webkit-input-placeholder { color:#888; font-weight: 300; }
+input::-moz-placeholder { color:#888; font-weight: 300;}
+input::-ms-input-placeholder { color:#888; font-weight: 300; }
+
+/*랜딩페이지*/
+#wrap {width:100%; margin:0 auto; overflow-x:hidden;}
+#wrap .page {width:1090px; margin:0 auto;}
+#wrap .page img {width:1920px; display:block; margin:0 auto; margin-left:-415px;}
+#wrap .form_page {width: 100%;; background:url(/views/bookandlife/basic/images/form_bg.jpg) no-repeat center top; padding-top:105px;  padding-bottom:60px; background-color: #000;}
+#wrap .form_page .form_area {width: 1020px; margin: 0 auto;}
+#wrap .form_page .form_area img {display: block; margin: 0 auto; margin-bottom:50px;}
+/*이벤트 폼*/
+#wrap .form_page .form_area .form_event {width:720px; margin: 0 auto; background: #fcfaff; padding: 50px 70px; box-sizing: border-box; border-radius: 30px; box-shadow: 4px 4px 4px 3px rgba(0, 0, 0, 0.2);}
+#wrap .form_page .form_area .form_event ul {width: 100%;}
+#wrap .form_page .form_area .form_event ul li {width: 100%; font-size:18px; font-weight:300; vertical-align: text-bottom; margin-bottom:13px;}
+#wrap .form_page .form_area .form_event ul li span {display: inline-block; width:117px; font-size:20px; font-weight: 500; color:#5f5f5f; vertical-align: middle; letter-spacing: -1px;}
+#wrap .form_page .form_area .form_event ul li input,#wrap .form_page .form_area .form_event ul li select {height:55px; border:1px solid #ddd; background: #fff; font-size:18px; color: #000; vertical-align: baseline;}
+#wrap .form_page .form_area .form_event ul li input {padding: 0px 15px; box-sizing: border-box;}
+#wrap .form_page .form_area .form_event ul li select {padding-left:15px; box-sizing: border-box; }
+#wrap .form_page .form_area .form_event ul li select optgroup option {font-size:18px;}
+/*개인정보 수집동의*/
+#wrap .form_page .form_area .form_event ul li.line {padding: 20px 0; border-top:1px dashed #ccc;  border-bottom:1px dashed #ccc; margin-top: 20px;}
+#wrap .form_page .form_area .form_event ul li dl {width: 100%; background: #f8f7fb; color: #777; border:1px solid #ddd; font-size: 15px; padding:15px 20px; box-sizing: border-box; margin-bottom: 8px;}
+#wrap .form_page .form_area .form_event ul li dl dt {font-weight: 500; margin-bottom: 8px;}
+#wrap .form_page .form_area .form_event ul li dl dd {padding-left: 15px;  line-height: 1.5; font-weight: 500;}
+#wrap .form_page .form_area .form_event ul li input[type="checkbox"] {height: auto; margin-right: 8px;}
+#wrap .form_page .form_area .form_event ul li label {font-size: 15px; font-weight: 500; color: #777;}
+
+/*스팸*/
+#wrap .form_page .form_area .form_event ul li.spam .spam_img {display: inline-block; width: 137px; height: 30px; border:1px solid #ddd; vertical-align: middle;}
+#wrap .form_page .form_area .form_event ul li.spam input {vertical-align: middle;}
+#wrap .form_page .form_area .form_event ul li.spam small {font-size: 14px; font-weight: 500; color:#777}
+#wrap .form_page .form_area .form_event .btn_box {text-align:center; margin-top: 40px;}
+#wrap .form_page .form_area .form_event input[type="submit"] { text-align: center; font-size: 30px; color: #79bffa; background: #000; border:0; padding: 8px 35px; border-radius: 30px; outline: none;}
+#wrap .form_page .form_area .form_event input[type="submit"]:hover {color: #a4a1fa;}
+
+/*footer 푸터*/
+.footer {width:100%; background: #000; padding: 30px 0 50px 0;}
+.footer P{width: 1090px; margin: 0 auto; text-align: center; font-size: 14px; line-height: 1.5; color:#ccc; font-weight: 300;}
+.footer P strong {display: block; margin-bottom: 8px; font-size: 14px;}
+
+.footer P small {display: block; margin-top: 5px; font-size:14px; color:#9a9a9a;}
+
+
+
+/***개인정보처리방침 팝업 mobile***/
+
+/*팝업창*/
+#popup {
+    display: none; /*숨기기*/
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+}
+
+#popmenu {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 350px;
+    height: 200px;
+    padding:15px;
+    text-align: center;
+    background: #fff;
+    border-radius:10px;
+}
+
+#popmenu h2 {
+    font-size:14px;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+#popmenu table {
+font-size:13px;
+width:100%;
+border-collapse:collapse;
+border-top:2px solid #ccc;
+}
+
+#popmenu table th, #popmenu table td {
+    border-bottom:1px solid #ccc;
+    text-align:left;
+    padding: 5px 10px;
+}
+
+#popmenu table th {
+    background: #eaeaea;
+}
+
+.exit {
+    position: absolute;
+    left: 50%;
+    bottom: 10px;
+    transform: translate(-50%,0);
+    width: 50px;
+    font-weight:bold;
+    color:#fff;
+    font-size:13px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    background: #000;
+    cursor: pointer;
+}
+
+/*본문내용*/
+#contents {
+    display:block;
+    width:120px;
+    padding:8px 0;
+    border:1px solid #757575;
+    font-size: 12px;
+    margin: 0 auto;
+    text-align: center;
+    color: #fff;
+    margin-top:10px;
+    margin-bottom:10px;
+    cursor: pointer;
+}

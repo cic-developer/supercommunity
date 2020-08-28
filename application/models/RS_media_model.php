@@ -116,15 +116,20 @@ class RS_media_model extends CB_Model
   }
 
   function getMissionMedia($mis_id, $mem_id){
-    $this->db->join('rs_judge juge', 'jud_mis_id = '.$mis_id.' AND jud_jug_id = 1 AND jud_state != 0', 'LEFT OUTER');
+    $this->db->join('rs_judge juge', 'jud_mis_id = '.$mis_id.' AND jud_jug_id = 1 AND jud_state != 0 AND jud_med_id = med_id', 'LEFT OUTER');
     return $this->get('','',array('mem_id' => $mem_id, 'med_state' => 3));
   }
 
   function check_media_duplication($med_id, $med_url){
+    if(($_http_pos = strpos($med_url,'//')) !== false){
+      $med_url = substr($med_url, $_http_pos + 2);
+    }
     if($med_id){
       $this->db->where('med_id != ', $med_id);
     }
-    $this->db->where('med_url', $med_url);
+    $this->db->where('med_state >', 0);
+    $this->db->where('med_deletion','N');
+    $this->db->like('med_url', $med_url);
     return $this->db->get('rs_media')->result();
   }
 

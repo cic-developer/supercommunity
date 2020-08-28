@@ -47,7 +47,7 @@ class RS_missionlist_model extends CB_Model
           CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
         ELSE
           CASE WHEN rs_missionlist.mis_endtype = 2 THEN
-            CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
+            CASE WHEN rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
           ELSE
             CASE WHEN rs_missionlist.mis_endtype = 3 THEN
             CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
@@ -149,20 +149,6 @@ class RS_missionlist_model extends CB_Model
 
 
 
-  /*
-  ** 해당 미션이 마감되었는지 확인하는 Function
-  */
-  public function get_is_this_mission_end($mis_id){
-    $getdata = $this->get_one($mis_id);
-    if(!$getdata) return false;
-    if(element('mis_end',$getdata)/* || element('mis_max_point',$getdata) < 해당 미션 승인 포인트 */){
-      return 'mission end'; //미션 종료
-    } else if (strtotime(element('mis_opendate',$getdata)) > time()){
-      return 'planned mission'; //미션 예정
-    } else {
-      return 'mission proceeding'; //미션 진행중
-    }
-  }
 
   public function get_mission_apply_total_superpoint($mis_id){
     $this->db->join('rs_media','jud_med_id = med_id');
@@ -174,5 +160,78 @@ class RS_missionlist_model extends CB_Model
     $this->db->select('SUM(med_superpoint) AS sum_superpoint');
     $sum_superpoint = $this->db->get('rs_judge')->row()->sum_superpoint;
     return $sum_superpoint ? $sum_superpoint : 0 ;
+  }
+
+  private function get_distribute_list(){
+    $where = array();
+    $where['mis_deletion'] = "N";
+    $where['mis_distribute'] = "N";
+    $where[' 
+    CASE WHEN rs_missionlist.mis_endtype = 1 THEN
+      (rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'"))
+    ELSE
+      CASE WHEN rs_missionlist.mis_endtype = 2 THEN
+        (rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'"))
+      ELSE
+        CASE WHEN rs_missionlist.mis_endtype = 3 THEN
+          (rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1)
+        ELSE
+          (rs_missionlist.mis_end = 1)
+        END
+      END
+    END
+  '] = null;
+  $join = array('table' => 'rs_missionpoint', 'on' => 'rs_missionlist.mis_id = rs_missionpoint.mip_mis_id', 'type' => 'inner');
+  return $this->_get_list_common('mis_id,mis_title,mis_per_token,mis_sf_percentage,mip_tpoint',$join,'','',$where);
+  }
+
+  public function distribute_point(){
+    $data = $this->get_distribute_list();
+    $total_row = element('total_rows',$data);
+    if(!$total_row || $total_row<1){
+      /*
+      ** 분배처리할 미션이 없음.
+      */
+      return true;
+    }
+    $list = element('list',$data);
+    $this->load->model('RS_judge_model');
+    foreach($list as $l){
+      $mis_id            = element('mis_id',$l);
+      $mis_title         = element('mis_title',$l);
+      $mis_per_token     = element('mis_per_token',$l);
+      $mis_sf_percentage = element('mis_sf_percentage',$l);
+      $mip_tpoint        = element('mip_tpoint',$l) ? element('mip_tpoint',$l) : 1; //분모 0 방지
+      $where = array();
+      $where['jud_mis_id'] = $mis_id;
+      $where['jud_state'] = 3;
+      $where['jud_deletion'] = "N";
+      $join = array(
+        array('table' => 'rs_whitelist', 'on' => 'rs_judge.jud_med_wht_id = rs_whitelist.wht_id', 'type' => 'inner'),
+        array('table' => 'member_group_member', 'on' => 'rs_judge.jud_mem_id = member_group_member.mem_id AND member_group_member.mgr_id = 2', 'type' => 'left'),
+      );
+      $userlist = $this->RS_judge_model->get('','jud_id,jud_mem_id,jud_med_name,jud_superpoint,wht_title,mgm_id',$where,'','','','',$join);
+      foreach($userlist as $u){
+        /*
+        ** 해당유저 superfriend 일 경우 추가 포인트 지급
+        */
+        $sf_percentage = 100;
+        if(element('mgm_id',$u)) $sf_percentage += $mis_sf_percentage;
+        $sf_percentage = $sf_percentage / 100;
+        $point = floor(element('jud_superpoint',$u)*$mis_per_token*$sf_percentage/$mip_tpoint*10)/10; //소수점 1의자리수 밑으로 버림하기위해, 곱하기 10 해서 버림 후 나누기10
+        $this->point->insert_point(
+          element('jud_mem_id',$u),
+          $point,
+					'"' . $mis_title . '" 미션 "' . element('wht_title',$u) . '( '.element('jud_med_name',$u) . '|' . element('jud_med_id',$u) . ' )' . '" 미디어에 해당하는 PERPOINT 지급'. element('mgm_id',$u) ? '(슈퍼프랜드 추가지급포함)' : '',
+					'distribute',
+					element('jud_id',$u),
+					'미션수행 포인트 지급'
+        );
+        $updatepoint = array(
+          'jud_point' => $point
+        );
+        $this->RS_judge_model->update(element('jud_id',$u),$updatepoint);
+      }
+    }
   }
 }

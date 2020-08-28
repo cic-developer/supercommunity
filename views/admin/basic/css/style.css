@@ -4,7 +4,7 @@
 * {margin: 0;padding: 0;}
 a > * {line-height: 0;}
 header, nav {display: block;}
-img {border: medium none;}
+img {border: medium none; max-width:100%; height:auto;}
 body {font-family: 'Nanum Gothic',나눔고딕,NanumGothic,돋움,Dotum,Arial,Helvetica,sans-serif;font-size: 13px;}
 a {color: #1e8fc6;text-decoration: none;}
 

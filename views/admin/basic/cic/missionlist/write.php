@@ -1,3 +1,11 @@
+
+<?php 
+	if(element('data', $view) && element('state', element('data', $view)) == 'end'){
+		$disabled = 'disabled';
+	} else {
+		$dusabled = '';
+	}
+?>
 <div class="box">
 	<div class="box-table">
 		<?php
@@ -10,13 +18,13 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">제목</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" name="mis_title" value="<?php echo set_value('mis_title', element('mis_title', element('data', $view))); ?>" />
+					<input type="text" class="form-control" name="mis_title" value="<?php echo set_value('mis_title', element('mis_title', element('data', $view))); ?>"  <?=$disabled?>/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">썸네일 유형</label>
 				<div class="col-sm-10 form-inline">
-					<select name="mis_thumb_type" class="form-control">
+					<select name="mis_thumb_type" class="form-control" <?=$disabled?>>
 						<option value="1" <?php echo set_select('mis_thumb_type', '1', ( element('mis_thumb_type', element('data', $view)) == 1 ? true : false)); ?>>이미지</option>
 						<option value="2" <?php echo set_select('mis_thumb_type', '2', ( element('mis_thumb_type', element('data', $view)) == 2 ? true : false)); ?>>유튜브</option>
 					</select>
@@ -30,25 +38,25 @@
 					?>
 						<img src="<?php echo thumb_url('mission_thumb_img', element('mis_thumb_image', element('data', $view)), 400, 300); ?>" alt="썸네일" title="썸네일" />
 						<label for="mis_thumb_image_del">
-							<input type="checkbox" name="mis_thumb_image_del" id="mis_thumb_image_del" value="1" <?php echo set_checkbox('mis_thumb_image_del', '1'); ?> /> 삭제
+							<input type="checkbox" name="mis_thumb_image_del" id="mis_thumb_image_del" value="1" <?php echo set_checkbox('mis_thumb_image_del', '1'); ?>  <?=$disabled?>/> 삭제
 						</label>
 					<?php
 					}
 					?>
-					<input type="file" name="mis_thumb_image" id="mis_thumb_image" />
+					<input type="file" name="mis_thumb_image" id="mis_thumb_image"  <?=$disabled?>/>
 					<p class="help-block">가로길이 : 400px, 세로길이 : 300px 에 최적화되어있습니다, gif, jpg, jpeg, png 파일 업로드가 가능합니다</p>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">썸네일 유튜브 주소</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" name="mis_thumb_youtube" value="<?php echo set_value('mis_thumb_youtube', element('mis_thumb_youtube', element('data', $view))); ?>" placeholder="ex) https://www.youtube.com/watch?v=cRNCHHtmWYM" />
+					<input type="text" class="form-control" name="mis_thumb_youtube" value="<?php echo set_value('mis_thumb_youtube', element('mis_thumb_youtube', element('data', $view))); ?>" placeholder="ex) https://www.youtube.com/watch?v=cRNCHHtmWYM"  <?=$disabled?>/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">마감 유형</label>
 				<div class="col-sm-10 form-inline">
-					<select name="mis_endtype" class="form-control">
+					<select name="mis_endtype" class="form-control" <?=$disabled?>>
 						<option value="1" <?php echo set_select('mis_endtype', '1', ( element('mis_endtype', element('data', $view)) === '1' ? true : false)); ?>>둘다 적용</option>
 						<option value="2" <?php echo set_select('mis_endtype', '2', ( element('mis_endtype', element('data', $view)) === '2' ? true : false)); ?>>마감일 마감</option>
 						<option value="3" <?php echo set_select('mis_endtype', '3', ( element('mis_endtype', element('data', $view)) === '3' ? true : false)); ?>>최대 Superpooint 마감</option>
@@ -59,27 +67,27 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">지급 PER TOKEN</label>
 				<div class="col-sm-10 form-inline">
-					<input type="text" class="form-control" name="mis_per_token" value="<?php echo set_value('mis_per_token', element('mis_per_token', element('data', $view))); ?>" />
+					<input type="text" class="form-control" name="mis_per_token" value="<?php echo set_value('mis_per_token', element('mis_per_token', element('data', $view))); ?>"  <?=$disabled?>/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">최대 슈퍼포인트</label>
 				<div class="col-sm-10 form-inline">
-					<input type="text" class="form-control" name="mis_max_point" value="<?php echo set_value('mis_max_point', element('mis_max_point', element('data', $view))); ?>" />
+					<input type="text" class="form-control" name="mis_max_point" value="<?php echo set_value('mis_max_point', element('mis_max_point', element('data', $view))); ?>"  <?=$disabled?>/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">슈퍼프랜드 추가지급 비율</label>
 				<div class="col-sm-10 form-inline">
-					<input type="text" class="form-control" name="mis_sf_percentage" value="<?php echo set_value('mis_sf_percentage', element('mis_sf_percentage', element('data', $view))); ?>" />
+					<input type="text" class="form-control" name="mis_sf_percentage" value="<?php echo set_value('mis_sf_percentage', element('mis_sf_percentage', element('data', $view))); ?>"  <?=$disabled?>/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">노출/미노출</label>
 				<div class="col-sm-10">
 					<div class="input-group">
-						<input type="radio" name="mis_allowed" value="1"  id="allowed" <?php echo set_radio('mis_allowed', '1', (element('mis_allowed', element('data', $view)) === '1' ? true : false)); ?> /> <label for="allowed" style="margin:0 5px;">노출</label>
-						<input type="radio" name="mis_allowed" value="0"  id="not_allowed" <?php echo set_radio('mis_allowed', '0', (element('mis_allowed', element('data', $view)) === '2' ? true : false)); ?> /> <label for="not_allowed" style="margin-left:5px;">미노출</label>
+						<input type="radio" name="mis_allowed" value="1"  id="allowed" <?php echo set_radio('mis_allowed', '1', (element('mis_allowed', element('data', $view)) === '1' ? true : false)); ?> <?=$disabled?> /> <label for="allowed" style="margin:0 5px;">노출</label>
+						<input type="radio" name="mis_allowed" value="0"  id="not_allowed" <?php echo set_radio('mis_allowed', '0', (element('mis_allowed', element('data', $view)) === '2' ? true : false)); ?> <?=$disabled?> /> <label for="not_allowed" style="margin-left:5px;">미노출</label>
 					</div>
 				</div>
 			</div>
@@ -107,72 +115,71 @@
 				<label class="col-sm-2 control-label">본문</label>
 				<div class="col-sm-10">
 					<!-- <textarea class="form-control" rows="10" name="mis_content"><?php echo set_value('mis_content', element('mis_content', element('data', $view))); ?></textarea> -->
-					<?php echo display_dhtml_editor('mis_content', set_value('mis_content', element('mis_content', element('data', $view))), $classname = 'dhtmleditor', true, $editor_type = $this->cbconfig->item('post_editor_type')); ?>
+					<?php 
+					if($disabled){
+						echo element('mis_content', element('data', $view));
+					} else {
+						echo display_dhtml_editor('mis_content', set_value('mis_content', element('mis_content', element('data', $view))), $classname = 'dhtmleditor', true, $editor_type = $this->cbconfig->item('post_editor_type')); 
+					}
+					?>
 				</div>
 			</div>
 			<div class="btn-group pull-right" role="group" aria-label="...">
-				<?php 
-				if(element('data', $view)){
-					if(element('state', element('data', $view)) != 'end'){
-				?>
-					<button type="button" class="btn btn-danger btn-sm" id="finish" data-finish="1">마감하기</button>
-				<?php }  else if(element('mis_end', element('data', $view))) { ?>
-					<button type="button" class="btn btn-danger btn-sm" id="finish" data-finish="0">강제마감취소</button>
-				<?php } else { ?>
-					<button type="button" class="btn btn-danger btn-sm" disabled >마감하기</button>
-				<?php
-					}
-				}
-				?>
+				<button type="button" class="btn btn-danger btn-sm" id="finish" data-finish="1" <?=$disabled?>>마감하기</button>
 				<button type="button" class="btn btn-default btn-sm btn-history-back" >취소하기</button>
-				<button type="submit" class="btn btn-success btn-sm">저장하기</button>
+				<button type="submit" class="btn btn-success btn-sm" <?=$disabled?>>저장하기</button>
 			</div>
 		<?php echo form_close(); ?>
 	</div>
 </div>
 
 <script type="text/javascript">
-$("input[name=mis_opendate]").datetimepicker({
-	format: 'yyyy-mm-dd hh:ii:00',
-	startDate: moment().format("YYYY-MM-DD HH:mm:00"),
-	todayBtn: true,
-	autoclose: true
-});
-$("input[name=mis_enddate]").datetimepicker({
-	format: 'yyyy-mm-dd hh:ii:00',
-	startDate: moment().format("YYYY-MM-DD HH:mm:00"),
-	todayBtn: true,
-	autoclose: true
-});
-<?php if(element('data', $view)){ ?>
-$("#finish").on('click',function(){
-	let csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  let csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
-	$.ajax({
-		type: 'post',
-		dataType: "json",
-		url:'/admin/cic/missionlist/ajax_finish_mission',
-		data:{
-			[csrfName]: csrfHash,
-			'mid': <?php echo element(element('primary_key', $view), element('data', $view)); ?>,
-			'finish' : $(this).attr('data-finish')
-		},
-		success(result){
-			if(result.type == 'success'){
-				alert($('#finish').attr('data-finish')==1 ? '마감되었습니다.' : '강제마감이 취소되었습니다.');
-				location.reload();
-				return;
-			} else if (result.type == 'error'){
-				alert(result.data);
-				return;
-			} else {
-				throw new error('unhandled error occur');
-			}
-			
-		}
+<?php if(!$disabled){ ?>
+	$("input[name=mis_opendate]").datetimepicker({
+		format: 'yyyy-mm-dd hh:ii:00',
+		startDate: moment().format("YYYY-MM-DD HH:mm:00"),
+		todayBtn: true,
+		autoclose: true
 	});
-});
-<?php } ?>
+	$("input[name=mis_enddate]").datetimepicker({
+		format: 'yyyy-mm-dd hh:ii:00',
+		startDate: moment().format("YYYY-MM-DD HH:mm:00"),
+		todayBtn: true,
+		autoclose: true
+	});
+	<?php if(element('data', $view)){ ?>
+	$("#finish").on('click',function(){
+		if(!confirm('마감후 되돌릴 수 없습니다.\n정말 강제로 마감하시겠습니까?')) return false;
+		let csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>';
+		let csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
+		$.ajax({
+			type: 'post',
+			dataType: "json",
+			url:'/admin/cic/missionlist/ajax_finish_mission',
+			data:{
+				[csrfName]: csrfHash,
+				'mid': <?php echo element(element('primary_key', $view), element('data', $view)); ?>,
+				'finish' : $(this).attr('data-finish')
+			},
+			success(result){
+				if(result.type == 'success'){
+					alert($('#finish').attr('data-finish')==1 ? '마감되었습니다.' : '강제마감이 취소되었습니다.');
+					location.reload();
+					return;
+				} else if (result.type == 'error'){
+					alert(result.data);
+					return;
+				} else {
+					throw new error('unhandled error occur');
+				}
+				
+			}
+		});
+	});
+<?php 
+	}
+} 
+?>
 //<![CDATA[
 $(function() {
 	$('#fadminwrite').validate({

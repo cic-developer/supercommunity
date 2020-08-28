@@ -66,6 +66,7 @@ if (typeof(COMMON_JS) === 'undefined') {
 		if (acttype === 'delete' && ! confirm('선택한 자료를 정말 삭제 하시겠습니까?')) return;
 		if (acttype === 'recover' && ! confirm('선택한 자료를 정말 복원 하시겠습니까?')) return;
 		if (acttype === 'trash' && ! confirm('선택한 자료를 정말 휴지통으로 이동하시겠습니까?')) return;
+		if (acttype === 'distribute' && ! confirm('선택한 자료를 정말 지급완료처리하시겠습니까?')) return;
 
 		f.action = actpage;
 		f.submit();
@@ -93,6 +94,10 @@ if (typeof(COMMON_JS) === 'undefined') {
 
 	$(document).on('click', '.btn-list-recover', function() {
 		select_submit(document.flist, 'recover', $(this).attr('data-list-recover-url'));
+	});
+
+	$(document).on('click', '.btn-list-distribute', function() {
+		select_submit(document.flist, 'distribute', $(this).attr('data-list-distribute-url'));
 	});
 
 	$(document).on('click', '.btn-one-delete', function() {

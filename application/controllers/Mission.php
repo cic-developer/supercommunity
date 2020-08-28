@@ -24,7 +24,7 @@ class Mission extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('RS_missionlist','RS_missionlist_log','RS_missionpoint', 'RS_media');
+	protected $models = array('RS_missionlist','RS_missionlist_log','RS_missionpoint', 'RS_media', 'RS_judge');
 
 	/**
 	 * 이 컨트롤러의 메인 모델 이름입니다
@@ -159,7 +159,112 @@ class Mission extends CB_Controller
         print_r($this->data['view']['data']['list']);
         echo "</pre>";
         exit;
-    }
+	}
+		
+	function myMission(){
+				/**
+		 * 페이지에 숫자가 아닌 문자가 입력되거나 1보다 작은 숫자가 입력되면 에러 페이지를 보여줍니다.
+		 */
+		$param =& $this->querystring;
+		$page = (((int) $this->input->get('page')) > 0) ? ((int) $this->input->get('page')) : 1;
+		$findex = $this->input->get('findex') ? $this->input->get('findex') : $this->{$this->modelname}->primary_key;
+		$forder = $this->input->get('forder', null, 'desc');
+		$sfield = $this->input->get('sfield', null, '');
+		$skeyword = $this->input->get('skeyword', null, '');
+        $per_page = 10;
+		$offset = ($page - 1) * $per_page;
+		$mem_id = $this->session->userdata('mem_id');
+		$this->db->join('rs_missionlist','rs_missionlist.mis_id = rs_judge.jud_mis_id');
+		$result = $this->RS_judge_model->get('','',array('jud_mem_id' => $mem_id, 'jud_deletion' => 'N', 'jud_jug_id' => 1), '', $offset, 'jud_wdate', 'DESC');
+
+		$list_num = count($result) - ($page - 1) * $per_page;
+		foreach ($result as $key => $val) {
+			switch($result[$key]['jud_state']){
+				case 0 :
+					$jud_kr_state = '거절';
+				break;
+				case 1 :
+					$jud_kr_state = '심사중';
+				break;
+				case 2 :
+					$jud_kr_state = '승인';
+				break;
+				case 5 :
+					$jud_kr_state = '지급완료';
+				break;
+				default :
+					echo 'found error state !!!!!! : '.$result[$key]['jud_state'];
+					// exit;
+				break;
+			}
+			$result[$key]['jud_ko_state'] =  $jud_kr_state;
+			if($result[$key]['jud_point']){
+				$result[$key]['jud_expected_value'] = $result[$key]['jud_point'];
+			}else{
+				$mission_total = $this->RS_missionpoint_model->get_one('','mip_tpoint',array('mip_mis_id' => $result[$key]['jud_mis_id']))['mip_tpoint'];
+				$mission_reword = $this->RS_missionlist_model->get_one($result[$key]['jud_mis_id'],'mis_per_token')['mis_per_token'];
+				$media_super_point = $result[$key]['jud_superpoint'];
+				$result[$key]['jud_expected_value'] = rs_cal_expected_point($mission_reword, $media_super_point, $mission_total - $media_super_point);
+			}
+		}
+		
+		$view['view']['judList'] = $result;
+
+		/*
+		** primary key 정보를 저장합니다
+		*/
+		$view['view']['primary_key'] = $this->{$this->modelname}->primary_key;
+
+		/*
+		** 페이지네이션을 생성합니다
+		*/
+		$config['base_url'] = $this->pagedir . '?' . $param->replace('page');
+		$config['total_rows'] = $result['total_rows'];
+		$config['per_page'] = $per_page;
+		$this->pagination->initialize($config);
+		$view['view']['paging'] = $this->pagination->create_links();
+		$view['view']['page'] = $page;
+
+		$view['view']['listall_url'] = $this->pagedir;
+		$view['view']['write_url'] = $this->pagedir . '/write';
+		$view['view']['list_update_url'] = $this->pagedir . '/listupdate/?' . $param->output();
+		$view['view']['list_delete_url'] = $this->pagedir . '/listdelete/?' . $param->output();
+
+		// 이벤트가 존재하면 실행합니다
+		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
+
+		/*
+		** 어드민 레이아웃을 정의합니다
+		*/
+		$this->data = $view;
+		
+
+		$page_title = $this->cbconfig->item('site_meta_title_main');
+		$meta_description = $this->cbconfig->item('site_meta_description_main');
+		$meta_keywords = $this->cbconfig->item('site_meta_keywords_main');
+		$meta_author = $this->cbconfig->item('site_meta_author_main');
+		$page_name = $this->cbconfig->item('site_page_name_main');
+
+		$layoutconfig = array(
+			'path' => 'mission',
+			'layout' => 'layout',
+			'skin' => 'myMission',
+			'layout_dir' => '/test',
+			'mobile_layout_dir' => '/test',
+			'use_sidebar' => $this->cbconfig->item('sidebar_main'),
+			'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_main'),
+			'skin_dir' => 'basic',
+			'mobile_skin_dir' => 'mobile',
+			'page_title' => $page_title,
+			'meta_description' => $meta_description,
+			'meta_keywords' => $meta_keywords,
+			'meta_author' => $meta_author,
+			'page_name' => $page_name,
+		);
+		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+		$this->layout = element('layout_skin_file', element('layout', $view));
+		$this->view = element('view_skin_file', element('layout', $view));
+	}
     
     public function detailMission($misid){
         echo "<pre>";
@@ -203,7 +308,7 @@ class Mission extends CB_Controller
 				$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
 				$view['medList'] = $med_list;
 				$view['missionData'] = $this->RS_missionlist_model->get_one_mission($misid);
-				$view['total_super'] = $this->RS_missionlist_model->get_mission_apply_total_superpoint($misid);
+				$view['total_super'] = $this->RS_missionpoint_model->get_one('','mip_tpoint',array('mip_mis_id'=> $misid))['mip_tpoint'];
 				$this->data = $view;
 				$this->layout = element('layout_skin_file', element('layout', $view));
 				$this->view = element('view_skin_file', element('layout', $view));
@@ -212,7 +317,7 @@ class Mission extends CB_Controller
 			}
 		}else{
 			$this->load->library('upload');
-			$upload_path = config_item('uploads_dir') . '/applyMission/';
+			$upload_path = config_item('uploads_dir') . '/judge/';
 			if (is_dir($upload_path) === false) {
 				mkdir($upload_path, 0707);
 				$file = $upload_path . 'index.php';
@@ -248,16 +353,23 @@ class Mission extends CB_Controller
 
 			$upload_result = $this->multy_upload($_FILES, $uploadconfig,'jud_attach');
 			$med_id = $this->input->post('med_id');
-			for($i = 0; $i < count($med_id); $i++){
-				$jud_insert_arr = array(
-					'jud_jug_id' => 1,
-					'jud_mis_id' => $misid,
-					'jud_med_id' => $med_id[$i],
-				);
-				$updatephoto = cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $upload_result[$i]);
-			}
+			$all_med_id = $this->input->post('all_med_id');
+			$jud_insert_arr = array();
+			$upload_result_count = 0;
 			echo "<pre>";
-			print_r($upload_result);
+			for($i = 0; $i < count($all_med_id); $i++){
+				if(in_array($all_med_id[$i],$med_id)){
+					$jud_insert_arr[] = array(
+						'jud_jug_id' => 1,
+						'jud_mis_id' => $misid,
+						'jud_med_id' => $all_med_id[$i],
+						'jud_attach' => element('file_name', $upload_result[$i]) ? (cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $upload_result[$i])) : ''
+					);
+				}
+			}
+
+			$result = $this->RS_judge_model->replace_apply_mission_judge($jud_insert_arr);
+			print_r($result); 
 			echo "</pre>";
 			exit;
 		}

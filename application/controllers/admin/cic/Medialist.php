@@ -24,7 +24,7 @@ class Medialist extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('RS_media','RS_media_log','RS_whitelist', 'RS_mediatype', 'RS_mediatype_map');
+	protected $models = array('RS_media','RS_media_log','RS_media_duplication','RS_whitelist', 'RS_mediatype', 'RS_mediatype_map');
 
 	/**
 	 * 이 컨트롤러의 메인 모델 이름입니다
@@ -122,6 +122,8 @@ class Medialist extends CB_Controller
 				$result['list'][$key]['state'] = rs_get_state(element('med_state',$val));
 
 				$result['list'][$key]['wht_title'] = element('wht_title',$this->RS_whitelist_model->get_one(element('med_wht_id',$val), 'wht_title', array('wht_deletion' => 'N')));
+
+				$result['list'][$key]['med_duplicate'] = $this->RS_media_duplication_model->get_is_duplication(element('med_id', $val));
 
 				$result['list'][$key]['num'] = $list_num--;
 
@@ -278,6 +280,7 @@ class Medialist extends CB_Controller
 			$view['view']['message'] = $file_error;
 
 			$view['view']['data'] = $getdata;
+			$view['view']['med_duplicate'] = $this->RS_media_duplication_model->get_is_duplication(element('med_id', $getdata));
 			$view['view']['all_whitelist'] = $this->RS_whitelist_model->get_whitelist_list();
 			$this->RS_mediatype_model->allow_order_field = array('met_order'); // 정렬이 가능한 필드
 			$view['view']['all_mediatype'] = $this->RS_mediatype_model->get_list('','','','','met_order','asc');
@@ -418,6 +421,7 @@ class Medialist extends CB_Controller
 					);
 					$this->{$this->modelname}->update('',$deleteupdate,$deletewhere);
 					
+					$this->RS_media_duplication_model->delete_where(array('(`med_id = '.$val.' or `dup_id` = '.$val.')' => null));
 
 					// 삭제 로그 기록
 					$logdata = array(
@@ -504,6 +508,7 @@ class Medialist extends CB_Controller
 				$result['list'][$key]['register_member'] = $dbmember = $this->Member_model->get_by_memid(element('mis_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
 				$result['list'][$key]['modifier_member'] = $dbmember = $this->Member_model->get_by_memid(element('mis_modifier_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
 				$result['list'][$key]['wht_title'] = element('wht_title',$this->RS_whitelist_model->get_one(element('med_wht_id',$val), 'wht_title', array('wht_deletion' => 'N')));
+				$result['list'][$key]['med_duplicate'] = $this->RS_media_duplication_model->get_is_duplication(element('med_id', $val));
 				$mediatype_join = array('table' => 'rs_mediatype', 'on' => 'rs_mediatype.met_id = rs_mediatype_map.met_id', 'type' => 'inner');
 				$mediatype = element('list',$this->RS_mediatype_map_model->_get_list_common('met_title',$mediatype_join,'','', array('med_id' => element('med_id', $val))));
 				$mediatype_list = '';

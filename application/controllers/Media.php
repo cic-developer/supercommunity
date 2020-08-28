@@ -173,7 +173,8 @@ class Media extends CB_Controller
 				'jul_user_id'	=> $mem_data['mem_userid'],
 				'jul_datetime'	=> $now,
 				'jul_ip'		=> $_ip,
-				'jul_useragent'	=> $this->agent->agent_string()
+				'jul_useragent'	=> $this->agent->agent_string(),
+				'jul_data'		=> json_encode($judgeArr)
 			);
 			$judge_log_id =  $this->RS_judge_log_model->insert($judgeLogArr);
 			if($judge_id && $judge_log_id && $met_result){
@@ -262,7 +263,7 @@ class Media extends CB_Controller
 			$this->view = element('view_skin_file', element('layout', $view));
 		}else{	// form_validation을 만족하는 경우 미디어 등록
 			//파일 업로드 시작
-			$upload_path = config_item('uploads_dir') . '/increaseMedia/';
+			$upload_path = config_item('uploads_dir') . '/judge/';
 			if (is_dir($upload_path) === false) {
 				mkdir($upload_path, 0707);
 				$file = $upload_path . 'index.php';

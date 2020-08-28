@@ -41,10 +41,16 @@
                     <td><?=$ml['med_name']?></td>
                     <td><?=$ml['med_admin']?></td>
                     <td><?=$ml['med_url']?></td>
-                    <td><img class="attach_img" src="<?=$ml['jud_attach']?>" alt="인증 사진"/><input class="jud_attach" name="jud_attach[]" type="file" style="display:none;"></td>
+                    <td>
+                        <img class="attach_img" src="<?php echo thumb_url('judge', element('jud_attach', $ml), 400, 300); ?>" alt='인증 사진' />
+                        <input class="jud_attach" name="jud_attach[]" type="file" style="display:none;">
+                    </td>
                     <td><?=$ml['med_superpoint']?></td>
-                    <td><?= rs_cal_expected_point($missionData['mis_per_token'], $ml['med_superpoint'], $total_super) ?></td>
-                    <td><input class="applycheck" name="med_id[]" type="checkbox" value="<?=$ml['med_id']?>" <?= ($ml['jud_state'] == 1 || $ml['jud_state'] == 3 )? 'checked' : '' ?>  onclick="return false"></td>
+                    <td><?= rs_cal_expected_point($missionData['mis_per_token'], $ml['med_superpoint'], ($ml['jud_state'] == 1 || $ml['jud_state'] == 3 )? $total_super - $ml['med_superpoint'] : $total_super) ?></td>
+                    <td>
+                        <input class="applycheck" name="med_id[]" type="checkbox" value="<?=$ml['med_id']?>" <?= ($ml['jud_state'] == 1 || $ml['jud_state'] == 3 )? 'checked' : '' ?>  onclick="return false">
+                        <input name="all_med_id[]" value="<?=$ml['med_id']?>" style="display:none;"/>
+                    </td>
                 </tr>
 <?php } ?>
             </tbody>

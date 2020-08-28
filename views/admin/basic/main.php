@@ -54,7 +54,7 @@
 			?>
 				<tr>
 					<td><?php echo html_escape(element('poi_content', $value)); ?></td>
-					<td><?php echo number_format((int) element('poi_point', $value)); ?> P</td>
+					<td><?php echo number_format(element('poi_point', $value),1); ?> P</td>
 					<td><?php echo element('display_name', $value); ?></td>
 					<td class="text-right"><?php echo display_datetime(element('poi_datetime', $value)); ?></td>
 				</tr>

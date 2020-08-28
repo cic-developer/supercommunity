@@ -66,12 +66,14 @@ $config['user_agent_parser'] = 'phpuseragent';  // phpuseragent , browscap 둘 �
 /**
  * CiBoard 주 : smpt email 을 사용하시는 경우 세팅해주세요
  */
-$config['email_protocal'] = 'mail'; // mail/sendmail/smtp
-$config['email_smtp_host'] = '';
-$config['email_smtp_user'] = '';
-$config['email_smtp_pass'] = '';
-$config['email_smtp_port'] = '25';
-$config['email_smtp_crypto'] = 'ssl'; // SMTP Encryption. Can be null, tls or ssl.
+$config['email_protocal'] = 'smtp'; // mail/sendmail/smtp
+$config['email_smtp_host'] = 'smtp.gmail.com';
+$config['email_smtp_user'] = 'percommunity1@gmail.com';
+$config['email_smtp_pass'] = 'Cic0805!';
+$config['email_smtp_port'] = '587';
+$config['email_smtp_crypto'] = 'tls'; // SMTP Encryption. Can be null, tls or ssl.
+// $config['email_smtp_port'] = '465';
+// $config['email_smtp_crypto'] = 'ssl'; // SMTP Encryption. Can be null, tls or ssl.
 
 
 /**

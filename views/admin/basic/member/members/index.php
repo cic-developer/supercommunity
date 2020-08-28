@@ -93,7 +93,7 @@
 									<?php } ?>
 								</td>
 							<?php } ?>
-							<td class="text-right"><?php echo number_format(element('mem_point', $result)); ?></td>
+							<td class="text-right"><?php echo number_format(element('mem_point', $result),1); ?></td>
 							<td><?php echo display_datetime(element('mem_register_datetime', $result), 'full'); ?></td>
 							<td><?php echo display_datetime(element('mem_lastlogin_datetime', $result), 'full'); ?></td>
 							<td><?php echo element('member_group', $result); ?></td>

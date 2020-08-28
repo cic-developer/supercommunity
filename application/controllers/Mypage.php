@@ -86,7 +86,7 @@ class Mypage extends CB_Controller
 		$meta_keywords = $this->cbconfig->item('site_meta_keywords_mypage');
 		$meta_author = $this->cbconfig->item('site_meta_author_mypage');
 		$page_name = $this->cbconfig->item('site_page_name_mypage');
-
+		
 		$layoutconfig = array(
 			'path' => 'mypage',
 			'layout' => 'layout',
@@ -103,9 +103,12 @@ class Mypage extends CB_Controller
 			'meta_author' => $meta_author,
 			'page_name' => $page_name,
 		);
+
 		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
 		$this->data = $view;
-		$this->layout = element('layout_skin_file', element('layout', $view));
+		$this->layout = '_layout/bootstrap/layout';//element('layout_skin_file', element('layout', $view));
+		// print_r($this->layout);
+		// exit;
 		$this->view = element('view_skin_file', element('layout', $view));
 	}
 

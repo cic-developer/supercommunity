@@ -28,6 +28,11 @@
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="med_url" value="<?php echo set_value('med_url', element('med_url', element('data', $view))); ?>" />
 					<a href="<?php echo set_value('med_url', element('med_url', element('data', $view))); ?>" target="_blank"><?php echo set_value('med_url', element('med_url', element('data', $view))); ?></a>
+					<?php if(element('med_duplicate', $view)){ ?>
+						<a href="/admin/cic/judgemedia?sfield=jud_med_url&skeyword=<?php echo urlencode(element('jud_med_url', element('data', $view))); ?>&search_submit=">
+							<span class="label label-danger" style="margin-left:10px;">중복된 미디어입니다.</span>
+						</a>
+					<?php } ?>
 				</div>
 			</div>
 			<div class="form-group">

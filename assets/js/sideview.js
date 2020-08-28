@@ -94,20 +94,20 @@ if (typeof(SIDEVIEW_JS) === 'undefined') // 한번만 실행
 			else if (note == '2')
 				this.insertTail('note', '<a href="javascript:;" onclick="alert(\'상대방이 쪽지수신을 원하지 않으십니다\'); return false;">쪽지보내기</a>');
 			// 친구등록
-			if (following == '1')
-				this.insertTail('follow', '<a href="javascript:;" onclick="delete_follow(\'' + userid + '\'); return false;">친구해제</a>');
-			else
-				this.insertTail('follow', '<a href="javascript:;" onclick="add_follow(\'' + userid + '\'); return false;">친구등록</a>');
+			// if (following == '1')
+			// 	this.insertTail('follow', '<a href="javascript:;" onclick="delete_follow(\'' + userid + '\'); return false;">친구해제</a>');
+			// else
+			// 	this.insertTail('follow', '<a href="javascript:;" onclick="add_follow(\'' + userid + '\'); return false;">친구등록</a>');
 			// 메일보내기
-			if (email == '1')
-				this.insertTail('email', '<a href="javascript:;" onclick="email_write(\'' + userid + '\'); return false;">메일보내기</a>');
-			else if (email == '3')
-				this.insertTail('email', '<a href="javascript:;" onclick="alert(\'회원님이 이메일수신설정을 해제하셨습니다.. 먼저 회원님의 이메일수신여부를 체크하신 후에 이용해주세요\'); return false;">메일보내기</a>');
-			else if (email == '2')
-				this.insertTail('email', '<a href="javascript:;" onclick="alert(\'상대방이 이메일수신을 원하지 않으십니다\'); return false;">메일보내기</a>');
+			// if (email == '1')
+			// 	this.insertTail('email', '<a href="javascript:;" onclick="email_write(\'' + userid + '\'); return false;">메일보내기</a>');
+			// else if (email == '3')
+			// 	this.insertTail('email', '<a href="javascript:;" onclick="alert(\'회원님이 이메일수신설정을 해제하셨습니다.. 먼저 회원님의 이메일수신여부를 체크하신 후에 이용해주세요\'); return false;">메일보내기</a>');
+			// else if (email == '2')
+			// 	this.insertTail('email', '<a href="javascript:;" onclick="alert(\'상대방이 이메일수신을 원하지 않으십니다\'); return false;">메일보내기</a>');
 			// 홈페이지
-			if (homepage == '1')
-				this.insertTail('homepage', '<a href="' + homepage + '" target="_blank">홈페이지</a>');
+			// if (homepage == '1')
+			// 	this.insertTail('homepage', '<a href="' + homepage + '" target="_blank">홈페이지</a>');
 			// 자기소개
 			if (profile == '1')
 				this.insertTail('profile', '<a href="javascript:;" onclick="open_profile(\'' + userid + '\'); return false;">프로필</a>');

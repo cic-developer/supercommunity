@@ -55,22 +55,22 @@ class CB_Model extends CI_Model
 	}
 
 
-	public function get($primary_value = '', $select = '', $where = '', $limit = '', $offset = 0, $findex = '', $forder = '')
+	public function get($primary_value = '', $select = '', $where = '', $limit = '', $offset = 0, $findex = '', $forder = '', $join = '')
 	{
 
-		$result = $this->_get($primary_value, $select, $where, $limit, $offset, $findex, $forder);
+		$result = $this->_get($primary_value, $select, $where, $limit, $offset, $findex, $forder, $join);
 		return $result->result_array();
 	}
 
 
-	public function get_one($primary_value = '', $select = '', $where = '')
+	public function get_one($primary_value = '', $select = '', $where = '', $join = '')
 	{
-		$result = $this->_get($primary_value, $select, $where, 1);
+		$result = $this->_get($primary_value, $select, $where, 1, '', '', '', $join);
 		return $result->row_array();
 	}
 
 
-	public function _get($primary_value = '', $select = '', $where = '', $limit = '', $offset = 0, $findex = '', $forder = '')
+	public function _get($primary_value = '', $select = '', $where = '', $limit = '', $offset = 0, $findex = '', $forder = '', $join = '')
 	{
 		if ($select) {
 			$this->db->select($select);
@@ -78,6 +78,21 @@ class CB_Model extends CI_Model
 		$this->db->from($this->_table);
 		if ($primary_value) {
 			$this->db->where($this->primary_key, $primary_value);
+		}
+		if ( ! empty($join['table']) && ! empty($join['on'])) {
+			if (empty($join['type'])) {
+				$join['type'] = 'left';
+			}
+			$this->db->join($join['table'], $join['on'], $join['type']);
+		} elseif (is_array($join)) {
+			foreach ($join as $jkey => $jval) {
+				if ( ! empty($jval['table']) && ! empty($jval['on'])) {
+					if (empty($jval['type'])) {
+						$jval['type'] = 'left';
+					}
+					$this->db->join($jval['table'], $jval['on'], $jval['type']);
+				}
+			}
 		}
 		if ($where) {
 			$this->db->where($where);

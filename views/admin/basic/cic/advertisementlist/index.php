@@ -1,4 +1,11 @@
 <div class="box">
+	<div class="box-header">
+		<ul class="nav nav-tabs">
+			<li role="presentation" class="active"><a href="<?php echo admin_url($this->pagedir); ?>" onclick="return check_form_changed();">광고목록</a></li>
+			<li role="presentation"><a href="<?php echo admin_url($this->pagedir . '/askadvertise'); ?>" onclick="return check_form_changed();">광고 요청</a></li>
+			<li role="presentation"><a href="<?php echo admin_url($this->pagedir . '/adconsulting'); ?>" onclick="return check_form_changed();">광고 컨설팅 요청</a></li>
+		</ul>
+	</div>
 	<div class="box-table">
 		<?php
 		echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');

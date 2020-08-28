@@ -5,6 +5,7 @@ td {text-align:center; line-height:40px; font-size:12px; color:#474747; font-fam
 </style>
 <table width="100%" border="1" bordercolor="#E4E4E4" cellspacing="0" cellpadding="0">
 		<tr>
+			<th>index</th>
 			<th>사용자지정 미디어 이름</th>
 			<th>미디어플랫폼</th>
 			<th>링크</th>
@@ -24,16 +25,22 @@ td {text-align:center; line-height:40px; font-size:12px; color:#474747; font-fam
 		foreach (element('list', element('data', $view)) as $result) {
 	?>
 			<tr>
-				<td height="30"><?php echo html_escape(element('med_name', $result)); ?></td>
+				<td height="30"><?php echo element('med_id', $result); ?></td>
+				<td><?php echo html_escape(element('med_name', $result)); ?></td>
 				<td><?php echo html_escape(element('wht_title', $result)); ?></td>
-				<td><?php echo html_escape(element('med_url', $result)); ?></td>
+				<td>
+					<?php echo html_escape(element('med_url', $result)); ?>
+					<?php if(element('med_duplicate',$result)){ ?>
+						(중복)
+					<?php } ?>
+				</td>
 				<td><?php echo html_escape(element('mediatype', $result)); ?></td>
 				<td><?php echo html_escape(element('med_admin', $result)); ?></td>
 				<td><?php echo number_format(element('med_superpoint', $result)); ?></td>
 				<td><?php echo number_format(element('med_member', $result)); ?></td>
 				<td><?php echo rs_get_state(element('med_state', $result)); ?></td>
 				<td><?php echo html_escape(element('mem_id', $result)); ?></td>
-				<td><?php echo html_escape(element('mem_nickname', $result)); ?></td>
+				<td><?php echo html_escape(html_escape(element('mem_nickname', $result).'('.(element('mem_userid', element('register_member', $result)) ? element('mem_userid', element('register_member', $result)) : '탈퇴회원').')')); ?></td>
 				<td><?php echo element('med_ip', $result); ?></td>
 				<td><?php echo element('med_wdate', $result); ?></td>
 				<td><?php echo element('mis_deletion', $result); ?></td>

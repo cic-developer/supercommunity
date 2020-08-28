@@ -39,7 +39,6 @@ class Advertisementlist extends CB_Controller
 	function __construct()
 	{
 		parent::__construct();
-		show_404();
 		/**
 		 * 라이브러리를 로딩합니다
 		 */

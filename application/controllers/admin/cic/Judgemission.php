@@ -164,279 +164,6 @@ class Judgemission extends CB_Controller
 	}
 	
 
-	/**
-	 * 반려사유 목록을 가져오는 메소드입니다
-	 */
-	public function denyreason()
-	{
-		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_judgemission_denyreason';
-		$this->load->event($eventname);
-
-		$view = array();
-		$view['view'] = array();
-
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before'] = Events::trigger('before', $eventname);
-
-		/**
-		 * 페이지에 숫자가 아닌 문자가 입력되거나 1보다 작은 숫자가 입력되면 에러 페이지를 보여줍니다.
-		 */
-		$param =& $this->querystring;
-		$page = (((int) $this->input->get('page')) > 0) ? ((int) $this->input->get('page')) : 1;
-		$view['view']['sort'] = array(
-			'judr_id' => $param->sort('judr_id', 'asc'),
-		);
-		$findex = $this->input->get('findex') ? $this->input->get('findex') : $this->RS_judge_denyreason_model->primary_key;
-		$forder = $this->input->get('forder', null, 'desc');
-		$sfield = $this->input->get('sfield', null, '');
-		$skeyword = $this->input->get('skeyword', null, '');
-
-		$per_page = admin_listnum();
-		$offset = ($page - 1) * $per_page;
-
-		/**
-		 * 게시판 목록에 필요한 정보를 가져옵니다.
-		 */
-		$this->RS_judge_denyreason_model->allow_search_field = array('judr_title','judr_reason'); // 검색이 가능한 필드
-		$this->RS_judge_denyreason_model->search_field_equal = array(); // 검색중 like 가 아닌 = 검색을 하는 필드
-		$this->RS_judge_denyreason_model->allow_order_field = array('judr_id'); // 정렬이 가능한 필드
-		$result = $this->RS_judge_denyreason_model
-			->get_list($per_page, $offset, array('judr_jug_id'=>$this->jug_id), '', $findex, $forder, $sfield, $skeyword);
-		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
-		if (element('list', $result)) {
-			foreach (element('list', $result) as $key => $val) {
-				if(mb_strlen(element('judr_reason', $val))>15){
-					$result['list'][$key]['memo'] = substr(element('judr_reason', $val),0,15).'...';
-				} else {
-					$result['list'][$key]['memo'] = element('judr_reason', $val);
-				}
-				$result['list'][$key]['num'] = $list_num--;
-			}
-		}
-		$view['view']['data'] = $result;
-		$view['view']['all_whitelist'] = $this->RS_whitelist_model->get_whitelist_list();
-
-		/**
-		 * primary key 정보를 저장합니다
-		 */
-		$view['view']['primary_key'] = $this->RS_judge_denyreason_model->primary_key;
-
-		/**
-		 * 페이지네이션을 생성합니다
-		 */
-		$config['base_url'] = admin_url($this->pagedir) . '?' . $param->replace('page');
-		$config['total_rows'] = $result['total_rows'];
-		$config['per_page'] = $per_page;
-		$this->pagination->initialize($config);
-		$view['view']['paging'] = $this->pagination->create_links();
-		$view['view']['page'] = $page;
-
-		/**
-		 * 쓰기 주소, 삭제 주소등 필요한 주소를 구합니다
-		 */
-		$search_option = array(
-			'judr_title'   => '제목',
-			'judr_reason'   => '반려사유'
-		);
-		$view['view']['skeyword'] = ($sfield && array_key_exists($sfield, $search_option)) ? $skeyword : '';
-		$view['view']['search_option'] = search_option($search_option, $sfield);
-		$view['view']['listall_url'] = admin_url($this->pagedir);
-		$view['view']['denyreason_url'] = admin_url($this->pagedir . '/denyreason');
-		$view['view']['write_url'] = admin_url($this->pagedir . '/denyreason_write');
-		$view['view']['list_update_url'] = admin_url($this->pagedir . '/listupdate/?' . $param->output());
-		$view['view']['list_delete_url'] = admin_url($this->pagedir . '/denyreason_listdelete/?' . $param->output());
-
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
-
-		/**
-		 * 어드민 레이아웃을 정의합니다
-		 */
-		$layoutconfig = array('layout' => 'layout', 'skin' => 'denyreason');
-		$view['layout'] = $this->managelayout->admin($layoutconfig, $this->cbconfig->get_device_view_type());
-		$this->data = $view;
-		$this->layout = element('layout_skin_file', element('layout', $view));
-		$this->view = element('view_skin_file', element('layout', $view));
-	}
-
-	/**
-	 * 반려사유추가 또는 수정 페이지를 가져오는 메소드입니다
-	 */
-	public function denyreason_write($pid = 0)
-	{
-		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_judgemission_denyreason_write';
-		$this->load->event($eventname);
-
-		$view = array();
-		$view['view'] = array();
-
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before'] = Events::trigger('before', $eventname);
-
-		/**
-		 * 프라이머리키에 숫자형이 입력되지 않으면 에러처리합니다
-		 */
-		if ($pid) {
-			$pid = (int) $pid;
-			if (empty($pid) OR $pid < 1) {
-				show_404();
-			}
-		}
-		$primary_key = $this->RS_judge_denyreason_model->primary_key;
-
-		/**
-		 * 수정 페이지일 경우 기존 데이터를 가져옵니다
-		 */
-		$getdata = array();
-		if ($pid) {
-			$getdata = $this->RS_judge_denyreason_model->get_one($pid);
-		}
-
-		/**
-		 * Validation 라이브러리를 가져옵니다
-		 */
-		$this->load->library('form_validation');
-
-		/**
-		 * 전송된 데이터의 유효성을 체크합니다
-		 */
-		$this->form_validation->set_rules('judr_title','제목','trim|required|min_length[2]|max_length[20]');
-		$this->form_validation->set_rules('judr_reason','반려사유','trim|required');
-		$form_validation = $this->form_validation->run();
-		$file_error = '';
-		$updatephoto = '';
-		$file_error2 = '';
-		$updateicon = '';
-
-
-		/**
-		 * 유효성 검사를 하지 않는 경우, 또는 유효성 검사에 실패한 경우입니다.
-		 * 즉 글쓰기나 수정 페이지를 보고 있는 경우입니다
-		 */
-		if ($form_validation === false) {
-
-			// 이벤트가 존재하면 실행합니다
-			$view['view']['event']['formrunfalse'] = Events::trigger('formrunfalse', $eventname);
-
-			$view['view']['data'] = $getdata;
-
-			/**
-			 * primary key 정보를 저장합니다
-			 */
-			$view['view']['primary_key'] = $primary_key;
-
-			// 이벤트가 존재하면 실행합니다
-			$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
-
-			/**
-			 * 어드민 레이아웃을 정의합니다
-			 */
-			$layoutconfig = array('layout' => 'layout', 'skin' => 'denyreason_write');
-			$view['layout'] = $this->managelayout->admin($layoutconfig, $this->cbconfig->get_device_view_type());
-			$this->data = $view;
-			$this->layout = element('layout_skin_file', element('layout', $view));
-			$this->view = element('view_skin_file', element('layout', $view));
-
-		} else {
-			/**
-			 * 유효성 검사를 통과한 경우입니다.
-			 * 즉 데이터의 insert 나 update 의 process 처리가 필요한 상황입니다
-			 */
-
-			// 이벤트가 존재하면 실행합니다
-			$view['view']['event']['formruntrue'] = Events::trigger('formruntrue', $eventname);
-
-			$updatedata = array(
-				'judr_jug_id' => $this->jug_id,
-				'judr_title' => $this->input->post('judr_title', null, ''),
-				'judr_reason' => $this->input->post('judr_reason', null, ''),
-			);
-
-			/**
-			 * 게시물을 수정하는 경우입니다
-			 */
-			if ($this->input->post($primary_key)) {
-				$judr_id = $this->input->post($primary_key);
-				$this->RS_judge_denyreason_model->update($judr_id, $updatedata);
-
-				$this->session->set_flashdata(
-					'message',
-					'정상적으로 수정되었습니다'
-				);
-
-			} else {
-				/**
-				 * 게시물을 새로 입력하는 경우입니다
-				 */
-
-				$this->RS_judge_denyreason_model->insert($updatedata);
-				
-
-				$this->session->set_flashdata(
-					'message',
-					'정상적으로 입력되었습니다'
-				);
-			}
-
-			// 이벤트가 존재하면 실행합니다
-			Events::trigger('after', $eventname);
-
-			/**
-			 * 게시물의 신규입력 또는 수정작업이 끝난 후 목록 페이지로 이동합니다
-			 */
-			$param =& $this->querystring;
-			$redirecturl = admin_url($this->pagedir. '/denyreason' . '?' . $param->output());
-
-			redirect($redirecturl);
-		}
-	}
-
-	
-	/**
-	 * 화이트리스트 목록 페이지에서 선택삭제를 하는 경우 실행되는 메소드입니다
-	 */
-	public function denyreason_listdelete()
-	{
-		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_judgemission_denyreason_listdelete';
-		$this->load->event($eventname);
-
-		// 이벤트가 존재하면 실행합니다
-		Events::trigger('before', $eventname);
-
-		/**
-		 * 체크한 게시물의 삭제를 실행합니다
-		 */
-		if ($this->input->post('chk') && is_array($this->input->post('chk'))) {
-			foreach ($this->input->post('chk') as $val) {
-				if ($val) {
-					
-					$deletewhere = array(
-						'judr_id' => $val,
-					);
-					$this->RS_judge_denyreason_model->delete_where($deletewhere);
-				}
-			}
-		}
-
-		// 이벤트가 존재하면 실행합니다
-		Events::trigger('after', $eventname);
-
-		/**
-		 * 삭제가 끝난 후 목록페이지로 이동합니다
-		 */
-		$this->session->set_flashdata(
-			'message',
-			'정상적으로 삭제되었습니다'
-		);
-		$param =& $this->querystring;
-		$redirecturl = admin_url($this->pagedir. '/denyreason' . '?' . $param->output());
-
-		redirect($redirecturl);
-	}
-
 
 	/**
 	 * 세부내용 페이지를 가져오는 메소드입니다
@@ -536,17 +263,37 @@ class Judgemission extends CB_Controller
 		/**
 		 * 게시판 목록에 필요한 정보를 가져옵니다.
 		 */
-		$this->{$this->modelname}->allow_search_field = array('mis_title', 'mis_content'); // 검색이 가능한 필드
-		$this->{$this->modelname}->search_field_equal = array('mis_max_point'); // 검색중 like 가 아닌 = 검색을 하는 필드
-		$this->{$this->modelname}->allow_order_field = array('mis_id','mis_thumb_type','mis_max_point','mis_wdate'); // 정렬이 가능한 필드
+		$this->{$this->modelname}->allow_search_field = array('mis_title','jud_med_admin', 'jud_med_url', 'jud_mem_nickname', 'jud_wdate'); // 검색이 가능한 필드
+		$this->{$this->modelname}->search_field_equal = array(); // 검색중 like 가 아닌 = 검색을 하는 필드
+		$this->{$this->modelname}->allow_order_field = array('mis_title','jud_id','jud_med_wht_id','jud_state','jud_wdate'); // 정렬이 가능한 필드
 
+		$where = array();
+		if (($jud_state = (int) $this->input->get('jud_state')) || $this->input->get('jud_state') === '0') {
+			if ($jud_state >= 0) {
+				$where['jud_state'] = $jud_state;
+			}
+		}
+		if ($wht_id = (int) $this->input->get('wht_id')) {
+			if ($wht_id > 0) {
+				$where['jud_med_wht_id'] = $wht_id;
+			}
+		}
+		$join = array('table' => 'rs_missionlist', 'on' => 'rs_judge.jud_mis_id = rs_missionlist.mis_id', 'type' => 'inner');
 		$result = $this->{$this->modelname}
-			->get_admin_list('', '', '', '', $findex, $forder, $sfield, $skeyword);
+		->get_judge_list($this->jug_id,'', '', $where, '', $findex, $forder, $sfield, $skeyword,'','', $join);
+
+		$_whitelist = $this->RS_whitelist_model->get();
+		$whitelistArr = array();
+		foreach($_whitelist as $l){
+			$whitelistArr[element('wht_id',$l)] = element('wht_title',$l);
+		}
 
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {
-				$result['list'][$key]['register_member'] = $dbmember = $this->Member_model->get_by_memid(element('mis_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
-				$result['list'][$key]['modifier_member'] = $dbmember = $this->Member_model->get_by_memid(element('mis_modifier_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
+				$result['list'][$key]['register_member'] = $this->Member_model->get_by_memid(element('jud_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
+				$result['list'][$key]['modifier_member'] = $this->Member_model->get_by_memid(element('jud_modifier_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
+				$result['list'][$key]['judn_reason'] 		 = element('judn_reason',$this->RS_judge_denied_model->get_one('','judn_reason', array('judn_jud_id' => element('jud_id',$val))));
+				$result['list'][$key]['wht_title']   		 = element(element('jud_med_wht_id',$val),$whitelistArr);
 				// $domainArr = $this->{$this->modelname}->get_explode_domain_list(element('wht_domains', $val));
 				// if(count($domainArr)>1){
 				// 	$result['list'][$key]['domain'] = '';
@@ -571,7 +318,7 @@ class Judgemission extends CB_Controller
 		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
 
 		header('Content-type: application/vnd.ms-excel');
-		header('Content-Disposition: attachment; filename=미션목록_' . cdate('Y_m_d') . '.xls');
+		header('Content-Disposition: attachment; filename=미션심사목록_' . cdate('Y_m_d') . '.xls');
 		echo $this->load->view('admin/' . ADMIN_SKIN . '/' . $this->pagedir  . '/excel', $view, true);
 	}
 
@@ -667,6 +414,9 @@ class Judgemission extends CB_Controller
 				'jud_modifier_ip' => $this->input->ip_address(),
 			);
 			if($this->{$this->modelname}->update(element('jud_id',$getdata), $update)){
+				if($this->input->post('state') == 3 && element('jud_jug_id',$getdata) == 1){ //미션심사 승인인 경우 포인트 지급
+					$this->point->insert_point();
+				}
 				$warn_count = 0;
 				$getuserdata = $this->Member_model->get_by_memid(element('jud_mem_id',$getdata), 'mem_id, mem_userid, mem_denied');
 				if($this->input->post('value') == 'deny' || $this->input->post('value') == 'warn'){

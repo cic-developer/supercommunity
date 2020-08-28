@@ -54,7 +54,6 @@ class Missionlist extends CB_Controller
 		// 이벤트 라이브러리를 로딩합니다
 		$eventname = 'event_admin_cic_missionlist_index';
 		$this->load->event($eventname);
-
 		$view = array();
 		$view['view'] = array();
 
@@ -93,21 +92,59 @@ class Missionlist extends CB_Controller
 
 		//진행중인 미션 목록
 		if ($this->input->get('on_process')) {
-			$where['rs_missionlist.mis_max_point > '] = 'rs_missionpoint.mip_tpoint';
-			$where['rs_missionlist.mis_end'] = 0;
-			$where['rs_missionlist.mis_opendate <='] = date('Y-m-d H:i:s');
+			$where['
+			CASE WHEN rs_missionlist.mis_endtype = 1 THEN
+				(rs_missionlist.mis_max_point > rs_missionpoint.mip_tpoint AND rs_missionlist.mis_end = 0 AND rs_missionlist.mis_enddate > "'.date('Y-m-d H:i:s').'" AND rs_missionlist.mis_opendate < "'.cdate('Y-m-d H:i:s').'")
+			ELSE
+				CASE WHEN rs_missionlist.mis_endtype = 2 THEN
+					(rs_missionlist.mis_end = 0 AND rs_missionlist.mis_enddate > "'.date('Y-m-d H:i:s').'" AND rs_missionlist.mis_opendate < "'.cdate('Y-m-d H:i:s').'")
+				ELSE
+					CASE WHEN rs_missionlist.mis_endtype = 3 THEN
+						(rs_missionlist.mis_max_point > rs_missionpoint.mip_tpoint AND rs_missionlist.mis_end = 0 AND rs_missionlist.mis_opendate < "'.cdate('Y-m-d H:i:s').'")
+					ELSE
+						(rs_missionlist.mis_end = 0 AND rs_missionlist.mis_opendate < "'.cdate('Y-m-d H:i:s').'")
+					END
+				END
+			END
+			'] = NULL;
 		}
 
 		//예정중인 미션 목록
 		if ($this->input->get('planned')) {
-			$where['rs_missionlist.mis_max_point > '] = 'rs_missionpoint.mip_tpoint';
-			$where['rs_missionlist.mis_end'] = 0;
-			$where['rs_missionlist.mis_opendate >'] = date('Y-m-d H:i:s');
+			$where['
+			CASE WHEN rs_missionlist.mis_endtype = 1 THEN
+				(rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint AND rs_missionlist.mis_end = 0 AND rs_missionlist.mis_enddate > "'.date('Y-m-d H:i:s').'" AND rs_missionlist.mis_opendate >= "'.cdate('Y-m-d H:i:s').'")
+			ELSE
+				CASE WHEN rs_missionlist.mis_endtype = 2 THEN
+					(rs_missionlist.mis_end = 0 AND rs_missionlist.mis_enddate > "'.date('Y-m-d H:i:s').'" AND rs_missionlist.mis_opendate >= "'.cdate('Y-m-d H:i:s').'")
+				ELSE
+					CASE WHEN rs_missionlist.mis_endtype = 3 THEN
+						(rs_missionlist.mis_max_point > rs_missionpoint.mip_tpoint AND rs_missionlist.mis_end = 0 AND rs_missionlist.mis_opendate >= "'.cdate('Y-m-d H:i:s').'")
+					ELSE
+						(rs_missionlist.mis_end = 0 AND rs_missionlist.mis_opendate >= "'.cdate('Y-m-d H:i:s').'")
+					END
+				END
+			END
+			'] = NULL;
 		}
 
 		//마감된 미션 목록
 		if ($this->input->get('end')) {
-			$where['(rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1)'] = NULL;
+			$where['
+			CASE WHEN rs_missionlist.mis_endtype = 1 THEN
+				(rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'"))
+			ELSE
+				CASE WHEN rs_missionlist.mis_endtype = 2 THEN
+					(rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'"))
+				ELSE
+					CASE WHEN rs_missionlist.mis_endtype = 3 THEN
+						(rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1)
+					ELSE
+						(rs_missionlist.mis_end = 1)
+					END
+				END
+			END
+			'] = NULL;
 		}
 		$result = $this->{$this->modelname}
 			->get_missionlist_list($per_page, $offset, $where, '', $findex, $forder, $sfield, $skeyword);
@@ -601,8 +638,66 @@ class Missionlist extends CB_Controller
 		$this->{$this->modelname}->search_field_equal = array('mis_max_point'); // 검색중 like 가 아닌 = 검색을 하는 필드
 		$this->{$this->modelname}->allow_order_field = array('mis_id','mis_thumb_type','mis_max_point','mis_wdate'); // 정렬이 가능한 필드
 
+		$where = array();
+
+		//진행중인 미션 목록
+		if ($this->input->get('on_process')) {
+			$where['
+			CASE WHEN rs_missionlist.mis_endtype = 1 THEN
+				(rs_missionlist.mis_max_point > rs_missionpoint.mip_tpoint AND rs_missionlist.mis_end = 0 AND rs_missionlist.mis_enddate > "'.date('Y-m-d H:i:s').'" AND rs_missionlist.mis_opendate < "'.cdate('Y-m-d H:i:s').'")
+			ELSE
+				CASE WHEN rs_missionlist.mis_endtype = 2 THEN
+					(rs_missionlist.mis_end = 0 AND rs_missionlist.mis_enddate > "'.date('Y-m-d H:i:s').'" AND rs_missionlist.mis_opendate < "'.cdate('Y-m-d H:i:s').'")
+				ELSE
+					CASE WHEN rs_missionlist.mis_endtype = 3 THEN
+						(rs_missionlist.mis_max_point > rs_missionpoint.mip_tpoint AND rs_missionlist.mis_end = 0 AND rs_missionlist.mis_opendate < "'.cdate('Y-m-d H:i:s').'")
+					ELSE
+						(rs_missionlist.mis_end = 0 AND rs_missionlist.mis_opendate < "'.cdate('Y-m-d H:i:s').'")
+					END
+				END
+			END
+			'] = NULL;
+		}
+
+		//예정중인 미션 목록
+		if ($this->input->get('planned')) {
+			$where['
+			CASE WHEN rs_missionlist.mis_endtype = 1 THEN
+				(rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint AND rs_missionlist.mis_end = 0 AND rs_missionlist.mis_enddate > "'.date('Y-m-d H:i:s').'" AND rs_missionlist.mis_opendate >= "'.cdate('Y-m-d H:i:s').'")
+			ELSE
+				CASE WHEN rs_missionlist.mis_endtype = 2 THEN
+					(rs_missionlist.mis_end = 0 AND rs_missionlist.mis_enddate > "'.date('Y-m-d H:i:s').'" AND rs_missionlist.mis_opendate >= "'.cdate('Y-m-d H:i:s').'")
+				ELSE
+					CASE WHEN rs_missionlist.mis_endtype = 3 THEN
+						(rs_missionlist.mis_max_point > rs_missionpoint.mip_tpoint AND rs_missionlist.mis_end = 0 AND rs_missionlist.mis_opendate >= "'.cdate('Y-m-d H:i:s').'")
+					ELSE
+						(rs_missionlist.mis_end = 0 AND rs_missionlist.mis_opendate >= "'.cdate('Y-m-d H:i:s').'")
+					END
+				END
+			END
+			'] = NULL;
+		}
+
+		//마감된 미션 목록
+		if ($this->input->get('end')) {
+			$where['
+			CASE WHEN rs_missionlist.mis_endtype = 1 THEN
+				(rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'"))
+			ELSE
+				CASE WHEN rs_missionlist.mis_endtype = 2 THEN
+					(rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'"))
+				ELSE
+					CASE WHEN rs_missionlist.mis_endtype = 3 THEN
+						(rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1)
+					ELSE
+						(rs_missionlist.mis_end = 1)
+					END
+				END
+			END
+			'] = NULL;
+		}
 		$result = $this->{$this->modelname}
-			->get_admin_list('', '', '', '', $findex, $forder, $sfield, $skeyword);
+			->get_missionlist_list('', '', $where, '', $findex, $forder, $sfield, $skeyword);
 
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {

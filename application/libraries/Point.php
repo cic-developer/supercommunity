@@ -35,8 +35,8 @@ class Point extends CI_Controller
 		}
 
 		// 포인트가 없다면 업데이트 할 필요 없음
-		$point = (int) $point;
-		if (empty($point)) {
+		// $point = (int) $point; //소수도 가능하므로 int 사용 불가.
+		if (empty($point) || !preg_match('/^(-{1})?\d+(\.\d{1})?$/',$point)) {
 			return false;
 		}
 
@@ -89,7 +89,7 @@ class Point extends CI_Controller
 		$this->CI->Point_model->insert($insertdata);
 
 		$sum = $this->CI->Point_model->get_point_sum($mem_id);
-
+		
 		$updatedata = array(
 			'mem_point' => $sum,
 		);

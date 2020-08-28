@@ -251,4 +251,106 @@ class RS_judge_model extends CB_Model
       return false;
     }
   }
+
+  public function replace_apply_mission_judge($jud_arr){
+	$this->db->trans_start();
+	// return $jud_arr;
+	if(! is_array($jud_arr)){return is_array($jud_arr);}
+	$mem_id = $this->session->userdata('mem_id');
+	$mem_data =  $this->Member_model->get_by_memid($mem_id);
+	if(! $mem_data){ return 'not found member data'; }
+	$_now = date('Y-m-d H:i:s');
+	$_ip = $this->input->ip_address();
+    $result = array();
+
+    foreach($jud_arr AS $jud){
+    //   $this->db->join('rs_mission_apply rs_apply','rs_apply.med_id = rs_media.med_id', 'LEFT OUTER');
+      $this->db->join('rs_judge', "rs_judge.jud_med_id = rs_media.med_id AND rs_judge.jud_deletion = 'N' AND rs_judge.jud_jug_id = 1 AND rs_judge.jud_mis_id = ".$jud['jud_mis_id']." AND rs_judge.jud_med_id = ".$jud['jud_med_id'], 'LEFT OUTER');
+      $this->db->where('rs_media.med_id', $jud['jud_med_id']);
+      $this->db->where('rs_media.med_deletion', 'N');
+	  $this->db->where('rs_media.mem_id', $mem_id);
+	  $this->db->order_by('ISNULL(rs_judge.jud_wdate)','ASC');
+	  $this->db->order_by('rs_judge.jud_wdate','DESC');
+	  $this->db->from('rs_media');
+	  $this->db->select('rs_media.*, rs_judge.*');
+	  $med_data = $this->db->get()->row_array();
+	//   print_r($this->db->last_query());
+	//   exit;
+	//   return array($this->db->last_query(), $med_data);
+
+	  if(!$med_data){return 'not found media data : '.$this->db->last_query();}
+
+      switch(element('jud_state',$med_data)){
+        case 0 :
+        case NULL :
+          $tmpArr = array(
+            'jud_mem_id'      => $mem_id,
+            'jud_register_ip' => $_ip,
+            'jud_wdate'       => $_now,
+            'jud_med_id'      => $med_data['med_id'],
+            'jud_med_name'    => $med_data['med_name'],
+            'jud_med_admin'   => $med_data['med_admin'],
+            'jud_med_wht_id'  => $med_data['med_wht_id'],
+			'jud_med_url'     => $med_data['med_url'],
+			'jud_mem_nickname'=> $mem_data['mem_nickname'],
+			'jud_superpoint'  => $med_data['med_superpoint']
+          );
+		  $applyArr = array('med_id' => $med_data['med_id'], 'mis_id' => $jud['jud_mis_id']);
+
+		  $merge_data =array_merge($jud, $tmpArr);
+		  $jud_id = $this->insert($merge_data);
+		  $this->db->insert('rs_mission_apply', $applyArr);
+		  //미션 총액 더하기
+		  $this->db->where('mip_mis_id', $jud['jud_mis_id']);
+		  $this->db->set('mip_tpoint', 'mip_tpoint + '.$med_data['med_superpoint'], false);
+		  $this->db->update('rs_missionpoint');
+
+		  //로그 쌓기용 result 추가  
+		  $result[] = array(
+			'jul_jug_id' 	=> 1,
+			'jul_jud_id' 	=> $jud_id,
+			'jul_med_id' 	=> $med_data['med_id'],
+			'jul_state'	 	=> 1,
+			'jul_mem_id' 	=> $mem_id,
+			'jul_user_id'	=> $mem_data['mem_userid'],
+			'jul_datetime'	=> $_now,
+			'jul_ip'		=> $_ip,
+			'jul_useragent'	=> $this->agent->agent_string(),
+			'jul_data'		=> json_encode($merge_data)
+		  );
+        break;
+
+        case 1 :
+          if(element('jud_attach', $jud)){
+            $updateArr = array(
+              'jud_attach'  =>  element('jud_attach', $jud)
+            );
+			if(!$this->update($med_data['jud_id'], $updateArr)){
+				return 'jud_attach update error occur';
+			}
+			$result[] = array(
+				'jul_jug_id' 	=> 1,
+				'jul_jud_id' 	=> $med_data['jud_id'],
+				'jul_med_id' 	=> $med_data['med_id'],
+				'jul_state'	 	=> 1,
+				'jul_mem_id' 	=> $mem_id,
+				'jul_user_id'	=> $mem_data['mem_userid'],
+				'jul_datetime'	=> $_now,
+				'jul_ip'		=> $_ip,
+				'jul_useragent'	=> $this->agent->agent_string(),
+				'jul_data'		=> json_encode($updateArr)
+			);
+          }
+        break;
+
+        default :
+          return 'judge_state error '.element('jud_state',$med_data);
+      }
+	}
+	if($result){
+		if(!$this->db->insert_batch('rs_judge_log',$result)){ return 'log data insert error'.$this->db->last_query(); }
+	}
+	$this->db->trans_complete();
+	return true;
+  }
 }

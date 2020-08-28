@@ -24,7 +24,7 @@ class Judgemedia extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('RS_judge','RS_whitelist','RS_media','RS_media_log','RS_mediatype','RS_mediatype_map','RS_judge_log','RS_judge_denied','RS_judge_denyreason','Member_extra_vars');
+	protected $models = array('RS_judge','RS_whitelist','RS_media','RS_media_log','RS_media_duplication','RS_mediatype','RS_mediatype_map','RS_judge_log','RS_judge_denied','RS_judge_denyreason','Member_extra_vars');
 
 	/**
 	 * 이 컨트롤러의 메인 모델 이름입니다
@@ -111,6 +111,7 @@ class Judgemedia extends CB_Controller
 					element('jud_mem_nickname', $val).'('.(element('mem_userid', $dbmember) ? element('mem_userid', $dbmember) : '탈퇴회원').')',
 					element('mem_icon', $dbmember)
 				);
+				$result['list'][$key]['med_duplicate'] = $this->RS_media_duplication_model->get_is_duplication(element('jud_med_id', $val));
 				$result['list'][$key]['num'] = $list_num--;
 			}
 		}
@@ -136,7 +137,6 @@ class Judgemedia extends CB_Controller
 		 * 쓰기 주소, 삭제 주소등 필요한 주소를 구합니다
 		 */
 		$search_option = array(
-			'mis_title' 				=> '미션제목',
 			'jud_mem_nickname' 	=> '닉네임',
 			'jud_med_admin'			=> '관리자명',
 			'jud_med_url' 			=> '링크',
@@ -164,12 +164,12 @@ class Judgemedia extends CB_Controller
 	}
 
 	/**
-	 * 미션추가 또는 수정 페이지를 가져오는 메소드입니다
+	 * 미디어심사 세부 페이지를 가져오는 메소드입니다
 	 */
 	public function detail($jid = 0)
 	{
 		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_medialist_detail';
+		$eventname = 'event_admin_cic_judgemedia_detail';
 		$this->load->event($eventname);
 
 		$view = array();
@@ -276,6 +276,7 @@ class Judgemedia extends CB_Controller
 			$view['view']['message'] = $file_error;
 
 			$view['view']['data'] = $getdata;
+			$view['view']['med_duplicate'] = $this->RS_media_duplication_model->get_is_duplication(element('jud_med_id', $getdata));;
 			$view['view']['med_data'] = $this->RS_media_model->get_one(element('jud_med_id',$getdata));
 			$view['view']['all_whitelist'] = $this->RS_whitelist_model->get_whitelist_list();
 			$this->RS_mediatype_model->allow_order_field = array('met_order'); // 정렬이 가능한 필드
@@ -412,14 +413,15 @@ class Judgemedia extends CB_Controller
 		}
 	}
 
-
+	
 	/**
-	 * 화이트리스트 목록을 가져오는 메소드입니다
+	 * 목록을 엑셀로 데이터를 추출합니다.
 	 */
-	public function whitelist()
+	public function excel()
 	{
+
 		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_judgemedia_whitelist';
+		$eventname = 'event_admin_cic_judgemedia_excel';
 		$this->load->event($eventname);
 
 		$view = array();
@@ -432,354 +434,7 @@ class Judgemedia extends CB_Controller
 		 * 페이지에 숫자가 아닌 문자가 입력되거나 1보다 작은 숫자가 입력되면 에러 페이지를 보여줍니다.
 		 */
 		$param =& $this->querystring;
-		$page = (((int) $this->input->get('page')) > 0) ? ((int) $this->input->get('page')) : 1;
-		$view['view']['sort'] = array(
-			'wht_id' => $param->sort('wht_id', 'asc'),
-			'wht_wdate' => $param->sort('wht_wdate', 'asc'),
-		);
-		$findex = $this->input->get('findex') ? $this->input->get('findex') : $this->RS_whitelist_model->primary_key;
-		$forder = $this->input->get('forder', null, 'desc');
-		$sfield = $this->input->get('sfield', null, '');
-		$skeyword = $this->input->get('skeyword', null, '');
-
-		$per_page = admin_listnum();
-		$offset = ($page - 1) * $per_page;
-
-		/**
-		 * 게시판 목록에 필요한 정보를 가져옵니다.
-		 */
-		$this->RS_whitelist_model->allow_search_field = array('wht_title','wht_domains','wht_memo'); // 검색이 가능한 필드
-		$this->RS_whitelist_model->search_field_equal = array(); // 검색중 like 가 아닌 = 검색을 하는 필드
-		$this->RS_whitelist_model->allow_order_field = array('wht_id', 'wht_wdate'); // 정렬이 가능한 필드
-		$result = $this->RS_whitelist_model
-			->get_whitelist_list($per_page, $offset, '', '', $findex, $forder, $sfield, $skeyword);
-		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
-		if (element('list', $result)) {
-			foreach (element('list', $result) as $key => $val) {
-				$result['list'][$key]['member'] = $dbmember = $this->Member_model->get_by_memid(element('wht_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
-				$result['list'][$key]['display_name'] = display_username(
-					element('mem_userid', $dbmember),
-					element('mem_nickname', $dbmember),
-					element('mem_icon', $dbmember)
-				);
-				$domainArr = $this->RS_whitelist_model->get_explode_domain_list(element('wht_domains', $val));
-				if(count($domainArr)>1){
-					$result['list'][$key]['domain'] = $domainArr[0].' 외 '.(count($domainArr)-1).'개';
-				} else {
-					$result['list'][$key]['domain'] = $domainArr[0];
-				}
-				if(mb_strlen(element('wht_memo', $val))>15){
-					$result['list'][$key]['memo'] = mb_substr(element('wht_memo', $val),0,15).'...';
-				} else {
-					$result['list'][$key]['memo'] = element('wht_memo', $val);
-				}
-				$result['list'][$key]['num'] = $list_num--;
-			}
-		}
-		$view['view']['data'] = $result;
-		$view['view']['all_whitelist'] = $this->RS_whitelist_model->get_whitelist_list();
-
-		/**
-		 * primary key 정보를 저장합니다
-		 */
-		$view['view']['primary_key'] = $this->RS_whitelist_model->primary_key;
-
-		/**
-		 * 페이지네이션을 생성합니다
-		 */
-		$config['base_url'] = admin_url($this->pagedir) . '?' . $param->replace('page');
-		$config['total_rows'] = $result['total_rows'];
-		$config['per_page'] = $per_page;
-		$this->pagination->initialize($config);
-		$view['view']['paging'] = $this->pagination->create_links();
-		$view['view']['page'] = $page;
-
-		/**
-		 * 쓰기 주소, 삭제 주소등 필요한 주소를 구합니다
-		 */
-		$search_option = array(
-			'wht_title'   => '제목',
-			'wht_domains' => '도메인',
-			'wht_memo' => '메모'
-		);
-		$view['view']['skeyword'] = ($sfield && array_key_exists($sfield, $search_option)) ? $skeyword : '';
-		$view['view']['search_option'] = search_option($search_option, $sfield);
-		$view['view']['listall_url'] = admin_url($this->pagedir);
-		$view['view']['whitelist_url'] = admin_url($this->pagedir . '/whitelist');
-		$view['view']['mediatype_url'] = admin_url($this->pagedir . '/mediatype');
-		$view['view']['write_url'] = admin_url($this->pagedir . '/whitelist_write');
-		$view['view']['denyreason_url'] = admin_url($this->pagedir . '/denyreason');
-		$view['view']['list_update_url'] = admin_url($this->pagedir . '/listupdate/?' . $param->output());
-		$view['view']['list_delete_url'] = admin_url($this->pagedir . '/whitelist_listdelete/?' . $param->output());
-
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
-
-		/**
-		 * 어드민 레이아웃을 정의합니다
-		 */
-		$layoutconfig = array('layout' => 'layout', 'skin' => 'whitelist');
-		$view['layout'] = $this->managelayout->admin($layoutconfig, $this->cbconfig->get_device_view_type());
-		$this->data = $view;
-		$this->layout = element('layout_skin_file', element('layout', $view));
-		$this->view = element('view_skin_file', element('layout', $view));
-	}
-
-	/**
-	 * 미션추가 또는 수정 페이지를 가져오는 메소드입니다
-	 */
-	public function whitelist_write($pid = 0)
-	{
-		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_judgemedia_whitelist_write';
-		$this->load->event($eventname);
-
-		$view = array();
-		$view['view'] = array();
-
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before'] = Events::trigger('before', $eventname);
-
-		/**
-		 * 프라이머리키에 숫자형이 입력되지 않으면 에러처리합니다
-		 */
-		if ($pid) {
-			$pid = (int) $pid;
-			if (empty($pid) OR $pid < 1) {
-				show_404();
-			}
-		}
-		$primary_key = $this->RS_whitelist_model->primary_key;
-
-		/**
-		 * 수정 페이지일 경우 기존 데이터를 가져옵니다
-		 */
-		$getdata = array();
-		if ($pid) {
-			$getdata = $this->RS_whitelist_model->get_one($pid);
-		}
-
-		/**
-		 * Validation 라이브러리를 가져옵니다
-		 */
-		$this->load->library('form_validation');
-
-		/**
-		 * 전송된 데이터의 유효성을 체크합니다
-		 */
-		$config = array(
-			array(
-				'field' => 'wht_title',
-				'label' => '제목',
-				'rules' => 'trim|min_length[2]|max_length[20]|required',
-			),
-			array(
-				'field' => 'wht_domains',
-				'label' => '도메인',
-				'rules' => array('trim','required',array('is_domain_right',array($this->RS_whitelist_model,'check_is_domainlist_right'))),
-			),
-		);
-		$this->form_validation->set_rules($config);
-		$form_validation = $this->form_validation->run();
-		$file_error = '';
-		$updatephoto = '';
-		$file_error2 = '';
-		$updateicon = '';
-
-
-		/**
-		 * 유효성 검사를 하지 않는 경우, 또는 유효성 검사에 실패한 경우입니다.
-		 * 즉 글쓰기나 수정 페이지를 보고 있는 경우입니다
-		 */
-		if ($form_validation === false) {
-
-			// 이벤트가 존재하면 실행합니다
-			$view['view']['event']['formrunfalse'] = Events::trigger('formrunfalse', $eventname);
-
-			$view['view']['data'] = $getdata;
-
-			/**
-			 * primary key 정보를 저장합니다
-			 */
-			$view['view']['primary_key'] = $primary_key;
-
-			// 이벤트가 존재하면 실행합니다
-			$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
-
-			/**
-			 * 어드민 레이아웃을 정의합니다
-			 */
-			$layoutconfig = array('layout' => 'layout', 'skin' => 'whitelist_write');
-			$view['layout'] = $this->managelayout->admin($layoutconfig, $this->cbconfig->get_device_view_type());
-			$this->data = $view;
-			$this->layout = element('layout_skin_file', element('layout', $view));
-			$this->view = element('view_skin_file', element('layout', $view));
-
-		} else {
-			/**
-			 * 유효성 검사를 통과한 경우입니다.
-			 * 즉 데이터의 insert 나 update 의 process 처리가 필요한 상황입니다
-			 */
-
-			// 이벤트가 존재하면 실행합니다
-			$view['view']['event']['formruntrue'] = Events::trigger('formruntrue', $eventname);
-
-			$updatedata = array(
-				'wht_title' => $this->input->post('wht_title', null, ''),
-				'wht_domains' => strtolower($this->input->post('wht_domains', null, '')),
-				'wht_memo' => $this->input->post('wht_memo', null, ''),
-			);
-			$datetime = cdate('Y-m-d H:i:s');
-
-			// 작성/수정 로그 기록
-			$this->load->model('RS_whitelist_log_model');
-			$logdata = array(
-				'whl_mem_id' => $this->session->userdata('mem_id'),
-				'whl_userid' => element('mem_userid',$this->Member_model->get_by_memid($this->session->userdata('mem_id'), 'mem_userid')),
-				'whl_datetime' => $datetime,
-				'whl_ip' => $this->input->ip_address(),
-				'whl_data' => json_encode($updatedata,JSON_UNESCAPED_UNICODE),
-				'whl_useragent' => $this->agent->agent_string(),
-			);
-
-			/**
-			 * 게시물을 수정하는 경우입니다
-			 */
-			if ($this->input->post($primary_key)) {
-				$updatedata['wht_mdate'] = $datetime;
-				$updatedata['wht_modifier_mem_id'] = $this->session->userdata('mem_id');
-				$updatedata['wht_modifier_ip'] = $this->input->ip_address();
-				$wht_id = $this->input->post($primary_key);
-				$this->RS_whitelist_model->update($wht_id, $updatedata);
-				
-				// 수정 로그 기록
-				$logdata['whl_state'] = 'update';
-				$logdata['whl_wht_id'] = $wht_id;
-				$this->RS_whitelist_log_model->insert($logdata);
-
-				$this->session->set_flashdata(
-					'message',
-					'정상적으로 수정되었습니다'
-				);
-			} else {
-				/**
-				 * 게시물을 새로 입력하는 경우입니다
-				 */
-				$updatedata['wht_wdate'] = $datetime;
-				$updatedata['wht_mem_id'] = $this->session->userdata('mem_id');
-				$updatedata['wht_deletion'] = 'N';
-				$updatedata['wht_register_ip'] = $this->input->ip_address();
-
-				$wht_id = $this->RS_whitelist_model->insert($updatedata);
-				
-				// 작성 로그 기록
-				$logdata['whl_state'] = 'new';
-				$logdata['whl_wht_id'] = $wht_id;
-				$this->RS_whitelist_log_model->insert($logdata);
-
-				$this->session->set_flashdata(
-					'message',
-					'정상적으로 입력되었습니다'
-				);
-			}
-
-			// 이벤트가 존재하면 실행합니다
-			Events::trigger('after', $eventname);
-
-			/**
-			 * 게시물의 신규입력 또는 수정작업이 끝난 후 목록 페이지로 이동합니다
-			 */
-			$param =& $this->querystring;
-			$redirecturl = admin_url($this->pagedir. '/whitelist' . '?' . $param->output());
-
-			redirect($redirecturl);
-		}
-	}
-
-	
-	/**
-	 * 화이트리스트 목록 페이지에서 선택삭제를 하는 경우 실행되는 메소드입니다
-	 */
-	public function whitelist_listdelete()
-	{
-		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_judgemedia_whitelist_listdelete';
-		$this->load->event($eventname);
-
-		// 이벤트가 존재하면 실행합니다
-		Events::trigger('before', $eventname);
-
-		/**
-		 * 체크한 게시물의 삭제를 실행합니다
-		 */
-		if ($this->input->post('chk') && is_array($this->input->post('chk'))) {
-			$datetime = cdate('Y-m-d H:i:s');
-			$this->load->model('RS_whitelist_log_model');
-			foreach ($this->input->post('chk') as $val) {
-				if ($val) {
-					
-					// $deletewhere = array(
-					// 	'wht_id' => $val,
-					// );
-					// $this->RS_whitelist_model->delete_where($deletewhere);
-					$update = array(
-						'met_deletion' => 'Y'
-					);
-					$this->RS_whitelist_model->update($val,$update);
-
-					// 삭제 로그 기록
-					$logdata = array(
-						'whl_wht_id' => $val,
-						'whl_state' => 'delete',
-						'whl_mem_id' => $this->session->userdata('mem_id'),
-						'whl_userid' => element('mem_userid',$this->Member_model->get_by_memid($this->session->userdata('mem_id'), 'mem_userid')),
-						'whl_datetime' => $datetime,
-						'whl_ip' => $this->input->ip_address(),
-						'whl_useragent' => $this->agent->agent_string(),
-					);
-					$this->RS_whitelist_log_model->insert($logdata);
-				}
-			}
-		}
-
-		// 이벤트가 존재하면 실행합니다
-		Events::trigger('after', $eventname);
-
-		/**
-		 * 삭제가 끝난 후 목록페이지로 이동합니다
-		 */
-		$this->session->set_flashdata(
-			'message',
-			'정상적으로 삭제되었습니다'
-		);
-		$param =& $this->querystring;
-		$redirecturl = admin_url($this->pagedir. '/whitelist' . '?' . $param->output());
-
-		redirect($redirecturl);
-	}
-
-	
-	/**
-	 * 화이트리스트 목록을 엑셀로 데이터를 추출합니다.
-	 */
-	public function whitelist_excel()
-	{
-
-		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_judgemedia_whitelist_excel';
-		$this->load->event($eventname);
-
-		$view = array();
-		$view['view'] = array();
-
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before'] = Events::trigger('before', $eventname);
-
-		/**
-		 * 페이지에 숫자가 아닌 문자가 입력되거나 1보다 작은 숫자가 입력되면 에러 페이지를 보여줍니다.
-		 */
-		$param =& $this->querystring;
-		$findex = $this->input->get('findex', null, $this->RS_whitelist_model->primary_key);
+		$findex = $this->input->get('findex', null, $this->{$this->modelname}->primary_key);
 		$forder = $this->input->get('forder', null, 'desc');
 		$sfield = $this->input->get('sfield', null, '');
 		$skeyword = $this->input->get('skeyword', null, '');
@@ -787,28 +442,38 @@ class Judgemedia extends CB_Controller
 		/**
 		 * 게시판 목록에 필요한 정보를 가져옵니다.
 		 */
-		$this->RS_whitelist_model->allow_search_field = array('wht_title','wht_domains','wht_memo'); // 검색이 가능한 필드
-		$this->RS_whitelist_model->search_field_equal = array(); // 검색중 like 가 아닌 = 검색을 하는 필드
-		$this->RS_whitelist_model->allow_order_field = array('wht_id', 'wht_wdate'); // 정렬이 가능한 필드
+		$this->{$this->modelname}->allow_search_field = array('mis_title','jud_med_admin', 'jud_med_url', 'jud_mem_nickname', 'jud_wdate'); // 검색이 가능한 필드
+		$this->{$this->modelname}->search_field_equal = array(); // 검색중 like 가 아닌 = 검색을 하는 필드
+		$this->{$this->modelname}->allow_order_field = array('mis_title','jud_id','jud_med_wht_id','jud_state','jud_wdate'); // 정렬이 가능한 필드
 
-		$result = $this->RS_whitelist_model
-			->get_whitelist_list('', '', '', '', $findex, $forder, $sfield, $skeyword);
+		$where = array();
+		if (($jud_state = (int) $this->input->get('jud_state')) || $this->input->get('jud_state') === '0') {
+			if ($jud_state >= 0) {
+				$where['jud_state'] = $jud_state;
+			}
+		}
+		if ($wht_id = (int) $this->input->get('wht_id')) {
+			if ($wht_id > 0) {
+				$where['jud_med_wht_id'] = $wht_id;
+			}
+		}
+		$result = $this->{$this->modelname}
+		->get_judge_list($this->jug_id,'', '', $where, '', $findex, $forder, $sfield, $skeyword);
+
+		$_whitelist = $this->RS_whitelist_model->get();
+		$whitelistArr = array();
+		foreach($_whitelist as $l){
+			$whitelistArr[element('wht_id',$l)] = element('wht_title',$l);
+		}
 
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {
-				$result['list'][$key]['member'] = $dbmember = $this->Member_model->get_by_memid(element('wht_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
-				$result['list'][$key]['display_name'] = display_username(
-					element('mem_userid', $dbmember),
-					element('mem_nickname', $dbmember),
-					element('mem_icon', $dbmember)
-				);
-				$result['list'][$key]['latest_member'] = $dbmember = $this->Member_model->get_by_memid(element('wht_modifier_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
-				$result['list'][$key]['latest_display_name'] = display_username(
-					element('mem_userid', $dbmember),
-					element('mem_nickname', $dbmember),
-					element('mem_icon', $dbmember)
-				);
-				// $domainArr = $this->RS_whitelist_model->get_explode_domain_list(element('wht_domains', $val));
+				$result['list'][$key]['register_member'] = $this->Member_model->get_by_memid(element('jud_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
+				$result['list'][$key]['modifier_member'] = $this->Member_model->get_by_memid(element('jud_modifier_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
+				$result['list'][$key]['judn_reason'] 		 = element('judn_reason',$this->RS_judge_denied_model->get_one('','judn_reason', array('judn_jud_id' => element('jud_id',$val))));
+				$result['list'][$key]['wht_title']   		 = element(element('jud_med_wht_id',$val),$whitelistArr);
+				$result['list'][$key]['med_duplicate'] = $this->RS_media_duplication_model->get_is_duplication(element('jud_med_id', $val));
+				// $domainArr = $this->{$this->modelname}->get_explode_domain_list(element('wht_domains', $val));
 				// if(count($domainArr)>1){
 				// 	$result['list'][$key]['domain'] = '';
 				// 	foreach($domainArr as $l){
@@ -825,407 +490,15 @@ class Judgemedia extends CB_Controller
 		/**
 		 * primary key 정보를 저장합니다
 		 */
-		$view['view']['primary_key'] = $this->RS_whitelist_model->primary_key;
+		$view['view']['primary_key'] = $this->{$this->modelname}->primary_key;
 
 
 		// 이벤트가 존재하면 실행합니다
 		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
 
 		header('Content-type: application/vnd.ms-excel');
-		header('Content-Disposition: attachment; filename=화이트리스트목록_' . cdate('Y_m_d') . '.xls');
-		echo $this->load->view('admin/' . ADMIN_SKIN . '/' . $this->pagedir  . '/whitelist_excel', $view, true);
-	}
-	
-
-	/**
-	 * 반려사유 목록을 가져오는 메소드입니다
-	 */
-	public function denyreason()
-	{
-		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_judgemission_denyreason';
-		$this->load->event($eventname);
-
-		$view = array();
-		$view['view'] = array();
-
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before'] = Events::trigger('before', $eventname);
-
-		/**
-		 * 페이지에 숫자가 아닌 문자가 입력되거나 1보다 작은 숫자가 입력되면 에러 페이지를 보여줍니다.
-		 */
-		$param =& $this->querystring;
-		$page = (((int) $this->input->get('page')) > 0) ? ((int) $this->input->get('page')) : 1;
-		$view['view']['sort'] = array(
-			'judr_id' => $param->sort('judr_id', 'asc'),
-		);
-		$findex = $this->input->get('findex') ? $this->input->get('findex') : $this->RS_judge_denyreason_model->primary_key;
-		$forder = $this->input->get('forder', null, 'desc');
-		$sfield = $this->input->get('sfield', null, '');
-		$skeyword = $this->input->get('skeyword', null, '');
-
-		$per_page = admin_listnum();
-		$offset = ($page - 1) * $per_page;
-
-		/**
-		 * 게시판 목록에 필요한 정보를 가져옵니다.
-		 */
-		$this->RS_judge_denyreason_model->allow_search_field = array('judr_title','judr_reason'); // 검색이 가능한 필드
-		$this->RS_judge_denyreason_model->search_field_equal = array(); // 검색중 like 가 아닌 = 검색을 하는 필드
-		$this->RS_judge_denyreason_model->allow_order_field = array('judr_id'); // 정렬이 가능한 필드
-		$result = $this->RS_judge_denyreason_model
-			->get_list($per_page, $offset, array('( judr_jug_id = 2 or judr_jug_id = 4 )'=>null), '', $findex, $forder, $sfield, $skeyword);
-		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
-		if (element('list', $result)) {
-			foreach (element('list', $result) as $key => $val) {
-				if(mb_strlen(element('judr_reason', $val))>15){
-					$result['list'][$key]['memo'] = substr(element('judr_reason', $val),0,15).'...';
-				} else {
-					$result['list'][$key]['memo'] = element('judr_reason', $val);
-				}
-				$result['list'][$key]['num'] = $list_num--;
-			}
-		}
-		$view['view']['data'] = $result;
-		$view['view']['all_whitelist'] = $this->RS_whitelist_model->get_whitelist_list();
-
-		/**
-		 * primary key 정보를 저장합니다
-		 */
-		$view['view']['primary_key'] = $this->RS_judge_denyreason_model->primary_key;
-
-		/**
-		 * 페이지네이션을 생성합니다
-		 */
-		$config['base_url'] = admin_url($this->pagedir) . '?' . $param->replace('page');
-		$config['total_rows'] = $result['total_rows'];
-		$config['per_page'] = $per_page;
-		$this->pagination->initialize($config);
-		$view['view']['paging'] = $this->pagination->create_links();
-		$view['view']['page'] = $page;
-
-		/**
-		 * 쓰기 주소, 삭제 주소등 필요한 주소를 구합니다
-		 */
-		$search_option = array(
-			'judr_title'   => '제목',
-			'judr_reason'   => '반려사유'
-		);
-		$view['view']['skeyword'] = ($sfield && array_key_exists($sfield, $search_option)) ? $skeyword : '';
-		$view['view']['search_option'] = search_option($search_option, $sfield);
-		$view['view']['listall_url'] = admin_url($this->pagedir);
-		$view['view']['denyreason_url'] = admin_url($this->pagedir . '/denyreason');
-		$view['view']['whitelist_url'] = admin_url($this->pagedir . '/whitelist');
-		$view['view']['mediatype_url'] = admin_url($this->pagedir . '/mediatype');
-		$view['view']['write_url'] = admin_url($this->pagedir . '/denyreason_write');
-		$view['view']['list_update_url'] = admin_url($this->pagedir . '/listupdate/?' . $param->output());
-		$view['view']['list_delete_url'] = admin_url($this->pagedir . '/denyreason_listdelete/?' . $param->output());
-
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
-
-		/**
-		 * 어드민 레이아웃을 정의합니다
-		 */
-		$layoutconfig = array('layout' => 'layout', 'skin' => 'denyreason');
-		$view['layout'] = $this->managelayout->admin($layoutconfig, $this->cbconfig->get_device_view_type());
-		$this->data = $view;
-		$this->layout = element('layout_skin_file', element('layout', $view));
-		$this->view = element('view_skin_file', element('layout', $view));
-	}
-
-	/**
-	 * 반려사유추가 또는 수정 페이지를 가져오는 메소드입니다
-	 */
-	public function denyreason_write($pid = 0)
-	{
-		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_judgemission_denyreason_write';
-		$this->load->event($eventname);
-
-		$view = array();
-		$view['view'] = array();
-
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before'] = Events::trigger('before', $eventname);
-
-		/**
-		 * 프라이머리키에 숫자형이 입력되지 않으면 에러처리합니다
-		 */
-		if ($pid) {
-			$pid = (int) $pid;
-			if (empty($pid) OR $pid < 1) {
-				show_404();
-			}
-		}
-		$primary_key = $this->RS_judge_denyreason_model->primary_key;
-
-		/**
-		 * 수정 페이지일 경우 기존 데이터를 가져옵니다
-		 */
-		$getdata = array();
-		if ($pid) {
-			$getdata = $this->RS_judge_denyreason_model->get_one($pid);
-		}
-
-		/**
-		 * Validation 라이브러리를 가져옵니다
-		 */
-		$this->load->library('form_validation');
-
-		/**
-		 * 전송된 데이터의 유효성을 체크합니다
-		 */
-		$this->form_validation->set_rules('judr_title','제목','trim|required|min_length[2]|max_length[20]');
-		$this->form_validation->set_rules('judr_reason','반려사유','trim|required');
-		$form_validation = $this->form_validation->run();
-		$file_error = '';
-		$updatephoto = '';
-		$file_error2 = '';
-		$updateicon = '';
-
-
-		/**
-		 * 유효성 검사를 하지 않는 경우, 또는 유효성 검사에 실패한 경우입니다.
-		 * 즉 글쓰기나 수정 페이지를 보고 있는 경우입니다
-		 */
-		if ($form_validation === false) {
-
-			// 이벤트가 존재하면 실행합니다
-			$view['view']['event']['formrunfalse'] = Events::trigger('formrunfalse', $eventname);
-
-			$view['view']['data'] = $getdata;
-
-			/**
-			 * primary key 정보를 저장합니다
-			 */
-			$view['view']['primary_key'] = $primary_key;
-
-			// 이벤트가 존재하면 실행합니다
-			$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
-
-			/**
-			 * 어드민 레이아웃을 정의합니다
-			 */
-			$layoutconfig = array('layout' => 'layout', 'skin' => 'denyreason_write');
-			$view['layout'] = $this->managelayout->admin($layoutconfig, $this->cbconfig->get_device_view_type());
-			$this->data = $view;
-			$this->layout = element('layout_skin_file', element('layout', $view));
-			$this->view = element('view_skin_file', element('layout', $view));
-
-		} else {
-			/**
-			 * 유효성 검사를 통과한 경우입니다.
-			 * 즉 데이터의 insert 나 update 의 process 처리가 필요한 상황입니다
-			 */
-
-			// 이벤트가 존재하면 실행합니다
-			$view['view']['event']['formruntrue'] = Events::trigger('formruntrue', $eventname);
-
-			$updatedata = array(
-				'judr_jug_id' => 2,
-				'judr_title' => $this->input->post('judr_title', null, ''),
-				'judr_reason' => $this->input->post('judr_reason', null, ''),
-			);
-
-			/**
-			 * 게시물을 수정하는 경우입니다
-			 */
-			if ($this->input->post($primary_key)) {
-				$judr_id = $this->input->post($primary_key);
-				$this->RS_judge_denyreason_model->update($judr_id, $updatedata);
-
-				$this->session->set_flashdata(
-					'message',
-					'정상적으로 수정되었습니다'
-				);
-
-			} else {
-				/**
-				 * 게시물을 새로 입력하는 경우입니다
-				 */
-
-				$this->RS_judge_denyreason_model->insert($updatedata);
-				
-
-				$this->session->set_flashdata(
-					'message',
-					'정상적으로 입력되었습니다'
-				);
-			}
-
-			// 이벤트가 존재하면 실행합니다
-			Events::trigger('after', $eventname);
-
-			/**
-			 * 게시물의 신규입력 또는 수정작업이 끝난 후 목록 페이지로 이동합니다
-			 */
-			$param =& $this->querystring;
-			$redirecturl = admin_url($this->pagedir. '/denyreason' . '?' . $param->output());
-
-			redirect($redirecturl);
-		}
-	}
-
-	
-	/**
-	 * 화이트리스트 목록 페이지에서 선택삭제를 하는 경우 실행되는 메소드입니다
-	 */
-	public function denyreason_listdelete()
-	{
-		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_judgemission_denyreason_listdelete';
-		$this->load->event($eventname);
-
-		// 이벤트가 존재하면 실행합니다
-		Events::trigger('before', $eventname);
-
-		/**
-		 * 체크한 게시물의 삭제를 실행합니다
-		 */
-		if ($this->input->post('chk') && is_array($this->input->post('chk'))) {
-			foreach ($this->input->post('chk') as $val) {
-				if ($val) {
-					
-					$deletewhere = array(
-						'judr_id' => $val,
-					);
-					$this->RS_judge_denyreason_model->delete_where($deletewhere);
-				}
-			}
-		}
-
-		// 이벤트가 존재하면 실행합니다
-		Events::trigger('after', $eventname);
-
-		/**
-		 * 삭제가 끝난 후 목록페이지로 이동합니다
-		 */
-		$this->session->set_flashdata(
-			'message',
-			'정상적으로 삭제되었습니다'
-		);
-		$param =& $this->querystring;
-		$redirecturl = admin_url($this->pagedir. '/denyreason' . '?' . $param->output());
-
-		redirect($redirecturl);
-	}
-
-	/**
-	 * 미디어성격 목록을 가져오는 메소드입니다
-	 */
-	public function mediatype()
-	{
-		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_admin_cic_judgemedia_mediatype';
-		$this->load->event($eventname);
-
-		$view = array();
-		$view['view'] = array();
-
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before'] = Events::trigger('before', $eventname);
-
-
-		/**
-		 * 페이지에 숫자가 아닌 문자가 입력되거나 1보다 작은 숫자가 입력되면 에러 페이지를 보여줍니다.
-		 */
-		$param =& $this->querystring;
-		$findex = 'met_order';
-		$forder = 'asc';
-
-
-		/**
-		 * Validation 라이브러리를 가져옵니다
-		 */
-		$this->load->library('form_validation');
-
-		/**
-		 * 전송된 데이터의 유효성을 체크합니다
-		 */
-		$config = array(
-			array(
-				'field' => 's',
-				'label' => '그룹명',
-				'rules' => 'trim',
-			),
-		);
-		$this->form_validation->set_rules($config);
-
-
-		/**
-		 * 유효성 검사를 하지 않는 경우, 또는 유효성 검사에 실패한 경우입니다.
-		 * 즉 글쓰기나 수정 페이지를 보고 있는 경우입니다
-		 */
-		if ($this->form_validation->run() === false) {
-
-			// 이벤트가 존재하면 실행합니다
-			$view['view']['event']['formrunfalse'] = Events::trigger('formrunfalse', $eventname);
-
-		} else {
-			/**
-			 * 유효성 검사를 통과한 경우입니다.
-			 * 즉 데이터의 insert 나 update 의 process 처리가 필요한 상황입니다
-			 */
-
-			// 이벤트가 존재하면 실행합니다
-			$view['view']['event']['formruntrue'] = Events::trigger('formruntrue', $eventname);
-
-			$updatedata = $this->input->post();
-
-			$this->RS_mediatype_model->update_mediatype($updatedata);
-			$view['view']['alert_message'] = '정상적으로 저장되었습니다';
-		}
-
-		/**
-		 * 게시판 목록에 필요한 정보를 가져옵니다.
-		 */
-		$this->RS_mediatype_model->allow_order_field = array('met_order'); // 정렬이 가능한 필드
-		$result = $this->RS_mediatype_model
-			->get_mediatype_list('', '', '', '', $findex, $forder);
-		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
-		if (element('list', $result)) {
-			foreach (element('list', $result) as $key => $val) {
-				$countwhere = array(
-					'met_id' => element('met_id', $val),
-				);
-				$result['list'][$key]['member_count'] = $this->RS_mediatype_map_model->count_by($countwhere);
-				$result['list'][$key]['num'] = $list_num--;
-			}
-		}
-		$view['view']['data'] = $result;
-		$view['view']['all_whitelist'] = $this->RS_whitelist_model->get_whitelist_list();
-
-		/**
-		 * primary key 정보를 저장합니다
-		 */
-		$view['view']['primary_key'] = $this->RS_mediatype_model->primary_key;
-
-		/**
-		 * 쓰기 주소, 삭제 주소등 필요한 주소를 구합니다
-		 */
-		$view['view']['skeyword'] = ($sfield && array_key_exists($sfield, $search_option)) ? $skeyword : '';
-		$view['view']['search_option'] = search_option($search_option, $sfield);
-		$view['view']['listall_url'] = admin_url($this->pagedir);
-		$view['view']['whitelist_url'] = admin_url($this->pagedir . '/whitelist');
-		$view['view']['mediatype_url'] = admin_url($this->pagedir . '/mediatype');
-		$view['view']['write_url'] = admin_url($this->pagedir . '/mediatype_write');
-		$view['view']['denyreason_url'] = admin_url($this->pagedir . '/denyreason');
-		$view['view']['list_update_url'] = admin_url($this->pagedir . '/listupdate/?' . $param->output());
-		$view['view']['list_delete_url'] = admin_url($this->pagedir . '/mediatype_listdelete/?' . $param->output());
-
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
-
-		/**
-		 * 어드민 레이아웃을 정의합니다
-		 */
-		$layoutconfig = array('layout' => 'layout', 'skin' => 'mediatype');
-		$view['layout'] = $this->managelayout->admin($layoutconfig, $this->cbconfig->get_device_view_type());
-		$this->data = $view;
-		$this->layout = element('layout_skin_file', element('layout', $view));
-		$this->view = element('view_skin_file', element('layout', $view));
+		header('Content-Disposition: attachment; filename=미디어심사목록_' . cdate('Y_m_d') . '.xls');
+		echo $this->load->view('admin/' . ADMIN_SKIN . '/' . $this->pagedir  . '/excel', $view, true);
 	}
 
 
@@ -1330,6 +603,15 @@ class Judgemedia extends CB_Controller
 				$warn_count = 0;
 				$getuserdata = $this->Member_model->get_by_memid(element('jud_mem_id',$getdata), 'mem_id, mem_userid, mem_denied');
 				if($this->input->post('value') == 'deny' || $this->input->post('value') == 'warn'){
+					/*
+					** 신규신청 반려일 경우 중복이 있다면 제거
+					*/
+					if(element('jud_jug_id',$getdata) == 2){
+						$this->RS_media_duplication_model->delete_where(array('(`med_id = '.element('jud_med_id',$getdata).' or `dup_id` = '.element('jud_med_id',$getdata).')' => null));
+					}
+					/*
+					** 경고 정보 불러오기
+					*/
 					$extradata = $this->Member_extra_vars_model->get_all_meta(element('jud_mem_id',$getdata));
 					// $is_warn_1 = element('mem_warn_1',$extradata);
 					$is_warn_1 = $this->Member_extra_vars_model->item(element('jud_mem_id',$getdata),'mem_warn_1');
@@ -1340,45 +622,45 @@ class Judgemedia extends CB_Controller
 					/*
 					** 반려 / 경고 사유 기록
 					*/
-						$insert = array(
-							'judn_jud_id' => element('jud_id',$getdata),
-							'judn_reason' => $this->input->post('deny')
-						);
-						$this->RS_judge_denied_model->insert($insert);
+					$insert = array(
+						'judn_jud_id' => element('jud_id',$getdata),
+						'judn_reason' => $this->input->post('deny')
+					);
+					$this->RS_judge_denied_model->insert($insert);
 
-						if($this->input->post('value') == 'warn'){
-							if(!$is_warn_1){
-								$insert = array(
-									'mem_warn_1' => $this->input->post('warn')
-								);
-								$this->Member_extra_vars_model->save(element('jud_mem_id',$getdata), $insert);
-								$warn_count ++;
-							} else if(!$is_warn_2){
-								/*
-								** 경고 2회시 차단적용
-								*/
-								$insert = array(
-									'mem_warn_2' => $this->input->post('warn')
-								);
-								$this->Member_extra_vars_model->save(element('jud_mem_id',$getdata), $insert);
+					if($this->input->post('value') == 'warn'){
+						if(!$is_warn_1){
+							$insert = array(
+								'mem_warn_1' => $this->input->post('warn')
+							);
+							$this->Member_extra_vars_model->save(element('jud_mem_id',$getdata), $insert);
+							$warn_count ++;
+						} else if(!$is_warn_2){
+							/*
+							** 경고 2회시 차단적용
+							*/
+							$insert = array(
+								'mem_warn_2' => $this->input->post('warn')
+							);
+							$this->Member_extra_vars_model->save(element('jud_mem_id',$getdata), $insert);
 
+							$update = array(
+								'mem_denied' => 1
+							);
+							$this->Member_model->update(element('jud_mem_id',$getdata),$update);
+							$warn_count ++;
+						} else {
+							/*
+							** 이미 2회 차단되있을 시 그냥 반려처리
+							*/
+							if(!element('mem_denied',$getuserdata)){
 								$update = array(
 									'mem_denied' => 1
 								);
 								$this->Member_model->update(element('jud_mem_id',$getdata),$update);
-								$warn_count ++;
-							} else {
-								/*
-								** 이미 2회 차단되있을 시 그냥 반려처리
-								*/
-								if(!element('mem_denied',$getuserdata)){
-									$update = array(
-										'mem_denied' => 1
-									);
-									$this->Member_model->update(element('jud_mem_id',$getdata),$update);
-								}
 							}
 						}
+					}
 				}
 
 				/*

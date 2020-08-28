@@ -5,10 +5,12 @@ td {text-align:center; line-height:40px; font-size:12px; color:#474747; font-fam
 </style>
 <table width="100%" border="1" bordercolor="#E4E4E4" cellspacing="0" cellpadding="0">
 		<tr>
+			<th>index</th>
 			<th>제목</th>
 			<th>본문</th>
 			<th>썸네일유형</th>
 			<th>썸네일이미지</th>
+			<th>썸네일이미지경로</th>
 			<th>썸네일유튜브</th>
 			<th>목표포인트</th>
 			<th>노출여부</th>
@@ -27,10 +29,12 @@ td {text-align:center; line-height:40px; font-size:12px; color:#474747; font-fam
 		foreach (element('list', element('data', $view)) as $result) {
 	?>
 			<tr>
-				<td height="30"><?php echo html_escape(element('mis_title', $result)); ?></td>
+				<td height="160"><?php echo element('mis_id', $result); ?></td>
+				<td><?php echo html_escape(element('mis_title', $result)); ?></td>
 				<td><?php echo html_escape(element('mis_content', $result)); ?></td>
 				<td><?php echo html_escape(element('mis_thumb_type', $result)); ?></td>
-				<td><?php echo html_escape(element('mis_thumb_image', $result)); ?></td>
+				<td style="width:200px;"><?php if(element('mis_thumb_image', $result)){ ?><img src="<?php echo thumb_url('mission_thumb_img', element('mis_thumb_image', $result), 200, 160); ?>" alt="제출이미지" title="제출이미지"/> <?php } ?></td>
+				<td><?php echo element('mis_thumb_image', $result) ? thumb_url('mission_thumb_img', element('mis_thumb_image', $result), 200, 160) : ''; ?></td>
 				<td><?php echo html_escape(element('mis_thumb_youtube', $result)); ?></td>
 				<td><?php echo html_escape(element('mis_max_point', $result)); ?></td>
 				<td><?php echo element('mis_allowed', $result)? '노출' : '미노출'; ?></td>

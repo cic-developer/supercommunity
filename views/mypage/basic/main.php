@@ -1,4 +1,5 @@
 <?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
+<?php $wallet_text = html_escape($this->member->item('mem_email'))? '지갑주소 수정' : '지갑주소 입력' ?>
 
 <div class="mypage">
 	<ul class="nav nav-tabs">
@@ -49,7 +50,14 @@
 		<?php } ?>
 		<li>
 			<span>포인트</span>
-			<div class="form-text"><?php echo number_format($this->member->item('mem_point')); ?></div>
+			<div class="form-text"><?php echo number_format($this->member->item('mem_point'),1); ?></div>
+		</li>
+		<li>
+			<span>Per Point <br> 지갑주소</span>
+			<div>
+				<input value="<?php echo html_escape($this->member->item('mem_email')); ?>" name="wallet"/>
+				<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal"><?=$wallet_text?></button>
+			</div>
 		</li>
 		<?php
 		/* if (element('member_group_name', $view)) {
@@ -77,3 +85,80 @@
 		</li>
 	</ol>
 </div>
+<style>
+	/* .modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+	} */
+	.modal {
+		top : -300px
+	}
+</style>
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>이메일 인증</h4>
+				본인 인증을 위해 이메일 주소를 입력하여 주세요
+			</div>
+			<div class="modal-body">
+				<div class="email_div">
+					<input id="email_id">@<input id="email_addr"/>
+					<select id="email_category">
+						<option value="">직접 입력</option>
+						<option value="naver.com">네이버</option>
+						<option value="daum.net">다음</option>
+					</select>
+				</div>
+				<div>
+					<button id="email_send" onclick="sendCertifiEmail()">이메일 인증</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	let email_addr = $("#email_addr");
+	let email_id = $("#email_id");
+
+	$("#email_category").on('change',function(){
+		let _value = $(this).val();
+		if(_value){
+			email_addr.attr('readonly',true);
+			email_addr.val(_value);
+		}else{
+			email_addr.attr('readonly',false);
+			email_addr.val('');
+		}
+	});
+
+	function sendCertifiEmail(){
+		if(!email_id.val()){
+			alert('이메일 아이디를 입력해주세요');
+			email_id.focus();
+			return;
+		}
+		if(!email_addr.val()){
+			alert('이메일 주소를 입력해주세요');
+			email_addr.focus();
+			return;
+		}
+		$.ajax({
+			url: "",
+			type: "POST",
+			dataType: "json",
+			data: {
+				id : email_id.val(),
+				addr : email_addr.val()
+			},
+			success: function(data){
+
+			},
+			error: function (request, status, error){        
+
+			}
+		});
+	}
+</script>

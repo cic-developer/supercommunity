@@ -18,7 +18,7 @@ class Main extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('Board');
+	protected $models = array('Board', 'RS_media');
 
 	/**
 	 * 헬퍼를 로딩합니다
@@ -41,6 +41,7 @@ class Main extends CB_Controller
 	 */
 	public function index()
 	{
+
 		// 이벤트 라이브러리를 로딩합니다
 		$eventname = 'event_main_index';
 		$this->load->event($eventname);
@@ -84,7 +85,7 @@ class Main extends CB_Controller
 			'mobile_layout_dir' => $this->cbconfig->item('mobile_layout_main'),
 			'use_sidebar' => $this->cbconfig->item('sidebar_main'),
 			'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_main'),
-			'skin_dir' => $this->cbconfig->item('skin_main'),
+			'skin_dir' => 'rsteam_cic',//$this->cbconfig->item('skin_main'),
 			'mobile_skin_dir' => $this->cbconfig->item('mobile_skin_main'),
 			'page_title' => $page_title,
 			'meta_description' => $meta_description,
@@ -92,7 +93,9 @@ class Main extends CB_Controller
 			'meta_author' => $meta_author,
 			'page_name' => $page_name,
 		);
+		// exit;
 		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+		$view['per_friends'] = $this->db->get('rs_perfriends')->row_array()['PERFRIENDS'];
 		$this->data = $view;
 		$this->layout = element('layout_skin_file', element('layout', $view));
 		$this->view = element('view_skin_file', element('layout', $view));

@@ -5,8 +5,10 @@
 	<?php
 	echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
 	echo show_alert_message(element('alert_message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
+	// 수정 금지구간 시작
 	$attributes = array('class' => 'form-inline', 'name' => 'flist', 'id' => 'flist');
 	echo form_open(current_full_url(), $attributes);
+	// 수정 금지구간 끝
 	?>
 		<ul class="table-top mb10 pull-left">
 			<li>
@@ -38,12 +40,25 @@
 				foreach (element('list', element('data', $view)) as $result) {
 			?>
 				<tr>
-					<td class="text-center"><input type="checkbox" name="chk[]" class="list-chkbox" value="<?php echo element('not_id', $result); ?>" /></td>
-					<td class="text-center"><?php echo number_format(element('num', $result)); ?></td>
-					<td class="text-center"><?php echo display_datetime(element('not_datetime', $result), 'sns'); ?></td>
 					<td class="text-center">
-						<a href="<?php echo element('read_url', $result); ?>" <?php echo element('onClick', $result) ? 'onClick="' . element('onClick', $result) . '";' : ''; ?> class="noti_read <?php echo element('not_type', $result); ?>" data-not-id="<?php echo element('not_id', $result); ?>"><?php echo (element('not_read_datetime', $result) > '0000-00-00 00:00:00') ? '<span class="read">' . display_datetime(element('not_read_datetime', $result), 'sns') . '</span>' : '<span class="unread">읽지 않음</span>'; ?></a></td>
-					<td><a href="<?php echo element('read_url', $result); ?>" <?php echo element('onClick', $result) ? 'onClick="' . element('onClick', $result) . '";' : ''; ?> class="noti_read <?php echo element('not_type', $result); ?>" data-not-id="<?php echo element('not_id', $result); ?>"><?php echo html_escape(element('not_message', $result)); ?></a></td>
+						<input type="checkbox" name="chk[]" class="list-chkbox" value="<?php echo element('not_id', $result); ?>" />
+					</td>
+					<td class="text-center">
+						<?php echo number_format(element('num', $result)); ?>
+					</td>
+					<td class="text-center">
+						<?php echo display_datetime(element('not_datetime', $result), 'sns'); ?>
+					</td>
+					<td class="text-center">
+						<a href="<?php echo element('read_url', $result); ?>" <?php echo element('onClick', $result) ? 'onClick="' . element('onClick', $result) . '";' : ''; ?> class="noti_read <?php echo element('not_type', $result); ?>" data-not-id="<?php echo element('not_id', $result); ?>">
+							<?php echo (element('not_read_datetime', $result) > '0000-00-00 00:00:00') ? '<span class="read">' . display_datetime(element('not_read_datetime', $result), 'sns') . '</span>' : '<span class="unread">읽지 않음</span>'; ?>
+						</a>
+					</td>
+					<td>
+						<a href="<?php echo element('read_url', $result); ?>" <?php echo element('onClick', $result) ? 'onClick="' . element('onClick', $result) . '";' : ''; ?> class="noti_read <?php echo element('not_type', $result); ?>" data-not-id="<?php echo element('not_id', $result); ?>">
+							<?php echo html_escape(element('not_message', $result)); ?>
+						</a>
+					</td>
 					<td class="text-center">
 						<button class="btn btn-danger btn-one-delete" type="button" data-one-delete-url = "<?php echo element('delete_url', $result); ?>"><i class="fa fa-trash"></i></button>
 					</td>

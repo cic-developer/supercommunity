@@ -1,4 +1,12 @@
 <div class="box">
+	<div class="box-header">
+		<ul class="nav nav-tabs">
+			<li role="presentation"><a href="<?php echo admin_url($this->pagedir); ?>" onclick="return check_form_changed();">메인페이지</a></li>
+			<li role="presentation" class="active"><a href="<?php echo admin_url($this->pagedir . '/denyreason'); ?>" onclick="return check_form_changed();">반려사유</a></li>
+			<li role="presentation"><a href="<?php echo admin_url($this->pagedir . '/mediatype'); ?>" onclick="return check_form_changed();">미디어 성격</a></li>
+			<li role="presentation"><a href="<?php echo admin_url($this->pagedir . '/whitelist'); ?>" onclick="return check_form_changed();">화이트리스트</a></li>
+		</ul>
+	</div>
 	<div class="box-table">
 		<?php
 		echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
@@ -7,6 +15,16 @@
 		echo form_open_multipart(current_full_url(), $attributes);
 		?>
 			<input type="hidden" name="<?php echo element('primary_key', $view); ?>"	value="<?php echo element(element('primary_key', $view), element('data', $view)); ?>" />
+			<div class="form-group">
+				<label class="col-sm-2 control-label">카테고리</label>
+				<div class="col-sm-10">
+					<select class="form-control" name="judr_jug_id" >
+						<option value="1" <?php echo set_select('judr_jug_id', '1', ( (($this->input->get('judr_jug_id') != 2 && $this->input->get('judr_jug_id') != 3) || element('judr_jug_id', element('data', $view)) === '1') ? true : false)); ?>>미션심사</option>
+						<option value="2" <?php echo set_select('judr_jug_id', '2', ( ($this->input->get('judr_jug_id') == 2 || element('judr_jug_id', element('data', $view)) === '2' || element('judr_jug_id', element('data', $view)) === '4') ? true : false)); ?>>미디어심사</option>
+						<option value="3" <?php echo set_select('judr_jug_id', '3', ( ($this->input->get('judr_jug_id') == 3 || element('judr_jug_id', element('data', $view)) === '3') ? true : false)); ?>>출금심사</option>
+					</select>
+				</div>
+			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">제목</label>
 				<div class="col-sm-10">
