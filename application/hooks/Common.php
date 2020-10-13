@@ -179,5 +179,10 @@ class _Common
 				}
 			}
 		}
+
+		$alert_message = $CI->session->flashdata('message');
+		if($alert_message){
+			echo '<script>alert("'.$alert_message.'")</script>';
+		}
 	}
 }

@@ -7,8 +7,8 @@
 		?>
 			<div class="box-table-header">
 				<ul class="nav nav-pills">
-					<li role="presentation" class="active"><a href="<?php echo admin_url($this->pagedir); ?>">포인트 목록</a></li>
-					<li role="presentation"><a href="<?php echo admin_url($this->pagedir . '/cleanlog'); ?>">포인트 로그 정리</a></li>
+					<li role="presentation" class="active"><a href="<?php echo admin_url($this->pagedir); ?>">퍼포인트 목록</a></li>
+					<li role="presentation"><a href="<?php echo admin_url($this->pagedir . '/cleanlog'); ?>">퍼포인트 로그 정리</a></li>
 				</ul>
 				<?php
 				ob_start();
@@ -16,7 +16,7 @@
 					<div class="btn-group pull-right" role="group" aria-label="...">
 						<a href="<?php echo element('listall_url', $view); ?>" class="btn btn-outline btn-default btn-sm">전체목록</a>
 						<button type="button" class="btn btn-outline btn-default btn-sm btn-list-delete btn-list-selected disabled" data-list-delete-url = "<?php echo element('list_delete_url', $view); ?>" >선택삭제</button>
-						<a href="<?php echo element('write_url', $view); ?>" class="btn btn-outline btn-danger btn-sm">포인트추가</a>
+						<a href="<?php echo element('write_url', $view); ?>" class="btn btn-outline btn-danger btn-sm">퍼포인트추가</a>
 					</div>
 				<?php
 				$buttons = ob_get_contents();
@@ -31,10 +31,10 @@
 							<th>번호</th>
 							<th>회원아이디</th>
 							<th>회원명</th>
-							<th>포인트</th>
+							<th>퍼포인트</th>
 							<th>발생일시</th>
-							<th>포인트내용</th>
-							<th>포인트합</th>
+							<th>퍼포인트내용</th>
+							<th>퍼포인트합</th>
 							<th><input type="checkbox" name="chkall" id="chkall" /></th>
 						</tr>
 					</thead>

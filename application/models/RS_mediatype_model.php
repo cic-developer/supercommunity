@@ -82,6 +82,7 @@ class RS_mediatype_model extends CB_Model
 				if ($value) {
 					$updatedata = array(
 						'met_title' => $data['met_title'][$key],
+						'met_title_en' => $data['met_title_en'][$key],
 						'met_order' => $order,
 						'met_mdate' => cdate('Y-m-d H:i:s'),
 						'met_modifier_mem_id'=> $this->session->userdata('mem_id'),
@@ -91,6 +92,7 @@ class RS_mediatype_model extends CB_Model
 				} else {
 					$insertdata = array(
 						'met_title' => $data['met_title'][$key],
+						'met_title_en' => $data['met_title_en'][$key],
 						'met_order' => $order,
 						'met_wdate' => cdate('Y-m-d H:i:s'),
 						'met_mdate' => cdate('Y-m-d H:i:s'),

@@ -1,0 +1,34 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+$lang[0] = 'withdrawal application';//'출금신청';
+$lang[1] = 'advertising photograph'; //'광고 사진';
+$lang[2] = 'SUPER COMMUNITY <br/> Applying for withdrawal'; //'SUPER COMMUNITY <br/> 출금신청중';
+$lang[3] = 'If you close the window, your application may not be successful. Just a moment, please'; //'*창을 닫을 시 신청이 제대로 이루어 지지 않을 수 있습니다. 잠시만 기다려 주세요.';
+$lang[4] = 'SUPER COMMUNITY <br/> withdrawal application has been completed.'; //'SUPER COMMUNITY <br/> 출금신청이 완료되었습니다.';
+$lang[5] = 'Check';
+$lang[6] = 'MY PAGE';
+$lang[7] = 'My Info'; //'내 정보';
+$lang[8] = 'withdrawal request'; //'출금요청';
+$lang[9] = 'withdrawalable PER POINT'; //'출금가능 PER POINT';
+$lang[10] = 'PER POINT';
+$lang[11] = 'Forwarding amount'; //'출금액';
+$lang[12] = 'Enter output amount'; //'출금액 입력';
+$lang[13] = 'withdrawal request'; //'출금요청';
+$lang[14] = 'withdrawal request status'; //'출금요청현황';
+$lang[15] = 'withdrawal application'; //'출금신청';
+$lang[16] = 'application<br/>date'; //'신청일';
+$lang[17] = 'Forwarding<br/>amount'; //'출금액';
+$lang[18] = 'Processing'; //'처리중';
+$lang[19] = 'Processing completed'; //'처리완료';
+$lang[20] = 'I have no withdrawal history';//'출금요청 이력이 없습니다.';
+$lang[21] = 'The withdrawal request PER POINT can only be a number, not a negative number';//'출금 요청 PER POINT는 음수가 아닌 숫자만 가능합니다.';
+$lang[22] = 'The withdrawal request has more PER POINT than the withdrawalable PER POINT';//'출금 요청 PER POINT가 출금 가능 PER POINT보다 많습니다.';
+$lang['controller_0'] = 'You can use the withdrawal request only when you register your wallet address';//'출금 요청은 지갑주소를 등록하여야 사용하실 수 있습니다.';
+$lang['controller_1'] = 'Refused'; //'반려';
+$lang['controller_2'] = 'under examination';//'심사중';
+$lang['controller_3'] = 'Approved'; //'승인';
+$lang['controller_4'] = 'Payment Completed'; //'지급 완료';
+$lang['ajax_0'] = 'Your withdrawal request has been completed';//'출금 요청이 완료되었습니다.';
+$lang['ajax_1'] = 'An error occurred while requesting withdrawal';//'출금 요청중 오류가 발생하였습니다.';
+$lang['require_login'] = '로그인이 필요한 서비스 입니다.';

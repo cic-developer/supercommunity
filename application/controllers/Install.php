@@ -1665,7 +1665,7 @@ class Install extends CI_Controller
 				'type' => 'TINYINT',
 				'constraint' => 4,
 				'unsigned' => true,
-				'default' => '0',
+				'default' => '1',
 			),
 			'mem_receive_sms' => array(
 				'type' => 'TINYINT',
@@ -1943,7 +1943,7 @@ class Install extends CI_Controller
 				'type' => 'TINYINT',
 				'constraint' => 4,
 				'unsigned' => true,
-				'default' => '0',
+				'default' => '1',
 			),
 			'mem_receive_sms' => array(
 				'type' => 'TINYINT',

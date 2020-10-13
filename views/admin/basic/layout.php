@@ -46,7 +46,7 @@ var cb_board = "";
 var cb_csrf_hash = "<?php echo $this->security->get_csrf_hash(); ?>";
 var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 </script>
-<script type="text/javascript" src="<?php echo base_url('assets/js/sideview.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/sideview.js?v=1'); ?>"></script>
 </head>
 <body>
 <!-- start wrapper -->

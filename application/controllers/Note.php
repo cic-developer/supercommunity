@@ -18,7 +18,7 @@ class Note extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('Note');
+	protected $models = array('Notification');
 
 	/**
 	 * 헬퍼를 로딩합니다
@@ -172,6 +172,7 @@ class Note extends CB_Controller
 			'meta_author' => $meta_author,
 			'page_name' => $page_name,
 		);
+
 		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
 		$this->data = $view;
 		$this->layout = element('layout_skin_file', element('layout', $view));
@@ -184,16 +185,18 @@ class Note extends CB_Controller
 	 */
 	public function view($type = 'recv', $note_id = 0)
 	{
-		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_note_view';
-		$this->load->event($eventname);
-
+		
 		/**
 		 * 로그인이 필요한 페이지입니다
 		 */
 		required_user_login();
 
 		$mem_id = (int) $this->member->item('mem_id');
+		
+		// 이벤트 라이브러리를 로딩합니다
+		$eventname = 'event_note_view';
+		$this->load->event($eventname);
+
 
 		$view = array();
 		$view['view'] = array();
@@ -339,15 +342,13 @@ class Note extends CB_Controller
 	 */
 	public function write($userid = '')
 	{
-		// 이벤트 라이브러리를 로딩합니다
-		$eventname = 'event_note_write';
-		$this->load->event($eventname);
-
 		/**
 		 * 로그인이 필요한 페이지입니다
 		 */
 		required_user_login();
-
+		// 이벤트 라이브러리를 로딩합니다
+		$eventname = 'event_note_write';
+		$this->load->event($eventname);
 		if ( ! $this->cbconfig->item('use_note')) {
 			alert_close('쪽지 기능을 사용하지 않는 사이트입니다');
 			return false;
@@ -494,7 +495,7 @@ class Note extends CB_Controller
 									$this->member->item('mem_id'),
 									element('mem_id', $mem),
 									$this->input->post('title'),
-									$this->input->post('content'),
+									$this->cbconfig->get_device_view_type() !== 'mobile' ? $this->input->post('content') : nl2br($this->input->post('content')),
 									$content_type,
 									element('nte_originname', $uploadfiledata, ''),
 									element('nte_filename', $uploadfiledata, '')

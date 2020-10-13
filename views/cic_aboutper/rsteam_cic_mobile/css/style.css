@@ -1,0 +1,225 @@
+/**
+	aboutper skin css
+*/
+
+
+
+
+#aboutper_wrap{
+	
+	padding-top:50px;
+	overflow: hidden;
+	padding-left: 20px;
+	padding-right: 20px;
+	
+
+}
+
+#aboutper_wrap .ab_right{
+	width: 100%;
+	overflow: hidden;
+	text-align:justify;	
+}
+
+#aboutper_wrap .ab_right .right_title{
+	overflow: hidden;
+	display: block;
+	
+}
+
+#aboutper_wrap .ab_right .right_title li{
+	display: block;
+	
+}
+
+#aboutper_wrap .ab_right .right_title li p{
+	font-size: 2em;
+	font-weight: 600;
+	color:#000;
+	padding-bottom:10px;
+	
+}
+ 
+#aboutper_wrap .ab_right .right_title .b_title{
+	display: block;	
+}
+
+#aboutper_wrap .ab_right .right_title .b_title p{
+	font-size: 2em;
+	display: inline-block;
+	font-weight: 500;
+	color:#fff;	
+	background-color: #000;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top:8px;
+	
+}
+
+/*분배 타이틀 끝*/
+
+#aboutper_wrap .ab_right .provision{
+	width: 100%;
+	display: block;
+	padding-bottom: 80px;
+	
+}
+
+#aboutper_wrap .ab_right .provision dt{
+	display: block;
+	font-size:1.6em;
+	font-weight: 600;
+	padding-bottom: 10px;
+	color:#333;
+	padding-top:30px;
+}
+
+#aboutper_wrap .ab_right .provision .first_dt{
+	display: block;
+	font-weight: 600;
+	padding-bottom: 10px;
+	color:#333;
+	padding-top:70px;
+}
+
+
+
+#aboutper_wrap .ab_right .provision dt b{
+	display: inline-block;
+	font-weight: 600;
+	color:#333;
+	border-bottom:1px solid #fdcd49;
+	line-height: 2;
+	
+}
+
+#aboutper_wrap .ab_right .provision dd{
+	display: block;
+	
+}
+
+#aboutper_wrap .ab_right .provision dd p{
+	display: inline-block;
+	font-size:1.154em;
+	font-weight: 400;
+	color:#555;
+	line-height: 1.7;
+	text-align:justify;
+
+}
+
+#aboutper_wrap .ab_right .provision dd .gray{
+	font-weight:300;
+	color:#aaa;
+	font-size:1em;
+	display: inline;
+}
+
+#aboutper_wrap .ab_right .bt{	
+	text-align: center;
+	padding-bottom: 70px;
+	
+}
+
+
+/*분배정책css끝*/
+
+
+/*분배현황 css 시작*/
+
+
+#aboutper_wrap .ab_right .status{
+	margin-top:30px;	
+	padding-top:45px;
+	padding-bottom:45px;
+	margin-bottom:50px;
+	
+
+}
+#aboutper_wrap .status dt{
+	display:block;
+	border-top:#ddd 1px solid;
+	border-bottom:#ddd 1px solid;
+	overflow: hidden;
+	padding-top:30px;
+	padding-bottom:30px;
+	text-align: center;
+		
+}
+#aboutper_wrap .status dt h3{
+	display:inline-block;
+	overflow: hidden;		
+}
+#aboutper_wrap .status dt h3 img{
+	display:block;
+	margin:0 auto;
+	margin-bottom:10px;
+	
+
+}
+#aboutper_wrap .status dt h3 u{
+	font-size: 2.8em;
+	font-weight: 400;
+	text-decoration: none;
+	display:block;
+	padding-top: 5px;
+	font-family:'Montserrat', sans-serif;	
+	float: left;
+	color:#333;
+	margin-left: 5px;
+	letter-spacing: -1px;
+}
+#aboutper_wrap .status dt strong{
+	font-size: 2.4em;
+	font-weight: 400;
+	text-decoration: none;
+	display:block;
+	font-weight: 600;
+	font-family:'Montserrat', sans-serif;
+	padding-top:5px;
+	line-height: 1.5;
+	
+}
+
+#aboutper_wrap .status dd{
+	display: block;
+	overflow: hidden;
+	padding-top: 50px;
+}
+
+#aboutper_wrap .status dd ul{
+	display:block;
+	width: 100%;
+}				
+
+
+#aboutper_wrap .status dd ul li{
+	display:block;
+	width: 100%;
+	overflow: hidden;
+	
+}
+
+#aboutper_wrap .status dd ul .tit{
+	font-size:2em;
+	padding-bottom: 20px;
+	font-weight: 500;
+}
+
+#aboutper_wrap .status dd ul li img{
+	width:5%;
+	display: block;
+	float: left;
+}
+	
+
+
+#aboutper_wrap .status dd ul li p{
+	width: 95%;
+	display:block;
+	font-size: 1.154em;
+	font-weight: 300;
+	color:#333;	
+	line-height: 1.5;
+	float: left;
+}

@@ -18,7 +18,7 @@ class Mypage extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array();
+	protected $models = array('RS_media','RS_auth_mail', 'RS_judge', 'RS_judge_log', 'RS_advertise', 'Member', 'Member_meta', 'Member_extra_vars', 'Point');
 
 	/**
 	 * 헬퍼를 로딩합니다
@@ -42,6 +42,26 @@ class Mypage extends CB_Controller
 	 */
 	public function index()
 	{
+
+		//페이지별 언어팩 로드
+		if($this->agent->is_mobile()){
+			$this->lang->load('cic_mypage_mobile_main', $this->session->userdata('lang'));
+		} else {
+			$this->lang->load('cic_mypage_main', $this->session->userdata('lang'));
+		}
+		$this->load->library('form_validation');
+		/**
+		 * 전송된 데이터의 유효성을 체크합니다
+		 */
+		$config = array(
+			array(
+				'field' => 'nick_name',
+				'label' => $this->lang->line('controller_0'),
+				'rules' => 'trim|required|max_length[12]|min_length[2]',
+			)
+		);
+		$this->form_validation->set_rules($config);
+			
 		// 이벤트 라이브러리를 로딩합니다
 		$eventname = 'event_mypage_index';
 		$this->load->event($eventname);
@@ -49,38 +69,117 @@ class Mypage extends CB_Controller
 		/**
 		 * 로그인이 필요한 페이지입니다
 		 */
-		required_user_login();
-
+		$mem_id = $this->member->is_member();
+		if(!$mem_id){ $this->session->set_flashdata('message', $this->lang->line('controller_1')); redirect('/login');}
 		$view = array();
 		$view['view'] = array();
 
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before'] = Events::trigger('before', $eventname);
-
-		$registerform = $this->cbconfig->item('registerform');
-		$view['view']['memberform'] = json_decode($registerform, true);
-
-		$view['view']['member_group_name'] = '';
-		$member_group = $this->member->group();
-		if ($member_group && is_array($member_group)) {
-
-			$this->load->model('Member_group_model');
-
-			foreach ($member_group as $gkey => $gval) {
-				$item = $this->Member_group_model->item(element('mgr_id', $gval));
-				if ($view['view']['member_group_name']) {
-					$view['view']['member_group_name'] .= ', ';
-				}
-				$view['view']['member_group_name'] .= element('mgr_title', $item);
-			}
-		}
-
-		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
 
 		/**
-		 * 레이아웃을 정의합니다
+		 * 유효성 검사를 하지 않는 경우, 또는 유효성 검사에 실패한 경우입니다.
+		 * 즉 글쓰기나 수정 페이지를 보고 있는 경우입니다
 		 */
+		$alert_message = '';
+		if ($this->form_validation->run() === false) {
+
+			// 이벤트가 존재하면 실행합니다
+			$view['view']['event']['before'] = Events::trigger('before', $eventname);
+
+			$registerform = $this->cbconfig->item('registerform');
+			$view['view']['memberform'] = json_decode($registerform, true);
+
+			$view['view']['member_group_name'] = '';
+			$member_group = $this->member->group();
+			if ($member_group && is_array($member_group)) {
+
+				$this->load->model('Member_group_model');
+
+				foreach ($member_group as $gkey => $gval) {
+					$item = $this->Member_group_model->item(element('mgr_id', $gval));
+					if ($view['view']['member_group_name']) {
+						$view['view']['member_group_name'] .= ', ';
+					}
+					$view['view']['member_group_name'] .= element('mgr_title', $item);
+				}
+			}
+			$view['media_data'] = $this->RS_media_model->get('', '', "med_deletion = 'N' AND med_state = 3 AND med_state != 0 AND mem_id = ".$mem_id, '', 0, 'med_wdate','DESC', $join = array('table' => 'rs_whitelist', 'on' => 'med_wht_id = wht_id', 'type' => 'LEFT'));
+			$view['member_data'] = $this->Member_model->get_by_memid($mem_id);
+			$view['total_super'] = $this->RS_media_model->get_total_super($mem_id);
+			
+			// 이벤트가 존재하면 실행합니다
+			$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
+			$view['header']['menu'] = 'mypage';
+			/**
+			 * 레이아웃을 정의합니다
+			 */
+			$page_title = $this->cbconfig->item('site_meta_title_mypage');
+			$meta_description = $this->cbconfig->item('site_meta_description_mypage');
+			$meta_keywords = $this->cbconfig->item('site_meta_keywords_mypage');
+			$meta_author = $this->cbconfig->item('site_meta_author_mypage');
+			$page_name = $this->cbconfig->item('site_page_name_mypage');
+			
+			$layoutconfig = array(
+				'path' => 'mypage',
+				'layout' => 'layout',
+				'skin' => 'main',
+				'layout_dir' => $this->cbconfig->item('layout_mypage'),
+				'mobile_layout_dir' => $this->cbconfig->item('mobile_layout_mypage'),
+				'use_sidebar' => $this->cbconfig->item('sidebar_mypage'),
+				'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_mypage'),
+				'skin_dir' => $this->cbconfig->item('skin_mypage'),
+				'mobile_skin_dir' => $this->cbconfig->item('mobile_skin_mypage'),
+				'page_title' => $page_title,
+				'meta_description' => $meta_description,
+				'meta_keywords' => $meta_keywords,
+				'meta_author' => $meta_author,
+				'page_name' => $page_name,
+			);
+			$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+			// print_r($view['layout']);
+			// exit;
+			$this->data = $view;
+			$this->layout = element('layout_skin_file', element('layout', $view));
+			$this->view = element('view_skin_file', element('layout', $view));
+		}else{
+			$nick_name = $this->input->post('nick_name');
+			$wallet_addr = $this->input->post('wallet_addr');
+			$atm_id = $this->input->post('auth_id');
+			$atm_hash = $this->input->post('auth_hash');
+			$where = array('atm_hash' => $atm_hash);
+			$result = $this->RS_auth_mail_model->get_one($atm_id, '', $where);
+
+			if($result){
+				if($result['atm_type'] == 1){	//지갑 주소 인증인 경우 지갑 주소 업데이트
+					$this->Member_extra_vars_model->save($mem_id, array('meta_wallet_address' => trim(html_escape($wallet_addr))));
+					$this->Member_extra_vars_model->save($mem_id, array('meta_wallet_auth_datetime' => date('Y-m-d H:i:s')));
+				}
+				//지갑 주소 인증인 경우에도 해당 이메일로 인증한것으로 간주, 이메일을 업데이트 한다
+				$this->Member_model->update($mem_id, array('mem_email' => $this->input->post('email')));
+			}
+			$this->Member_model->update($mem_id, array('mem_nickname' => $nick_name));
+			$this->session->set_flashdata('message',$this->lang->line('controller_2'));
+			redirect('/Mypage');
+		}
+	}
+
+	//mypage 슈퍼포인트 조회 페이지
+	function superpoint(){
+		/**
+		 * 로그인이 필요한 페이지입니다
+		 */
+		required_user_login();
+
+		//페이지별 언어팩 로드
+		if($this->agent->is_mobile()){
+			$this->lang->load('cic_mypage_mobile_superpoint', $this->session->userdata('lang'));
+		} else {
+			$this->lang->load('cic_mypage_superpoint', $this->session->userdata('lang'));
+		}
+		$mem_id = $this->member->is_member();
+
+		/**
+		* 레이아웃을 정의합니다
+		*/
 		$page_title = $this->cbconfig->item('site_meta_title_mypage');
 		$meta_description = $this->cbconfig->item('site_meta_description_mypage');
 		$meta_keywords = $this->cbconfig->item('site_meta_keywords_mypage');
@@ -90,7 +189,7 @@ class Mypage extends CB_Controller
 		$layoutconfig = array(
 			'path' => 'mypage',
 			'layout' => 'layout',
-			'skin' => 'main',
+			'skin' => 'superpoint',
 			'layout_dir' => $this->cbconfig->item('layout_mypage'),
 			'mobile_layout_dir' => $this->cbconfig->item('mobile_layout_mypage'),
 			'use_sidebar' => $this->cbconfig->item('sidebar_mypage'),
@@ -103,15 +202,342 @@ class Mypage extends CB_Controller
 			'meta_author' => $meta_author,
 			'page_name' => $page_name,
 		);
-
 		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+		$view['member_data'] = $this->Member_model->get_by_memid($mem_id);
+		$view['total_super'] = $this->RS_media_model->get_total_super($mem_id);
+		$view['header']['menu'] = 'mypage';
 		$this->data = $view;
-		$this->layout = '_layout/bootstrap/layout';//element('layout_skin_file', element('layout', $view));
-		// print_r($this->layout);
-		// exit;
+		$this->layout = element('layout_skin_file', element('layout', $view));
+		$this->view = element('view_skin_file', element('layout', $view));
+	}
+	
+	//mypage 슈퍼포인트 조회 페이지
+	// function superpoint_mobile(){
+	// 	/**
+	// 	 * 로그인이 필요한 페이지입니다
+	// 	 */
+	// 	required_user_login();
+
+	// 	$mem_id = $this->member->is_member();
+
+	// 	/**
+	// 	* 레이아웃을 정의합니다
+	// 	*/
+	// 	$page_title = $this->cbconfig->item('site_meta_title_mypage');
+	// 	$meta_description = $this->cbconfig->item('site_meta_description_mypage');
+	// 	$meta_keywords = $this->cbconfig->item('site_meta_keywords_mypage');
+	// 	$meta_author = $this->cbconfig->item('site_meta_author_mypage');
+	// 	$page_name = $this->cbconfig->item('site_page_name_mypage');
+		
+	// 	$layoutconfig = array(
+	// 		'path' => 'mypage',
+	// 		'layout' => 'layout',
+	// 		'skin' => 'superpoint',
+	// 		'layout_dir' => '/rsteam_cic_mobile',
+	// 		'mobile_layout_dir' => '/rsteam_cic_mobile',
+	// 		'use_sidebar' => $this->cbconfig->item('sidebar_mypage'),
+	// 		'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_mypage'),
+	// 		'skin_dir' => '/rsteam_cic_mobile',
+	// 		'mobile_skin_dir' => '/rsteam_cic_mobile',
+	// 		'page_title' => $page_title,
+	// 		'meta_description' => $meta_description,
+	// 		'meta_keywords' => $meta_keywords,
+	// 		'meta_author' => $meta_author,
+	// 		'page_name' => $page_name,
+	// 	);
+	// 	$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+	// 	$view['member_data'] = $this->Member_model->get_by_memid($mem_id);
+	// 	$view['total_super'] = $this->RS_media_model->get_total_super($mem_id);
+	// 	$view['header']['menu'] = 'mypage';
+	// 	$this->data = $view;
+	// 	$this->layout = element('layout_skin_file', element('layout', $view));
+	// 	$this->view = element('view_skin_file', element('layout', $view));
+	// }
+
+	//출금 요청 페이지
+	function withdraw(){
+		/**
+		 * 로그인이 필요한 페이지입니다
+		 */
+
+		//페이지별 언어팩 로드
+		if($this->agent->is_mobile()){
+			$this->lang->load('cic_mypage_mobile_withdraw', $this->session->userdata('lang'));
+		} else {
+			$this->lang->load('cic_mypage_withdraw', $this->session->userdata('lang'));
+		}
+
+		if(!$this->member->is_member()){
+			$this->session->set_flashdata('message', $this->lang->line('require_login'));
+			redirect('/');
+		}
+		$mem_id = $this->member->is_member();
+		$all_meta = $this->Member_extra_vars_model->get_all_meta($mem_id);
+		$wallet_addr = element('meta_wallet_address',$all_meta);
+		if(!$wallet_addr || strlen($wallet_addr) < 10){
+			$this->session->set_flashdata('message',$this->lang->line('controller_0'));
+			redirect('/Mypage');
+			exit;
+		}
+		$param =& $this->querystring;
+		$page = (((int) $this->input->get('page')) > 0) ? ((int) $this->input->get('page')) : 1;
+		$findex = $this->input->get('findex') ? $this->input->get('findex') : $this->RS_judge_model->primary_key;
+		$forder = $this->input->get('forder', null, 'desc');
+		$sfield = $this->input->get('sfield', null, '');
+		$skeyword = $this->input->get('skeyword', null, '');
+		$per_page = $this->agent->is_mobile() ? 5 : 10;
+		$offset = ($page - 1) * $per_page;
+
+		$list_where = array(
+			'jud_jug_id' => 3,
+			'jud_mem_id' => $mem_id,
+			'jud_deletion' => 'N'
+		); 
+
+		$join = array(
+			'table' => 'rs_judge_denied',
+			'on' 	=> 'jud_id = judn_jud_id',
+			'type'	=> 'left'
+		);
+
+		$result = $this->RS_judge_model->_get_list_common(
+			'', $join, $per_page, $offset, $list_where, '', $findex, $forder, $sfield, $skeyword
+		);
+
+		$config['base_url'] = '/Mypage/withdraw?' . $param->replace('page');
+		$config['total_rows'] = $result['total_rows'];
+		$config['per_page'] = $per_page;
+		$this->pagination->initialize($config);
+		$view['paging'] = $this->pagination->create_links();
+		$view['page'] = $page;
+		$view['withdraw_list'] = $result['list'];
+		$view['advertise'] = $this->RS_advertise_model->get_random();
+		// 이벤트 라이브러리를 로딩합니다
+		$eventname = 'event_mypage_index';
+		$this->load->event($eventname);
+		/**
+		* 레이아웃을 정의합니다
+		*/
+		$page_title = $this->cbconfig->item('site_meta_title_mypage');
+		$meta_description = $this->cbconfig->item('site_meta_description_mypage');
+		$meta_keywords = $this->cbconfig->item('site_meta_keywords_mypage');
+		$meta_author = $this->cbconfig->item('site_meta_author_mypage');
+		$page_name = $this->cbconfig->item('site_page_name_mypage');
+		
+		$layoutconfig = array(
+			'path' => 'mypage',
+			'layout' => 'layout',
+			'skin' => 'withdraw',
+			'layout_dir' => $this->cbconfig->item('layout_mypage'),
+			'mobile_layout_dir' => $this->cbconfig->item('mobile_layout_mypage'),
+			'use_sidebar' => $this->cbconfig->item('sidebar_mypage'),
+			'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_mypage'),
+			'skin_dir' => $this->cbconfig->item('skin_mypage'),
+			'mobile_skin_dir' => $this->cbconfig->item('mobile_skin_mypage'),
+			'page_title' => $page_title,
+			'meta_description' => $meta_description,
+			'meta_keywords' => $meta_keywords,
+			'meta_author' => $meta_author,
+			'page_name' => $page_name,
+		);
+		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+		$view['total_super'] = $this->RS_media_model->get_total_super($mem_id);
+		foreach($view['withdraw_list'] AS $key => $value){
+			switch($view['withdraw_list'][$key]['jud_state']){
+				case '0' :
+					$view['withdraw_list'][$key]['state'] = $this->lang->line('controller_1');
+				break;
+				case '1' :
+					$view['withdraw_list'][$key]['state'] = $this->lang->line('controller_2');
+				break;
+				case '3' :
+					$view['withdraw_list'][$key]['state'] = $this->lang->line('controller_3');
+				break;
+				case '5' :
+					$view['withdraw_list'][$key]['state'] = $this->lang->line('controller_4');
+				break;
+				default :
+					$view['withdraw_list'][$key]['state'] = $view['withdraw_list'][$key]['jud_state'];
+			}
+		}
+		$view['header']['menu'] = 'mypage';
+		$this->data = $view;
+		$this->layout = element('layout_skin_file', element('layout', $view));
+		$this->view = element('view_skin_file', element('layout', $view));
+	}
+	
+	//출금 요청 페이지
+	function withdraw_mobile(){
+		/**
+		 * 로그인이 필요한 페이지입니다
+		 */
+		required_user_login();
+		/**
+		* 레이아웃을 정의합니다
+		*/
+		$page_title = $this->cbconfig->item('site_meta_title_mypage');
+		$meta_description = $this->cbconfig->item('site_meta_description_mypage');
+		$meta_keywords = $this->cbconfig->item('site_meta_keywords_mypage');
+		$meta_author = $this->cbconfig->item('site_meta_author_mypage');
+		$page_name = $this->cbconfig->item('site_page_name_mypage');
+		
+		$layoutconfig = array(
+			'path' => 'mypage',
+			'layout' => 'layout',
+			'skin' => 'withdraw',
+			'layout_dir' => '/rsteam_cic_mobile',
+			'mobile_layout_dir' => '/rsteam_cic_mobile',
+			'use_sidebar' => $this->cbconfig->item('sidebar_mypage'),
+			'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_mypage'),
+			'skin_dir' => '/rsteam_cic_mobile',
+			'mobile_skin_dir' => '/rsteam_cic_mobile',
+			'page_title' => $page_title,
+			'meta_description' => $meta_description,
+			'meta_keywords' => $meta_keywords,
+			'meta_author' => $meta_author,
+			'page_name' => $page_name,
+		);
+		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+		$view['header']['menu'] = 'mypage';
+		$this->data = $view;
+		$this->layout = element('layout_skin_file', element('layout', $view));
 		$this->view = element('view_skin_file', element('layout', $view));
 	}
 
+	//회원탈퇴 페이지
+	function signout(){
+		/**
+		 * 로그인이 필요한 페이지입니다
+		 */
+		required_user_login();
+
+		$this->load->library(array('form_validation'));
+
+		/**
+		 * 전송된 데이터의 유효성을 체크합니다
+		 */
+		$config = array(
+			array(
+				'field' => 'member_id',
+				'label' => 'fake_id',
+				'rules' => 'trim|required',
+			),
+		);
+		//페이지별 언어팩 로드
+		if($this->agent->is_mobile()){
+			$this->lang->load('cic_mypage_mobile_signout', $this->session->userdata('lang'));
+		} else {
+			$this->lang->load('cic_mypage_signout', $this->session->userdata('lang'));
+		}
+		$this->form_validation->set_rules($config);
+		if ($this->form_validation->run() === false) {
+			/**
+			* 레이아웃을 정의합니다
+			*/
+			$page_title = $this->cbconfig->item('site_meta_title_mypage');
+			$meta_description = $this->cbconfig->item('site_meta_description_mypage');
+			$meta_keywords = $this->cbconfig->item('site_meta_keywords_mypage');
+			$meta_author = $this->cbconfig->item('site_meta_author_mypage');
+			$page_name = $this->cbconfig->item('site_page_name_mypage');
+			$total_super = $this->RS_media_model->get_total_super($this->member->is_member());
+			$view['total_super'] = $total_super;
+			
+			$layoutconfig = array(
+				'path' => 'mypage',
+				'layout' => 'layout',
+				'skin' => 'signout',
+				'layout_dir' => $this->cbconfig->item('layout_mypage'),
+				'mobile_layout_dir' => $this->cbconfig->item('mobile_layout_mypage'),
+				'use_sidebar' => $this->cbconfig->item('sidebar_mypage'),
+				'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_mypage'),
+				'skin_dir' => $this->cbconfig->item('skin_mypage'),
+				'mobile_skin_dir' => $this->cbconfig->item('mobile_skin_mypage'),
+				'page_title' => $page_title,
+				'meta_description' => $meta_description,
+				'meta_keywords' => $meta_keywords,
+				'meta_author' => $meta_author,
+				'page_name' => $page_name,
+			);
+			$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+			$view['header']['menu'] = 'mypage';
+			$view['member_data'] = $this->member->get_member();
+			$this->data = $view;
+			$this->layout = element('layout_skin_file', element('layout', $view));
+			$this->view = element('view_skin_file', element('layout', $view));
+		}else{
+			$mem_id = element('mem_userid', $this->member->get_member('mem_id'));
+			$input_mem_id = $this->input->post('member_id');
+
+			if($mem_id == $input_mem_id){
+				$this->member->delete_member($this->member->is_member());
+				$this->session->sess_destroy();
+				$this->session->set_flashdata('message', $this->lang->line('c_1'));
+				$this->cache->clean();
+			}else{
+				$this->session->set_flashdata('message', $this->lang->line('c_2'));
+			}
+			redirect('/Mypage/signout');
+		}
+	}
+
+	
+	//회원탈퇴 페이지
+	function signout_mobile(){
+		/**
+		 * 로그인이 필요한 페이지입니다
+		 */
+		required_user_login();
+
+		$this->load->library(array('form_validation'));
+
+		/**
+		 * 전송된 데이터의 유효성을 체크합니다
+		 */
+		$config = array(
+			array(
+				'field' => 'mem_password',
+				'label' => '패스워드',
+				'rules' => 'trim|required|min_length[4]|callback__cur_password_check',
+			),
+		);
+		$this->form_validation->set_rules($config);
+		if ($this->form_validation->run() === false) {
+			/**
+			* 레이아웃을 정의합니다
+			*/
+			$page_title = $this->cbconfig->item('site_meta_title_mypage');
+			$meta_description = $this->cbconfig->item('site_meta_description_mypage');
+			$meta_keywords = $this->cbconfig->item('site_meta_keywords_mypage');
+			$meta_author = $this->cbconfig->item('site_meta_author_mypage');
+			$page_name = $this->cbconfig->item('site_page_name_mypage');
+			
+			$layoutconfig = array(
+				'path' => 'mypage',
+				'layout' => 'layout',
+				'skin' => 'signout',
+				'layout_dir' => 'rsteam_cic_mobile',//$this->cbconfig->item('layout_mypage'),
+				'mobile_layout_dir' => 'rsteam_cic_mobile',//$this->cbconfig->item('mobile_layout_mypage'),
+				'use_sidebar' => $this->cbconfig->item('sidebar_mypage'),
+				'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_mypage'),
+				'skin_dir' => 'rsteam_cic_mobile',//$this->cbconfig->item('skin_mypage'),
+				'mobile_skin_dir' => 'rsteam_cic_mobile',//$this->cbconfig->item('mobile_skin_mypage'),
+				'page_title' => $page_title,
+				'meta_description' => $meta_description,
+				'meta_keywords' => $meta_keywords,
+				'meta_author' => $meta_author,
+				'page_name' => $page_name,
+			);
+			$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+			
+			$this->data = $view;
+			$this->layout = element('layout_skin_file', element('layout', $view));
+			$this->view = element('view_skin_file', element('layout', $view));
+		}else{
+			$mem_id = $this->member->is_member();
+			$this->member->delete_member($mem_id);
+			$this->session->sess_destroy();
+		}
+	}
 
 	/**
 	 * 마이페이지>나의작성글 입니다
@@ -125,7 +551,10 @@ class Mypage extends CB_Controller
 		/**
 		 * 로그인이 필요한 페이지입니다
 		 */
-		required_user_login();
+				if(!$this->member->is_member()){
+			$this->session->set_flashdata('message',$this->lang->line('require_login'));
+			redirect('/login');
+		}
 
 		$mem_id = (int) $this->member->item('mem_id');
 
@@ -1170,4 +1599,162 @@ class Mypage extends CB_Controller
 		$this->layout = element('layout_skin_file', element('layout', $view));
 		$this->view = element('view_skin_file', element('layout', $view));
 	}
+
+	function ajax_emailSend(){
+		//페이지별 언어팩 로드
+		$this->lang->load('cic_mypage_authemail', $this->session->userdata('lang'));
+		$mem_id = $this->member->item('mem_id');
+		if(!$mem_id){echo json_encode('not found member'); exit;}
+		$email_type = $this->input->get('type');
+		if($email_type == 1 || $email_type == 2){ //이메일 형식이 지갑 주소 인증 또는 이메일 인증이 아닌경우 잘못된 접근, fail 리턴하고 끝낸다.
+			$where = array('atm_rev_mem_id' => $mem_id, 'atm_state' => 0, 'atm_wdate >=' => date('Y-m-d H:i:s', strtotime("-6 hours")), 'atm_type' => $email_type);
+			$search = $this->RS_auth_mail_model->get_one('','', $where);
+			if($search){
+				echo json_encode(array('state' => 'overlap', 'id' => $search['atm_id']));
+				exit;
+			}
+			$getdata['webmaster_email'] = $this->cbconfig->item('webmaster_email');
+			$getdata['webmaster_name'] 	= $this->cbconfig->item('webmaster_name');
+			$getdata['site_title'] 		= $this->cbconfig->item('site_title');
+
+			$email_data['auth_code'] 	= $this->generateRandomString();
+			$email_data['site_title'] 	= $this->cbconfig->item('site_title');
+			$email_data['mem_nickname']	= $this->member->item('mem_nickname');
+
+			$data['email_data'] = $email_data;
+
+			$message = $this->load->view('/mypage/auth_email_form', $data, true);
+			$this->load->library('email');
+			$this->email->from(element('webmaster_email', $getdata), element('webmaster_name', $getdata));
+			$this->email->to($this->input->get('email'));
+			$this->email->subject($email_type == 1 ? $this->lang->line('ajax_0') : $this->lang->line('ajax_1'));
+			$this->email->message($message);
+			$send_result = $this->email->send();
+			if($send_result){
+				$insert_array = array(
+					'atm_subject' 	=> $email_type == 1 ? $this->lang->line('ajax_0') : $this->lang->line('ajax_1'),
+					'atm_message' 	=> $message,
+					'atm_email'		=> element('webmaster_email', $getdata),
+					'atm_type' 		=> $email_type,
+					'atm_name'		=> element('webmaster_name', $getdata),
+					'atm_rev_mem_id'=> $mem_id,
+					'atm_wdate'		=> date('Y-m-d H:i:s'),
+					'atm_auth_code' => $email_data['auth_code']
+				);
+				$this->RS_auth_mail_model->insert($insert_array);
+				echo json_encode(array('state' => 'success', 'id' => $this->db->insert_id()));
+			}else{
+				echo json_encode(array('state' => 'fail', 'id' => 0));
+			} 
+		}else{
+			echo json_encode(array('state' => 'fail', 'id' => 0)); exit;
+		}
+	}
+
+	function ajax_emailAuth(){
+		$_code = $this->input->post('code');
+		$_id = $this->input->post('id');
+		$_email = $this->input->post('email');
+		$mem_id = $this->member->is_member();
+
+		$where = array(
+			'atm_rev_mem_id' => $mem_id,
+			'atm_state' 	=> 0,
+			'atm_wdate >=' 	=> date('Y-m-d H:i:s', strtotime("-6 hours")),
+			'atm_auth_code'	=> $_code
+		);
+		$result = $this->RS_auth_mail_model->get_one($_id, '', $where);
+		
+		if($result){
+			$_hash = md5("emailAuth".rand());
+			$this->Member_extra_vars_model->save($mem_id, array('meta_auth_eamil_datetime' => date('Y-m-d H:i:s')));
+			$this->Member_extra_vars_model->save($mem_id, array('meta_auth_email_address' => $_email));
+			$this->RS_auth_mail_model->update($_id, array('atm_state' => 1, 'atm_hash' => $_hash));
+
+			// echo json_encode($_hash);			
+			echo json_encode(array('result' => 'success', 'data' => $_hash, 'type' => $result['atm_type']));
+		}else{
+			echo json_encode(array('result' => 'fail', 'data' => '', 'type' => ''));
+		}
+	}
+
+	function ajax_withdraw(){
+		//페이지별 언어팩 로드
+		if($this->agent->is_mobile()){
+			$this->lang->load('cic_mypage_mobile_withdraw', $this->session->userdata('lang'));
+		} else {
+			$this->lang->load('cic_mypage_withdraw', $this->session->userdata('lang'));
+		}
+		$mem_id = $this->member->is_member();
+		if(!$mem_id){ echo json_encode('fail'); exit;}
+		$now = date('Y-m-d H:i:s');
+		$_ip = $this->input->ip_address();
+		$meta_data = $this->Member_extra_vars_model->get_all_meta($this->member->is_member());
+		$withdraw_point = $this->input->post('withdraw_point');
+		$member_point = $this->Point_model->get_point_sum($mem_id);
+
+		if($withdraw_point > $member_point && !is_numeric($withdraw_point)){
+			$this->session->set_flashdata('message',$this->lang->line('ajax_1'));
+			echo json_decode('fail');
+			exit;
+		}
+		$this->db->trans_start();
+
+		$judgeArr = array(
+			'jud_jug_id'	=> 3,
+			'jud_state'		=> 1,
+			'jud_point'		=> floor($withdraw_point*10)/10,
+			'jud_wallet'	=> element('meta_wallet_address',$meta_data),
+			'jud_wdate'		=> $now,
+			'jud_mem_id'	=> $mem_id,
+			'jud_mem_nickname'	=> $this->member->item('mem_nickname'),
+			'jud_register_ip'	=> $_ip,
+			'jud_deletion'	=> 'N'
+		);
+		
+		$jud_id = $this->RS_judge_model->insert($judgeArr);
+
+		$judgeLogArr = array(
+			'jul_jug_id'	=> 3,
+			'jul_jud_id'	=> $jud_id,
+			'jul_state'		=> 1,
+			'jul_mem_id'	=> $mem_id,
+			'jul_user_id'	=> $this->member->item('mem_userid'),
+			'jul_datetime'	=> $now,
+			'jul_ip'		=> $_ip,
+			'jul_useragent'	=> $this->agent->agent_string(),
+			'jul_data'		=> json_encode($judgeArr)
+		);
+
+		$jud_log_id = $this->RS_judge_log_model->insert($judgeLogArr);
+
+		if($jud_id && $jud_log_id){
+			$this->point->insert_point(
+				$mem_id,
+				-1*floor($withdraw_point*10)/10,
+				'출금 요청',
+				'applywithdraw',
+				$jud_id,
+				'출금심사 요청'
+			);
+			$this->db->trans_complete();
+			$this->session->set_flashdata('message',$this->lang->line('ajax_0'));
+			echo json_encode('success');
+		}else{
+			$this->session->set_flashdata('message',$this->lang->line('ajax_1'));
+			echo json_decode('fail');
+		}
+	}
+
+	private function generateRandomString($length = 6) {
+		$characters = '123456789ABCDEFGHIJKLMNPQRSTUVWXYZ';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[rand(0, $charactersLength - 1)];
+		}
+		return $randomString;
+	}
+
+	
 }

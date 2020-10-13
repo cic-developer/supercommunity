@@ -57,7 +57,7 @@ class Board_post extends CB_Controller
 
 		$view['view']['list'] = $list = $this->_get_list($brd_key);
 		$view['view']['board_key'] = element('brd_key', element('board', $list));
-
+		$view['header']['menu'] = 'noti';
 		// stat_count_board ++
 		$this->_stat_count_board(element('brd_id', element('board', $list)));
 
@@ -150,6 +150,7 @@ class Board_post extends CB_Controller
 		$post['meta'] = $this->Post_meta_model->get_all_meta($post_id);
 		$post['extravars'] = $this->Post_extra_vars_model->get_all_meta($post_id);
 		$view['view']['post'] = $post;
+		$view['header']['menu'] = 'noti';
 
 		$mem_id = (int) $this->member->item('mem_id');
 

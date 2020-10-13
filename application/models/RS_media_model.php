@@ -89,6 +89,8 @@ class RS_media_model extends CB_Model
 
     $now = date('Y-m-d H:i:s');
     if($insertData['med_id']){
+      $other_judge = $this->check_other_judge($insertData['med_id']);
+      if($other_judge){return $other_judge;}
       $insertData['med_mdate'] = $now;
       if($this->update($insertData['med_id'], $insertData)){
         $med_id = $insertData['med_id'];
@@ -97,9 +99,9 @@ class RS_media_model extends CB_Model
       $insertData['med_wdate'] = $now;
       $med_id = $this->insert($insertData);
     }
-
     if($med_id){
       $is_duplication =  $this->check_media_duplication($med_id, element('med_url', $insertData));  //중복확인된 리스트를 가지고 중복이 있을경우 db에 등록
+
       if($is_duplication){
         $sql = "REPLACE INTO rs_media_duplication (med_id, dup_id, med_url) VALUES ";
         $count = 1;
@@ -115,6 +117,16 @@ class RS_media_model extends CB_Model
     }
   }
 
+  //mem_id 기준 승인된 미디어의 모든 super point의 총합을 구함, 없으면 모든 미디어의 총 super point
+  function get_total_super($mem_id = 0){
+    $this->db->select('SUM(med_superpoint) AS total_superpoint');
+    if($mem_id){$this->db->where('mem_id', $mem_id);}
+    $this->db->where(array('med_deletion' => 'N', 'med_state' => 3));
+    return $this->db->get('rs_media')->row_array()['total_superpoint'];
+  }
+
+
+  //미션에 신청한 미디어들 전부 가져옴
   function getMissionMedia($mis_id, $mem_id){
     $this->db->join('rs_judge juge', 'jud_mis_id = '.$mis_id.' AND jud_jug_id = 1 AND jud_state != 0 AND jud_med_id = med_id', 'LEFT OUTER');
     return $this->get('','',array('mem_id' => $mem_id, 'med_state' => 3));
@@ -136,10 +148,11 @@ class RS_media_model extends CB_Model
 
 
   function check_wht_id_is($wht_id){
+		$this->lang->load('cic_formvalidation_callback', $this->session->userdata('lang'));
     $this->load->model('RS_whitelist_model');
     $value = $this->RS_whitelist_model->get_one($wht_id,'wht_id',array('wht_deletion'=>'N'));
     if(!element('wht_id',$value)){
-      $this->form_validation->set_message('check_wht_id_is','존재하지 않는 미디어플랫폼 입니다.');
+      $this->form_validation->set_message('check_wht_id_is', $this->lang->line('check_wht_id_is1'));
       return false;
     } else {
       return true;
@@ -147,9 +160,10 @@ class RS_media_model extends CB_Model
   }
 
   function check_wht_id_url($check_url){
+		$this->lang->load('cic_formvalidation_callback', $this->session->userdata('lang'));
     $value = $this->check_url_right($this->set_wht_id, $check_url);
     if(!$value){
-      $this->form_validation->set_message('check_wht_id_url','유효하지 않은 URL 입니다.');
+      $this->form_validation->set_message('check_wht_id_url', $this->lang->line('check_wht_id_url1'));
       return false;
     } else {
       return true;
@@ -157,6 +171,7 @@ class RS_media_model extends CB_Model
   }
 
   function check_met_id_is($met_id_array){
+		$this->lang->load('cic_formvalidation_callback', $this->session->userdata('lang'));
     $met_id_array = $this->set_met_id;
     $this->load->model('RS_mediatype_model');
     $getdata = $this->RS_mediatype_model->get_mediatype_index();
@@ -175,13 +190,24 @@ class RS_media_model extends CB_Model
 
     }
     if($emergFlag){
-      $this->form_validation->set_message('check_met_id_is','비정상적인 시도입니다.');
+      $this->form_validation->set_message('check_met_id_is', $this->lang->line('check_met_id_is1'));
       return false;
     }
     if($flag){
       return true;
     } else {
-      $this->form_validation->set_message('check_met_id_is','최소 1개 이상의 미디어 성격을 지정하셔야합니다.');
+      $this->form_validation->set_message('check_met_id_is', $this->lang->line('check_met_id_is2'));
+      return false;
+    }
+  }
+
+  function callback_url_check($url){
+
+    $wht_id = $this->set_wht_id;
+    if($this->check_url_right($wht_id, $url)){
+      return true;
+    } else {
+      $this->form_validation->set_message('callback_url_check',$this->lang->line('controller_8'));
       return false;
     }
   }
@@ -198,6 +224,37 @@ class RS_media_model extends CB_Model
     } else {
       return false;
     }
+  }
+
+  function check_other_judge($med_id){
+    $where = array(
+      'jud_deletion' => 'N',
+      'jud_state'    => 1,
+      'jud_mem_id'   => $this->session->userdata('mem_id'),
+      'jud_med_id'   => $med_id
+    );
+    $this->db->order_by('jud_wdate','DESC');
+    $this->db->limit(1);
+    $this->db->where($where);
+    $jud_data = $this->db->get('rs_judge')->row_array();
+    if(!$jud_data){  return false; }
+    switch($jud_data['jud_jug_id']){
+      case 1 :
+        return '미션심사 진행중입니다.';
+      break;
+      case 2 :
+        return '미디어심사 진행중입니다.';
+      break;
+      case 3 :
+        return '출금심사 진행중입니다.';
+      break;
+      case 4 :
+        return '미디어 재심사 진행중입니다.';
+      break;
+      default :
+        return true;
+    }
+
   }
 
 

@@ -22,6 +22,12 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label">영문제목</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="wht_title_en" value="<?php echo set_value('wht_title_en', element('wht_title_en', element('data', $view))); ?>" />
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">도메인</label>
 				<div class="col-sm-10">
 					<textarea class="form-control" rows="5" name="wht_domains"><?php echo set_value('wht_domains', element('wht_domains', element('data', $view))); ?></textarea>
@@ -52,6 +58,7 @@ $(function() {
 	$('#fadminwrite').validate({
 		rules: {
 			wht_title: { required: true, minlength:2, maxlength:20 },
+			wht_title_en: { required: true, minlength:2, maxlength:20 },
 			wht_domains: { required: true }
 		}
 	});

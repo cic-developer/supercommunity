@@ -50,31 +50,35 @@ class Mission extends CB_Controller
 	 * 목록을 가져오는 메소드입니다
 	 */
 	public function index(){
-		/**
-		 * 페이지에 숫자가 아닌 문자가 입력되거나 1보다 작은 숫자가 입력되면 에러 페이지를 보여줍니다.
-		 */
+		//페이지별 언어팩 로드
+		if($this->cbconfig->get_device_view_type() == 'mobile'){
+			$this->lang->load('cic_cic_pershouting_mobile_mission_list', $this->session->userdata('lang'));
+		}else{
+			$this->lang->load('cic_cic_pershouting_mission_list', $this->session->userdata('lang'));
+		}
+		
+		//기존 검색
 		$param =& $this->querystring;
 		$page = (((int) $this->input->get('page')) > 0) ? ((int) $this->input->get('page')) : 1;
-		// $view['view']['sort'] = array(
-		// 	'mis_id' => $param->sort('mis_id', 'asc'),
-		// 	'mis_thumb_type' => $param->sort('mis_thumb_type', 'asc'),
-		// 	'mis_max_point' => $param->sort('mis_max_point', 'asc'),
-		// 	'percentage' => $param->sort('percentage', 'asc'),
-		// 	'mis_wdate' => $param->sort('mis_wdate', 'asc'),
-		// );
 		$findex = $this->input->get('findex') ? $this->input->get('findex') : $this->{$this->modelname}->primary_key;
 		$forder = $this->input->get('forder', null, 'desc');
 		$sfield = $this->input->get('sfield', null, '');
 		$skeyword = $this->input->get('skeyword', null, '');
         $per_page = 10;
 		$offset = ($page - 1) * $per_page;
+		$where = array('mis_allowed' => 1, 'mis_deletion' => 'N');
+		$result = $this->{$this->modelname}->get_missionlist_list($per_page, $offset, $where , '', $findex, $forder, $sfield, $skeyword);
+		//기존 검색
 
-		$result = $this->{$this->modelname}
-			->get_missionlist_list($per_page, $offset, array('mis_allowed' => 1, 'mis_deletion' => 'N'), '', $findex, $forder, $sfield, $skeyword);
+		//조건이 존재하는 경우 검색 한번 더 추가
+		$state = element('state',$this->input->get());
+		$search = element('search',$this->input->get());
+		if($state || $search){
+			$result =$this->{$this->modelname}->get_clientMissionlist($per_page, $offset, $state, $search);
+		}
 		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {
-
 				/*
 				** 유저 아이디 닉네임 불러오기
 				*/
@@ -102,13 +106,13 @@ class Mission extends CB_Controller
 				*/
 				switch(element('state', $val)){
 					case 'planned':
-						$result['list'][$key]['state'] = '오픈예정('.date('Y-m-d',strtotime(element('mis_opendate', $val))).')';
+						$result['list'][$key]['state'] = $this->lang->line('c_2');
 					break;
 					case 'process':
-						$result['list'][$key]['state'] = '진행중';
+						$result['list'][$key]['state'] = $this->lang->line('c_3');
 					break;
 					case 'end':
-						$result['list'][$key]['state'] = '마감';
+						$result['list'][$key]['state'] = $this->lang->line('c_1');
 					break;
 					default:
 				}
@@ -130,85 +134,99 @@ class Mission extends CB_Controller
 		$this->pagination->initialize($config);
 		$view['view']['paging'] = $this->pagination->create_links();
 		$view['view']['page'] = $page;
-
-		/*
-		** 쓰기 주소, 삭제 주소등 필요한 주소를 구합니다
-		*/
-		$search_option = array(
-			'mis_title' => '제목',
-			'mis_content' => '본문',
-			'mis_per_token' => '지급 PER TOKEN',
-			'mis_max_point' => '최대 슈퍼포인트',
-			'mis_wdate' => '날짜'
-		);
-		$view['view']['skeyword'] = ($sfield && array_key_exists($sfield, $search_option)) ? $skeyword : '';
-		$view['view']['search_option'] = search_option($search_option, $sfield);
-		$view['view']['listall_url'] = $this->pagedir;
-		$view['view']['write_url'] = $this->pagedir . '/write';
-		$view['view']['list_update_url'] = $this->pagedir . '/listupdate/?' . $param->output();
-		$view['view']['list_delete_url'] = $this->pagedir . '/listdelete/?' . $param->output();
+		$view['header']['menu'] = 'pershouting';
 
 		// 이벤트가 존재하면 실행합니다
 		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
-
-		/*
-		** 어드민 레이아웃을 정의합니다
-		*/
-        $this->data = $view;
-        echo "<pre>";
-        print_r($this->data['view']['data']['list']);
-        echo "</pre>";
-        exit;
-	}
 		
+		$layoutconfig = array(
+			'path' => 'cic_pershouting',
+			'layout' => 'layout',
+			'skin' => 'mission_list',
+			'layout_dir' => '/rsteam_cic_main',
+			'mobile_layout_dir' => '/rsteam_cic_mobile',
+			'use_sidebar' => $this->cbconfig->item('sidebar_main'),
+			'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_main'),
+			'skin_dir' => 'rsteam_cic',
+			'mobile_skin_dir' => 'rsteam_cic_mobile',
+			'page_title' => $page_title,
+			'meta_description' => $meta_description,
+			'meta_keywords' => $meta_keywords,
+			'meta_author' => $meta_author,
+			'page_name' => $page_name,
+		);
+		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+		$this->data = $view;
+		$this->layout = element('layout_skin_file', element('layout', $view));
+		$this->view = element('view_skin_file', element('layout', $view));
+	}
+
 	function myMission(){
-				/**
-		 * 페이지에 숫자가 아닌 문자가 입력되거나 1보다 작은 숫자가 입력되면 에러 페이지를 보여줍니다.
+		/**
+		 * 로그인이 필요한 페이지입니다
 		 */
+		if(!$this->member->is_member()){
+			$this->session->set_flashdata('message',$this->lang->line('require_login'));
+			redirect('/login');
+		}
+
+		//페이지별 언어팩 로드
+		if($this->agent->is_mobile()){
+			$this->lang->load('cic_mypage_mobile_mymission', $this->session->userdata('lang'));
+		} else {
+			$this->lang->load('cic_mypage_mymission', $this->session->userdata('lang'));
+		}
 		$param =& $this->querystring;
 		$page = (((int) $this->input->get('page')) > 0) ? ((int) $this->input->get('page')) : 1;
 		$findex = $this->input->get('findex') ? $this->input->get('findex') : $this->{$this->modelname}->primary_key;
 		$forder = $this->input->get('forder', null, 'desc');
 		$sfield = $this->input->get('sfield', null, '');
 		$skeyword = $this->input->get('skeyword', null, '');
-        $per_page = 10;
+		$per_page = !$this->agent->is_mobile() ? 10 : 5;
 		$offset = ($page - 1) * $per_page;
 		$mem_id = $this->session->userdata('mem_id');
-		$this->db->join('rs_missionlist','rs_missionlist.mis_id = rs_judge.jud_mis_id');
-		$result = $this->RS_judge_model->get('','',array('jud_mem_id' => $mem_id, 'jud_deletion' => 'N', 'jud_jug_id' => 1), '', $offset, 'jud_wdate', 'DESC');
+		$join = array(
+			array(
+				'table' => 'rs_missionlist',
+				'on' 	=> 'rs_missionlist.mis_id = rs_judge.jud_mis_id'
+			),
+			array(
+				'table' => 'rs_judge_denied',
+				'on'	=> 'rs_judge.jud_id = rs_judge_denied.judn_jud_id'
+			)
+		);
 
-		$list_num = count($result) - ($page - 1) * $per_page;
-		foreach ($result as $key => $val) {
-			switch($result[$key]['jud_state']){
+		$result = $this->RS_judge_model->_get_list_common( 
+			'', $join, $per_page, $offset, array('jud_mem_id' => $mem_id, 'jud_deletion' => 'N', 'jud_jug_id' => 1), '',$findex, $forder, $sfield, $skeyword
+		);
+
+		foreach ($result['list'] as $key => $val) {
+			switch($result['list'][$key]['jud_state']){
 				case 0 :
-					$jud_kr_state = '거절';
+					$jud_kr_state = $this->lang->line('c_1');
 				break;
 				case 1 :
-					$jud_kr_state = '심사중';
+					$jud_kr_state = $this->lang->line('c_2');
 				break;
-				case 2 :
-					$jud_kr_state = '승인';
+				case 3 :
+					$jud_kr_state = $this->lang->line('c_3');
 				break;
 				case 5 :
-					$jud_kr_state = '지급완료';
-				break;
-				default :
-					echo 'found error state !!!!!! : '.$result[$key]['jud_state'];
-					// exit;
+					$jud_kr_state = $this->lang->line('c_4');
 				break;
 			}
-			$result[$key]['jud_ko_state'] =  $jud_kr_state;
-			if($result[$key]['jud_point']){
-				$result[$key]['jud_expected_value'] = $result[$key]['jud_point'];
+			$result['list'][$key]['jud_ko_state'] =  $jud_kr_state;
+			if($result['list'][$key]['jud_point']){
+				$result['list'][$key]['jud_expected_value'] = $result['list'][$key]['jud_point'];
 			}else{
-				$mission_total = $this->RS_missionpoint_model->get_one('','mip_tpoint',array('mip_mis_id' => $result[$key]['jud_mis_id']))['mip_tpoint'];
-				$mission_reword = $this->RS_missionlist_model->get_one($result[$key]['jud_mis_id'],'mis_per_token')['mis_per_token'];
-				$media_super_point = $result[$key]['jud_superpoint'];
-				$result[$key]['jud_expected_value'] = rs_cal_expected_point($mission_reword, $media_super_point, $mission_total - $media_super_point);
+				$mission_total = $this->RS_missionpoint_model->get_one('','mip_tpoint',array('mip_mis_id' => $result['list'][$key]['jud_mis_id']))['mip_tpoint'];
+				$mission_reword = $this->RS_missionlist_model->get_one($result['list'][$key]['jud_mis_id'],'mis_per_token')['mis_per_token'];
+				$media_super_point = $result['list'][$key]['jud_superpoint'];
+				$result['list'][$key]['jud_expected_value'] = rs_cal_expected_point($mission_reword, $media_super_point, $mission_total);
 			}
 		}
 		
-		$view['view']['judList'] = $result;
+		$view['view']['judList'] = $result['list'];
 
 		/*
 		** primary key 정보를 저장합니다
@@ -218,27 +236,20 @@ class Mission extends CB_Controller
 		/*
 		** 페이지네이션을 생성합니다
 		*/
-		$config['base_url'] = $this->pagedir . '?' . $param->replace('page');
+		$config['base_url'] = $this->pagedir . '/myMission?' . $param->replace('page');
 		$config['total_rows'] = $result['total_rows'];
 		$config['per_page'] = $per_page;
+		$view['header']['menu'] = 'mypage';
 		$this->pagination->initialize($config);
 		$view['view']['paging'] = $this->pagination->create_links();
 		$view['view']['page'] = $page;
 
-		$view['view']['listall_url'] = $this->pagedir;
-		$view['view']['write_url'] = $this->pagedir . '/write';
-		$view['view']['list_update_url'] = $this->pagedir . '/listupdate/?' . $param->output();
-		$view['view']['list_delete_url'] = $this->pagedir . '/listdelete/?' . $param->output();
-
 		// 이벤트가 존재하면 실행합니다
 		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
-
-		/*
-		** 어드민 레이아웃을 정의합니다
-		*/
-		$this->data = $view;
 		
-
+		/**
+		 * 레이아웃을 정의합니다
+		 */
 		$page_title = $this->cbconfig->item('site_meta_title_main');
 		$meta_description = $this->cbconfig->item('site_meta_description_main');
 		$meta_keywords = $this->cbconfig->item('site_meta_keywords_main');
@@ -246,15 +257,15 @@ class Mission extends CB_Controller
 		$page_name = $this->cbconfig->item('site_page_name_main');
 
 		$layoutconfig = array(
-			'path' => 'mission',
+			'path' => 'mypage',
 			'layout' => 'layout',
-			'skin' => 'myMission',
-			'layout_dir' => '/test',
-			'mobile_layout_dir' => '/test',
+			'skin' => 'mymission',
+			'layout_dir' => '/rsteam_cic_mypage',
+			'mobile_layout_dir' => '/rsteam_cic_mobile',
 			'use_sidebar' => $this->cbconfig->item('sidebar_main'),
 			'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_main'),
-			'skin_dir' => 'basic',
-			'mobile_skin_dir' => 'mobile',
+			'skin_dir' => 'rsteam_cic',
+			'mobile_skin_dir' => 'rsteam_cic_mobile',
 			'page_title' => $page_title,
 			'meta_description' => $meta_description,
 			'meta_keywords' => $meta_keywords,
@@ -262,27 +273,86 @@ class Mission extends CB_Controller
 			'page_name' => $page_name,
 		);
 		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+		$view['total_super'] = $this->RS_media_model->get_total_super($mem_id);
+		$view['header']['menu'] = 'mypage';
+		$view['member_data'] = $this->member->get_member();
+		$this->data = $view;
 		$this->layout = element('layout_skin_file', element('layout', $view));
 		$this->view = element('view_skin_file', element('layout', $view));
 	}
-    
+	
+	//미션 상세 페이지
     public function detailMission($misid){
-        echo "<pre>";
-        print_r($this->RS_missionlist_model->get_one_mission($misid));
-        echo "</pre>";
+		// 언어팩 로드
+		if($this->agent->is_mobile()){
+			$this->lang->load('cic_cic_pershouting_mobile_mission_detail', $this->session->userdata('lang'));
+		} else {
+			$this->lang->load('cic_cic_pershouting_mission_detail', $this->session->userdata('lang'));
+		}
+
+		// 해당 미션 정보를 가져옴
+		$view['mission_data'] = $this->RS_missionlist_model->get_one_mission($misid);
+		if($view['mission_data']['state'] == 'planned'){
+			$this->session->set_flashdata('message', $this->lang->line('c_1')); //공개예정 미션은 보지 못하도록 튕겨낸다.
+			redirect('/Mission');
+			exit;
+		}
+
+		$layoutconfig = array(
+			'path' => 'cic_pershouting',
+			'layout' => 'layout',
+			'skin' => 'mission_detail',
+			'layout_dir' => '/rsteam_cic_main',
+			'mobile_layout_dir' => '/rsteam_cic_mobile',
+			'use_sidebar' => $this->cbconfig->item('sidebar_main'),
+			'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_main'),
+			'skin_dir' => 'rsteam_cic',
+			'mobile_skin_dir' => 'rsteam_cic_mobile',
+			'page_title' => $page_title,
+			'meta_description' => $meta_description,
+			'meta_keywords' => $meta_keywords,
+			'meta_author' => $meta_author,
+			'page_name' => $page_name,
+		);
+		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+		$view['header']['menu'] = 'pershouting';
+		$this->data = $view;
+		$this->layout = element('layout_skin_file', element('layout', $view));
+		$this->view = element('view_skin_file', element('layout', $view));
     }
 
     public function applyMission($misid){
+
+		if($this->agent->is_mobile()){
+			$this->lang->load('cic_cic_pershouting_mobile_mission_apply', $this->session->userdata('lang'));
+		} else {
+			$this->lang->load('cic_cic_pershouting_mission_apply', $this->session->userdata('lang'));
+		}
+		if(!$this->member->is_member()){
+			$this->session->set_flashdata('message',$this->lang->line('require_login'));
+			redirect('/login');
+		}
+		$mission_data = $this->RS_missionlist_model->get_one_mission($misid);
+		// print_r($mission_data['state']); exit;
+		if($mission_data['state'] != 'process'){
+			$this->session->set_flashdata('message', $this->lang->line('c_1'));
+			redirect('/Mission');
+			exit;
+		}
+		$mem_id = $this->session->userdata('mem_id');
         $where = array(
-            'mem_id' => $this->session->userdata('mem_id'),
+            'mem_id' => $mem_id,
             'med_state' => 3
 		);
 
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('med_id[]','미디어', 'required|numeric');
+		$this->form_validation->set_rules('med_id[]',$this->lang->line('c_3'), 'required|numeric');
 		if($this->form_validation->run() == FALSE){	
-			$med_list = $this->RS_media_model->getMissionMedia($misid,$this->session->userdata('mem_id'));
-			if($med_list){
+			if($this->input->post('dummy')){
+				echo "<script>alert('".$this->lang->line('c_10')."')</script>";
+			}
+			$med_list = $this->RS_media_model->getMissionMedia($misid,$mem_id);
+			if($med_list){ 
 				$page_title = $this->cbconfig->item('site_meta_title_main');
 				$meta_description = $this->cbconfig->item('site_meta_description_main');
 				$meta_keywords = $this->cbconfig->item('site_meta_keywords_main');
@@ -290,15 +360,15 @@ class Mission extends CB_Controller
 				$page_name = $this->cbconfig->item('site_page_name_main');
 		
 				$layoutconfig = array(
-					'path' => 'mission',
+					'path' => 'cic_pershouting',
 					'layout' => 'layout',
-					'skin' => 'applyMission',
-					'layout_dir' => '/test',
-					'mobile_layout_dir' => '/test',
+					'skin' => 'mission_apply',
+					'layout_dir' => '/rsteam_cic_mypage',
+					'mobile_layout_dir' => '/rsteam_cic_mobile',
 					'use_sidebar' => $this->cbconfig->item('sidebar_main'),
 					'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_main'),
-					'skin_dir' => 'basic',
-					'mobile_skin_dir' => 'mobile',
+					'skin_dir' => 'rsteam_cic',
+					'mobile_skin_dir' => 'rsteam_cic_mobile',
 					'page_title' => $page_title,
 					'meta_description' => $meta_description,
 					'meta_keywords' => $meta_keywords,
@@ -307,14 +377,18 @@ class Mission extends CB_Controller
 				);
 				$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
 				$view['medList'] = $med_list;
-				$view['missionData'] = $this->RS_missionlist_model->get_one_mission($misid);
-				$view['total_super'] = $this->RS_missionpoint_model->get_one('','mip_tpoint',array('mip_mis_id'=> $misid))['mip_tpoint'];
+				$view['member_data'] = $this->Member_model->get_by_memid($mem_id);
+				$view['total_super'] = $this->RS_missionpoint_model->get_one($misid)['mip_tpoin'];
+				$view['missionData'] = $mission_data;
+				$view['header']['menu'] = 'pershouting';
 				$this->data = $view;
 				$this->layout = element('layout_skin_file', element('layout', $view));
 				$this->view = element('view_skin_file', element('layout', $view));
-			}else{
-				echo "<script>alert('등록된 미디어가 없습니다. 미디어 신청페이지로 이동합니다.'); location.href='/Media/editMedia'</script>";
-			}
+			 }else{
+					$this->session->set_flashdata('message',$this->lang->line('c_4'));
+					redirect('/Media/editMedia');
+					exit;
+			 }
 		}else{
 			$this->load->library('upload');
 			$upload_path = config_item('uploads_dir') . '/judge/';
@@ -355,29 +429,55 @@ class Mission extends CB_Controller
 			$med_id = $this->input->post('med_id');
 			$all_med_id = $this->input->post('all_med_id');
 			$jud_insert_arr = array();
-			$upload_result_count = 0;
-			echo "<pre>";
 			for($i = 0; $i < count($all_med_id); $i++){
 				if(in_array($all_med_id[$i],$med_id)){
 					$jud_insert_arr[] = array(
 						'jud_jug_id' => 1,
 						'jud_mis_id' => $misid,
 						'jud_med_id' => $all_med_id[$i],
-						'jud_attach' => element('file_name', $upload_result[$i]) ? (cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $upload_result[$i])) : ''
+						'jud_attach' => element('file_name', $upload_result['list'][$i]) ? (cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $upload_result['list'][$i])) : ''
 					);
 				}
 			}
 
 			$result = $this->RS_judge_model->replace_apply_mission_judge($jud_insert_arr);
-			print_r($result); 
-			echo "</pre>";
-			exit;
+	
+			
+			$message = $this->lang->line('c_2');
+			
+			if($upload_result['err_count'] == $upload_result['all_count']){
+				$message = $this->lang->line('c_10');
+			}
+			if(strcmp($result,'not found member data') == 0){
+				$message = $this->lang->line('c_5');
+			}
+			if(strcmp ($result,'mission over max point') == 0 || strcmp ($result, 'mission already over') == 0){
+				$message = $this->lang->line('c_7');
+				
+			}
+			if(strcmp ($result,'jud_attach update error occur') == 0){
+				$message = $this->lang->line('c_9');
+			}
+			if(
+				strcmp ($result ,'error occur for check other judge') == 0 ||
+				strcmp ($result ,'미디어심사 진행중입니다.')  == 0 ||
+				strcmp ($result , '출금심사 진행중입니다.') == 0 ||
+				strcmp ($result ,'미디어 재심사 진행중입니다.') == 0
+			){
+				$message = $this->lang->line('c_6');
+			}
+
+			$this->session->set_flashdata('message',$message);
+			redirect('/Mission/detailMission/'.$misid);
 		}
 	}
 	
 	private function multy_upload($files, $upload_config, $input_name){
 		$this->load->library('upload');
 		$num_files = count($files[$input_name]['name']);
+		$err_count = 0;
+		$all_count = $num_files;
+		$file_data = array();
 		for($i = 0; $i < $num_files; $i++){
 			$_FILES['userfile']['name'] = $_FILES[$input_name]['name'][$i];
 			$_FILES['userfile']['type'] = $_FILES[$input_name]['type'][$i];
@@ -387,12 +487,14 @@ class Mission extends CB_Controller
 
 			$this->upload->initialize($upload_config);
 			if(! $this->upload->do_upload()){
-				$file_data[] = array('file_name'=>'');
+				$file_data['list'][] = array('file_name'=>'');
+				$err_count++;
 			}else{
-				$file_data[] = $this->upload->data();
+				$file_data['list'][] = $this->upload->data();
 			}
 		}
-
+		$file_data['err_count'] = $err_count;
+		$file_data['all_count'] = $all_count;
 		return $file_data;
 	}
 }

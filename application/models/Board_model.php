@@ -41,24 +41,24 @@ class Board_model extends CB_Model
 	}
 
 
-	public function get_one($primary_value = '', $select = '', $where = '')
-	{
-		$use_cache = false;
-		if ($primary_value && empty($select) && empty($where)) {
-			$use_cache = true;
-		}
+	// public function get_one($primary_value = '', $select = '', $where = '')
+	// {
+	// 	$use_cache = false;
+	// 	if ($primary_value && empty($select) && empty($where)) {
+	// 		$use_cache = true;
+	// 	}
 
-		if ($use_cache) {
-			$cachename = $this->cache_prefix . $primary_value;
-			if ( ! $result = $this->cache->get($cachename)) {
-				$result = parent::get_one($primary_value);
-				$this->cache->save($cachename, $result, $this->cache_time);
-			}
-		} else {
-			$result = parent::get_one($primary_value, $select, $where);
-		}
-		return $result;
-	}
+	// 	if ($use_cache) {
+	// 		$cachename = $this->cache_prefix . $primary_value;
+	// 		if ( ! $result = $this->cache->get($cachename)) {
+	// 			$result = parent::get_one($primary_value);
+	// 			$this->cache->save($cachename, $result, $this->cache_time);
+	// 		}
+	// 	} else {
+	// 		$result = parent::get_one($primary_value, $select, $where);
+	// 	}
+	// 	return $result;
+	// }
 
 
 	public function delete($primary_value = '', $where = '')

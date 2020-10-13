@@ -1,0 +1,152 @@
+/**
+	login skin css
+*/
+
+.access{width: 100%; margin: 0 auto;}
+.loginform li {display: block;margin: 0px; clear: both; margin-bottom: 15px;}
+.loginform li>span {float: left;width: 25%;text-align: right;padding-right: 20px;margin-top: 5px;color: #000;font-weight: bold;}
+
+
+
+
+
+.access{width: 100%; margin: 0 auto;}
+.loginform li {display: block;margin: 0px; clear: both; margin-bottom: 15px;}
+.loginform li>span {float: left;width: 25%;text-align: right;padding-right: 20px;margin-top: 5px;color: #000;font-weight: bold;}
+
+
+
+#login_wrap{
+	margin:0 auto;
+	overflow: hidden;
+	padding-left: 20px;
+	padding-right: 20px;
+	
+	
+}
+/*로그인창 왼쪽 내용*/
+#login_wrap .left{
+	width: 100%;
+	float: left;
+	display: block;
+	text-align: center;
+
+}
+
+
+#login_wrap .left ul {
+	margin: 0 auto;
+	display: block;
+	margin-bottom: 50px;
+	margin-top:60px;
+}
+
+
+#login_wrap .left ul li{	
+	display: block;
+	
+
+}
+
+#login_wrap .left ul li p{
+	font-size: 1.846em;
+	font-family: 'Montserrat', sans-serif;
+	font-weight:700 ;
+	color:#b3b3b3;
+	
+	display: block;
+	
+}
+
+
+#login_wrap .left li b{
+	font-size: 3.538em;
+	font-family: 'Montserrat', sans-serif;
+	font-weight:700 ;
+	color:#212121;
+
+	display: block;
+}
+
+
+/*로그인창 왼쪽 내용 끄읏//*/
+
+/*로그인창 오른쪽 내용 시작*/
+
+#login_wrap .right{
+	width: 100%;
+	overflow: hidden;
+	margin:0 auto;	
+
+}
+
+#login_wrap .right ul{	
+	display: block;
+}
+
+#login_wrap .right ul li{
+	display: block;
+	padding-bottom: 25px;
+	margin: 0 auto;
+	padding-left: 55px;
+	padding-right: 55px;
+
+}
+
+#login_wrap .right ul li a{
+	display: block;
+	width:100%;
+	overflow: auto;
+	border-radius: 10px;
+	text-transform: uppercase;
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+#login_wrap .right ul li a img{
+	display: block;
+	padding-top:10px;
+	padding-left:11px ;
+	padding-right:2px ;
+	float: left;
+	
+}
+
+#login_wrap .right ul li a strong{
+	display: block;
+	border-radius: 10px;
+	color:#fff;
+	font-size: 1em;
+	font-weight: 500;
+	float: left;
+	padding-top:13px;
+	padding-left: 15%;
+	box-sizing: border-box;
+	
+}
+
+
+
+#login_wrap .right ul li .facebook_lg{
+	background-color:#3c5c9c;
+}
+
+#login_wrap .right ul li .twitter_lg{
+
+	background-color:#2696ea;
+}
+
+
+#login_wrap .right ul li .google_lg{
+
+	background-color:#cc3731;
+}
+
+#login_wrap .right ul li .naver_lg{
+
+	background-color:#1ecd00;
+}
+#login_wrap .right ul li .kakao_lg{
+
+	background-color:#fac400;
+}

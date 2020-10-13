@@ -109,12 +109,12 @@ if (typeof(SIDEVIEW_JS) === 'undefined') // 한번만 실행
 			// if (homepage == '1')
 			// 	this.insertTail('homepage', '<a href="' + homepage + '" target="_blank">홈페이지</a>');
 			// 자기소개
-			if (profile == '1')
-				this.insertTail('profile', '<a href="javascript:;" onclick="open_profile(\'' + userid + '\'); return false;">프로필</a>');
-			else if (profile == '3')
-				this.insertTail('profile', '<a href="javascript:;" onclick="alert(\'회원님이 프로필을 공개하지 않으셨습니다. 먼저 회원님의 프로필을 공개하신 후 이용해주세요\'); return false;">프로필</a>');
-			else if (profile == '2')
-				this.insertTail('profile', '<a href="javascript:;" onclick="alert(\'상대방이 프로필을 공개하지 않으셨습니다\'); return false;">프로필</a>');
+			// if (profile == '1')
+			// 	this.insertTail('profile', '<a href="javascript:;" onclick="open_profile(\'' + userid + '\'); return false;">프로필</a>');
+			// else if (profile == '3')
+			// 	this.insertTail('profile', '<a href="javascript:;" onclick="alert(\'회원님이 프로필을 공개하지 않으셨습니다. 먼저 회원님의 프로필을 공개하신 후 이용해주세요\'); return false;">프로필</a>');
+			// else if (profile == '2')
+			// 	this.insertTail('profile', '<a href="javascript:;" onclick="alert(\'상대방이 프로필을 공개하지 않으셨습니다\'); return false;">프로필</a>');
 			}
 		}
 

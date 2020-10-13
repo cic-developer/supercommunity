@@ -103,3 +103,24 @@ ERROR - 2020-08-28 16:49:54 --> Severity: Warning --> Declaration of Board_model
 ERROR - 2020-08-28 16:50:07 --> Severity: Warning --> Declaration of Board_model::get_one($primary_value = '', $select = '', $where = '') should be compatible with CB_Model::get_one($primary_value = '', $select = '', $where = '', $join = '') /opt/bitnami/apps/dev-percommunity/www/application/models/Board_model.php 106
 ERROR - 2020-08-28 17:00:14 --> Severity: Warning --> Declaration of Board_model::get_one($primary_value = '', $select = '', $where = '') should be compatible with CB_Model::get_one($primary_value = '', $select = '', $where = '', $join = '') /opt/bitnami/apps/dev-percommunity/www/application/models/Board_model.php 106
 ERROR - 2020-08-28 17:00:15 --> 404 Page Not Found: Faviconico/index
+ERROR - 2020-08-28 17:31:51 --> Severity: Warning --> Declaration of Board_model::get_one($primary_value = '', $select = '', $where = '') should be compatible with CB_Model::get_one($primary_value = '', $select = '', $where = '', $join = '') /opt/bitnami/apps/dev-percommunity/www/application/models/Board_model.php 106
+ERROR - 2020-08-28 17:31:55 --> Severity: Warning --> Declaration of Board_model::get_one($primary_value = '', $select = '', $where = '') should be compatible with CB_Model::get_one($primary_value = '', $select = '', $where = '', $join = '') /opt/bitnami/apps/dev-percommunity/www/application/models/Board_model.php 106
+ERROR - 2020-08-28 17:46:06 --> 404 Page Not Found: Faviconico/index
+ERROR - 2020-08-28 18:17:45 --> 404 Page Not Found: Faviconico/index
+ERROR - 2020-08-28 18:23:00 --> 404 Page Not Found: Faviconico/index
+ERROR - 2020-08-28 18:25:37 --> 404 Page Not Found: Faviconico/index
+ERROR - 2020-08-28 18:41:21 --> Severity: Warning --> Declaration of Board_model::get_one($primary_value = '', $select = '', $where = '') should be compatible with CB_Model::get_one($primary_value = '', $select = '', $where = '', $join = '') /opt/bitnami/apps/dev-percommunity/www/application/models/Board_model.php 106
+ERROR - 2020-08-28 18:41:21 --> Severity: Warning --> Declaration of Board_model::get_one($primary_value = '', $select = '', $where = '') should be compatible with CB_Model::get_one($primary_value = '', $select = '', $where = '', $join = '') /opt/bitnami/apps/dev-percommunity/www/application/models/Board_model.php 106
+ERROR - 2020-08-28 18:41:22 --> 404 Page Not Found: Faviconico/index
+ERROR - 2020-08-28 18:41:27 --> Severity: Warning --> Declaration of Board_model::get_one($primary_value = '', $select = '', $where = '') should be compatible with CB_Model::get_one($primary_value = '', $select = '', $where = '', $join = '') /opt/bitnami/apps/dev-percommunity/www/application/models/Board_model.php 106
+ERROR - 2020-08-28 18:41:27 --> Severity: Warning --> Declaration of Board_model::get_one($primary_value = '', $select = '', $where = '') should be compatible with CB_Model::get_one($primary_value = '', $select = '', $where = '', $join = '') /opt/bitnami/apps/dev-percommunity/www/application/models/Board_model.php 106
+ERROR - 2020-08-28 18:43:25 --> 404 Page Not Found: mypage/mymedia
+ERROR - 2020-08-28 18:43:38 --> 404 Page Not Found: MyPage/mymedia
+ERROR - 2020-08-28 18:43:47 --> 404 Page Not Found: MyPage/mymedia
+ERROR - 2020-08-28 18:49:03 --> Severity: Warning --> Declaration of Board_model::get_one($primary_value = '', $select = '', $where = '') should be compatible with CB_Model::get_one($primary_value = '', $select = '', $where = '', $join = '') /opt/bitnami/apps/dev-percommunity/www/application/models/Board_model.php 106
+ERROR - 2020-08-28 18:49:03 --> Severity: Warning --> Declaration of Board_model::get_one($primary_value = '', $select = '', $where = '') should be compatible with CB_Model::get_one($primary_value = '', $select = '', $where = '', $join = '') /opt/bitnami/apps/dev-percommunity/www/application/models/Board_model.php 106
+ERROR - 2020-08-28 18:49:49 --> Severity: Warning --> Declaration of Board_model::get_one($primary_value = '', $select = '', $where = '') should be compatible with CB_Model::get_one($primary_value = '', $select = '', $where = '', $join = '') /opt/bitnami/apps/dev-percommunity/www/application/models/Board_model.php 106
+ERROR - 2020-08-28 18:51:44 --> 404 Page Not Found: MyPage/mymedia
+ERROR - 2020-08-28 18:53:51 --> Severity: Warning --> call_user_func_array() expects parameter 1 to be a valid callback, cannot access private method Media::registMedia() /opt/bitnami/apps/dev-percommunity/www/application/core/CB_Controller.php 109
+ERROR - 2020-08-28 19:03:22 --> 404 Page Not Found: %E3%85%81%EC%9C%BC%E3%85%91%E3%85%9C/index
+ERROR - 2020-08-28 19:03:22 --> 404 Page Not Found: Faviconico/index

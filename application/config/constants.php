@@ -112,3 +112,11 @@ if (PHP_VERSION >= '5.1.0') {
  *	CiBoard 주 : 현재 시간 정의 상수입니다. 값을 변경하지 말아주세요
 */
 defined('TIMESTAMP')         OR define('TIMESTAMP', time());
+
+
+/*
+*	RS TEAM : 멤버 아이디 *** 표시할 길이 지정 변수 입니다. 
+*	EX) 2를 입력하시면 전체 아이디의 절반만 출력됩니다.
+*/
+
+define('BLIND_ID_LENG', 2);

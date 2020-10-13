@@ -153,6 +153,118 @@ class Notification extends CB_Controller
 	}
 
 
+		/**
+	 * 알림 페이지 입니다
+	 */
+	public function index_mobile()
+	{
+		// 이벤트 라이브러리를 로딩합니다
+		$eventname = 'event_notification_index';
+		$this->load->event($eventname);
+
+		/**
+		 * 로그인이 필요한 페이지입니다
+		 */
+		required_user_login();
+
+		$mem_id = (int) $this->member->item('mem_id');
+
+		$view = array();
+		$view['view'] = array();
+
+		// 이벤트가 존재하면 실행합니다
+		$view['view']['event']['before'] = Events::trigger('before', $eventname);
+
+		// 2개월 이상된 알림은 하루에 한번씩 체크해서 삭제합니다.
+		$cachename = 'delete_old_notifications_cache';
+		$cachetime = 86400;
+		if ( ! $result = $this->cache->get($cachename)) {
+			$sdate = cdate('Y-m-d H:i:s', ctimestamp() - 24* 60 * 60 * 60);
+			$where = array(
+				'not_datetime <=' => $sdate,
+			);
+			$this->Notification_model->delete_where($where);
+			$this->cache->save($cachename, cdate('Y-m-d H:i:s'), $cachetime);
+		}
+
+		/**
+		 * 페이지에 숫자가 아닌 문자가 입력되거나 1보다 작은 숫자가 입력되면 에러 페이지를 보여줍니다.
+		 */
+		$param =& $this->querystring;
+		$page = (((int) $this->input->get('page')) > 0) ? ((int) $this->input->get('page')) : 1;
+
+		$per_page = $this->cbconfig->item('list_count') ? (int) $this->cbconfig->item('list_count') : 20;
+		$offset = ($page - 1) * $per_page;
+
+		/**
+		 * 게시판 목록에 필요한 정보를 가져옵니다.
+		 */
+		$read = $this->input->get('read', null, '');
+		$result = $this->Notification_model
+			->get_notification_list($per_page, $offset, $mem_id, $read);
+		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
+		if (element('list', $result)) {
+			foreach (element('list', $result) as $key => $val) {
+				$result['list'][$key]['num'] = $list_num--;
+				$result['list'][$key]['delete_url'] = site_url('notification/delete/' . element('not_id', $val) . '?' . $param->output());
+				$result['list'][$key]['read_url'] = site_url('notification/read/' . element('not_id', $val) . '?' . $param->output());
+				$result['list'][$key]['onClick'] = '';
+				if (element('not_type', $val) === 'note') {
+					$result['list'][$key]['read_url'] = 'javascript:;';
+					$result['list'][$key]['onClick'] = 'note_list(' . element('not_content_id', $val) . ');';
+				}
+			}
+		}
+		$view['view']['data'] = $result;
+		$view['view']['list_delete_url'] = site_url('notification/listdelete?' . $param->output());
+		$view['view']['list_update_url'] = site_url('notification/listupdate?' . $param->output());
+
+		/**
+		 * 페이지네이션을 생성합니다
+		 */
+		$config['base_url'] = site_url('notification') . '?' . $param->replace('page');
+		$config['total_rows'] = $result['total_rows'];
+		$config['per_page'] = $per_page;
+		$this->pagination->initialize($config);
+		$view['view']['paging'] = $this->pagination->create_links();
+		$view['view']['page'] = $page;
+
+		$view['view']['canonical'] = site_url('notification');
+
+		// 이벤트가 존재하면 실행합니다
+		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
+
+		/**
+		 * 레이아웃을 정의합니다
+		 */
+		$page_title = $this->cbconfig->item('site_meta_title_notification');
+		$meta_description = $this->cbconfig->item('site_meta_description_notification');
+		$meta_keywords = $this->cbconfig->item('site_meta_keywords_notification');
+		$meta_author = $this->cbconfig->item('site_meta_author_notification');
+		$page_name = $this->cbconfig->item('site_page_name_notification');
+
+		$layoutconfig = array(
+			'path' => 'notification',
+			'layout' => 'layout',
+			'skin' => 'notification',
+			'layout_dir' => '/rsteam_cic_mobile',//$this->cbconfig->item('layout_notification'),
+			'mobile_layout_dir' => '/rsteam_cic_mobile',//$this->cbconfig->item('mobile_layout_notification'),
+			'use_sidebar' => $this->cbconfig->item('sidebar_notification'),
+			'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_notification'),
+			'skin_dir' => '/rsteam_cic_mobile',//$this->cbconfig->item('skin_notification'),
+			'mobile_skin_dir' => '/rsteam_cic_mobile',//$this->cbconfig->item('mobile_skin_notification'),
+			'page_title' => $page_title,
+			'meta_description' => $meta_description,
+			'meta_keywords' => $meta_keywords,
+			'meta_author' => $meta_author,
+			'page_name' => $page_name,
+		);
+		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+		$this->data = $view;
+		$this->layout = element('layout_skin_file', element('layout', $view));
+		$this->view = element('view_skin_file', element('layout', $view));
+	}
+
 	/**
 	 * 알림 읽기 입니다
 	 */

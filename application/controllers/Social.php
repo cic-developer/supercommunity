@@ -18,7 +18,7 @@ class Social extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('Social', 'Social_meta', 'Member_nickname');
+	protected $models = array('Social', 'Social_meta', 'Member_nickname', 'Member_extra_vars');
 
 	/**
 	 * 헬퍼를 로딩합니다
@@ -366,7 +366,8 @@ class Social extends CB_Controller
 		}
 
 		if ($this->session->userdata('naver_access_token')) {
-			$url = 'https://apis.naver.com/nidlogin/nid/getUserProfile.xml';
+			// $url = 'https://apis.naver.com/nidlogin/nid/getUserProfile.xml';
+			$url = 'https://openapi.naver.com/v1/nid/me';
 
 			$ch = curl_init();
 			curl_setopt ($ch, CURLOPT_URL, $url);
@@ -381,17 +382,28 @@ class Social extends CB_Controller
 			$result = curl_exec($ch);
 			curl_close($ch);
 
-			$xml = simplexml_load_string($result);
-
-			$naver_id = (string) $xml->response->enc_id;
-			$email = (string) $xml->response->email;
-			$nickname = (string) $xml->response->nickname;
-			$profile_image = (string) $xml->response->profile_image;
-			$age = (string) $xml->response->age;
-			$gender = (string) $xml->response->gender;
-			$id = (string) $xml->response->id;
-			$name = (string) $xml->response->name;
-			$birthday = (string) $xml->response->birthday;
+			// $xml = simplexml_load_string($result);
+			// $naver_id = (string) $xml->response->enc_id;
+			// $email = (string) $xml->response->email;
+			// $nickname = (string) $xml->response->nickname;
+			// $profile_image = (string) $xml->response->profile_image;
+			// $age = (string) $xml->response->age;
+			// $gender = (string) $xml->response->gender;
+			// $id = (string) $xml->response->id;
+			// $name = (string) $xml->response->name;
+			// $birthday = (string) $xml->response->birthday;
+			$json = json_decode($result);
+			// print_r(json_decode($result));
+			// exit;
+			$naver_id = (string) $json->response->id;
+			$email = (string) $json->response->email;
+			$nickname = (string) $json->response->nickname;
+			$profile_image = (string) $json->response->profile_image;
+			$age = (string) $json->response->age;
+			$gender = (string) $json->response->gender;
+			$id = (string) $json->response->id;
+			$name = (string) $json->response->name;
+			$birthday = (string) $json->response->birthday;
 
 			if (empty($nickname)) {
 				$this->session->unset_userdata('naver_access_token');
@@ -416,6 +428,7 @@ class Social extends CB_Controller
 			Events::trigger('after', $eventname);
 
 			$this->_common_login('naver', $naver_id);
+			exit;
 		}
 
 		if ($this->input->get('code')) {
@@ -436,7 +449,8 @@ class Social extends CB_Controller
 			curl_close($ch);
 
 			$json = json_decode($result, true);
-
+			// print_r(element('access_token', $json));
+			// exit;
 			if (element('access_token', $json)) {
 
 				$this->session->set_userdata(
@@ -447,7 +461,6 @@ class Social extends CB_Controller
 				exit;
 
 			} else {
-
 				alert_close('로그인에 실패하였습니다');
 
 			}
@@ -494,7 +507,7 @@ class Social extends CB_Controller
 		}
 
 		if ($this->session->userdata('kakao_access_token')) {
-			$url = 'https://kapi.kakao.com/v1/user/me';
+			$url = 'https://kapi.kakao.com/v2/user/me';
 
 			$ch = curl_init();
 			curl_setopt ($ch, CURLOPT_URL, $url);
@@ -510,7 +523,8 @@ class Social extends CB_Controller
 			curl_close($ch);
 
 			$json = json_decode($result, true);
-
+			// print_r($json);
+			// exit;
 			$kakao_id = element('id', $json);
 			$nickname = element('nickname', element('properties', $json));
 			$profile_image = element('profile_image', element('properties', $json));
@@ -685,7 +699,6 @@ class Social extends CB_Controller
 		if ( ! element($social_type, $this->socialtype)) {
 			return;
 		}
-
 		// 이벤트가 존재하면 실행합니다
 		Events::trigger('common_login_before', $eventname);
 
@@ -748,10 +761,14 @@ class Social extends CB_Controller
 				$this->member->update_login_log($mem_id, '', 1, element($social_type, $this->socialtype) . ' 로그인 성공');
 				$this->session->set_userdata('mem_id', $mem_id);
 
+	
+
 				$url_after_login = $this->cbconfig->item('url_after_login');
 				if ($url_after_login) {
 					$url_after_login = site_url($url_after_login);
 				}
+
+
 				echo '<meta http-equiv="content-type" content="text/html; charset=' . config_item('charset') . '">';
 				echo '<script type="text/javascript"> window.close();';
 				if ($url_after_login) {
@@ -759,6 +776,14 @@ class Social extends CB_Controller
 				} else {
 					echo 'window.opener.location.reload();';
 				}
+				$all_meta = $this->Member_extra_vars_model->get_all_meta($this->member->is_member());
+				if(element('mem_warn_1', $all_meta) || element('mem_warn_2', $all_meta)){
+
+					$message =  (element('mem_warn_2', $all_meta) ? element('mem_warn_2', $all_meta) : element('mem_warn_1', $all_meta));
+					echo "alert('".$message."')";
+				}
+			
+				
 				echo '</script>';
 				exit;
 

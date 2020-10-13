@@ -59,7 +59,7 @@
 					?>
 						<tr>
 							<td><?php echo number_format(element('num', $result)); ?></td>
-							<td><?php echo element('jud_jug_id', $result) == 2 ? '신규' : '증액'; ?></td>
+							<td><?php echo element('jud_jug_id', $result) == 2 ? '신규' : '미디어 재심사'; ?></td>
 							<td><?php echo html_escape(element('wht_title', $result)); ?></td>
 							<td><?php echo html_escape(element('jud_med_admin', $result)); ?></td>
 							<td>

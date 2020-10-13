@@ -24,8 +24,9 @@
 			<div class="list-group">
 				<div class="form-group list-group-item">
 					<div class="col-sm-1">순서변경</div>
-					<div class="col-sm-7">미디어 성격</div>
-					<div class="col-sm-2">회원수</div>
+					<div class="col-sm-4">미디어 성격</div>
+					<div class="col-sm-4">미디어 성격(ENG)</div>
+					<div class="col-sm-1">회원수</div>
 					<div class="col-sm-2"><button type="button" class="btn btn-outline btn-primary btn-xs btn-add-rows">추가</button></div>
 				</div>
 				<div id="sortable">
@@ -35,8 +36,9 @@
 					?>
 						<div class="form-group list-group-item">
 							<div class="col-sm-1"><div class="fa fa-arrows" style="cursor:pointer;"></div><input type="hidden" name="met_id[<?php echo element('met_id', $result); ?>]" value="<?php echo element('met_id', $result); ?>" /></div>
-							<div class="col-sm-7"><input type="text" class="form-control" name="met_title[<?php echo element('met_id', $result); ?>]" value="<?php echo html_escape(element('met_title', $result)); ?>"/></div>
-							<div class="col-sm-2"><?php echo element('member_count', $result); ?></div>
+							<div class="col-sm-4"><input type="text" class="form-control" name="met_title[<?php echo element('met_id', $result); ?>]" value="<?php echo html_escape(element('met_title', $result)); ?>"/></div>
+							<div class="col-sm-4"><input type="text" class="form-control" name="met_title_en[<?php echo element('met_id', $result); ?>]" value="<?php echo html_escape(element('met_title_en', $result)); ?>"/></div>
+							<div class="col-sm-1"><?php echo element('member_count', $result); ?></div>
 							<div class="col-sm-2"><button type="button" class="btn btn-outline btn-default btn-xs btn-delete-row" >삭제</button></div>
 						</div>
 					<?php
@@ -53,7 +55,7 @@
 <script type="text/javascript">
 //<![CDATA[
 $(document).on('click', '.btn-add-rows', function() {
-	$('#sortable').append(' <div class="form-group list-group-item"><div class="col-sm-1"><div class="fa fa-arrows" style="cursor:pointer;"></div><input type="hidden" name="met_id[]" /></div><div class="col-sm-7"><input type="text" class="form-control" name="met_title[]"/></div><div class="col-sm-2"></div><div class="col-sm-2"><button type="button" class="btn btn-outline btn-default btn-xs btn-delete-row" >삭제</button></div></div>');
+	$('#sortable').append(' <div class="form-group list-group-item"><div class="col-sm-1"><div class="fa fa-arrows" style="cursor:pointer;"></div><input type="hidden" name="met_id[]" /></div><div class="col-sm-4"><input type="text" class="form-control" name="met_title[]"/></div><div class="col-sm-4"><input type="text" class="form-control" name="met_title_en[]"/></div><div class="col-sm-1"></div><div class="col-sm-2"><button type="button" class="btn btn-outline btn-default btn-xs btn-delete-row" >삭제</button></div></div>');
 });
 $(document).on('click', '.btn-delete-row', function() {
 	$(this).parents('div.list-group-item').remove();

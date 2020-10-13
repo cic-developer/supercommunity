@@ -24,7 +24,22 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">예상/실제 지급 PER TOKEN</label>
 				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-					<?php echo element('mis_per_token', element('data', $view)); ?>
+					<?php 
+					switch(element('jud_state', element('data', $view))){
+						case '0': 
+							echo 0;
+						break;
+						case '1': 
+							echo number_format(rs_cal_expected_point( element('mis_per_token', element('data', $view)),element('mip_tpoint', element('data', $view)), element('med_superpoint', element('data', $view)) ),1);
+						break;
+						case '3': 
+							echo number_format((element('mis_per_token', element('data', $view))*element('med_superpoint', element('data', $view))/(element('mip_tpoint', element('data', $view))===0? 1 : element('mip_tpoint', element('data', $view)) )),1);
+						break;
+						case '5':
+							echo number_format(element('jud_point', element('data', $view)),1);
+						break;
+					}
+					?>
 				</div>
 			</div>
 			<div class="form-group">
@@ -72,6 +87,17 @@
 			</div>
 			<?php } ?>
 			<div class="btn-group pull-right" role="group" aria-label="...">
+			<?php if(element('jud_state', element('data', $view)) == 3 && element('state', element('data', $view)) == 'end'){ ?>
+				<button type="button" class="btn btn-outline btn-default btn-sm give_point" 
+					data-judid="<?php echo element(element('primary_key', $view), element('data', $view)); ?>" 
+					data-userid="<?php echo element('mem_userid',element('member', element('data', $view))); ?>" 
+					data-nickname="<?php echo element('jud_mem_nickname', element('data', $view)); ?>" 
+					data-superfriend="<?php echo element('is_superfriend',element('data', $view)); ?>"
+					data-point="<?php echo (element('mis_per_token', element('data', $view))*element('med_superpoint', element('data', $view))/(element('mip_tpoint', element('data', $view))===0? 1 : element('mip_tpoint', element('data', $view)))); ?>"
+				>
+					포인트 지급
+				</button>
+			<?php } ?>
 				<button type="button" class="btn btn-success btn-sm set_state" data-value="confirm" data-state="3" data-text="승인" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>승인하기</button>
         <button type="button" id="denyBtn" class="btn btn-danger btn-sm" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>반려하기</button>
 				<button type="button" class="btn btn-default btn-sm btn-history-back" >목록으로</button>
@@ -79,6 +105,109 @@
 		<?php echo form_close(); ?>
 	</div>
 </div>
+
+
+<!-- 포인트 지급 Modal -->
+<div class="modal fade" id="pointModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+	
+		<!-- Modal content-->
+		<div class="modal-content" style="position:absolute; z-index:2000; width:100%;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">포인트 지급</h4>
+			</div>
+			<div class="modal-body" style="text-align:center;">
+				<div id='div_superfriend' style="margin-bottom:15px;">
+					<span style="text-align:center; font-size:24px; font-weight:bold;">SUPERFRIEND</span>
+				</div>
+				<form class="form-horizontal" id="gp_form">
+					<input name="<?php echo $this->security->get_csrf_token_name(); ?>" type="hidden" value="<?php echo $this->security->get_csrf_hash(); ?>" />
+					<input name="gp_jud_id" type="hidden" />
+					<input name="gp_point" type="hidden" />
+					<fieldset>
+					
+						<!-- Text input-->
+						
+						<div class="form-group">
+							<label class="col-md-4 control-label">유저 닉네임</label>  
+							<div class="col-md-4 inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									<input  name="gp_nickname" placeholder="로딩중" class="form-control"  type="text" readonly style="background-color:#ffffff;">
+								</div>
+							</div>
+						</div>
+						
+						<!-- Text input-->
+						
+						<div class="form-group">
+							<label class="col-md-4 control-label" >유저 아이디</label> 
+							<div class="col-md-4 inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+									<input name="gp_userid" placeholder="로딩중" class="form-control"  type="text" readonly style="background-color:#ffffff;">
+								</div>
+							</div>
+						</div>
+						
+						<!-- Text input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label">예상 지급 퍼포인트</label>  
+							<div class="col-md-4 inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-flag"></i></span>
+									<input name="gp_expectpoint" placeholder="로딩중" class="form-control"  type="text" readonly style="background-color:#ffffff;">
+								</div>
+							</div>
+						</div>
+						
+						<!-- Select Basic -->
+						<div class="form-group"> 
+							<label class="col-md-4 control-label">실제지급퍼센티지</label>
+							<div class="col-md-4 selectContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-hand-right"></i></span>
+									<select name="gp_giveperc" class="form-control selectpicker" >
+										<option value="100" >100%</option>
+										<option value="90" >90%</option>
+										<option value="80" >80%</option>
+										<option value="70" >70%</option>
+										<option value="60" >60%</option>
+										<option value="50" >50%</option>
+										<option value="40" >40%</option>
+										<option value="30" >30%</option>
+										<option value="20" >20%</option>
+										<option value="10" >10%</option>
+										<option value="0" >0%</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Text input-->
+						<div class="form-group">
+							<label class="col-md-4 control-label">실제 지급 퍼포인트</label>  
+							<div class="col-md-4 inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-gift"></i></span>
+									<input name="gp_givepoint" class="form-control"  type="text" value="0" readonly style="background-color:#ffffff;">
+								</div>
+							</div>
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success send_point" >지급</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		
+	</div>
+</div>
+<!-- Modal End -->
 
 <style>
   @media (min-width: 780px){ 
@@ -190,6 +319,66 @@ $(document).on('click','.set_state',function(){
 				alert(result.data);
 				return;
 			} else {
+				throw new error('unhandled error occur');
+			}
+			
+		}
+	});
+});
+
+
+$(document).on('click', '.give_point', function(){
+	document.getElementById("gp_form").reset();
+	$('.send_point').attr('disabled', false);
+	if($(this).attr('data-superfriend')){
+		$('#div_superfriend').css('display','');
+	} else {
+		$('#div_superfriend').css('display','none');
+	}
+	$("#pointModal .modal-body input[name=gp_jud_id]").val($(this).attr('data-judid'));
+	$("#pointModal .modal-body input[name=gp_point]").val($(this).attr('data-point'));
+	$("#pointModal .modal-body input[name=gp_nickname]").val($(this).attr('data-nickname'));
+	$("#pointModal .modal-body input[name=gp_userid]").val($(this).attr('data-userid'));
+	$("#pointModal .modal-body input[name=gp_expectpoint]").val(Number($(this).attr('data-point')).toLocaleString('en', {maximumFractionDigits: 1}));
+	$("#pointModal .modal-body input[name=gp_givepoint]").val(Number($(this).attr('data-point')).toLocaleString('en', {maximumFractionDigits: 1}));
+	$("#pointModal").modal({
+		backdrop:false
+	});
+});
+
+
+$(document).on('change', '#pointModal .modal-body select[name=gp_giveperc]', function(){
+	console.log('onchange')
+	let _perc = $(this).val();
+	let _point = $("#pointModal .modal-body input[name=gp_point]").val();
+	let _calculate = _point / 100 * _perc;
+	$("#pointModal .modal-body input[name=gp_givepoint]").val(_calculate.toLocaleString('en', {maximumFractionDigits: 1}));
+});
+
+
+$(document).on('click','.send_point',function(){
+	if(typeof($(this).attr('disabled')) !== 'undefined') {
+		return false;
+	} else {
+  	if(!confirm('정말 지급처리 하시겠습니까?')) return false;
+		$(this).attr('disabled', true);
+	}
+	let _data = $('#gp_form').serialize();
+  $.ajax({
+		type: 'post',
+		dataType: "json",
+		url:'/admin/cic/judgemission/ajax_givepoint',
+		data: _data,
+		success(result){
+			if(result.type == 'success'){
+        alert('승인되었습니다.');
+				location.reload();
+			} else if (result.type == 'error'){
+				$('.send_point').attr('disabled', false);
+				alert(result.data);
+				return;
+			} else {
+				$('.send_point').attr('disabled', false);
 				throw new error('unhandled error occur');
 			}
 			

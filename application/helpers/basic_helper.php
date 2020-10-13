@@ -448,8 +448,13 @@ if ( ! function_exists('display_username')) {
 	function display_username($userid = '', $name = '', $icon = '', $use_sideview = '')
 	{
 		$CI = & get_instance();
-		$name = $name ? html_escape($name) : '비회원';
-		$title = $userid ? '[' . $userid . ']' : '[비회원]';
+		$lang = $CI->session->userdata('lang');
+		$beuser = '비회원';
+		if($lang == 'english'){
+			$beuser = 'non-user';
+		}
+		$name = $name ? html_escape($name) : $beuser;
+		$title = $userid ? '[' . $userid . ']' : '['.$beuser.']';
 
 		$_use_sideview = ($CI->cbconfig->get_device_view_type() === 'mobile')
 			? $CI->cbconfig->item('use_mobile_sideview')

@@ -1,0 +1,141 @@
+/**
+	login skin css
+*/
+
+.access{width: 100%; margin: 0 auto;}
+.loginform li {display: block;margin: 0px; clear: both; margin-bottom: 15px;}
+.loginform li>span {float: left;width: 25%;text-align: right;padding-right: 20px;margin-top: 5px;color: #000;font-weight: bold;}
+
+
+
+#login_wrap{
+	margin:0 auto;
+	overflow: hidden;
+	margin-top:190px!important;
+	background:url(/assets/images/sns_login_bar.gif) no-repeat center 14px;
+	max-width: 1300px;
+	min-height: 580px;
+}
+/*로그인창 왼쪽 내용*/
+#login_wrap .left{
+	width: 49%;
+	float: left;
+	text-align: right;
+	margin-right: 0px;	
+	padding-right: 3px;	
+	display: block;
+
+}
+
+
+#login_wrap .left ul {
+	
+	display: block;
+	padding-right:50px;
+	margin-top:90px;
+}
+
+
+#login_wrap .left ul li{	
+	display: block;
+
+	
+	
+
+}
+
+#login_wrap .left ul li p{
+	font-size: 45px;
+	font-family: 'Montserrat', sans-serif;
+	font-weight:700 ;
+	color:#b3b3b3;
+	
+	display: block;
+	
+}
+
+
+#login_wrap .left li b{
+	font-size: 90px;
+	font-family: 'Montserrat', sans-serif;
+	font-weight:700 ;
+	color:#212121;
+
+	display: block;
+}
+
+
+/*로그인창 왼쪽 내용 끄읏//*/
+
+/*로그인창 오른쪽 내용 시작*/
+
+#login_wrap .right{
+	width: 49%;
+	float: right;
+	padding-top: 35px;
+}
+
+#login_wrap .right ul{
+	padding-left:50px ;
+	display: block;
+	
+}
+
+#login_wrap .right ul li{
+	display: block;
+	padding-bottom: 25px;
+}
+
+#login_wrap .right ul li a{
+	display: block;
+	width:310px;
+	height: 50px;
+	border-radius: 10px;
+	text-transform: uppercase;
+	
+}
+
+#login_wrap .right ul li a img{
+	display: block;
+	padding-top:14px;
+	padding-left:12px ;
+	float: left;
+	
+}
+
+#login_wrap .right ul li a strong{
+	display: block;
+	border-radius: 10px;
+	color:#fff;
+	font-size: 14px;
+	font-weight: 500;
+	float: left;
+	padding-top:18px;
+	padding-left: 75px;
+}
+
+
+
+#login_wrap .right ul li .facebook_lg{
+	background-color:#3c5c9c;
+}
+
+#login_wrap .right ul li .twitter_lg{
+
+	background-color:#2696ea;
+}
+
+
+#login_wrap .right ul li .google_lg{
+
+	background-color:#cc3731;
+}
+
+#login_wrap .right ul li .naver_lg{
+
+	background-color:#1ecd00;
+}
+#login_wrap .right ul li .kakao_lg{
+
+	background-color:#fac400;
+}

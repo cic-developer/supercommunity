@@ -132,6 +132,56 @@ class CB_Model extends CI_Model
 
 	public function _get_list_common($select = '', $join = '', $limit = '', $offset = '', $where = '', $like = '', $findex = '', $forder = '', $sfield = '', $skeyword = '', $sop = 'OR')
 	{
+		$this->db->select('count(*) as rownum');
+		$this->db->from($this->_table);
+		if ( ! empty($join['table']) && ! empty($join['on'])) {
+			if (empty($join['type'])) {
+				$join['type'] = 'left';
+			}
+			$this->db->join($join['table'], $join['on'], $join['type']);
+		} elseif (is_array($join)) {
+			foreach ($join as $jkey => $jval) {
+				if ( ! empty($jval['table']) && ! empty($jval['on'])) {
+					if (empty($jval['type'])) {
+						$jval['type'] = 'left';
+					}
+					$this->db->join($jval['table'], $jval['on'], $jval['type']);
+				}
+			}
+		}
+		if ($where) {
+			$this->db->where($where);
+		}
+		if ($search_where) {
+			$this->db->where($search_where);
+		}
+		if ($like) {
+			$this->db->like($like);
+		}
+		if ($search_like) {
+			foreach ($search_like as $item) {
+				foreach ($item as $skey => $sval) {
+					$this->db->like($skey, $sval);
+				}
+			}
+		}
+		if ($search_or_like) {
+			$this->db->group_start();
+			foreach ($search_or_like as $item) {
+				foreach ($item as $skey => $sval) {
+					$this->db->or_like($skey, $sval);
+				}
+			}
+			$this->db->group_end();
+		}
+		if ($count_by_where) {
+			$this->db->where($count_by_where);
+		}
+		$qry = $this->db->get();
+		$rows = $qry->row_array();
+		$result['total_rows'] = $rows['rownum'];
+		//여기까지가 totla_rows query 뽑는 부분
+
 		if (empty($findex) OR ! in_array($findex, $this->allow_order_field)) {
 			$findex = $this->primary_key;
 		}
@@ -239,56 +289,9 @@ class CB_Model extends CI_Model
 		}
 		$qry = $this->db->get();
 		$result['list'] = $qry->result_array();
-
-		$this->db->select('count(*) as rownum');
-		$this->db->from($this->_table);
-		if ( ! empty($join['table']) && ! empty($join['on'])) {
-			if (empty($join['type'])) {
-				$join['type'] = 'left';
-			}
-			$this->db->join($join['table'], $join['on'], $join['type']);
-		} elseif (is_array($join)) {
-			foreach ($join as $jkey => $jval) {
-				if ( ! empty($jval['table']) && ! empty($jval['on'])) {
-					if (empty($jval['type'])) {
-						$jval['type'] = 'left';
-					}
-					$this->db->join($jval['table'], $jval['on'], $jval['type']);
-				}
-			}
-		}
-		if ($where) {
-			$this->db->where($where);
-		}
-		if ($search_where) {
-			$this->db->where($search_where);
-		}
-		if ($like) {
-			$this->db->like($like);
-		}
-		if ($search_like) {
-			foreach ($search_like as $item) {
-				foreach ($item as $skey => $sval) {
-					$this->db->like($skey, $sval);
-				}
-			}
-		}
-		if ($search_or_like) {
-			$this->db->group_start();
-			foreach ($search_or_like as $item) {
-				foreach ($item as $skey => $sval) {
-					$this->db->or_like($skey, $sval);
-				}
-			}
-			$this->db->group_end();
-		}
-		if ($count_by_where) {
-			$this->db->where($count_by_where);
-		}
-		$qry = $this->db->get();
-		$rows = $qry->row_array();
-		$result['total_rows'] = $rows['rownum'];
-
+		// echo $this->db->last_query(); exit;
+		// 여기까지가 list data query
+		
 		return $result;
 	}
 

@@ -1,0 +1,244 @@
+/**
+	advertise skin css
+*/
+
+/** 아이폰 리셋**/
+input[type="text"], 
+input[type="password"],
+input[type="submit"]{ 
+	-webkit-border-radius:0;
+	border-radius:0; 
+  -webkit-appearance:none;
+  appearance:none;  
+}
+
+
+/* 광고 div 전체*/
+#ask_wrap{
+	padding-left: 20px;
+	padding-right: 20px;
+	overflow: hidden;
+	text-align: center;
+}
+
+
+#ask_wrap h3{
+	display: block;
+	font-size: 2em;
+	line-height: 1.3;
+	padding-top:50px;
+	font-weight: 600;
+	overflow: hidden;
+	width: 100%;
+	text-align: center;
+}
+
+/* 왼쪽 css 끝*/
+
+
+/* 오른쪽 top css 시작*/
+
+.right{
+	width: 100%;
+	overflow: hidden;
+	
+}
+
+#ask_wrap ul{
+	display: block;
+	padding-top:50px;		
+}
+
+#ask_wrap ul li{
+	display: block;
+	padding-bottom:100px;
+}
+
+#ask_wrap ul li p{
+	display: block;
+	font-size: 1.154em;
+	line-height: 1.5;
+	color:#333;
+	font-weight: 400;
+	text-align: justify;
+}
+
+#ask_wrap ul li h4{
+	width: 100%;
+	display: block;
+	font-size: 100%;
+	font-weight: 400;
+	color:#999;
+	text-decoration: underline;
+		
+}
+
+#ask_wrap ul li .bt{
+	padding-top:30px;
+	width: 100%;
+	
+}
+
+#ask_wrap ul li .bt a{
+	font-size: 100%;
+}
+
+
+
+/* 오른쪽 top css 끝 */
+
+
+/* form css 시작 */
+
+#ask_wrap ul .form{
+	width: 100%;
+	
+	overflow: hidden;
+}
+
+#ask_wrap ul .form .form_top_all{
+	padding-bottom: 50px;
+	overflow: hidden;
+}
+
+#ask_wrap ul .form b{
+	display: block;
+	font-size: 1.385em;
+	font-weight: 600;
+	padding-bottom: 40px;
+	padding-top: 40px;
+	line-height: 1.5;	
+}
+
+#ask_wrap ul .form input{
+	margin-bottom: 40px;
+	outline:none;
+	border-style:none;
+	border-bottom: 2px solid #000;
+	font-size: 1.154em;
+	font-weight: 300;
+	width: 100%;
+	height: 10%;
+	
+}
+/* 휴대폰 번호 css */
+
+#ask_wrap ul .form .number{
+	display: block;
+	overflow: hidden;
+	width: 100%;
+}
+
+
+#ask_wrap ul .form .number input{
+	
+	border-style:none;
+	border-bottom: 2px solid #000;
+	font-size: 1.154em;
+	font-weight: 300;
+	
+	width: 31.8%;
+	float: left;
+
+	
+}
+
+#ask_wrap ul .form .number strong{
+	display: block;
+	font-size: 100%;
+	font-weight: 400;	
+	color:#333;
+	float: left;
+	line-height: 23px;
+}
+
+/* 휴대폰 번호 끝css */
+
+#ask_wrap ul .form .inquiry {
+	margin-bottom: 30px;
+	overflow: hidden;
+
+}
+
+
+#ask_wrap ul .form .inquiry textarea{
+	border-style:none;
+	border: 1px solid #ddd;
+	font-size: 1.154em;
+	font-weight: 300;
+	height: 150px;
+	width: 100%;	
+	outline:none;
+	resize: none;
+	box-sizing: border-box;
+	padding-left: 10px;
+	padding-top: 10px;
+}
+
+/*알파고(로봇)인지 확인하는 css시작*/
+#ask_wrap ul .form label{
+	overflow: hidden;
+	display: block;
+	margin-top:20px;
+}
+
+#ask_wrap ul .form label .checkbox{
+	width: 13px;
+	height: 13px;
+	float: left;
+	margin-top:2px;
+	border:1px solid #ddd;
+}
+
+#ask_wrap ul .form label h5{
+	font-size: 100%;
+	display: block;
+	color:#333;
+	padding-top:1px;
+	font-weight: 400;
+	padding-left: 25px;
+	text-align: left;
+}
+
+
+#ask_wrap ul .form .something{
+	
+	margin-bottom:30px;
+}
+
+
+
+
+/*알파고(로봇)인지 확인하는 css끝*/
+
+#ask_wrap ul .form .bt_02{
+	width: 30%;
+	padding-top:20px;
+	margin:0 auto;
+}
+
+#ask_wrap ul .form .btn1 {
+    display: block;
+    transition: 0.5s;
+    font-weight: 500;
+    font-size: 1.154em;
+    border-radius: 20px;
+    border: 0;
+	box-sizing: border-box;
+	
+	
+}
+
+
+/*컨설팅 문의 오른쪽 TOP*/
+
+
+
+#ask_wrap .right li u{
+	display: block;
+	font-size: 1.154em;
+	line-height: 1.3;
+	color:#333;	
+	font-weight: 400;
+	text-decoration: none;
+}

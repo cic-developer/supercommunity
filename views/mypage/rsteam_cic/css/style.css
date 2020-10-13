@@ -1,7 +1,9 @@
+@charset "UTF-8";
+/* CSS Document */
 /**
 	mypage skin css
 */
-
+/*  혹시몰라 살려두는 기존 css //
 .mypage .mypagemain li {display: block;margin: 0px; clear: both; margin-bottom: 15px;}
 .mypage .mypagemain li>span {float: left;width: 25%;text-align: right;padding-right: 20px;margin-top: 5px;color: #000;font-weight: bold;}
 .mypage .mypagemain li {min-height:25px;}
@@ -20,3 +22,120 @@
 .mypage .table-top li{float: left;text-align: center;padding-right: 5px;}
 
 .mypage .nav {margin-bottom:20px;}
+*/
+
+
+
+
+
+/**read-only, 읽기전용 인풋폼 정의**/
+/* p.read_fake {width:180px; height:35px; padding:0 15px; line-height:35px; border:1px solid #ccc; background:#eee; color:#888;} 
+input:-moz-read-only {  For Firefox 
+	background:#eee; 
+	color:#888;
+}
+input:read-only, textarea:read-only {
+	background:#eee; 
+	color:#888;
+  } */
+
+
+
+/******************마이페이지 css**************************/
+/* #mypage {width:1300px; margin:0 auto; min-height:600px; padding:55px 0; overflow: hidden;}
+#mypage #my_left_box {float: left; width: 235px;}
+#mypage #my_left_box h3 {font-size: 40px; margin-bottom:30px; font-family: 'Montserrat', sans-serif; color:#2a2a2a; text-align: center;}
+#mypage #my_left_box .my_box {width: 100%; border:1px solid #ddd; border-radius: 15px; text-align: center;}
+#mypage #my_left_box .my_box h4 {font-family: 'Montserrat', sans-serif; text-transform: uppercase; text-align: center; font-size: 20px; padding:15px 0; color:#333; font-weight: 300; border-bottom:1px solid #ddd;}
+#mypage #my_left_box .my_box .user_img {margin: 32px 0 28px 0;}
+#mypage #my_left_box .my_box strong {display: block; padding:0px 15px; font-size:20px; color:#848484; margin-bottom: 25px;}
+#mypage #my_left_box .my_box p {padding:0px 15px; border-top:1px solid #ddd; padding:20px 0; font-size:15px; color:#f7b400;  font-weight:700; text-transform: uppercase; font-family: 'Montserrat', sans-serif;}
+#mypage #my_left_box .my_box p span {display: block; margin-top: 10px; font-size:25px; color:#333;}
+#mypage #my_right_box {float: right; width:965px ; }
+#mypage #my_right_box h5 {font-size: 25px; padding: 15px 0; color:#a5a5a5; border-bottom:1px solid #ccc;}
+#mypage #my_right_box h6 {font-size: 18px; font-weight:500; padding: 15px; border:1px dashed #ddd; margin-top:15px; background:#fcfcfc;}
+#mypage #my_right_box h6 small {display: block; padding: 8px; font-size: 13px; line-height: 1.4; color:#f36262; font-weight:400; } */
+
+/************테이블 정의*************/
+/* table.list_table {width: 100%; border-collapse: collapse; border-top:2px solid #2a2a2a; margin-top:20px}
+table.list_table th {background:#fcfcfc; color: #2a2a2a;}
+table.list_table th, table.list_table td {border-bottom:1px solid #ddd; border-left:1px solid #ddd; font-size: 13px; padding:15px; text-align: center; word-break: break-all;}
+table.list_table th:first-child, table.list_table td:first-child {border-left:0;}
+table.list_table td.link a {text-decoration: underline;}
+table.list_table td .s_btn, .s_btn {display: inline-block; border:0; width: 70px; line-height:25px; border-radius:5px; font-weight: 500; font-size: 12px; text-align: center; background:#8e8e8e; color:#fff;}
+.reject {color:#ec4848; font-weight: 500; text-decoration: underline;}
+.judge {color:#1e77d2; font-weight: 500;} */
+
+/***퍼포인트, 슈퍼포인트 텍스트 아이콘***/
+/* i.super_p, i.per_p {display: inline-block; width:17px; height:17px; vertical-align: middle; margin-right:3px;}
+i.super_p {background:url(/assets/images/super_p.gif) no-repeat center;}
+i.per_p {background:url(/assets/images/per_p.gif) no-repeat center;} */
+
+
+/*작성 수정 폼*/
+/* #mypage #my_right_box .ul_write {width: 100%;}
+#mypage #my_right_box .ul_write>li {border-bottom:1px solid #eee; overflow: hidden; padding:30px 20px; position: relative; font-size: 14px; color:#777;}
+#mypage #my_right_box .ul_write>li>span {position:absolute; top:30px; left:20px; display: block; font-size: 14px; color:#333; font-weight:500;}
+#mypage #my_right_box .ul_write>li>span>b {color:#fab908; font-weight: 500;}
+#mypage #my_right_box .ul_write>li .my_cont {margin-left:200px;}
+#mypage #my_right_box .ul_write>li .my_cont select {min-width:180px; padding-left:15px; border:1px solid #ccc; height: 35px;}
+#mypage #my_right_box .ul_write>li .my_cont input[type="text"], 
+#mypage #my_right_box .ul_write>li .my_cont input[type="password"] {width: 180px; font-size: 14px; padding:0 15px; border:1px solid #ccc; height: 35px;}
+#mypage #my_right_box .ul_write>li .my_cont textarea {width: 90%; height:120px; padding: 15px; box-sizing: border-box; resize: none; border:1px solid #ccc;}
+#mypage #my_right_box .check_table li,.check_table li{display: inline-block; margin:0 25px 10px 0;}
+#mypage #my_right_box .check_table li input[type="checkbox"],.check_table li input[type="checkbox"] {margin-right:5px;}
+
+#mypage #my_right_box .ul_write>li .my_cont .midea_txt li{width: 100%; overflow: hidden; margin-bottom: 8px; font-size: 13px; line-height: 1.5;}
+#mypage #my_right_box .ul_write>li .my_cont .midea_txt li b {display:block; width:12%;  float: left; margin-right: 10px; font-weight: 500;}
+#mypage #my_right_box .ul_write>li .my_cont .midea_txt li p {float: right;  width: 85%; overflow:hidden;}
+#mypage #my_right_box .ul_write>li .my_cont .img_file {display:block; float:left; overflow: hidden; width: 130px; height: 80px; border:1px solid #eee;}
+#mypage #my_right_box .ul_write>li .my_cont .img_file img {max-width: 100%;}
+#mypage #my_right_box .ul_write>li .my_cont .right_txt {float: left; margin-left: 15px;}
+#mypage #my_right_box .ul_write>li .my_cont .right_txt small {display: block; margin-bottom:10px;} */
+
+/*******내미디어******/
+/* #mypage #my_right_box .none_media {text-align: center; padding: 50px 0;}
+#mypage #my_right_box .none_media i {font-size: 200px;}
+#mypage #my_right_box .none_media p {font-size: 16px; margin: 25px 0; color:#888;} */
+
+
+
+/*********내미션 인증현황********/
+/* #mypage #my_right_box .wallet_link {position: relative; border-top:1px solid #eee; border-bottom:1px solid #eee; padding:30px 0 30px 113px; margin-top:75px; background:url(/assets/images/wallet_bg.gif) no-repeat 30px center; background-color: #fcfcfc;}
+#mypage #my_right_box .wallet_link p {font-size: 18px; font-weight: 600; margin-bottom:10px;}
+#mypage #my_right_box .wallet_link span {display:inline-block; font-size: 14px;}
+#mypage #my_right_box .wallet_link span b {display:inline-block; margin-left: 10px;}
+#mypage #my_right_box .wallet_link a {position: absolute; right:30px; top:30px;} */
+
+
+/********* SUPER POINT ********/
+/* 
+#mypage #my_right_box .point_txt {margin: 30px;}
+#mypage #my_right_box .point_txt li {padding: 35px 0; text-align: center; color: #909090;}
+#mypage #my_right_box .point_txt li p {line-height: 1.5; font-size: 18px; margin-top:5px; margin-top: 30px;}
+#mypage #my_right_box .point_txt li p b {font-weight: 500; color:#2a2a2a; background: url(/assets/images/nav_line_bg.gif) repeat-x center 17px;}
+#mypage #my_right_box .point_txt li:last-child {border-top:1px solid #eee; border-bottom:1px solid #eee; font-size:23px;}
+#mypage #my_right_box .point_txt li:last-child b {display: inline-block; color:#f1b206; font-size: 45px; vertical-align: text-top; margin-left: 10px;}
+#mypage #my_right_box .ul_write>li .my_cont .point {display: inline-block; vertical-align: sub; font-size: 25px; font-weight: 600; color:#2a2a2a;} */
+
+
+/************마이페이지 모달 팝업 css************/
+.popup { display: none;max-width: 520px; font-size: 15px }
+.popup input[type="text"] { height:35px; font-size:13px; padding:0px 15px; border:1px solid #ccc;}
+.lightlayer-popup .body {padding:30px;}
+.mail_box {margin-top:20px;}
+.mail_code {padding: 15px 0; margin-top:15px; border-top:1px dashed #ccc;}
+.btn { padding: 10px 20px; margin: 0 10px; border: 0; background-color: #fbb906; border-bottom: 3px solid #f0b209; border-radius: 3px; color: #fff; font-weight: bold; }
+.lightlayer-popup .head { background-color: #2a2a2a; color: #fff; font-weight:500; line-height:28px;}
+
+.popup_youtube {width:800; max-width: 800px; height: auto;}
+.popup_youtube .body {width: 800px; padding:20px; box-sizing: border-box; border-bottom:1px dashed #ccc;}
+.popup_youtube .body img {width: 100%;}
+.popup_youtube .foot p {text-align: left; font-size:30px; font-weight: 700; line-height: 1.2; font-family: 'Montserrat','Noto Sans KR', sans-serif;}
+.popup_youtube .x-button {display: none;}
+
+/*****프로그래스 로딩바 css**********/
+.withdraw_done {text-align: right;}
+#loading {margin-top:15px;}
+.withdraw_ing small {display: block; font-size: 13px; padding: 8px 0 15px 0; color:#6d6d6d; text-align: left;}
+.lightlayer-popup .foot {padding: 20px;}

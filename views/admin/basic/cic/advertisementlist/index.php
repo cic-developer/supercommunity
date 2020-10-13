@@ -1,11 +1,11 @@
 <div class="box">
-	<div class="box-header">
+	<!-- <div class="box-header">
 		<ul class="nav nav-tabs">
-			<li role="presentation" class="active"><a href="<?php echo admin_url($this->pagedir); ?>" onclick="return check_form_changed();">광고목록</a></li>
-			<li role="presentation"><a href="<?php echo admin_url($this->pagedir . '/askadvertise'); ?>" onclick="return check_form_changed();">광고 요청</a></li>
-			<li role="presentation"><a href="<?php echo admin_url($this->pagedir . '/adconsulting'); ?>" onclick="return check_form_changed();">광고 컨설팅 요청</a></li>
+			<li role="presentation" class="active"><a href="<?php// echo admin_url($this->pagedir); ?>" onclick="return check_form_changed();">광고목록</a></li>
+			<li role="presentation"><a href="<?php// echo admin_url($this->pagedir . '/askadvertise'); ?>" onclick="return check_form_changed();">광고 요청</a></li>
+			<li role="presentation"><a href="<?php// echo admin_url($this->pagedir . '/adconsulting'); ?>" onclick="return check_form_changed();">광고 컨설팅 요청</a></li>
 		</ul>
-	</div>
+	</div> -->
 	<div class="box-table">
 		<?php
 		echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
@@ -14,28 +14,18 @@
 		?>
 			<div class="box-table-header">
 				<div class="btn-group btn-group-sm" role="group">
-					<a href="?" class="btn btn-sm <?php echo ( ! $this->input->get('mem_is_admin') && ! $this->input->get('mem_denied')) ? 'btn-success' : 'btn-default'; ?>">전체회원</a>
-					<a href="?mem_is_admin=1" class="btn btn-sm <?php echo ($this->input->get('mem_is_admin')) ? 'btn-success' : 'btn-default'; ?>">최고관리자</a>
-					<a href="?mem_denied=1" class="btn btn-sm <?php echo ($this->input->get('mem_denied')) ? 'btn-success' : 'btn-default'; ?>">차단회원</a>
-				</div>
-				<div class="btn-group btn-group-sm" role="group">
-					<a href="?" class="btn btn-sm <?php echo ( ! $this->input->get('mgr_id')) ? 'btn-success' : 'btn-default'; ?>">전체그룹</a>
-					<?php
-					foreach (element('all_group', $view) as $gkey => $gval) {
-					?>
-						<a href="?mgr_id=<?php echo element('mgr_id', $gval); ?>" class="btn btn-sm <?php echo (element('mgr_id', $gval) === $this->input->get('mgr_id')) ? 'btn-success' : 'btn-default'; ?>"><?php echo element('mgr_title', $gval); ?></a>
-					<?php
-					}
-					?>
+					<a href="?" class="btn btn-sm <?php echo ( ! $this->input->get('ad_type')) ? 'btn-success' : 'btn-default'; ?>">전체</a>
+					<a href="?ad_type=1" class="btn btn-sm <?php echo ($this->input->get('ad_type') == 1) ? 'btn-success' : 'btn-default'; ?>">이미지</a>
+					<a href="?ad_type=2" class="btn btn-sm <?php echo ($this->input->get('ad_type') == 2) ? 'btn-success' : 'btn-default'; ?>">유튜브</a>
 				</div>
 				<?php
 				ob_start();
 				?>
 					<div class="btn-group pull-right" role="group" aria-label="...">
-						<button type="button" class="btn btn-outline btn-success btn-sm" id="export_to_excel"><i class="fa fa-file-excel-o"></i> 엑셀 다운로드</button>
+						<!-- <button type="button" class="btn btn-outline btn-success btn-sm" id="export_to_excel"><i class="fa fa-file-excel-o"></i> 엑셀 다운로드</button> -->
 						<a href="<?php echo element('listall_url', $view); ?>" class="btn btn-outline btn-default btn-sm">전체목록</a>
 						<button type="button" class="btn btn-outline btn-default btn-sm btn-list-delete btn-list-selected disabled" data-list-delete-url = "<?php echo element('list_delete_url', $view); ?>" >선택삭제</button>
-						<a href="<?php echo element('write_url', $view); ?>" class="btn btn-outline btn-danger btn-sm">회원추가</a>
+						<a href="<?php echo element('write_url', $view); ?>" class="btn btn-outline btn-danger btn-sm">광고추가</a>
 					</div>
 				<?php
 				$buttons = ob_get_contents();
@@ -47,21 +37,11 @@
 				<table class="table table-hover table-striped table-bordered">
 					<thead>
 						<tr>
-							<th><a href="<?php echo element('mem_id', element('sort', $view)); ?>">번호</a></th>
-							<th><a href="<?php echo element('mem_userid', element('sort', $view)); ?>">아이디</a></th>
-							<th><a href="<?php echo element('mem_username', element('sort', $view)); ?>">실명</a></th>
-							<th><a href="<?php echo element('mem_nickname', element('sort', $view)); ?>">닉네임</a></th>
-							<th><a href="<?php echo element('mem_email', element('sort', $view)); ?>">이메일</a></th>
-							<?php if ($this->cbconfig->item('use_sociallogin')) { ?>
-								<th>소셜연동</th>
-							<?php } ?>
-							<th><a href="<?php echo element('mem_point', element('sort', $view)); ?>">포인트</a></th>
-							<th><a href="<?php echo element('mem_register_datetime', element('sort', $view)); ?>">가입일</a></th>
-							<th><a href="<?php echo element('mem_lastlogin_datetime', element('sort', $view)); ?>">최근로그인</a></th>
-							<th>회원그룹</th>
-							<th><a href="<?php echo element('mem_level', element('sort', $view)); ?>">회원레벨</a></th>
-							<th>메일인증/공개/메일/쪽지/문자</th>
-							<th>승인</th>
+							<th>작성자</th>
+							<th>광고 분류</th>
+							<th><a href="<?php echo element('ad_wdate', element('sort', $view)); ?>">작성일</a></th>
+							<th><a href="<?php echo element('ad_state', element('sort', $view)); ?>">상태</a></th>
+							<th>메모</th>
 							<th>수정</th>
 							<th><input type="checkbox" name="chkall" id="chkall" /></th>
 						</tr>
@@ -72,47 +52,11 @@
 						foreach (element('list', element('data', $view)) as $result) {
 					?>
 						<tr>
-							<td><?php echo number_format(element('num', $result)); ?></td>
-							<td><?php echo html_escape(element('mem_userid', $result)); ?></td>
-							<td>
-								<span><?php echo html_escape(element('mem_username', $result)); ?></span>
-								<?php echo element('mem_is_admin', $result) ? '<span class="label label-primary">최고관리자</span>' : ''; ?>
-								<?php echo element('mem_denied', $result) ? '<span class="label label-danger">차단</span>' : ''; ?>
-							</td>
 							<td><?php echo element('display_name', $result); ?></td>
-							<td><?php echo html_escape(element('mem_email', $result)); ?></td>
-							<?php if ($this->cbconfig->item('use_sociallogin')) { ?>
-								<td>
-									<?php if ($this->cbconfig->item('use_sociallogin_facebook') && element('facebook_id', element('social', $result))) { ?>
-										<a href="javascript:;" onClick="social_open('facebook', '<?php echo element('mem_id', $result); ?>');"><img src="<?php echo base_url('assets/images/social_facebook.png'); ?>" width="15" height="15" alt="페이스북 로그인" title="페이스북 로그인" /></a>
-									<?php } ?>
-									<?php if ($this->cbconfig->item('use_sociallogin_twitter') && element('twitter_id', element('social', $result))) { ?>
-										<a href="javascript:;" onClick="social_open('twitter', '<?php echo element('mem_id', $result); ?>');"><img src="<?php echo base_url('assets/images/social_twitter.png'); ?>" width="15" height="15" alt="트위터 로그인" title="트위터 로그인" /></a>
-									<?php } ?>
-									<?php if ($this->cbconfig->item('use_sociallogin_google') && element('google_id', element('social', $result))) { ?>
-										<a href="javascript:;" onClick="social_open('google', '<?php echo element('mem_id', $result); ?>');"><img src="<?php echo base_url('assets/images/social_google.png'); ?>" width="15" height="15" alt="구글 로그인" title="구글 로그인" /></a>
-									<?php } ?>
-									<?php if ($this->cbconfig->item('use_sociallogin_naver') && element('naver_id', element('social', $result))) { ?>
-										<a href="javascript:;" onClick="social_open('naver', '<?php echo element('mem_id', $result); ?>');"><img src="<?php echo base_url('assets/images/social_naver.png'); ?>" width="15" height="15" alt="네이버 로그인" title="네이버 로그인" /></a>
-									<?php } ?>
-									<?php if ($this->cbconfig->item('use_sociallogin_kakao') && element('kakao_id', element('social', $result))) { ?>
-										<a href="javascript:;" onClick="social_open('kakao', '<?php echo element('mem_id', $result); ?>');"><img src="<?php echo base_url('assets/images/social_kakao.png'); ?>" width="15" height="15" alt="카카오 로그인" title="카카오 로그인" /></a>
-									<?php } ?>
-								</td>
-							<?php } ?>
-							<td class="text-right"><?php echo number_format(element('mem_point', $result)); ?></td>
-							<td><?php echo display_datetime(element('mem_register_datetime', $result), 'full'); ?></td>
-							<td><?php echo display_datetime(element('mem_lastlogin_datetime', $result), 'full'); ?></td>
-							<td><?php echo element('member_group', $result); ?></td>
-							<td class="text-right"><?php echo element('mem_level', $result); ?></td>
-							<td>
-								<?php echo element('mem_email_cert', $result) ? '<i class="fa fa-check-square-o"></i>' : '<i class="fa fa-square-o"></i>';; ?>
-								<?php echo element('mem_open_profile', $result) ? '<i class="fa fa-check-square-o"></i>' : '<i class="fa fa-square-o"></i>';; ?>
-								<?php echo element('mem_receive_email', $result) ? '<i class="fa fa-check-square-o"></i>' : '<i class="fa fa-square-o"></i>';; ?>
-								<?php echo element('mem_use_note', $result) ? '<i class="fa fa-check-square-o"></i>' : '<i class="fa fa-square-o"></i>';; ?>
-								<?php echo element('mem_receive_sms', $result) ? '<i class="fa fa-check-square-o"></i>' : '<i class="fa fa-square-o"></i>';; ?>
-							</td>
-							<td><?php echo element('mem_denied', $result) ? '<span class="label label-danger">차단</span>' : '승인'; ?></td>
+							<td><?php echo (element('ad_type', $result) == 1) ? '이미지':'유튜브'?></td>
+							<td><?php echo display_datetime(element('ad_wdate', $result), 'full'); ?></td>
+							<td><?php echo (element('ad_state', $result) == 0) ? '비공개' : '공개'?></td>
+							<td><?php echo mb_substr(element('ad_memo', $result), 0, 21)?></td>
 							<td><a href="<?php echo admin_url($this->pagedir); ?>/write/<?php echo element(element('primary_key', $view), $result); ?>?<?php echo $this->input->server('QUERY_STRING', null, ''); ?>" class="btn btn-outline btn-default btn-xs">수정</a></td>
 							<td><input type="checkbox" name="chk[]" class="list-chkbox" value="<?php echo element(element('primary_key', $view), $result); ?>" /></td>
 						</tr>

@@ -295,12 +295,19 @@ class Missionlist extends CB_Controller
 			'thumb_youtube' 			=> $this->input->post('mis_thumb_youtube'),
 			'mis_thumb_image_del' => $this->input->post('mis_thumb_image_del'),
 			'mis_endtype' 				=> $this->input->post('mis_endtype'),
+			'mis_opendate' 				=> $this->input->post('mis_opendate'),
+			'mis_enddate' 				=> $this->input->post('mis_enddate'),
 		);
 		// log_message('error',$thumb_type_data);
 		$config = array(
 			array(
 				'field' => 'mis_title',
 				'label' => '제목',
+				'rules' => 'trim|min_length[2]|max_length[20]|required',
+			),
+			array(
+				'field' => 'mis_title_en',
+				'label' => '영문제목',
 				'rules' => 'trim|min_length[2]|max_length[20]|required',
 			),
 			array(
@@ -329,11 +336,6 @@ class Missionlist extends CB_Controller
 				'rules' => array('trim','is_natural','required','min_length[1]','max_length[11]', array('check_endtype_sp',array($this->{$this->modelname},'check_endtype_sp'))),
 			),
 			array(
-				'field' => 'mis_sf_percentage',
-				'label' => '슈퍼프랜드 추가지급 비율',
-				'rules' => 'trim|is_natural|required|greater_than_equal_to[0]|less_than[10000]',
-			),
-			array(
 				'field' => 'mis_allowed',
 				'label' => '노출/미노출',
 				'rules' => 'trim|is_natural|greater_than_equal_to[0]|less_than_equal_to[1]|required',
@@ -351,6 +353,11 @@ class Missionlist extends CB_Controller
 			array(
 				'field' => 'mis_content',
 				'label' => '본문',
+				'rules' => 'required',
+			),
+			array(
+				'field' => 'mis_content_en',
+				'label' => '영문본문',
 				'rules' => 'required',
 			),
 		);
@@ -448,17 +455,21 @@ class Missionlist extends CB_Controller
 
 			$updatedata = array(
 				'mis_title' => $this->input->post('mis_title', null, ''),
+				'mis_title_en' => $this->input->post('mis_title_en', null, ''),
 				'mis_thumb_type' => $this->input->post('mis_thumb_type', null, 1),
 				'mis_thumb_youtube' => $this->input->post('mis_thumb_youtube', null, ''),
 				'mis_endtype' => $this->input->post('mis_endtype', null, ''),
 				'mis_per_token' => $this->input->post('mis_per_token', null, ''),
+				'mis_left_token' => $this->input->post('mis_per_token', null, ''),
 				'mis_max_point' => $this->input->post('mis_max_point', null, ''),
-				'mis_sf_percentage' => $this->input->post('mis_sf_percentage', null, ''),
 				'mis_allowed' => $this->input->post('mis_allowed', null, 1),
 				'mis_opendate' => $this->input->post('mis_opendate', null, ''),
 				'mis_enddate' => $this->input->post('mis_enddate', null, ''),
 				'mis_content' => $this->input->post('mis_content', null, ''),
+				'mis_content_en' => $this->input->post('mis_content_en', null, ''),
 			);
+			// print_r($this->input->post('mis_content_en', null, ''));
+			// exit;
 			if ($this->input->post('mis_thumb_image_del')) {
 				$updatedata['mis_thumb_image'] = '';
 			} elseif ($updatephoto) {
@@ -515,9 +526,11 @@ class Missionlist extends CB_Controller
 				$logdata['mil_state'] = 'new';
 				$logdata['mil_mis_id'] = $mis_id;
 				$this->RS_missionlist_log_model->insert($logdata);
+
+				//rs_missionpoint 등록
 				$mipdata = array(
 					'mip_mis_id' => $mis_id,
-					'mip_tpoint' => 0
+					'mip_tpoint' => 0,
 				);
 				$this->RS_missionpoint_model->insert($mipdata);
 
@@ -565,7 +578,7 @@ class Missionlist extends CB_Controller
 					// );
 					// $this->{$this->modelname}->delete_where($deletewhere);
 					$update = array(
-						'met_deletion' => 'Y'
+						'mis_deletion' => 'Y'
 					);
 					$this->{$this->modelname}->update($val,$update);
 					

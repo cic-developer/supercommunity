@@ -593,10 +593,13 @@ class Judgemedia extends CB_Controller
 				'jud_modifier_ip' => $this->input->ip_address(),
 			);
 			if($this->{$this->modelname}->update(element('jud_id',$getdata), $update)){
-				if(element('jud_jug_id',$getdata) == 2){ //jud_jug_id == 4 인경우 반려한다고 미디어가 반려되면 안됨.
+				if(element('jud_jug_id',$getdata) == 2 || element('jud_jug_id',$getdata) == 4){
 					$update = array(
 						'med_state' => $this->input->post('state')
 					);
+					if($this->input->post('value') == 'deny'|| $this->input->post('value') == 'warn'){
+						$update['med_textarea'] = $this->input->post('deny');
+					}
 					$this->RS_media_model->update(element('jud_med_id',$getdata),$update);
 				}
 

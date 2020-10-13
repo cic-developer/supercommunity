@@ -24,7 +24,7 @@ class Setting extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('RS_mediatype','RS_mediatype_map','RS_whitelist','RS_whitelist_log','RS_judge_denyreason');
+	protected $models = array('RS_mediatype','RS_mediatype_map','RS_whitelist','RS_whitelist_log','RS_judge_denyreason','RS_main_config');
 
 	/**
 	 * 이 컨트롤러의 메인 모델 이름입니다
@@ -61,84 +61,52 @@ class Setting extends CB_Controller
 		// 이벤트가 존재하면 실행합니다
 		$view['view']['event']['before'] = Events::trigger('before', $eventname);
 
-		/**
-		 * 페이지에 숫자가 아닌 문자가 입력되거나 1보다 작은 숫자가 입력되면 에러 페이지를 보여줍니다.
-		 */
-		$param =& $this->querystring;
-		$page = (((int) $this->input->get('page')) > 0) ? ((int) $this->input->get('page')) : 1;
-		$findex = $this->input->get('findex') ? $this->input->get('findex') : $this->{$this->modelname}->primary_key;
-		$forder = $this->input->get('forder', null, 'desc');
-		$sfield = $this->input->get('sfield', null, '');
-		$skeyword = $this->input->get('skeyword', null, '');
-
-		$per_page = admin_listnum();
-		$offset = ($page - 1) * $per_page;
-
-		/**
-		 * 게시판 목록에 필요한 정보를 가져옵니다.
-		 */
-		$this->{$this->modelname}->allow_search_field = array('mfo_id', 'mfg_id', 'mem_id', 'target_mem_id', 'mfo_datetime'); // 검색이 가능한 필드
-		$this->{$this->modelname}->search_field_equal = array('mfo_id', 'mfg_id', 'mem_id', 'target_mem_id'); // 검색중 like 가 아닌 = 검색을 하는 필드
-		$this->{$this->modelname}->allow_order_field = array('mfo_id'); // 정렬이 가능한 필드
-		$result = $this->{$this->modelname}
-			->get_admin_list($per_page, $offset, '', '', $findex, $forder, $sfield, $skeyword);
-		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
-		if (element('list', $result)) {
-			foreach (element('list', $result) as $key => $val) {
-				$result['list'][$key]['member'] = $dbmember = $this->Member_model->get_by_memid(element('mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
-				$result['list'][$key]['display_name'] = display_username(
-					element('mem_userid', $dbmember),
-					element('mem_nickname', $dbmember),
-					element('mem_icon', $dbmember)
-				);
-				$result['list'][$key]['target_member'] = $target_member = $this->Member_model->get_by_memid(element('target_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
-				$result['list'][$key]['target_display_name'] = display_username(
-					element('mem_userid', $target_member),
-					element('mem_nickname', $target_member),
-					element('mem_icon', $target_member)
-				);
-				$result['list'][$key]['num'] = $list_num--;
-			}
-		}
-		$view['view']['data'] = $result;
-
-		/**
-		 * primary key 정보를 저장합니다
-		 */
-		$view['view']['primary_key'] = $this->{$this->modelname}->primary_key;
-
-		/**
-		 * 페이지네이션을 생성합니다
-		 */
-		$config['base_url'] = admin_url($this->pagedir) . '?' . $param->replace('page');
-		$config['total_rows'] = $result['total_rows'];
-		$config['per_page'] = $per_page;
-		$this->pagination->initialize($config);
-		$view['view']['paging'] = $this->pagination->create_links();
-		$view['view']['page'] = $page;
-
-		/**
-		 * 쓰기 주소, 삭제 주소등 필요한 주소를 구합니다
-		 */
-		$search_option = array('mfo_datetime' => '날짜');
-		$view['view']['skeyword'] = ($sfield && array_key_exists($sfield, $search_option)) ? $skeyword : '';
-		$view['view']['search_option'] = search_option($search_option, $sfield);
-		$view['view']['listall_url'] = admin_url($this->pagedir);
-		$view['view']['write_url'] = admin_url($this->pagedir . '/write');
-		$view['view']['list_update_url'] = admin_url($this->pagedir . '/listupdate/?' . $param->output());
-		$view['view']['list_delete_url'] = admin_url($this->pagedir . '/listdelete/?' . $param->output());
-
 		// 이벤트가 존재하면 실행합니다
 		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
-
+		$view['view']['data'] = $this->RS_main_config_model->get_one('','', "mcf_main = 'Y'");
 		/**
-		 * 어드민 레이아웃을 정의합니다
+		 * Validation 라이브러리를 가져옵니다
 		 */
-		$layoutconfig = array('layout' => 'layout', 'skin' => 'index');
-		$view['layout'] = $this->managelayout->admin($layoutconfig, $this->cbconfig->get_device_view_type());
-		$this->data = $view;
-		$this->layout = element('layout_skin_file', element('layout', $view));
-		$this->view = element('view_skin_file', element('layout', $view));
+		if(!$this->input->post('is_submit')){
+			/**
+			 * 어드민 레이아웃을 정의합니다
+			 */
+			$layoutconfig = array('layout' => 'layout', 'skin' => 'index');
+			$view['layout'] = $this->managelayout->admin($layoutconfig, $this->cbconfig->get_device_view_type());
+			$this->data = $view;
+			$this->layout = element('layout_skin_file', element('layout', $view));
+			$this->view = element('view_skin_file', element('layout', $view));
+		}else{
+			$postData = $this->input->post();
+			$dataArr = array(
+				'mcf_perfriends_setting'	=> element('mcf_perfriends_setting',$postData,0),
+				'mcf_message_setting' 	 	=> element('mcf_message_setting',$postData,0),
+				'mcf_messages'				=> nl2br(element('mcf_messages',$postData, '')),
+				'mcf_messages_en'			=> nl2br(element('mcf_messages_en',$postData, '')),
+				'mcf_main'					=> 'Y',
+				'mcf_ip'					=> $this->input->ip_address(),
+				'mcf_userid'				=> element('mem_userid',$this->Member_model->get_by_memid($this->session->userdata('mem_id'), 'mem_userid')),
+				'mcf_date'					=> date('Y-m-d H:i:s')
+			);
+
+			if($view['view']['data']){
+				$result = $this->RS_main_config_model->update('',$dataArr, "mcf_main = 'Y'");
+			}else{
+				$result = $this->RS_main_config_model->insert($dataArr);
+			}
+			if($result){
+				$this->session->set_flashdata(
+					'message',
+					'정상적으로 입력되었습니다'
+				);
+			}else{
+				$this->session->set_flashdata(
+					'message',
+					'입력도중 에러가 발생하였습니다'
+				);
+			}
+			redirect('/admin/cic/setting');
+		}
 	}
 
 
@@ -703,6 +671,11 @@ class Setting extends CB_Controller
 				'rules' => 'trim|min_length[2]|max_length[20]|required',
 			),
 			array(
+				'field' => 'wht_title_en',
+				'label' => '영문제목',
+				'rules' => 'trim|min_length[2]|max_length[20]|required',
+			),
+			array(
 				'field' => 'wht_domains',
 				'label' => '도메인',
 				'rules' => array('trim','required',array('is_domain_right',array($this->RS_whitelist_model,'check_is_domainlist_right'))),
@@ -755,6 +728,7 @@ class Setting extends CB_Controller
 
 			$updatedata = array(
 				'wht_title' => $this->input->post('wht_title', null, ''),
+				'wht_title_en' => $this->input->post('wht_title_en', null, ''),
 				'wht_domains' => strtolower($this->input->post('wht_domains', null, '')),
 				'wht_memo' => $this->input->post('wht_memo', null, ''),
 			);

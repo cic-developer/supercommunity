@@ -1,6 +1,7 @@
 if (typeof(SOCIAL_LOGIN_JS) === 'undefined') {
 
 	var SOCIAL_LOGIN_JS = true;
+	var SOCIAL_LOGIN_POPUP;
 
 	function social_connect_off(social_type) {
 
@@ -36,7 +37,12 @@ if (typeof(SOCIAL_LOGIN_JS) === 'undefined') {
 		if (social_type !== 'facebook' && social_type !== 'twitter' && social_type !== 'google' && social_type !== 'naver' && social_type !== 'kakao') {
 			return false;
 		}
-		window.open(cb_url + '/social/' + social_type + '_login', social_type + '-on', 'width=600,height=600');
+		SOCIAL_LOGIN_POPUP = window.open(cb_url + '/social/' + social_type + '_login', social_type + '-on', 'width=600,height=600');
+	}
+
+	function social_close(){
+		console.log(SOCIAL_LOGIN_POPUP);
+		SOCIAL_LOGIN_POPUP.close();
 	}
 
 

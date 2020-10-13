@@ -22,6 +22,12 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label">영문 제목</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="mis_title_en" value="<?php echo set_value('mis_title_en', element('mis_title_en', element('data', $view))); ?>"  <?=$disabled?>/>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">썸네일 유형</label>
 				<div class="col-sm-10 form-inline">
 					<select name="mis_thumb_type" class="form-control" <?=$disabled?>>
@@ -44,7 +50,7 @@
 					}
 					?>
 					<input type="file" name="mis_thumb_image" id="mis_thumb_image"  <?=$disabled?>/>
-					<p class="help-block">가로길이 : 400px, 세로길이 : 300px 에 최적화되어있습니다, gif, jpg, jpeg, png 파일 업로드가 가능합니다</p>
+					<p class="help-block">가로길이 : 400px, 세로길이 : 300px 에 최적화되어있습니다, gif, jpg, jpeg, png 파일 업로드가 가능합니다.(최대 20MB)</p>
 				</div>
 			</div>
 			<div class="form-group">
@@ -70,6 +76,14 @@
 					<input type="text" class="form-control" name="mis_per_token" value="<?php echo set_value('mis_per_token', element('mis_per_token', element('data', $view))); ?>"  <?=$disabled?>/>
 				</div>
 			</div>
+			<?php if(element('state', element('data', $view)) == 'end'){ ?>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">잔여 PER TOKEN</label>
+				<div class="col-sm-10 form-inline">
+					<input type="text" class="form-control" name="mis_per_token" value="<?php echo element('mis_left_token', element('data', $view)); ?>"  disabled/>
+				</div>
+			</div>
+			<?php } ?>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">최대 슈퍼포인트</label>
 				<div class="col-sm-10 form-inline">
@@ -77,17 +91,11 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">슈퍼프랜드 추가지급 비율</label>
-				<div class="col-sm-10 form-inline">
-					<input type="text" class="form-control" name="mis_sf_percentage" value="<?php echo set_value('mis_sf_percentage', element('mis_sf_percentage', element('data', $view))); ?>"  <?=$disabled?>/>
-				</div>
-			</div>
-			<div class="form-group">
 				<label class="col-sm-2 control-label">노출/미노출</label>
 				<div class="col-sm-10">
 					<div class="input-group">
 						<input type="radio" name="mis_allowed" value="1"  id="allowed" <?php echo set_radio('mis_allowed', '1', (element('mis_allowed', element('data', $view)) === '1' ? true : false)); ?> <?=$disabled?> /> <label for="allowed" style="margin:0 5px;">노출</label>
-						<input type="radio" name="mis_allowed" value="0"  id="not_allowed" <?php echo set_radio('mis_allowed', '0', (element('mis_allowed', element('data', $view)) === '2' ? true : false)); ?> <?=$disabled?> /> <label for="not_allowed" style="margin-left:5px;">미노출</label>
+						<input type="radio" name="mis_allowed" value="0"  id="not_allowed" <?php echo set_radio('mis_allowed', '0', (element('mis_allowed', element('data', $view)) === '0' ? true : false)); ?> <?=$disabled?> /> <label for="not_allowed" style="margin-left:5px;">미노출</label>
 					</div>
 				</div>
 			</div>
@@ -120,6 +128,18 @@
 						echo element('mis_content', element('data', $view));
 					} else {
 						echo display_dhtml_editor('mis_content', set_value('mis_content', element('mis_content', element('data', $view))), $classname = 'dhtmleditor', true, $editor_type = $this->cbconfig->item('post_editor_type')); 
+					}
+					?>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">영문본문</label>
+				<div class="col-sm-10">
+					<?php 
+					if($disabled){
+						echo element('mis_content_en', element('data', $view));
+					} else {
+						echo display_dhtml_editor('mis_content_en', set_value('mis_content_en', element('mis_content_en', element('data', $view))), $classname = 'dhtmleditor', true, $editor_type = $this->cbconfig->item('post_editor_type')); 
 					}
 					?>
 				</div>
@@ -181,6 +201,27 @@
 } 
 ?>
 //<![CDATA[
+$(document).ready(function(){
+	jQuery.validator.addMethod("check_opendate", function(value, element, param) {
+		let opendate = $('input[name=mis_opendate]').val();
+		let enddate = $('input[name=mis_enddate]').val();
+		let endtype = $('select[name=mis_endtype]').val();
+		if(!enddate) {
+			return true;
+		} else {
+			if(opendate){
+				if((endtype == '1' || endtype == '2') && ( opendate > enddate || enddate == '0000-00-00 00:00:00') ){
+					return false;
+				} else {
+					return true;
+				}
+
+			} else {
+				return true;
+			}
+		}
+	}, "마감일은 무조건 오픈일보다 늦어야합니다.");	
+});
 $(function() {
 	$('#fadminwrite').validate({
 		rules: {
@@ -189,14 +230,41 @@ $(function() {
 			mis_thumb_youtube: { url :true },
 			mis_per_token: { required :true, digits :true, min :1, maxlength :11},
 			// mis_max_point: { required :true, digits :true, min :1, maxlength :11},
-			mis_sf_percentage: { required :true, digits :true, min :0, max :9999},
 			mis_allowed: { required :true, digits :true, range :[0,1] },
 			// mis_opendate: { date :true },
-			// mis_enddate: { date :true },
-			mis_content: { '<?='required_' . $this->cbconfig->item('post_editor_type')?>' :true }
+			mis_enddate: { check_opendate :true },
+			mis_content: { '<?='required_' . $this->cbconfig->item('post_editor_type')?>' :true },
+			mis_content_en: { '<?='required_' . $this->cbconfig->item('post_editor_type')?>' :true }
 		}
 	});
 });
 
+var fileTypes = ['image/gif', 'image/png', 'image/jpg', 'image/jpeg'];
+
+$("#mis_thumb_image").on('change', function(){
+	var file = $(this).get(0).files[0];
+			if(file){
+					if(file.size > 20000000){
+							alert('파일은 최대 20MB까지 업로드 가능합니다.');
+							$("#mis_thumb_image").val('');
+							return false;
+					}
+					if(file.type.indexOf('image') == -1 ){
+							alert('이미지 파일만 업로드 가능합니다.');
+							$("#mis_thumb_image").val('');
+							return false;
+					}
+					if(!validFileType(file)){
+							alert('지원하지 않는 이미지 파일입니다.');
+							$("#mis_thumb_image").val('');
+							return false;
+					}
+		var reader = new FileReader();
+					reader.onload = function(){
+							$("#ad_img").attr('src',reader.result);
+					};
+		reader.readAsDataURL(file);
+	}
+});
 //]]>
 </script>

@@ -70,7 +70,7 @@ class WhitePaper extends CB_Controller
 		$page_name = $this->cbconfig->item('site_page_name_main');
 
 		$layoutconfig = array(
-			'path' => 'whitepaper',
+			'path' => 'cic_whitepaper',
 			'layout' => 'layout',
 			'skin' => 'whitepaper',
 			'layout_dir' => $this->cbconfig->item('layout_main'),

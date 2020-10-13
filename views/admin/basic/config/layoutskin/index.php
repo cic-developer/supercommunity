@@ -129,7 +129,7 @@
 							<td><button type="button" onClick="open_preview('main')" class="btn btn-xs btn-success">미리보기</button></td>
 						</tr>
 						<tr>
-							<th>게시판</th>
+							<th><strike>게시판</strike></th>
 							<td>
 								<div class="form-inline">
 									<select class="form-control" name="layout_board" id="layout_board">
@@ -176,10 +176,12 @@
 									</select>
 								</div>
 							</td>
-							<td><button type="button" onClick="open_preview('board')" class="btn btn-xs btn-success">미리보기</button></td>
+							<td>
+							<!-- <button type="button" onClick="open_preview('board')" class="btn btn-xs btn-success">미리보기</button> -->
+							</td>
 						</tr>
 						<tr>
-							<th>게시판그룹</th>
+							<th><strike>게시판그룹</strike></th>
 							<td>
 								<div class="form-inline">
 									<select class="form-control" name="layout_group" id="layout_group">
@@ -226,10 +228,12 @@
 									</select>
 								</div>
 							</td>
-							<td><button type="button" onClick="open_preview('group')" class="btn btn-xs btn-success">미리보기</button></td>
+							<td>
+							<!-- <button type="button" onClick="open_preview('group')" class="btn btn-xs btn-success">미리보기</button> -->
+							</td>
 						</tr>
 						<tr>
-							<th>일반문서페이지</th>
+							<th><strike>일반문서페이지</strike></th>
 							<td>
 								<div class="form-inline">
 									<select class="form-control" name="layout_document" id="layout_document">
@@ -276,10 +280,12 @@
 									</select>
 								</div>
 							</td>
-							<td><button type="button" onClick="open_preview('document')" class="btn btn-xs btn-success">미리보기</button></td>
+							<td>
+							<!-- <button type="button" onClick="open_preview('document')" class="btn btn-xs btn-success">미리보기</button> -->
+							</td>
 						</tr>
 						<tr>
-							<th>FAQ</th>
+							<th><strike>FAQ</strike></th>
 							<td>
 								<div class="form-inline">
 									<select class="form-control" name="layout_faq" id="layout_faq">
@@ -326,10 +332,12 @@
 									</select>
 								</div>
 							</td>
-							<td><button type="button" onClick="open_preview('faq')" class="btn btn-xs btn-success">미리보기</button></td>
+							<td>
+							<!-- <button type="button" onClick="open_preview('faq')" class="btn btn-xs btn-success">미리보기</button> -->
+							</td>
 						</tr>
 						<tr>
-							<th>회원가입</th>
+							<th><strike>회원가입</strike></th>
 							<td>
 								<div class="form-inline">
 									<select class="form-control" name="layout_register" id="layout_register">
@@ -376,10 +384,12 @@
 									</select>
 								</div>
 							</td>
-							<td><button type="button" onClick="open_preview('register')" class="btn btn-xs btn-success">미리보기</button></td>
+							<td>
+							<!-- <button type="button" onClick="open_preview('register')" class="btn btn-xs btn-success">미리보기</button> -->
+							</td>
 						</tr>
 						<tr>
-							<th>아이디패스워드찾기</th>
+							<th><strike>아이디패스워드찾기</strike></th>
 							<td>
 								<div class="form-inline">
 									<select class="form-control" name="layout_findaccount" id="layout_findaccount">
@@ -426,7 +436,9 @@
 									</select>
 								</div>
 							</td>
-							<td><button type="button" onClick="open_preview('findaccount')" class="btn btn-xs btn-success">미리보기</button></td>
+							<td>
+							<!-- <button type="button" onClick="open_preview('findaccount')" class="btn btn-xs btn-success">미리보기</button> -->
+							</td>
 						</tr>
 						<tr>
 							<th>로그인</th>
@@ -529,7 +541,7 @@
 							<td><button type="button" onClick="open_preview('mypage')" class="btn btn-xs btn-success">미리보기</button></td>
 						</tr>
 						<tr>
-							<th>현재접속자</th>
+							<th><strike>현재접속자</strike></th>
 							<td>
 								<div class="form-inline">
 									<select class="form-control" name="layout_currentvisitor" id="layout_currentvisitor">
@@ -576,10 +588,12 @@
 									</select>
 								</div>
 							</td>
-							<td><button type="button" onClick="open_preview('currentvisitor')" class="btn btn-xs btn-success">미리보기</button></td>
+							<td>
+							<!-- <button type="button" onClick="open_preview('currentvisitor')" class="btn btn-xs btn-success">미리보기</button> -->
+							</td>
 						</tr>
 						<tr>
-							<th>검색페이지</th>
+							<th><strike>검색페이지</strike></th>
 							<td>
 								<div class="form-inline">
 									<select class="form-control" name="layout_search" id="layout_search">
@@ -626,10 +640,12 @@
 									</select>
 								</div>
 							</td>
-							<td><button type="button" onClick="open_preview('search')" class="btn btn-xs btn-success">미리보기</button></td>
+							<td>
+							<!-- <button type="button" onClick="open_preview('search')" class="btn btn-xs btn-success">미리보기</button> -->
+							</td>
 						</tr>
 						<tr>
-							<th>태그페이지</th>
+							<th><strike>태그페이지</strike></th>
 							<td>
 								<div class="form-inline">
 									<select class="form-control" name="layout_tag" id="layout_tag">
@@ -676,7 +692,9 @@
 									</select>
 								</div>
 							</td>
-							<td><button type="button" onClick="open_preview('tag')" class="btn btn-xs btn-success">미리보기</button></td>
+							<td>
+							<!-- <button type="button" onClick="open_preview('tag')" class="btn btn-xs btn-success">미리보기</button> -->
+							</td>
 						</tr>
 						<tr>
 							<th>쪽지</th>
@@ -713,7 +731,7 @@
 							<td><button type="button" onClick="open_preview('note')" class="btn btn-xs btn-success">미리보기</button></td>
 						</tr>
 						<tr>
-							<th>프로필</th>
+							<th><strike>프로필</strike></th>
 							<td>
 								<div class="form-inline">
 									<select class="form-control" name="layout_profile" id="layout_profile">
@@ -744,10 +762,12 @@
 									</select>
 								</div>
 							</td>
-							<td><button type="button" onClick="open_preview('profile')" class="btn btn-xs btn-success">미리보기</button></td>
+							<td>
+							<!-- <button type="button" onClick="open_preview('profile')" class="btn btn-xs btn-success">미리보기</button> -->
+							</td>
 						</tr>
 						<tr>
-							<th>폼메일</th>
+							<th><strike>폼메일</strike></th>
 							<td>
 								<div class="form-inline">
 									<select class="form-control" name="layout_formmail" id="layout_formmail">
@@ -778,7 +798,9 @@
 									</select>
 								</div>
 							</td>
-							<td><button type="button" onClick="open_preview('formmail')" class="btn btn-xs btn-success">미리보기</button></td>
+							<td>
+							<!-- <button type="button" onClick="open_preview('formmail')" class="btn btn-xs btn-success">미리보기</button> -->
+							</td>
 						</tr>
 						<tr>
 							<th>알림페이지</th>
@@ -831,7 +853,7 @@
 							<td><button type="button" onClick="open_preview('notification')" class="btn btn-xs btn-success">미리보기</button></td>
 						</tr>
 						<tr>
-							<th>헬프툴</th>
+							<th><strike>헬프툴</strike></th>
 							<td>
 								<div class="form-inline">
 									<select class="form-control" name="layout_helptool" id="layout_helptool">
@@ -862,7 +884,9 @@
 									</select>
 								</div>
 							</td>
-							<td><button type="button" onClick="open_preview('helptool')" class="btn btn-xs btn-success">미리보기</button></td>
+							<td>
+							<!-- <button type="button" onClick="open_preview('helptool')" class="btn btn-xs btn-success">미리보기</button> -->
+							</td>
 						</tr>
 						<tr>
 							<th>팝업</th>

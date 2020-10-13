@@ -66,4 +66,18 @@ class Note_model extends CB_Model
 
 		return $result;
 	}
+
+	public function get_unread_recv_note_num($mem_id = 0){
+		$mem_id = (int) $mem_id;
+		if (empty($mem_id) OR $mem_id < 1) {
+			return;
+		}
+		$this->db->where(array('recv_mem_id' => $mem_id, 'nte_type' => 2));
+		$this->db->group_start();
+		$this->db->where(array('nte_read_datetime <=' => '0000-00-00 00:00:00'));
+		$this->db->or_where(array('nte_read_datetime' => null));
+		$this->db->group_end();
+
+		return $this->db->count_all_results($this->_table);
+	}
 }

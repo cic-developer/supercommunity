@@ -16,12 +16,12 @@ $config['admin_page_menu']['member'] =
 		'__config'					=> array('회원설정', 'fa-users'),
 		'menu'						=> array(
 			'members'				=> array('회원관리', ''),
-			'membergroup'			=> array('회원그룹관리', ''),
-			'points'				=> array('포인트관리', ''),
+			// 'membergroup'			=> array('회원그룹관리', ''),
+			'points'				=> array('퍼포인트관리', ''),
 			// 'memberfollow'			=> array('팔로우현황', ''),
 			'nickname'				=> array('닉네임변경이력', ''),
 			// 'memberlevelhistory'	=> array('레벨히스토리', ''),
 			'loginlog'				=> array('로그인현황', ''),
-			'dormant'				=> array('휴면계정관리', ''),
+			// 'dormant'				=> array('휴면계정관리', ''),
 		),
 	);

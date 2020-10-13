@@ -1,0 +1,31 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+$lang[0] = 'MY PAGE';
+$lang[1] = 'Per friends';
+$lang[2] = 'Super Friends';
+$lang[3] = 'super point';
+$lang[4] = 'My Media';
+$lang[5] = 'Request Re-examination';
+$lang[6] = '* Penalty will be charged for cheating.';
+$lang[7] = '* There is a 48-hour waiting time for the application for the review of Dear.';
+$lang[8] = 'My media platform';
+$lang[9] = 'My media name';
+$lang[10] = 'Name of the media administrator';
+$lang[11] = 'Media Link';
+$lang[12] = 'Reasons for application';
+$lang[13] = 'Please enter the reason for applying for media review.';
+$lang[14] = 'The attached file';
+$lang[15] = '첨부파일';
+$lang[16] = '**10 MB or less';
+$lang[17] = 'File Attachment';
+$lang[18] = 'Request Re-examination';
+$lang[19] = 'Files can be uploaded up to 10MB.';
+$lang['controller_0'] = 'WhiteList';
+$lang['controller_1'] = 'URL';
+$lang['controller_2'] = 'Administrator Name';
+$lang['controller_3'] = 'Media Name';
+$lang['controller_4'] = 'Reasons for application';
+$lang['controller_5'] = 'Access to invalid media.';
+$lang['controller_6'] = 'An error has occurred. Please try again.';
+$lang['require_login'] = '로그인이 필요한 서비스 입니다.';

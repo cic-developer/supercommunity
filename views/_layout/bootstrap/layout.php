@@ -55,7 +55,6 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 </head>
 <body <?php echo isset($view) ? element('body_script', $view) : ''; ?>>
 <div class="wrapper">
-
 	<?php if ($this->cbconfig->get_device_view_type() !== 'mobile') {?>
 		<!-- header start -->
 		<header class="header">

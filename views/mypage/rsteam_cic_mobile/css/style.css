@@ -2,7 +2,8 @@
 	mypage skin css
 */
 
-.mypage .mypagemain li {display: block;margin: 0px; clear: both; margin-bottom: 15px;}
+
+/* .mypage .mypagemain li {display: block;margin: 0px; clear: both; margin-bottom: 15px;}
 .mypage .mypagemain li>span {float: left;width: 25%;text-align: right;padding-right: 20px;margin-top: 5px;color: #000;font-weight: bold;}
 .mypage .mypagemain li {min-height:25px;}
 
@@ -12,11 +13,36 @@
 .mypage .askpassword li>span {float: left;width: 25%;text-align: right;padding-right: 20px;margin-top: 5px;color: #000;font-weight: bold;}
 
 .mypage .member_modify li {display: block;margin: 0px; clear: both; margin-bottom: 15px;}
-.mypage .member_modify li>span {margin-top: 5px;color: #000;font-weight: bold;}
-.mypage .member_modify textarea {width:90%; }
+.mypage .member_modify li>span {float: left;width: 25%;text-align: right;padding-right: 20px;margin-top: 5px;color: #000;font-weight: bold;}
+.mypage .member_modify textarea {width:500px; }
 
 .mypage .table-top {overflow: hidden;padding-bottom: 10px;}
 .mypage .table-top input{margin-bottom: 0;margin-top: 0;}
 .mypage .table-top li{float: left;text-align: center;padding-right: 5px;}
 
-.mypage .nav {margin-bottom:20px;}
+.mypage .nav {margin-bottom:20px;} */
+
+
+/************마이페이지 모달 팝업 모바일 css************/
+.popup { display: none; width: 100%; max-width: 100%; box-sizing: border-box; font-size: 15px;}
+.popup input[type="text"] { height:35px; font-size:13px; padding:0px 15px; border:1px solid #ccc; box-sizing: border-box;}
+.popup .btn_black {box-sizing: border-box; margin-top: 8px;}
+.lightlayer-popup .body {padding:15px;}
+.mail_box {margin-top:15px; text-align: center;}
+.mail_code {padding: 15px 0; margin-top:15px; border-top:1px dashed #ccc;}
+.btn { padding: 10px 20px; margin: 0 10px; border: 0; background-color: #fbb906; border-bottom: 3px solid #f0b209; border-radius: 3px; color: #fff; font-weight: bold; }
+.lightlayer-popup .head { background-color: #2a2a2a; color: #fff; font-weight:500; line-height:28px;}
+
+.lightlayer {background-color:rgba(0, 0, 0, 0.5)!important;}
+.popup_youtube {width:100%; height: auto;}
+.popup_youtube .body {width: 100%; padding:20px; box-sizing: border-box; border-bottom:1px dashed #ccc;}
+.popup_youtube .body img {width: 100%;}
+.popup_youtube .foot p {text-align: left; font-size:23px; font-weight: 700; line-height: 1.2; font-family: 'Montserrat','Noto Sans KR', sans-serif;}
+.popup_youtube .x-button {display: none;}
+.lightlayer-popup .body iframe {height: 250px;}
+
+/*****프로그래스 로딩바 css**********/
+.withdraw_done {text-align: right;}
+#loading {margin-top:15px;}
+.withdraw_ing small {display: block; font-size: 12px; padding: 8px 0 15px 0; color:#6d6d6d; text-align: left;}
+.lightlayer-popup .foot {padding: 20px;}

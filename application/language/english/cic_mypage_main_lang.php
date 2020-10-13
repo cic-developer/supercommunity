@@ -1,0 +1,36 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+$lang[0] = 'Mail authentication of wallet address';
+$lang[1] = 'Please enter your e-mail correctly.';
+$lang[2] = 'Please enter your e-mail correctly';
+$lang[3] = 'Receive authentication mail';
+$lang[4] = 'Please enter the authentication number';
+$lang[5] = 'To authenticate';
+$lang[6] = 'Confirm';
+$lang[7] = 'My Info';
+$lang[8] = 'ID';
+$lang[9] = 'NAME';
+$lang[10] = 'PER POINT';
+$lang[11] = 'Wallet Address';
+$lang[12] = 'Edit wallet';
+$lang[13] = 'Wallet address input';
+$lang[14] = 'My media';
+$lang[15] = 'My media is not registered.';
+$lang[16] = 'Add media';
+$lang[17] = 'Update';
+$lang[18] = 'withdrawal';
+$lang[19] = 'Sign Out';
+$lang[20] = 'Please enter your e-mail correctly.';
+$lang[21] = 'Authentication account not found. \n Navigate to the login page.';
+$lang[22] = 'An authentication error has occurred.';
+$lang[23] = 'The authentication number was sent.';
+$lang[24] = 'There is an authentication number sent. \n Please check and enter it.';
+$lang[25] = 'The authentication number does not match.';
+$lang[26] = 'Certified.';
+$lang[27] = 'Edit E-mail';
+$lang[28] = 'Regist E-mail';
+$lang['controller_0'] = 'NAME';
+$lang['controller_1'] = 'You need to log in to use it.';
+$lang['controller_2'] = 'It has been modified.';
+$lang['require_login'] = '로그인이 필요한 서비스 입니다.';

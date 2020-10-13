@@ -1,0 +1,229 @@
+/**
+	advertise skin css
+*/
+
+/* 광고 div 전체*/
+#ask_wrap{
+	width: 1300px;
+	margin:0 auto;
+	overflow: hidden;
+}
+
+
+
+#ask_wrap h3{
+	display: block;
+	font-size: 45px;
+	position: fixed;
+	line-height: 65px;
+	padding-top:150px;
+		
+}
+
+/* 왼쪽 css 끝*/
+
+
+
+/* 오른쪽 top css 시작*/
+
+.right{
+	width: 45%;
+	float: right;
+	overflow: hidden;
+
+}
+
+#ask_wrap ul{
+	display: block;
+	padding-top:540px;		
+}
+
+#ask_wrap ul li{
+	display: block;
+	padding-bottom:140px;
+}
+
+#ask_wrap ul li p{
+	display: block;
+	font-size: 22px;
+	line-height: 40px;
+	color:#333;
+	font-weight: 400;
+}
+
+#ask_wrap ul li h4{
+	display: block;
+	width: 240px;
+	font-size: 18px;
+	font-weight: 400;
+	color:#999;
+	border-bottom : 1px solid #999;
+	padding-bottom : 2px;	
+}
+
+#ask_wrap ul li .bt{
+	padding-top:35px;
+}
+
+
+
+/* 오른쪽 top css 끝 */
+
+
+/* form css 시작 */
+
+#ask_wrap ul .form{
+	width: 100%;
+	padding-top:60px;
+	overflow: hidden;
+}
+
+#ask_wrap ul .form .form_top_all{
+	padding-bottom: 50px;
+	overflow: hidden;
+}
+
+#ask_wrap ul .form b{
+	display: block;
+	font-size: 22px;
+	font-weight: 600;
+	line-height: 30px;
+	padding-bottom: 40px;
+	padding-top: 40px;	
+}
+
+#ask_wrap ul .form input{
+	margin-bottom: 40px;
+	outline:none;
+	border-style:none;
+	border-bottom: 2px solid #000;
+	font-size: 18px;
+	font-weight: 300;
+	width: 100%;
+	height: 40px;
+	
+}
+/* 휴대폰 번호 css */
+
+#ask_wrap ul .form .number{
+	display: block;
+	overflow: hidden;
+}
+
+
+#ask_wrap ul .form .number input{
+	
+	border-style:none;
+	border-bottom: 2px solid #000;
+	font-size: 18px;
+	font-weight: 300;
+	height: 40px;
+	width: 30%;
+	float: left;
+
+	
+}
+
+#ask_wrap ul .form .number strong{
+	display: block;
+	font-size: 30px;
+	font-weight: 400;
+	padding-left: 9px;
+	padding-right: 9px;
+	color:#333;
+	float: left;
+	line-height: 40px;
+}
+
+/* 휴대폰 번호 끝css */
+
+#ask_wrap ul .form .inquiry {
+	margin-bottom: 30px;
+	overflow: hidden;
+
+}
+
+
+#ask_wrap ul .form .inquiry textarea{
+	border-style:none;
+	border-bottom: 2px solid #000;
+	font-size: 18px;
+	font-weight: 300;
+	height: 200px;
+	width: 100%;
+	
+	outline:none;
+	resize: none;
+
+}
+
+/*알파고(로봇)인지 확인하는 css시작*/
+#ask_wrap ul .form label{
+	overflow: hidden;
+	display: block;
+	margin-top:20px;
+}
+
+#ask_wrap ul .form label input{
+	width: 18px;
+	height: 18px;
+	float: left;
+	
+}
+
+#ask_wrap ul .form label h5{
+	font-size: 15px;
+	display: block;
+	color:#333;
+	padding-top:1px;
+	font-weight: 400;
+	padding-left: 25px;
+}
+
+
+#ask_wrap ul .form .something{
+	overflow: hidden;
+	float: left;
+	padding-top:50px;
+}
+
+/*알파고(로봇)인지 확인하는 css끝*/
+
+#ask_wrap ul .form .bt{
+	float: left;
+	padding-top:70px;
+	padding-left:110px;		
+}
+
+#ask_wrap ul .form .bt input{
+	text-align: center;
+    display: inline-block;
+    transition: 0.5s;
+    padding: 0px 30px;
+    height: 40px;
+    line-height: 40px;
+    vertical-align: middle;
+    font-weight: 500;
+    font-size: 15px;
+    border-radius: 20px;
+    border: 0;
+	box-sizing: border-box;
+	width: 143px;
+}
+
+
+/*컨설팅 문의 오른쪽 TOP*/
+
+
+
+#ask_wrap .right li u{
+	display: block;
+	font-size: 22px;
+	line-height: 40px;
+	color:#333;	
+	font-weight: 400;
+	text-decoration: none;
+}
+
+
+

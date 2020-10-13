@@ -44,10 +44,10 @@ class RS_missionlist_model extends CB_Model
       'rs_missionpoint.mip_tpoint as tpoint',
       'CASE WHEN rs_missionlist.mis_max_point = 0 OR (rs_missionlist.mis_endtype != 1 AND rs_missionlist.mis_endtype != 3) THEN 0 ELSE (rs_missionpoint.mip_tpoint/rs_missionlist.mis_max_point*100) END percentage',
       ' CASE WHEN rs_missionlist.mis_endtype = 1 THEN
-          CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
+          CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.cdate('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
         ELSE
           CASE WHEN rs_missionlist.mis_endtype = 2 THEN
-            CASE WHEN rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.date('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
+            CASE WHEN rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.cdate('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
           ELSE
             CASE WHEN rs_missionlist.mis_endtype = 3 THEN
             CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
@@ -66,6 +66,7 @@ class RS_missionlist_model extends CB_Model
     $result = $this->_get_list_common($select, $join, $limit, $offset, $where, $like, $findex, $forder, $sfield, $skeyword, $sop);
 		return $result;
   }
+
   public function get_one_mission($primary_value = ''/*, $select = '', $where = ''*/)
 	{
     //get_one으로는 join이 안되서 어쩔 수 없이 위 함수를 활용
@@ -75,7 +76,42 @@ class RS_missionlist_model extends CB_Model
     } else {
       return element(0,element('list',$result));
     }
-	}
+  }
+  
+
+  public function get_clientMissionlist($limit = 10, $offset = 0, $state = false, $search = false){
+      if($state){
+        $this->db->where('state', $state);
+      }
+      if($search){
+        $this->db->group_start();
+        $this->db->like('ko_title', $search);
+        $this->db->or_like('ko_content', $search);
+        $this->db->or_like('en_content', $search);
+        $this->db->or_like('en_title', $search);
+        $this->db->group_end();
+      }
+      $this->db->from($subquery);
+      $this->db->limit($limit, $offset);
+      $result['list'] = $this->db->get('rs_pershoutinglist')->result_array();
+
+      $this->db->select('count(*) as rownum');
+      if($state){
+        $this->db->where('state', $state);
+      }
+      if($search){
+        $this->db->group_start();
+        $this->db->like('ko_title', $search);
+        $this->db->or_like('ko_content', $search);
+        $this->db->or_like('en_content', $search);
+        $this->db->or_like('en_title', $search);
+        $this->db->group_end();
+      }
+      $this->db->from($subquery);
+      $result['total_rows'] = $this->db->get('rs_pershoutinglist')->row_array()['rownum'];
+
+      return $result;
+  }
   /*
   ** post 로 전송된 도메인 목록에 http, https 가 입력되어있는지
   ** 한글이 입력되지는 않았는지 확인하는 function
@@ -100,6 +136,8 @@ class RS_missionlist_model extends CB_Model
     'thumb_youtube'       => '',
     'mis_thumb_image_del' => 0,
     'mis_endtype'         => 0,
+    'mis_opendate'        => '0000-00-00 00:00:00',
+    'mis_enddate'         => '0000-00-00 00:00:00',
   );
 	public function check_thumb_data($value){
     $data = $this->post_thumb_data;
@@ -129,10 +167,17 @@ class RS_missionlist_model extends CB_Model
   }
 
 	public function check_endtype_enddate($value){
-    $endtype = element('mis_endtype',$this->post_thumb_data);
+    $endtype  = element('mis_endtype',$this->post_thumb_data);
+    $opendate = element('mis_opendate',$this->post_thumb_data);
+    $enddate  = element('mis_enddate',$this->post_thumb_data);
+
 		if(($endtype == 1 || $endtype == 2) && !$value){
       $this->form_validation->set_message('check_endtype_enddate', '선택하신 마감유형은 마감일 필수적으로 입력하셔야합니다.');
-			return false;
+      return false;
+			if(strtotime($opendate) > strtotime($enddate)){
+        $this->form_validation->set_message('check_endtype_enddate', '마감일은 오픈날짜보다 이후여야 합니다.');
+        return false;
+			}
     }
 		return true;
   }
@@ -186,6 +231,7 @@ class RS_missionlist_model extends CB_Model
   }
 
   public function distribute_point(){
+    #crontab
     $data = $this->get_distribute_list();
     $total_row = element('total_rows',$data);
     if(!$total_row || $total_row<1){

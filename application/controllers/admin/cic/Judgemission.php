@@ -24,7 +24,7 @@ class Judgemission extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('RS_judge','RS_whitelist','RS_judge_log','RS_judge_denied','RS_judge_denyreason','Member_extra_vars');
+	protected $models = array('Member_group_member', 'Member_group', 'RS_judge', 'RS_missionlist', 'RS_whitelist', 'RS_judge_log', 'RS_judge_denied', 'RS_judge_denyreason', 'Member_extra_vars');
 
 	/**
 	 * 이 컨트롤러의 메인 모델 이름입니다
@@ -101,12 +101,33 @@ class Judgemission extends CB_Controller
 				$where['jud_med_wht_id'] = $wht_id;
 			}
 		}
-		$join = array('table' => 'rs_missionlist', 'on' => 'rs_judge.jud_mis_id = rs_missionlist.mis_id', 'type' => 'inner');
+		$join = array(
+			array('table' => 'rs_missionlist', 'on' => 'rs_judge.jud_mis_id = rs_missionlist.mis_id', 'type' => 'inner'),
+			array('table' => 'rs_missionpoint', 'on' => 'rs_judge.jud_mis_id = rs_missionpoint.mip_mis_id', 'type' => 'inner'),
+			array('table' => 'rs_media', 'on' => 'rs_judge.jud_med_id = rs_media.med_id', 'type' => 'inner'),
+		);
 		$result = $this->{$this->modelname}
 			->get_judge_list($this->jug_id,$per_page, $offset, $where, '', $findex, $forder, $sfield, $skeyword,'','', $join);
 		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {
+				
+				$where = array(
+					'mem_id' => element('mem_id', $val),
+				);
+				$result['list'][$key]['member_group_member'] = $this->Member_group_member_model->get('', '', $where, '', 0, 'mgm_id', 'ASC');
+				$mgroup = array();
+				if ($result['list'][$key]['member_group_member']) {
+					foreach ($result['list'][$key]['member_group_member'] as $mk => $mv) {
+						if (element('mgr_id', $mv)) {
+							$mgroup[] = element('mgr_title',$this->Member_group_model->item(element('mgr_id', $mv)));
+						}
+					}
+				}
+
+				$result['list'][$key]['is_superfriend'] = in_array('SF',$mgroup);
+
+				$result['list'][$key]['state'] = element('state', $this->RS_missionlist_model->get_one_mission(element('mis_id', $val)));
 				$result['list'][$key]['member'] = $dbmember = $this->Member_model->get_by_memid(element('jud_mem_id', $val), 'mem_id, mem_userid, mem_nickname, mem_icon');
 				$result['list'][$key]['display_name'] = display_username(
 					element('mem_userid', $dbmember),
@@ -196,7 +217,11 @@ class Judgemission extends CB_Controller
 		 */
 		$getdata = array();
 		if ($jid) {
-			$join = array('table' => 'rs_missionlist', 'on' => 'rs_judge.jud_mis_id = rs_missionlist.mis_id', 'type' => 'inner');
+			$join = array(
+				array('table' => 'rs_missionlist', 'on' => 'rs_judge.jud_mis_id = rs_missionlist.mis_id', 'type' => 'inner'),
+				array('table' => 'rs_media', 'on' => 'rs_judge.jud_med_id = rs_media.med_id', 'type' => 'inner'),
+				array('table' => 'rs_missionpoint', 'on' => 'rs_judge.jud_mis_id = rs_missionpoint.mip_mis_id', 'type' => 'inner')
+			);
 			$getdata = $this->{$this->modelname}->get_one_judge($this->jug_id, $jid,'','',$join);
 			if(empty($getdata) || element('jud_jug_id',$getdata) != $this->jug_id) {
 				$this->session->set_flashdata('message','비정상적인접근입니다.(404)');
@@ -206,6 +231,7 @@ class Judgemission extends CB_Controller
 		}
 
 			$view['view']['data'] = $getdata;
+			$view['view']['data']['state'] = element('state', $this->RS_missionlist_model->get_one_mission(element('mis_id', $getdata)));
 			$view['view']['data']['member'] = $dbmember = $this->Member_model->get_by_memid(element('jud_mem_id', $getdata), 'mem_id, mem_userid, mem_nickname, mem_icon');
 			$view['view']['data']['display_name'] = display_username(
 				element('mem_userid', $dbmember),
@@ -214,6 +240,21 @@ class Judgemission extends CB_Controller
 			);
 			$view['view']['all_denyreason'] = $this->RS_judge_denyreason_model->get_list('','',array('judr_jug_id' => $this->jug_id));
 			$view['view']['this_denied_reason'] = $this->RS_judge_denied_model->get_one('','',array('judn_jud_id'=>$jid));
+
+			$where = array(
+				'mem_id' => element('jud_mem_id', $getdata),
+			);
+			$result['list'][$key]['member_group_member'] = $this->Member_group_member_model->get('', '', $where, '', 0, 'mgm_id', 'ASC');
+			$mgroup = array();
+			if ($result['list'][$key]['member_group_member']) {
+				foreach ($result['list'][$key]['member_group_member'] as $mk => $mv) {
+					if (element('mgr_id', $mv)) {
+						$mgroup[] = element('mgr_title',$this->Member_group_model->item(element('mgr_id', $mv)));
+					}
+				}
+			}
+
+			$view['view']['data']['is_superfriend'] = in_array('SF',$mgroup);
 
 			/**
 			 * primary key 정보를 저장합니다
@@ -510,5 +551,139 @@ class Judgemission extends CB_Controller
 
 			}
 		}
+	}
+
+	/*
+	** 수정페이지에서 ajax로 마감하기
+	*/
+	public function ajax_givepoint(){
+		
+		// 이벤트 라이브러리를 로딩합니다
+		$eventname = 'event_admin_cic_judgemission_ajax_givepoint';
+		$this->load->event($eventname);
+
+		$view = array();
+		$view['view'] = array();
+
+		// 이벤트가 존재하면 실행합니다
+		$view['view']['event']['before'] = Events::trigger('before', $eventname);
+
+		$primary_key = $this->{$this->modelname}->primary_key;
+
+		/**
+		 * Validation 라이브러리를 가져옵니다
+		 */
+		$this->load->library('form_validation');
+
+		/**
+		 * 전송된 데이터의 유효성을 체크합니다
+		 */
+		$config = array(
+			array(
+				'field' => 'gp_jud_id',
+				'label' => 'jud_id',
+				'rules' => 'trim|required|is_natural_no_zero',
+			),
+			array(
+				'field' => 'gp_giveperc',
+				'label' => 'percentage',
+				'rules' => 'trim|required|is_natural|in_list[0,10,20,30,40,50,60,70,80,90,100]',
+			),
+		);
+		$this->form_validation->set_rules($config);
+
+
+		/**
+		 * 유효성 검사를 하지 않는 경우, 또는 유효성 검사에 실패한 경우입니다.
+		 * 즉 글쓰기나 수정 페이지를 보고 있는 경우입니다
+		 */
+		if ($this->form_validation->run() === false) {
+			$this->form_validation->set_error_delimiters('', '');
+			$return = array(
+				'type' => 'error',
+				'data' => $this->form_validation->error_string()
+			);
+			echo json_encode($return,JSON_UNESCAPED_UNICODE);
+			exit;
+		} else {
+
+			$view['view']['event']['formruntrue'] = Events::trigger('formruntrue', $eventname);
+
+			$jid = $this->input->post('gp_jud_id');
+			$join = array(
+				array('table' => 'rs_missionlist', 'on' => 'rs_judge.jud_mis_id = rs_missionlist.mis_id', 'type' => 'inner'),
+				array('table' => 'rs_media', 'on' => 'rs_judge.jud_med_id = rs_media.med_id', 'type' => 'inner'),
+				array('table' => 'rs_missionpoint', 'on' => 'rs_judge.jud_mis_id = rs_missionpoint.mip_mis_id', 'type' => 'inner'),
+			);
+			$getdata = $this->{$this->modelname}->get_one_judge($this->jug_id, $jid,'','',$join);
+			if(empty($getdata) || element('jud_jug_id',$getdata) != $this->jug_id) {
+				$return = array(
+					'type' => 'error',
+					'data' => 'no judge data found'
+				);
+				echo json_encode($return,JSON_UNESCAPED_UNICODE);
+				exit;
+			}
+			$state =  element('state', $this->RS_missionlist_model->get_one_mission(element('jud_mis_id', $getdata)));
+			if($state !== 'end') {
+				$return = array(
+					'type' => 'error',
+					'data' => 'mission didn\'t end yet'
+				);
+				echo json_encode($return,JSON_UNESCAPED_UNICODE);
+				exit;
+			}
+			if((int)element('jud_state',$getdata) !== 3) {
+				$return = array(
+					'type' => 'error',
+					'data' => 'already gave or not deserved'
+				);
+				echo json_encode($return,JSON_UNESCAPED_UNICODE);
+				exit;
+			}
+			$expect_point = (element('mis_per_token', $getdata)*element('med_superpoint', $getdata)/(element('mip_tpoint', $getdata)===0? 1 : element('mip_tpoint', $getdata)));
+			$percentage = $this->input->post('gp_giveperc');
+			$give_point = $expect_point * $percentage / 100;
+			$give_point = floor($give_point*10)/10; //소숫점 버림을 위해
+			$left_point = element('mis_per_token',$getdata) - $give_point;
+			if($left_point<0){
+				$return = array(
+					'type' => 'error',
+					'data' => 'exceed maximum point'
+				);
+				echo json_encode($return,JSON_UNESCAPED_UNICODE);
+				exit;
+			}
+			$mem_id = element('jud_mem_id',$getdata);
+			$content = '"' . element('mis_title', $getdata) . '" 미션 "' . element('wht_title',$getdata) . '( '.element('jud_med_name',$getdata) . ' | ' . element('jud_med_id',$getdata) . ' )' . '" 미디어에 해당하는 PERPOINT 지급';
+			$this->point->insert_point(
+				$mem_id,
+				$give_point,
+				$content,
+				'@byadmin',
+				$mem_id,
+				$this->member->item('mem_id') . '-' . uniqid('')
+			);
+
+			$update_jud = array(
+				'jud_point' => $give_point,
+				'jud_state' => 5
+			);
+			$this->RS_judge_model->update($jid, $update_jud);
+
+			$update_leftpoint = array(
+				'mis_left_token' => $left_point
+			);
+			$this->RS_missionlist_model->update(element('jud_mis_id', $getdata), $update_leftpoint);
+			
+			$return = array(
+				'type' => 'success',
+				'data' => 'updated'
+			);
+			echo json_encode($return,JSON_UNESCAPED_UNICODE);
+			exit;
+			Events::trigger('after', $eventname);
+		}
+
 	}
 }

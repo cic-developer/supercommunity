@@ -44,9 +44,6 @@
 							<?php if ($this->cbconfig->item('use_sociallogin_facebook')) {?>
 								<a href="javascript:;" onClick="social_connect_on('facebook');" title="페이스북 로그인"><img src="<?php echo base_url('assets/images/social_facebook.png'); ?>" width="22" height="22" alt="페이스북 로그인" title="페이스북 로그인" /></a>
 							<?php } ?>
-							<?php if ($this->cbconfig->item('use_sociallogin_twitter')) {?>
-								<a href="javascript:;" onClick="social_connect_on('twitter');" title="트위터 로그인"><img src="<?php echo base_url('assets/images/social_twitter.png'); ?>" width="22" height="22" alt="트위터 로그인" title="트위터 로그인" /></a>
-							<?php } ?>
 							<?php if ($this->cbconfig->item('use_sociallogin_google')) {?>
 								<a href="javascript:;" onClick="social_connect_on('google');" title="구글 로그인"><img src="<?php echo base_url('assets/images/social_google.png'); ?>" width="22" height="22" alt="구글 로그인" title="구글 로그인" /></a>
 							<?php } ?>

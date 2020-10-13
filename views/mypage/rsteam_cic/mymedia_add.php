@@ -1,4 +1,85 @@
-<?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
-<div>
-  마이페이지>내 미디어 추가 페이지 입니다.
+<?php 
+    $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); 
+
+    $csrf = array(
+        'name' => $this->security->get_csrf_token_name(),
+        'hash'  => $this->security->get_csrf_hash()
+    );
+?>
+
+<!--마이페이지-2 :: 내미디어> 내미디어 추가-->
+
+       <!--페이지별 변경되는 오른쪽 영역 page_right_box-->
+       <div id="my_right_box">
+            <h5><?php echo $this->lang->line(0)?></h5> <!--마이페이지 상세 타이틀-->
+            <!--my_cont_area-->
+            <div class="my_cont_area">
+                <h6><?php echo $this->lang->line(1)?></h6>
+<?php echo form_open(''); ?>
+                <ul class="ul_write">
+                    <li>
+                        <span><?php echo $this->lang->line(2)?></span>
+                        <div class="my_cont">
+                            <select name="wht_list">
+<?php for($i = 0; $i < count($white_list); $i++){ ?>
+                                <option value="<?php echo $white_list[$i]['wht_id']?>" <?php echo set_select('wht_list', $white_list[$i]['wht_id']); ?>><?php echo $this->session->userdata('lang') == 'korean' ? $white_list[$i]['wht_title'] : $white_list[$i]['wht_title_en']?></option>
+<?php } ?>
+                            </select>
+                        </div>
+                    </li>
+                    <li>
+                        <span><?php echo $this->lang->line(3)?></span>
+                        <div class="my_cont">
+                            <ul class="check_table">
+<?php foreach($media_type_list AS $mt){ ?>
+                                    <li><label><input type="checkbox" value="<?php echo $mt['met_id']?>" name="met_type[]" <?php echo set_checkbox('met_type[]', $mt['met_id']); ?> /><?php echo $this->session->userdata('lang') == 'korean' ? $mt['met_title'] : $mt['met_title_en']?></label></li>
+<?php } ?>
+<?php if(!$media_type_list){ //미디어 type이 없는 경우?>
+                                    <input type="hidden" value="0" name="met_type[]"/>
+<?php } ?>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <span><?php echo $this->lang->line(4)?></span>
+                        <div class="my_cont">
+                            <input type="text" placeholder="<?php echo $this->lang->line(5)?>" name="med_name" value="<?php echo set_value('med_name'); ?>" />
+                        </div>
+                    </li>
+                    <li>
+                        <span><?php echo $this->lang->line(6)?></span>
+                        <div class="my_cont">
+                            <input type="text" placeholder="<?php echo $this->lang->line(7)?>" name="med_admin" value="<?php echo set_value('med_admin'); ?>" />
+                        </div>
+                    </li>
+                    <li>
+                        <span><?php echo $this->lang->line(8)?></span>
+                        <div class="my_cont">
+                            <input type="text" placeholder="<?php echo $this->lang->line(9)?>" name="med_url" style="width:70%;" value="<?php echo set_value('med_url'); ?>" />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!--//my_cont_area-->
+            <div class="btn_box">
+                 <input type="submit" value="<?php echo $this->lang->line(10)?>" class="btn1 btn_yellow"/>
+            </div>
+ <?php echo form_close(); ?>
+      </div>
+       <!--//페이지별 변경되는 오른쪽 영역 page_right_box-->
+
+  </div>
+   <!--//마이페이지 레이아웃 mypage-->
+
+
+
+<script>
+    $(document).ready(function(){
+        let validation_err = '<?php echo isset($validation_err) ? $validation_err : '' ?>';
+        if(validation_err){
+            alert(validation_err);
+        }
+    });
+</script>
+
 </div>

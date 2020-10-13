@@ -340,11 +340,11 @@ class Members extends CB_Controller
 				'label' => '패스워드',
 				'rules' => 'trim|min_length[4]',
 			);
-			$config[] = array(
-				'field' => 'mem_email',
-				'label' => '회원이메일',
-				'rules' => 'trim|required|valid_email|is_unique[member.mem_email.mem_id.' . element('mem_id', $getdata) . ']',
-			);
+			// $config[] = array(
+			// 	'field' => 'mem_email',
+			// 	'label' => '회원이메일',
+			// 	'rules' => 'trim|required|valid_email|is_unique[member.mem_email.mem_id.' . element('mem_id', $getdata) . ']',
+			// );
 			$config[] = array(
 				'field' => 'mem_nickname',
 				'label' => '회원닉네임',
@@ -1182,7 +1182,7 @@ class Members extends CB_Controller
 					'mem_id' => element('mem_id', $val),
 				);
 				$result['list'][$key]['member_group_member'] = $this->Member_group_member_model->get('', '', $where, '', 0, 'mgm_id', 'ASC');
-				$mgroup = '';
+				$mgroup = array();
 				if ($result['list'][$key]['member_group_member']) {
 					foreach ($result['list'][$key]['member_group_member'] as $mk => $mv) {
 						if (element('mgr_id', $mv)) {

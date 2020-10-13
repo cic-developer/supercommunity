@@ -1,0 +1,51 @@
+/**
+	note skin css
+*/
+
+a {text-decoration: none;}
+
+.note_menu li {width:32%;}
+.note_menu a {font-size:14px;padding:5px 0px;width:100%;}
+.note-view small{float:right;}
+.note-contents{padding:20px;}
+.note-view-title{border-bottom: 1px solid #ccc;padding-bottom: 5px;padding-left: 10px;padding-right: 10px;background: #D0E3F1;height: 30px;line-height: 30px;}
+
+
+/********/
+
+
+h4.modal-title {font-size: 23px;}
+
+
+/*************쪽지버튼 재정의**************/
+.btn-default { font-weight: 400; font-size: 14px; font-weight:500; border:1px solid #ccc; background:#eee; color:#2a2a2a; padding: 8px 15px;}
+.btn-default:active, .btn-default.active {background:#2a2a2a; color:#fff; font-weight: 200;}
+.note_menu {text-align: center;}
+.note_menu li {width: 31%; margin: 0px 0.5%;}
+.table {width: 95%; margin: 0 auto; margin-top: 25px;}
+.table td {text-align: center}
+.btn-one-delete {background:#2a2a2a; border:0; color:#fff; font-size: 12px; font-weight: normal; padding: 2px 5px;}
+.modal-body ol {padding:0px 15px;}
+.modal-body form li {overflow: hidden; margin-bottom:15px}
+form li>span {float:left; width:15%; text-align:left;margin-top:5px; color:#000; font-weight:600;}
+form li>p {float:left; padding:5px 15px 0 0; font-size: 14px;}
+form .input { width: 70%; font-size: 13px; padding:5px 15px; border:1px solid #ccc;}
+textarea.input {width:400px;height:200px;  }
+
+.pull-right {padding: 20px 15px;}
+.btn-success {background:#2a2a2a; color: #fff; font-size: 14px; font-weight:500; border:0; padding: 8px 15px;}
+.btn-success:hover, .btn-success:active {background:#fbb906; }
+
+.btn-danger {background:#fbb906; color: #fff!important; font-size: 14px; font-weight:500; border:0; padding: 8px 15px;}
+.btn-danger:hover, .btn-danger:hover {background:#2a2a2a;}
+
+
+.note-view {padding: 20px;}
+.note-view small {font-size: 12px; font-weight: normal;}
+.note-view .note-view-title {border-top:2px solid #2a2a2a; border-bottom:1px soid #ccc; font-size:14px; font-weight: 500; padding:10px 15px; background:#fcfcfc;}
+.note-contents {border-bottom:1px solid #ccc; min-height: 80px;}
+
+.alert-info {background:#fcfcfc; border:1px solid #ccc;}
+
+.alert {margin:15px;}
+.close {padding: 0; margin:0; line-height: 0; color: #2a2a2a;}

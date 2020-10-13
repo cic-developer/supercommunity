@@ -132,12 +132,12 @@ class Login extends CB_Controller
 				'path' => 'login',
 				'layout' => 'layout',
 				'skin' => 'login',
-				'layout_dir' => $this->cbconfig->item('layout_login'),
-				'mobile_layout_dir' => $this->cbconfig->item('mobile_layout_login'),
-				'use_sidebar' => $this->cbconfig->item('sidebar_login'),
-				'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_login'),
-				'skin_dir' => $this->cbconfig->item('skin_login'),
-				'mobile_skin_dir' => $this->cbconfig->item('mobile_skin_login'),
+				'layout_dir' => '/rsteam_cic_main',
+				'mobile_layout_dir' => '/rsteam_cic_mobile',
+				'use_sidebar' => $this->cbconfig->item('sidebar_main'),
+				'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_main'),
+				'skin_dir' => 'rsteam_cic',
+				'mobile_skin_dir' => 'rsteam_cic_mobile',
 				'page_title' => $page_title,
 				'meta_description' => $meta_description,
 				'meta_keywords' => $meta_keywords,
@@ -225,7 +225,6 @@ class Login extends CB_Controller
 			redirect($url_after_login);
 		}
 	}
-
 
 	/**
 	 * 로그인시 아이디와 패스워드가 일치하는지 체크합니다

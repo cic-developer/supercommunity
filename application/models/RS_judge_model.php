@@ -166,6 +166,7 @@ class RS_judge_model extends CB_Model
 		'value'		=> null
   );
 	public function check_deny_data($value){
+		$this->lang->load('cic_formvalidation_callback', $this->session->userdata('lang'));
 		$data = $this->post_form_data;
 		if(element('value',$data) == 'deny' && !$value){
 			$this->form_validation->set_message('check_deny', '반려시 반려사유를 입력하셔야합니다.');
@@ -188,10 +189,11 @@ class RS_judge_model extends CB_Model
 
 
   function check_wht_id_is($wht_id){
+		$this->lang->load('cic_formvalidation_callback', $this->session->userdata('lang'));
     $this->load->model('RS_whitelist_model');
     $value = $this->RS_whitelist_model->get_one($wht_id,'wht_id',array('wht_deletion'=>'N'));
     if(!element('wht_id',$value)){
-      $this->form_validation->set_message('check_wht_id_is','존재하지 않는 미디어플랫폼 입니다.');
+      $this->form_validation->set_message('check_wht_id_is', $this->lang->line('check_wht_id_is1'));
       return false;
     } else {
       return true;
@@ -199,9 +201,10 @@ class RS_judge_model extends CB_Model
   }
 
   function check_wht_id_url($check_url){
+		$this->lang->load('cic_formvalidation_callback', $this->session->userdata('lang'));
     $value = $this->check_url_right($this->set_wht_id, $check_url);
     if(!$value){
-      $this->form_validation->set_message('check_wht_id_url','유효하지 않은 URL 입니다.');
+      $this->form_validation->set_message('check_wht_id_url', $this->lang->line('check_wht_id_url1'));
       return false;
     } else {
       return true;
@@ -209,6 +212,7 @@ class RS_judge_model extends CB_Model
   }
 
   function check_met_id_is($met_id_array){
+		$this->lang->load('cic_formvalidation_callback', $this->session->userdata('lang'));
     $met_id_array = $this->set_met_id;
     $this->load->model('RS_mediatype_model');
     $getdata = $this->RS_mediatype_model->get_mediatype_index();
@@ -227,13 +231,13 @@ class RS_judge_model extends CB_Model
 
     }
     if($emergFlag){
-      $this->form_validation->set_message('check_met_id_is','비정상적인 시도입니다.');
+      $this->form_validation->set_message('check_met_id_is', $this->lang->line('check_met_id_is1'));
       return false;
     }
     if($flag){
       return true;
     } else {
-      $this->form_validation->set_message('check_met_id_is','최소 1개 이상의 미디어 성격을 지정하셔야합니다.');
+      $this->form_validation->set_message('check_met_id_is', $this->lang->line('check_met_id_is2'));
       return false;
     }
   }
@@ -253,6 +257,8 @@ class RS_judge_model extends CB_Model
   }
 
   public function replace_apply_mission_judge($jud_arr){
+	$this->load->model('RS_missionlist_model');
+	$this->load->model('RS_media_model');
 	$this->db->trans_start();
 	// return $jud_arr;
 	if(! is_array($jud_arr)){return is_array($jud_arr);}
@@ -261,76 +267,79 @@ class RS_judge_model extends CB_Model
 	if(! $mem_data){ return 'not found member data'; }
 	$_now = date('Y-m-d H:i:s');
 	$_ip = $this->input->ip_address();
-    $result = array();
-
+	$result = array();
+	$mis_arr = array();
+	$mis_id = 0;
+	
     foreach($jud_arr AS $jud){
-    //   $this->db->join('rs_mission_apply rs_apply','rs_apply.med_id = rs_media.med_id', 'LEFT OUTER');
-      $this->db->join('rs_judge', "rs_judge.jud_med_id = rs_media.med_id AND rs_judge.jud_deletion = 'N' AND rs_judge.jud_jug_id = 1 AND rs_judge.jud_mis_id = ".$jud['jud_mis_id']." AND rs_judge.jud_med_id = ".$jud['jud_med_id'], 'LEFT OUTER');
-      $this->db->where('rs_media.med_id', $jud['jud_med_id']);
-      $this->db->where('rs_media.med_deletion', 'N');
-	  $this->db->where('rs_media.mem_id', $mem_id);
-	  $this->db->order_by('ISNULL(rs_judge.jud_wdate)','ASC');
-	  $this->db->order_by('rs_judge.jud_wdate','DESC');
-	  $this->db->from('rs_media');
-	  $this->db->select('rs_media.*, rs_judge.*');
-	  $med_data = $this->db->get()->row_array();
-	//   print_r($this->db->last_query());
-	//   exit;
-	//   return array($this->db->last_query(), $med_data);
-
-	  if(!$med_data){return 'not found media data : '.$this->db->last_query();}
-
-      switch(element('jud_state',$med_data)){
-        case 0 :
-        case NULL :
-          $tmpArr = array(
-            'jud_mem_id'      => $mem_id,
-            'jud_register_ip' => $_ip,
-            'jud_wdate'       => $_now,
-            'jud_med_id'      => $med_data['med_id'],
-            'jud_med_name'    => $med_data['med_name'],
-            'jud_med_admin'   => $med_data['med_admin'],
-            'jud_med_wht_id'  => $med_data['med_wht_id'],
-			'jud_med_url'     => $med_data['med_url'],
-			'jud_mem_nickname'=> $mem_data['mem_nickname'],
-			'jud_superpoint'  => $med_data['med_superpoint']
-          );
-		  $applyArr = array('med_id' => $med_data['med_id'], 'mis_id' => $jud['jud_mis_id']);
-
-		  $merge_data =array_merge($jud, $tmpArr);
-		  $jud_id = $this->insert($merge_data);
-		  $this->db->insert('rs_mission_apply', $applyArr);
-		  //미션 총액 더하기
-		  $this->db->where('mip_mis_id', $jud['jud_mis_id']);
-		  $this->db->set('mip_tpoint', 'mip_tpoint + '.$med_data['med_superpoint'], false);
-		  $this->db->update('rs_missionpoint');
-
-		  //로그 쌓기용 result 추가  
-		  $result[] = array(
-			'jul_jug_id' 	=> 1,
-			'jul_jud_id' 	=> $jud_id,
-			'jul_med_id' 	=> $med_data['med_id'],
-			'jul_state'	 	=> 1,
-			'jul_mem_id' 	=> $mem_id,
-			'jul_user_id'	=> $mem_data['mem_userid'],
-			'jul_datetime'	=> $_now,
-			'jul_ip'		=> $_ip,
-			'jul_useragent'	=> $this->agent->agent_string(),
-			'jul_data'		=> json_encode($merge_data)
-		  );
-        break;
-
-        case 1 :
-          if(element('jud_attach', $jud)){
-            $updateArr = array(
-              'jud_attach'  =>  element('jud_attach', $jud)
-            );
-			if(!$this->update($med_data['jud_id'], $updateArr)){
-				return 'jud_attach update error occur';
+		//미디어가 심사중에 있는지 확인
+		$other_judge = $this->RS_media_model->check_other_judge($jud['jud_med_id']);
+		if($other_judge != '미션심사 진행중입니다.' && $other_judge != false){
+			if($other_judge === true){
+				return 'error occur for check other judge';
+			}else{
+				return $other_judge;
 			}
+		}
+	//   $this->db->join('rs_mission_apply rs_apply','rs_apply.med_id = rs_media.med_id', 'LEFT OUTER');
+		$mission_data = $this->RS_missionlist_model->get_one_mission($jud['jud_mis_id']);
+		if($mission_data['state'] != 'process'){ return 'mission closed'; }
+		$this->db->join('rs_judge', "rs_judge.jud_med_id = rs_media.med_id AND rs_judge.jud_deletion = 'N' AND rs_judge.jud_jug_id = 1 AND rs_judge.jud_mis_id = ".$jud['jud_mis_id']." AND rs_judge.jud_med_id = ".$jud['jud_med_id'], 'LEFT OUTER');
+		$this->db->where('rs_media.med_id', $jud['jud_med_id']);
+		$this->db->where('rs_media.med_deletion', 'N');
+		$this->db->where('rs_media.mem_id', $mem_id);
+		$this->db->order_by('ISNULL(rs_judge.jud_wdate)','ASC');
+		$this->db->order_by('rs_judge.jud_wdate','DESC');
+		$this->db->from('rs_media');
+		$this->db->select('rs_media.*, rs_judge.*');
+		$med_data = $this->db->get()->row_array();
+
+		if(!$med_data){return 'not found media data : '.$this->db->last_query();}
+
+		switch(element('jud_state',$med_data)){
+			case 0 :
+			case NULL :
+			$tmpArr = array(
+				'jud_mem_id'      => $mem_id,
+				'jud_register_ip' => $_ip,
+				'jud_wdate'       => $_now,
+				'jud_med_id'      => $med_data['med_id'],
+				'jud_med_name'    => $med_data['med_name'],
+				'jud_med_admin'   => $med_data['med_admin'],
+				'jud_med_wht_id'  => $med_data['med_wht_id'],
+				'jud_med_url'     => $med_data['med_url'],
+				'jud_mem_nickname'=> $mem_data['mem_nickname'],
+				'jud_superpoint'  => $med_data['med_superpoint']
+			);
+			$applyArr = array('med_id' => $med_data['med_id'], 'mis_id' => $jud['jud_mis_id']);
+
+			$merge_data =array_merge($jud, $tmpArr);
+			$jud_id = $this->insert($merge_data);
+			$this->db->insert('rs_mission_apply', $applyArr);
+			//미션 총액 더하기
+			$this->db->where('mip_mis_id', $jud['jud_mis_id']);
+			$this->db->set('mip_tpoint', 'mip_tpoint + '.$med_data['med_superpoint'], false);
+			$this->db->update('rs_missionpoint');
+			//총액 가져와서 해당 미션의 최고 금액과 비교하여 오버되었으면 종료
+			$this->db->where('mip_mis_id', $jud['jud_mis_id']);
+			$total_point = $this->db->get('rs_missionpoint')->row_array()['mip_tpoint'];
+			$max_point = $mission_data['mis_max_point']*1.01; //(최대 미디어 super point) * 101% 
+			if($max_point < $total_point){ return 'mission over max point';}
+			if(($mission_data['mis_max_point'] <= $total_point) && ($max_point >= $total_point)){ 
+				/*만일 해당 미션에 참여한 미디어까지의 총합이 (최대 미디어 super point) * 101% 보다 작거나 같고 
+				**(최대 미디어 super point) 보다 크거나 같으면 해당 미션은 여기서 마감 처리
+				*/
+				if($mission_data['mis_endtype'] == 1 || $mission_data['mis_endtype'] == 3){
+					$this->RS_missionlist_model->update($mission_data['mis_id'], array('mis_end' => 1));
+				}else{
+					return 'mission already over';
+				}
+			}
+
+			//로그 쌓기용 result 추가  
 			$result[] = array(
 				'jul_jug_id' 	=> 1,
-				'jul_jud_id' 	=> $med_data['jud_id'],
+				'jul_jud_id' 	=> $jud_id,
 				'jul_med_id' 	=> $med_data['med_id'],
 				'jul_state'	 	=> 1,
 				'jul_mem_id' 	=> $mem_id,
@@ -338,18 +347,41 @@ class RS_judge_model extends CB_Model
 				'jul_datetime'	=> $_now,
 				'jul_ip'		=> $_ip,
 				'jul_useragent'	=> $this->agent->agent_string(),
-				'jul_data'		=> json_encode($updateArr)
+				'jul_data'		=> json_encode($merge_data)
 			);
-          }
-        break;
+			break;
 
-        default :
-          return 'judge_state error '.element('jud_state',$med_data);
-      }
+			case 1 :
+			if(element('jud_attach', $jud)){
+				$updateArr = array(
+				'jud_attach'  =>  element('jud_attach', $jud)
+				);
+				if(!$this->update($med_data['jud_id'], $updateArr)){
+					return 'jud_attach update error occur';
+				}
+				$result[] = array(
+					'jul_jug_id' 	=> 1,
+					'jul_jud_id' 	=> $med_data['jud_id'],
+					'jul_med_id' 	=> $med_data['med_id'],
+					'jul_state'	 	=> 1,
+					'jul_mem_id' 	=> $mem_id,
+					'jul_user_id'	=> $mem_data['mem_userid'],
+					'jul_datetime'	=> $_now,
+					'jul_ip'		=> $_ip,
+					'jul_useragent'	=> $this->agent->agent_string(),
+					'jul_data'		=> json_encode($updateArr)
+				);
+			}
+			break;
+
+			default :
+				return 'judge_state error '.element('jud_state',$med_data);
+		}
 	}
 	if($result){
 		if(!$this->db->insert_batch('rs_judge_log',$result)){ return 'log data insert error'.$this->db->last_query(); }
 	}
+
 	$this->db->trans_complete();
 	return true;
   }
