@@ -84,7 +84,7 @@ $(function () {
 
 
     // CONFIG
-
+    var multi_interval = Array();
     let mainClass = '.countdown';
     let OffsetLocation = -4;
 
@@ -117,10 +117,9 @@ $(function () {
         //show and hide classes
         $('.' + extraClass + ' ' + runningClass).css('display', 'flex');
         $('.' + extraClass + ' ' + endedClass).css('display', 'none');
-
         //call main function
         dateReplace(extraClass, date, fixTime, initText, zeroPad, $(this)); //prevent delay for the first time
-        setInterval(dateReplace, 1000, extraClass, date, fixTime, initText, zeroPad, $(this));
+        multi_interval[extraClass] = setInterval(dateReplace, 1000, extraClass, date, fixTime, initText, zeroPad, $(this));
     });
 
     function dateReplace(extraClass, date, fixTime, initText, zeroPad, $this) {
@@ -132,8 +131,13 @@ $(function () {
         if (dif[0] < 0 || dif[1] < 0 || dif[2] < 0 || dif[3] < 0) {
             if(isend == 'true') return;
             //countdown ended
+            let this_state = $('.' + extraClass).attr('data-state');
+            let this_realterm = 0;
+            if(this_state == 'planned') this_realterm = Number($('.' + extraClass).attr('data-realTerm'));
             let endText = $('.' + extraClass).attr('data-endText');
-            if (page == 'detail') { //case data-endText attr
+            let processText = '';
+            if(this_state == 'planned') processText = $('.' + extraClass).attr('data-processText');
+             if (page == 'detail') { //case data-endText attr
                 /*
                     미션상세페이지
                     카운트다운 마감시
@@ -148,13 +152,36 @@ $(function () {
                     미션목록페이지
                     카운트다운 마감시
                 */
-               let list_item = $this.closest('li');
-               list_item.addClass('endgame');
-               $(list_item).find('.yet').text(endText);
+                let list_item = $this.closest('li');
+                if(this_state == 'process'){
+                    list_item.addClass('endgame');
+                    $(list_item).find('.yet').text(endText);
+                    $('.' + extraClass).attr('data-isend','true');
+                    $(list_item).find('.yet').text(endText);
+                    clearInterval(multi_interval[extraClass]);
+                    console.log('end');
+                } else {
+                    $('.' + extraClass).attr('data-state','process')
+                    $('.' + extraClass).closest('.lock').removeClass('lock');
+                    $(list_item).find('.yet').text(processText);
+                    $this.attr('data-fixTime', $this.attr('data-realTerm'));
+                    date = $this.attr('data-Date');
+                    fixTime = $this.attr('data-fixTime');
+                    zeroPad = $this.attr('data-zeroPad')
+                    if (fixTime != undefined) date = getFixDate(fixTime);
+                    let hiddenPrice = String($this.attr('data-hidden'));
+                    String.prototype.number_format = function() { return this.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'); }; 
+                    $(list_item).find('.yet').text(processText);
+                    $(list_item).find('.txt_box').find('h3').find('b').text(hiddenPrice.number_format());
+                    // Planned to Process Change Interval
+                    clearInterval(multi_interval[extraClass]);
+                    dateReplace(extraClass, date, fixTime, initText, zeroPad, $this); //prevent delay for the first time
+                    multi_interval[extraClass] = setInterval(dateReplace, 1000, extraClass, date, fixTime, initText, zeroPad, $this);
+                    console.log('process');
+                }
                 // $('.' + extraClass + ' ' + runningClass).css('display', 'none');
                 // $('.' + extraClass + ' ' + endedClass).css('display', 'flex');
             }
-            $('.' + extraClass).attr('data-isend','true');
         } else {
             //Zero-pad
            if(zeroPad != undefined) zeroPadArr = JSON.parse(zeroPad);

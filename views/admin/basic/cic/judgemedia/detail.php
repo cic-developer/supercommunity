@@ -1,3 +1,18 @@
+<?php 
+	function display_warn($mem_id){
+		$CI =& get_instance();
+		$all_extra = $CI->Member_extra_vars_model->get('','', array('mem_id' => $mem_id));
+		foreach($all_extra AS $extra){
+			if(  $extra['mev_key'] == 'mem_warn_1' ||  $extra['mev_key'] == 'mem_warn_2' ){
+				if($extra['mev_value']){
+					echo '<span class="label label-danger" style="margin-left:10px;">경고</span>';
+					return;
+				}
+			}
+		}
+	}
+?>
+
 <div class="box">
 	<div class="box-table">
 		<?php
@@ -79,7 +94,7 @@
 			<?php } ?>
 			<?php if(element('jud_jug_id',element('data',$view)) == 4) { ?>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">유서 신청 사유</label>
+				<label class="col-sm-2 control-label">신청 사유</label>
 				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
 					<?php echo nl2br(html_escape(element('med_textarea',element('med_data',$view)))); ?>
 				</div>
@@ -102,7 +117,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">회원정보</label>
 				<div class="col-sm-10">
-					<span class="form-control" style="border:0;box-shadow:none;padding:6px 0;"><?php echo element('display_name',$view); ?> </span>
+					<span class="form-control" style="border:0;box-shadow:none;padding:6px 0;"><?php echo element('display_name',$view); ?> <?php display_warn(element('mem_id', element('member',$view)));?></span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -115,6 +130,12 @@
 				<label class="col-sm-2 control-label">등록일</label>
 				<div class="col-sm-10 form-inline">
 					<input type="text" style="all:unset; height:30px; width:150px; display:inline-block; vertical-align:middle;" disabled value="<?=display_datetime(element('jud_wdate', element('data', $view)),'user','Y-m-d H:i:s')?>" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">첨부 이미지</label>
+				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
+          			<img  src="<?php echo thumb_url('judge', element('jud_attach', element('data', $view)), 800, 600); ?>" alt="제출이미지" title="제출이미지"/>
 				</div>
 			</div>
 			<div class="btn-group pull-right" role="group" aria-label="...">

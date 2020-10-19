@@ -3,6 +3,9 @@ if (typeof(SIDEVIEW_JS) === 'undefined') // 한번만 실행
 	if (typeof is_member === 'undefined') {
 		alert('is_member 변수가 선언되지 않았습니다.');
 	}
+	if (typeof rs_lang === 'undefined') {
+		rs_lang = 'korean';
+	}
 
 	var SIDEVIEW_JS = true;
 
@@ -88,7 +91,7 @@ if (typeof(SIDEVIEW_JS) === 'undefined') // 한번만 실행
 			if (userid) {
 			// 쪽지보내기
 			if (note == '1')
-				this.insertTail('note', '<a href="javascript:;" onclick="note_write(\'' + userid + '\'); return false;">쪽지보내기</a>');
+				this.insertTail('note', '<a href="javascript:;" onclick="note_write(\'' + userid + '\'); return false;">'+ (rs_lang == "korean" ? '쪽지보내기' : 'Send Note') +'</a>');
 			else if (note == '3')
 				this.insertTail('note', '<a href="javascript:;" onclick="alert(\'회원님이 쪽지수신설정을 해제하셨습니다.. 먼저 회원님의 쪽지수신여부를 체크하신 후에 이용해주세요\'); return false;">쪽지보내기</a>');
 			else if (note == '2')
@@ -136,8 +139,8 @@ if (typeof(SIDEVIEW_JS) === 'undefined') // 한번만 실행
 				this.insertTail('point', '<a href="' + cb_admin_url + '/member/points?sfield=point.mem_id&skeyword=' + memid + '" target="_blank">포인트내역</a>');
 			if (userid)
 				this.insertTail('new', '<a href="' + cb_admin_url + '/board/post?sfield=mem_id&skeyword=' + memid + '" target="_blank">전체게시물</a>');
-			if (userid)
-				this.insertTail('new', '<a href="' + cb_admin_url + '/board/comment?sfield=post.mem_id&skeyword=' + memid + '" target="_blank">전체댓글</a>');
+			// if (userid)
+			// 	this.insertTail('new', '<a href="' + cb_admin_url + '/board/comment?sfield=post.mem_id&skeyword=' + memid + '" target="_blank">전체댓글</a>');
 		}
 	}
 

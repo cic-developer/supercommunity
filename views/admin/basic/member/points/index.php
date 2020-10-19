@@ -23,7 +23,7 @@
 				ob_end_flush();
 				?>
 			</div>
-			<div class="row">전체 : <?php echo element('total_rows', element('data', $view), 0); ?>건</div>
+			<div class="row">전체 : <?php echo element('total_rows', element('data', $view), 0); ?>건 &nbsp; 미지급 포인트 : <?php echo element('total_point', element('data', $view), 0); ?> PER POINT</div>
 			<div class="table-responsive">
 				<table class="table table-hover table-striped table-bordered">
 					<thead>

@@ -82,7 +82,7 @@
                 <small>Minutes</small>
                 <small>Seconds</small>
             </div>
-            <h1 class='timer countdown' data-fixTime='{"Seconds": "<?php echo $_timer_time; ?>"}' data-endText='<?php echo $this->lang->line("12"); ?>' data-isend='<?php echo $mission_state != 'end' ? 'false' : 'true'; ?>' data-page="detail">                                
+            <h1 class='timer countdown' data-state="process" data-fixTime='{"Seconds": "<?php echo $_timer_time; ?>"}' data-endText='<?php echo $this->lang->line("12"); ?>' data-isend='<?php echo $mission_state != 'end' ? 'false' : 'true'; ?>' data-page="detail">                                
                 <div class="running">
                     <timer>
                         <span class="days">00</span>:<span class="hours">00</span>:<span class="minutes">00</span>:<span class="seconds">00</span>

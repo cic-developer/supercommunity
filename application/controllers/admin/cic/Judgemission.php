@@ -45,6 +45,7 @@ class Judgemission extends CB_Controller
 		 * 라이브러리를 로딩합니다
 		 */
 		$this->load->library(array('pagination', 'querystring'));
+		$this->load->helper('rs_common');
 	}
 
 	/**
@@ -641,7 +642,7 @@ class Judgemission extends CB_Controller
 				echo json_encode($return,JSON_UNESCAPED_UNICODE);
 				exit;
 			}
-			$expect_point = (element('mis_per_token', $getdata)*element('med_superpoint', $getdata)/(element('mip_tpoint', $getdata)===0? 1 : element('mip_tpoint', $getdata)));
+			$expect_point = rs_cal_expected_point2(element('mis_per_token', $getdata), element('mis_max_point', $getdata), element('med_superpoint', $getdata), $getdata);
 			$percentage = $this->input->post('gp_giveperc');
 			$give_point = $expect_point * $percentage / 100;
 			$give_point = floor($give_point*10)/10; //소숫점 버림을 위해

@@ -333,7 +333,7 @@ class Members extends CB_Controller
 			$config[] = array(
 				'field' => 'mem_userid',
 				'label' => '회원아이디',
-				'rules' => 'trim|required|alphanumunder|min_length[3]|max_length[20]|is_unique[member_userid.mem_userid.mem_id.' . element('mem_id', $getdata) . ']|callback__mem_userid_check',
+				'rules' => 'trim|required|alphanumunder|min_length[3]|max_length[40]|is_unique[member_userid.mem_userid.mem_id.' . element('mem_id', $getdata) . ']|callback__mem_userid_check',
 			);
 			$config[] = array(
 				'field' => 'mem_password',
@@ -354,7 +354,7 @@ class Members extends CB_Controller
 			$config[] = array(
 				'field' => 'mem_userid',
 				'label' => '회원아이디',
-				'rules' => 'trim|required|alphanumunder|min_length[3]|max_length[20]|is_unique[member_userid.mem_userid]',
+				'rules' => 'trim|required|alphanumunder|min_length[3]|max_length[40]|is_unique[member_userid.mem_userid]',
 			);
 			$config[] = array(
 				'field' => 'mem_password',
@@ -364,7 +364,7 @@ class Members extends CB_Controller
 			$config[] = array(
 				'field' => 'mem_email',
 				'label' => '회원이메일',
-				'rules' => 'trim|required|valid_email|is_unique[member.mem_email]',
+				'rules' => 'trim|valid_email|is_unique[member.mem_email]',
 			);
 			$config[] = array(
 				'field' => 'mem_nickname',

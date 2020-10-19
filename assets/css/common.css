@@ -156,12 +156,12 @@
 .btn_line, a.btn_line, .btn_box a.btn_line, .btn_grey:hover, a.btn_grey:hover {background:none; border:1px solid #ccc!important; color:#2a2a2a;}
 .btn_line:hover, a.btn_line:hover {background: #2a2a2a; color:#fff; transition: 1s;}
 
-.btn2 {display:inline-block; transition: 0.5s; padding:0px 15px; height:37px; line-height:37px; vertical-align: middle; font-weight: 500; font-size: 13px; border:1px solid #fff; box-sizing: border-box;}
+.btn2 {display:inline-block; outline:none; transition: 0.5s; padding:0px 15px; height:37px; line-height:37px; vertical-align: middle; font-weight: 500; font-size: 13px; border:1px solid #fff; box-sizing: border-box;}
 
 .btn_box2 {width: 100%; margin:20px 0 40px 0; text-align: center;}
 
 .btn_mission {background: #2a2a2a; color:#fff!important;}
-.btn_mission:hover {background:#fff; color:#2a2a2a!important; font-weight:600;}
+.btn_mission:hover {background:#fff; color:#2a2a2a!important; font-weight:500;}
 
 
 
@@ -190,21 +190,45 @@ input:read-only, textarea:read-only {
 #mypage #my_left_box .my_box strong {display: block; padding:0px 15px; font-size:20px; color:#848484; margin-bottom: 25px;}
 #mypage #my_left_box .my_box p {padding:0px 15px; border-top:1px solid #ddd; padding:20px 0; font-size:15px; color:#f7b400;  font-weight:700; text-transform: uppercase; font-family: 'Montserrat', sans-serif;}
 #mypage #my_left_box .my_box p span {display: block; margin-top: 10px; font-size:25px; color:#333;}
-#mypage #my_right_box {float: right; width:965px ; }
+#mypage #my_right_box {float: right; width:995px ; }
 #mypage #my_right_box h5 {font-size: 25px; padding: 15px 0; color:#a5a5a5; border-bottom:1px solid #ccc;}
 #mypage #my_right_box h6 {font-size: 18px; font-weight:500; padding: 15px; border:1px dashed #ddd; margin-top:15px; background:#fcfcfc;}
 #mypage #my_right_box h6 small {display: block; padding: 8px; font-size: 13px; line-height: 1.4; color:#f36262; font-weight:400; }
+
+/**미션신청 노티 알림 정의**/
+#mypage #my_right_box h6.apply_head {position: relative; height: 120px;}
+#mypage #my_right_box h6.apply_head small {display: block; color: #888; font-weight: normal; line-height: 1.5;}
+#mypage #my_right_box h6.apply_head small b {display: block; font-weight: 500; color:#f36262;}
+#mypage #my_right_box h6.apply_head small.noti_type1 {position: absolute; left:30px; top:38px;}
+#mypage #my_right_box h6.apply_head small.noti_type2 {position: absolute; left: 500px; top:38px;}
+
 /************테이블 정의*************/
 table.list_table {width: 100%; border-collapse: collapse; border-top:2px solid #2a2a2a; margin-top:20px}
 table.list_table th {background:#fcfcfc; color: #2a2a2a;}
-table.list_table th, table.list_table td {border-bottom:1px solid #ddd; border-left:1px solid #ddd; font-size: 13px; padding:15px; text-align: center; word-break: break-all;}
+table.list_table th {border-bottom:1px solid #ddd; border-left:1px solid #ddd; font-size: 12px; padding:13px; text-align: center; word-break: break-all;}
+table.list_table td {border-bottom:1px solid #ddd; border-left:1px solid #ddd; font-size: 13px; padding:13px; text-align: center; word-break: break-all;}
 table.list_table th:first-child, table.list_table td:first-child {border-left:0;}
 table.list_table td.link a {text-decoration: underline;}
 table.list_table td .s_btn, .s_btn {display: inline-block; border:0; width: 70px; line-height:25px; border-radius:5px; font-weight: 500; font-size: 12px; text-align: center; background:#8e8e8e; color:#fff;}
 
+/**20.10.15 미션신청 신청상태 자동체크 버튼 css**/
+table.list_table td .state{
+	display: inline-block;
+	border-radius: 5px;
+	text-align: center;
+	color:#fff;
+    border: 0;
+    padding:4px 5px;
+    font-weight: 500;
+    font-size: 10px;
+    text-align: center;
+    background: #6e6e6e;
+    color: #fff;
+}
+
 /*미션신청 테이블*/
-table.list_table td .img_check {display: block; cursor: pointer; width: 90%; height: 95px; margin:0 auto; overflow:hidden; border:1px solid #eee;}
-table.list_table td .img_check img{ width: 100%;}
+table.list_table td .img_check {display: block; cursor: pointer; width: 90%; height:49px; margin:0 auto; overflow:hidden; border:1px solid #eee;}
+table.list_table td .img_check img{ width: 100%; }
 
 .reject {color:#ec4848; font-weight: 500; text-decoration: underline;}
 .judge {color:#1e77d2; font-weight: 500;}
@@ -224,6 +248,10 @@ i.per_p {background:url(/assets/images/per_p.gif) no-repeat center;}
 #mypage #my_right_box .ul_write>li .my_cont select {min-width:180px; padding-left:15px; border:1px solid #ccc; height: 35px;}
 #mypage #my_right_box .ul_write>li .my_cont input[type="text"], 
 #mypage #my_right_box .ul_write>li .my_cont input[type="password"] {width: 180px; font-size: 14px; padding:0 15px; border:1px solid #ccc; height: 35px;}
+/*20.10.14 추가요청 포스트 링크폼*/
+#mypage #my_right_box #post_link{border: #ddd 1px solid; outline: none; margin: 0 auto; padding:5px;}
+#mypage #my_right_box table.list_table td small{text-align:left; font-size: 11px; color:#999; display: block; padding-bottom: 10px; padding-left: 0px;}
+/*20.10.14 추가요청 포스트 링크폼//*/
 #mypage #my_right_box .ul_write>li .my_cont textarea {width: 90%; height:120px; padding: 15px; box-sizing: border-box; resize: none; border:1px solid #ccc;}
 #mypage #my_right_box .check_table li,.check_table li{display: inline-block; margin:0 25px 10px 0;}
 #mypage #my_right_box .check_table li input[type="checkbox"],.check_table li input[type="checkbox"] {margin-right:5px;}
@@ -268,7 +296,7 @@ i.per_p {background:url(/assets/images/per_p.gif) no-repeat center;}
 #mypage #my_right_box .mission_check a {display: block; position: absolute; right: 30px; top:20px; font-size: 13px; color:#888;}
 #mypage #my_right_box .mission_check a i {font-size: 10px; vertical-align: top;}
 #mypage #my_right_box .mission_check .mission_check_thumb {width:195px; float:left; height: 110px; overflow:hidden; border:1px solid #ccc;}
-#mypage #my_right_box .mission_check .mission_check_thumb img {width: 100%;}
+#mypage #my_right_box .mission_check .mission_check_thumb img {width: 100%; height: 100%;}
 #mypage #my_right_box .mission_check .mission_check_txt {width: 675px; float: right; margin-left:30px; overflow:hidden;}
 #mypage #my_right_box .mission_check .mission_check_txt small {display: inline-block; padding: 0; font-size: 15px; font-weight:800; color:#2a2a2a; background: url(/assets/images/nav_line_bg.gif) repeat-x center 11px;}
 #mypage #my_right_box .mission_check .mission_check_txt strong {display: block; width:100%; font-size: 18px; margin-top:15px; margin-bottom: 10px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}

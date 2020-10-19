@@ -10,4 +10,4 @@ $lang[5] = 'Sign Out';
 $lang[6] = 'Are you sure you want to leave the super community?';
 $lang['c_1'] = "Success. \n Thank you for using Super Community.";
 $lang['c_2'] = 'Not matched Logged Account with Sign Out Account';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

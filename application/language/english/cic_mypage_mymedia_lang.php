@@ -13,5 +13,5 @@ $lang[8] = 'Refused';
 $lang[9] = 'review';
 $lang[10] = 'Delete';
 $lang[11] = 'Add media';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';
 $lang['deleteMedia'] = 'Are you sure delete Media?';

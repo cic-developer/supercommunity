@@ -146,7 +146,25 @@ class Member_extra_vars_model extends CB_Model
 			'mev_value' => $value,
 		);
 		$this->db->replace($this->_table, $updatedata);
-
+		//meta data가 경고인 경우 자동 경감을 추가해준다.
+		if(strcmp($column,'mem_warn_1') == 0 || strcmp($column,'mem_warn_2') == 0 ){
+			$this->load->model('RS_main_config_model');
+			$_date = $this->RS_main_config_model->get_one('','',array('mcf_main' => 'Y'))['mcf_warningdate'];
+			// print_r($_date); exit;
+			$delete_date = date("Y-m-d H:i:s", strtotime("+".$_date." days"));
+			if($_date){
+				$insert_data = array(
+					'mdw_mem_id' => $mem_id,
+					'mdw_type'	=> $column,
+					'mdw_value' => $value,
+					'mdw_wdate'	=> date('Y-m-d H:i:s'),
+					'mdw_ddate' => $delete_date
+				);
+				$this->db->set($insert_data);
+				$this->db->insert('member_delete_warn');
+			}
+		}
+		//---------------------------------------------------
 		return true;
 	}
 
@@ -174,7 +192,25 @@ class Member_extra_vars_model extends CB_Model
 		$this->db->where($this->meta_key, $column);
 		$data = array($this->meta_value => $value);
 		$this->db->update($this->_table, $data);
-
+		//meta data가 경고인 경우 자동 경감을 추가해준다.
+		if(strcmp($column == 'mem_warn_1') == 0 || strcmp($column == 'mem_warn_2') == 0 ){
+			$this->load->model('RS_main_config_model');
+			$_date = $this->RS_main_config_model->get_one('','',array('mcf_main' => 'Y'))['mcf_warningdate'];
+			// print_r($_date); exit;
+			$delete_date = date("Y-m-d H:i:s", strtotime("+".$_date." days"));
+			if($_date){
+				$insert_data = array(
+					'mdw_mem_id' => $mem_id,
+					'mdw_type'	=> $column,
+					'mdw_value' => $value,
+					'mdw_wdate'	=> date('Y-m-d H:i:s'),
+					'mdw_ddate' => $delete_date
+				);
+				$this->db->set($insert_data);
+				$this->db->insert('member_delete_warn');
+			}
+		}
+		//---------------------------------------------------
 		return true;
 	}
 }

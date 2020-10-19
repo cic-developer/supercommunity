@@ -156,7 +156,7 @@ $lang[4] ='<h4>3. PER Token Project</h4>
         In this structure, the toad is essential to the operation of the platform. The transactions documented in the block chain are paid by advertisers, ensuring reliability of the platform. 
         SUPER COMMUNITY loses control of the token distributed to the user, making the points attributed to the user better asset value. That&#39;s a lot more participants. 
         I can make it. As the ecosystem expands, the value of PER tokens increases due to the principle of supply and demand. In the long run, tokens have a certain level of value and are actively used. 
-        Rewards for advertising activities can be easily obtained oldspan class="p_bold">"누"누/span>, and this token is immediately cashed in or as a good participation reward with many direct uses. 
+        Rewards for advertising activities can be easily obtained old, and this token is immediately cashed in or as a good participation reward with many direct uses. 
         The goal is to become a viral marketing company that makes every individual a marketer and the subject of advertising.<br><br>
         We are not competing with existing platform companies such as Facebook and YouTube, but rather, our ecosystem participants use existing platforms as tools to help expand our ecosystem. 
         it is.
@@ -266,7 +266,7 @@ $lang[17] ='  <h4>6. Lock-Up Policy</h4>
     <li>
         <p> With the current digital asset market, the market price of coins / tokens is an important part of the business&#39;s progress, and for this purpose, strict and transparent distribution management is required. 
             It should be accompanied. Any additional issuance of tokens, supply/dumping of distribution other than those specified in the white paper shall be prevented in advance, which shall include the SUPER COMMUNITY bylaws and initial token design. 
-            Force token lock-up in steps is enabled by grants.<br><<br>
+            Force token lock-up in steps is enabled by grants.<br><br>
             The purpose of this lock-up policy is to gradually increase the value of PER tokens in line with the expansion of the ecosystem and the increase in service sulphurization, thereby inducing more users to participate. 
             Compensated tokens will become increasingly self-rewarded viral marketing platforms, with SUPER COMMUNITY unable to control or interfere. 
         </p>
@@ -277,7 +277,7 @@ $lang[17] ='  <h4>6. Lock-Up Policy</h4>
     <li>
         <ul class="list">
             <li>
-                1.Advisor-allocated tokens are terminated 0.01% of lock-ups per month from the date of initial exchange listing. 
+                1. Advisor-allocated tokens are terminated 0.01% of lock-ups per month from the date of initial exchange listing. 
             </li>
             <li>
                 2. SUPER COMMUNITY Holding Token will be closed 0.01% of lock-up per month from the date of listing on the first exchange. (The lockup token is then used for the SUPER COMMUNITY operating funds and system development costs.)
@@ -293,7 +293,7 @@ $lang[17] ='  <h4>6. Lock-Up Policy</h4>
 <ul>';
 $lang[18] =' <h4>7. Road Map</h4>
 <ul>
-    <li class="img">>
+    <li class="img">
         <img src="https://dev.percommunity.com/assets/images/white016_en.jpg" alt="Figure16"/>
     </li>
 </ul>       ';//
@@ -302,7 +302,7 @@ $lang[21] ='Figure12';
 $lang[22] ='Figure13';
 $lang[23] ='Figure14';//토큰발행 이미지 alt끝//
 $lang['c_1'] ='ENG 준비중입니다.';//다운로드 버튼 알럿//
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';
 
 
 ?>

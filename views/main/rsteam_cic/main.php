@@ -73,7 +73,7 @@
                 <?=$csrf['name']?> : "<?=$csrf['hash']?>"
             },
             success : function(result){
-                if(result != false){
+                if(result){
                     $(".num").numScroll({
                         number: result,
                         symbol: true
@@ -84,7 +84,7 @@
     }, 10000);
 
 	$(".num").numScroll({
-      number:<?=$per_friends?>,
+      number:<?=$per_friends ? $per_friends : 0 ?>,
       symbol: true
 	});
 	

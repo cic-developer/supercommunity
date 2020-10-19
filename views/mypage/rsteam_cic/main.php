@@ -96,7 +96,7 @@
                         <span><b><?php echo $this->lang->line(10)?></b> <?php echo $this->lang->line(11)?></span>
                         <div class="my_cont">
 							<input type="text" value="<?php echo $_is_auth ? $_wallet_addr : '-'?>" id="wallet_addr" name="wallet_addr" style="width:400px" readonly="readonly"/>
-							<input type="button" id="basic" class="btn2 btn_black" value="<?php echo $_is_auth? $this->lang->line(12): $this->lang->line(13)?>"/> <!--지갑주소가 입력되면 '지갑주소수정'으로 문구 변경-->
+							<input type="button" id="basic" class="btn2 btn_black" value="<?php echo $_is_auth? $this->lang->line(12): $this->lang->line(13)?>" /> <!--지갑주소가 입력되면 '지갑주소수정'으로 문구 변경-->
                         </div>
                     </li>
                     <li>
@@ -145,17 +145,23 @@
     var auth_id2 = 0;
     var auth_email = '';
     var auth_email2= '';
-
+    $(document).on("change keyup input", "#certyfy_string", function(){
+        $(this).val( $(this).val().replace(/[^0-9a-zA-Z]/g,"").substr(0,6) );
+    });
+    $(document).on("change keyup input", "#changeWallet", function(){
+        $(this).val( $(this).val().replace(/[^0-9a-zA-Z]/g,"") );
+    });
     <?php //지갑 주소 수정 버튼 클릭시 ?>
     $('#basic').on('click', function(){
+        //인증 코드를 받지 않은 경우에만
+        if(!$("#auth_hash").val()){
+            if(!confirm('<?php echo $this->lang->line(29); ?>')) return false;
+            sendEmail();
+        }
         // $('.popup_basic').modal({ keyboard: false, backdrop: 'static' });
         $('.popup_basic').lightlayer(
             // { escape: false }
         );
-        //인증 코드를 받지 않은 경우에만
-        if(!$("#auth_hash").val()){
-            sendEmail();
-        }
         
     });
     <?php //지갑 주소 수정 버튼 클릭시 끝 ?>

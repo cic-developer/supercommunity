@@ -25,4 +25,4 @@ $lang['controller_3'] = 'Media Name';
 $lang['controller_4'] = 'Reasons for application';
 $lang['controller_5'] = 'Access to invalid media.';
 $lang['controller_6'] = 'An error has occurred. Please try again';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

@@ -11,4 +11,4 @@ $lang[6] = 'Title';
 $lang[7] = 'Please enter the title of the note';
 $lang[8] = 'Attached file';
 $lang[9] = 'Send';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

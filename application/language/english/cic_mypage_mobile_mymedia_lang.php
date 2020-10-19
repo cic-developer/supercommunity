@@ -13,5 +13,5 @@ $lang[8] = 'Refused';
 $lang[9] = 'Add media';
 $lang['controller_0'] = 'Media was deleted.';
 $lang['controller_1'] = 'Error occur in Media deletion.';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';
 $lang['deleteMedia'] = 'Are you sure delete Media?';

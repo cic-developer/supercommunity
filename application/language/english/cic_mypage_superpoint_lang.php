@@ -9,4 +9,4 @@ $lang[4] = 'When the influence of your own media expands, You can apply for a <b
 $lang[5] = 'Review criteria are based on company policy.';
 $lang[6] = 'MY SUPER POINT';
 $lang[7] = 'Media Review Request';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

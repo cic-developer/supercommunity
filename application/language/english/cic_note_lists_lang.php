@@ -15,4 +15,4 @@ $lang[10] = 'Not yet read';
 $lang[11] = 'Delete';
 $lang[12] = 'No note';
 $lang[13] = 'Close';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

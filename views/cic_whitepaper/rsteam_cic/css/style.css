@@ -53,8 +53,10 @@
 	font-size: 18px;
 	font-weight: 300;
 	color:#333;
-	line-height:27px;
+	line-height:1.8;
 	display: block;
+	text-align: justify;
+
 }
 
 
@@ -71,7 +73,7 @@
 	font-weight: 300;
 	font-size: 18px;
 	color:#999;
-	line-height:27px;
+	line-height:1.8;
 	display: inline-block;
 }
 
@@ -85,11 +87,13 @@
 #white_wrap .white_content .text_g li{
 	padding-bottom:30px;
 	display: block;
+	line-height: 1.7;
 }
 
 #white_wrap .white_content .text_g li .list{
 	display: block;
 	padding-top:5px;
+	line-height: 1.8;
 	
 }
 
@@ -99,6 +103,7 @@
 	color:#999;
 	font-weight: 400;
 	padding-bottom: 15px;
+	line-height: 1.7;
 }
 
 
@@ -111,6 +116,7 @@
 	padding-bottom:20px;
 	color:#333;
 	display: block;
+	line-height: 1.7;
 	
 }
 

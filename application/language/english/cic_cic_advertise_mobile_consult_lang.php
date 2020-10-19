@@ -11,7 +11,7 @@ $lang[6] = 'Contact number '; //연락처 placeholder
 $lang[7] = 'How can I help you? ';   //문의내용
 $lang[8] = 'Enter your inquiry '; //문의내용 placeholder
 $lang[9] = 'I agree with the collection of personal information. ';    //개인정보 수집 동의 체크박스
-$lang[10] = 'submission';   //문의 제출 버튼
+$lang[10] = 'submit';   //문의 제출 버튼
 $lang[11] = 'Check the recaptha';
 $lang[12] = 'Name ';   // validation 이름
 $lang[13] = 'Workplace, Group Name ';// validation 
@@ -22,7 +22,12 @@ $lang[17] = 'Privacy Policy';  // validation
 $lang[18] = 'Inquiry authentication error occurred';    //문의 등록 에러
 $lang[19] = 'Inquiry registration completed'; //문의 등록 성공
 $lang[20] = 'error occurrence'; //문의 등록 에러
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang[21] = '"Name" field is required';
+$lang[22] = '"Workplace, Group Name" field is required';
+$lang[23] = '"Email" field is required';
+$lang[24] = '"Inquiries" field must be more than 10 letters';
+$lang[25] = '"Privacy Policy" agreement is required';
+$lang['require_login'] = 'This service requires login.';
 
 
 

@@ -3,7 +3,8 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
 ?>
 
 <!-- 구글 reCAPTCHA 적용하기 위한 JS INSERT -->
-<script src='https://www.google.com/recaptcha/api.js'></script> 
+<?php $_lang = ($this->session->userdata('lang') == 'english') ? 'en' : 'ko'?>
+<script src='https://www.google.com/recaptcha/api.js?hl=<?php echo $_lang?>'></script> 
 <!-- 구글 reCAPTCHA 적용하기 위한 JS INSERT -->
 <?php
     $csrf = array(
@@ -63,21 +64,21 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
     $("#is_submit").click(function(){
         //이름 필수
         if($('input[name=inq_name]').val() === ''){
-            alert('"이름 항목은 필수 입력입니다.');
+            alert('<?php echo $this->lang->line(21); ?>');
             $('input[name=inq_name]').focus();
             return false;
         }
 
         //직장/단체명 필수
         if($('input[name=inq_group]').val() === ''){
-            alert('"직장/단체명은 필수 입력입니다.');
+            alert('<?php echo $this->lang->line(22); ?>');
             $('input[name=inq_group]').focus();
             return false;
         }
 
         //이메일 필수
         if($('input[name=inq_email]').val() === '' || !validateEmail($('input[name=inq_email]').val())){
-            alert('이메일 항목은 필수 입력입니다.');
+            alert('<?php echo $this->lang->line(23); ?>');
             $('input[name=inq_email]').focus();
             return false;
         }
@@ -87,22 +88,22 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
         let tel3 = trim($("#tel3").val());
         $("#inq_tel").val(tel1+'-'+tel2+'-'+tel3);
         //전화번호 입력 필수
-        if($('#inq_tel').val() === '' || $('#inq_tel').val().length <3){
-            alert('"전화번호 항목은 3자 이상 입력하셔야합니다.');
-            $('#tel2').focus();
-            return false;
-        }
+        // if($('#inq_tel').val() === '' || $('#inq_tel').val().length <3){
+        //     alert('"전화번호 항목은 3자 이상 입력하셔야합니다.');
+        //     $('#tel2').focus();
+        //     return false;
+        // }
 
         //문의내용 항목 필수
         if($('textarea[name=inq_contents]').val() === '' || $('textarea[name=inq_contents]').val().length < 10){
-            alert('문의 내용 항목은 10자 이상 입력하셔야합니다.');
+            alert('<?php echo $this->lang->line(24); ?>');
             $('textarea[name=inq_contents]').focus();
             return false;
         }
 
         //개인정보처리방침 필수
         if(!$('input[name=inq_agree]').is(":checked")){
-            alert('개인정보 처리방침 항목은 필수 입력입니다.');
+            alert('<?php echo $this->lang->line(25); ?>');
             $('input[name=inq_agree]').focus();
             return false;
         }

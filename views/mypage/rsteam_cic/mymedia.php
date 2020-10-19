@@ -11,10 +11,10 @@
                 <h6><?=$this->lang->line(1)?></h6>
                 <table cellpadding="0" class="list_table" cellspacing="0" width="100%">
                     <colgroup> <!--칸의 width조절을 여기서해-->
-                      <col width="15%">
+                      <col width="16%">
                       <col width="15%">
                       <col width="*">
-                      <col width="18%">
+                      <col width="17%">
                       <col width="15%">
                     </colgroup>
                     <tr>

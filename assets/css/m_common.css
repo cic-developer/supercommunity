@@ -133,14 +133,20 @@ input:read-only, textarea:read-only {
 #mypage #my_right_box h6 {font-size: 18px; font-weight:500; padding: 15px; box-sizing: border-box; border:1px dashed #ddd; margin-top:15px; background:#fcfcfc;}
 #mypage #my_right_box h6 small {display: block; padding: 8px; font-size: 13px; line-height: 1.4; color:#f36262; font-weight:400; }
 
+/**미션신청 노티 알림 정의**/
+#mypage #my_right_box h6.apply_head small {display: block; font-size: 12px; color: #888; font-weight: normal; line-height: 1.5; word-break:break-word;}
+#mypage #my_right_box h6.apply_head small b {display: block; font-weight: 500; color:#f36262;}
+
 
 /************모바일 테이블 정의*************/
-ul.mob_list_table {width: 100%;}
-ul.mob_list_table li {width: 100%; color: #2a2a2a; padding:20px 20px 0; box-sizing: border-box; background: #fcfcfc; border:1px solid #ccc; margin-top: 15px; border-radius: 15px;}
+ul.mob_list_table {width: 100%; overflow: hidden;}
+ul.mob_list_table li {position: relative; width: 100%; color: #2a2a2a; padding:20px 20px 0; box-sizing: border-box; background: #fcfcfc; border:1px solid #ccc; margin-top: 15px; border-radius: 15px;}
+ul.mob_list_table li u.state {border:none; top:-13px; border-radius: 5px; right:25px; position: absolute; z-index: 8;  display: block;  color:#fff; border: 0;  padding:7px; font-weight: 500;font-size: 12px; text-align: center; background: #6e6e6e; text-decoration: none; }
 ul.mob_list_table li.nothing {text-align: center; padding: 25px 0; font-size: 15px;}
 ul.mob_list_table li dl{width: 100%;}
 ul.mob_list_table li dl dt {font-size:16px; font-weight: 600; margin-bottom: 8px; line-height: 1.4;}
 ul.mob_list_table li dl dd {padding: 8px 0; line-height: 1.4;; border-bottom: 1px solid #ddd; font-weight: normal; overflow: hidden;}
+ul.mob_list_table li dl dd #post_url{padding:5px; border:solid 1px #ddd; outline: none; width: 63%; background-color: #fff;}
 ul.mob_list_table li dl dd span {float: left;  width: 28%; margin-right: 10px; text-align: left;}
 ul.mob_list_table li dl dd a {width: 65%; word-break: break-all; display: block; float: left; color: #888;}
 ul.mob_list_table li .table_bottom {width: 100%; padding: 15px 0;}

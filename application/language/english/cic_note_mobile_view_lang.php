@@ -9,4 +9,4 @@ $lang[4] = 'Previous';
 $lang[5] = 'write note';
 $lang[6] = 'Reply';
 $lang[7] = 'Close';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

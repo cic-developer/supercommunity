@@ -241,10 +241,10 @@
 $(function() {
 	$('#fadminwrite').validate({
 		rules: {
-			mem_userid: { required: true, minlength:3, maxlength:20 },
+			mem_userid: { required: true, minlength:3, maxlength:40 },
 			mem_username: {minlength:2, maxlength:20 },
 			mem_nickname: {required :true, minlength:2, maxlength:20 },
-			mem_email: {required :true, email:true },
+			mem_email: { email:true },
 			mem_password: {minlength :4 }
 		}
 	});

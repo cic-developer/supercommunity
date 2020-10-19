@@ -1,3 +1,17 @@
+<?php 
+	function display_warn($mem_id){
+		$CI =& get_instance();
+		$all_extra = $CI->Member_extra_vars_model->get('','', array('mem_id' => $mem_id));
+		foreach($all_extra AS $extra){
+			if(  $extra['mev_key'] == 'mem_warn_1' ||  $extra['mev_key'] == 'mem_warn_2' ){
+				if($extra['mev_value']){
+					echo '<span class="label label-danger" style="margin-left:10px;">경고</span>';
+					return;
+				}
+			}
+		}
+	}
+?>
 <div class="box">
 	<div class="box-table">
 		<?php
@@ -74,7 +88,10 @@
 							</td>
 							<td><img class="img_modal" src="<?php echo thumb_url('judge', element('jud_attach', $result), 200, 160); ?>" alt="제출이미지" title="제출이미지" style="cursor:pointer;" data-img="<?=thumb_url('judge', element('jud_attach', $result), 800, 600)?>"/></td>
 							<td><?php echo rs_get_state(element('jud_state', $result)); ?></td>
-							<td><?php echo element('display_name', $result); ?></td>
+							<td>
+								<?php echo element('display_name', $result); ?>
+								<?php display_warn(element('mem_id' ,element('member',$result)))?>
+							</td>
 							<td><?php echo display_datetime(element('jud_wdate', $result), 'user','Y-m-d'); ?><br/><?php echo display_datetime(element('jud_wdate', $result), 'user','H:i:s'); ?></td>
 							<!-- <td><a class="btn btn-outline btn-default btn-xs" <?=element('jud_state', $result)!=1 ? 'disabled' : ''?>><?=element('jud_state', $result)!=1 ? rs_get_state(element('jud_state', $result)) : '승인'?></a></td> -->
 							<td><a href="<?php echo admin_url($this->pagedir); ?>/detail/<?php echo element(element('primary_key', $view), $result); ?>?<?php echo $this->input->server('QUERY_STRING', null, ''); ?>" class="btn btn-outline btn-default btn-xs">자세히</a></td>

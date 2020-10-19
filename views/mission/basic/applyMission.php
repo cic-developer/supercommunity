@@ -30,7 +30,7 @@
 foreach($medList AS $ml){ 
     $media_check = ($ml['jud_state'] == 1 || $ml['jud_state'] == 3); //해당 미디어가 미션 심사 진행 또는 완료된 미디어인지 체크
     $media_comp_check =  ($ml['jud_state'] == 3);
-    $expected_point = rs_cal_expected_point($missionData['mis_per_token'], $ml['med_superpoint'], ($media_check)? $total_super - $ml['med_superpoint'] : $total_super); //예상 지급 토큰값
+    $expected_point = rs_cal_expected_point2($missionData['mis_per_token'], $missionData['mis_max_point'], $ml['med_superpoint'], $ml); //예상 지급 토큰값
 ?>
             <tr>
                 <td><?=$ml['med_name']?></td>

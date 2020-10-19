@@ -159,16 +159,24 @@
     var auth_email = '';
     var auth_email2= '';
 
+    $(document).on("change keyup input", "#certyfy_string", function(){
+        $(this).val( $(this).val().replace(/[^0-9a-zA-Z]/g,"").substr(0,6) );
+    });
+    $(document).on("change keyup input", "#changeWallet", function(){
+        $(this).val( $(this).val().replace(/[^0-9a-zA-Z]/g,"") );
+    });
+
     <?php //지갑 주소 수정 버튼 클릭시 ?>
     $('#basic').on('click', function(){
         // $('.popup_basic').modal({ keyboard: false, backdrop: 'static' });
+        //인증 코드를 받지 않은 경우에만
+        if(!$("#auth_hash").val()){
+            if(!confirm('<?php echo $this->lang->line(29); ?>')) return false;
+            sendEmail();
+        }
         $('.popup_basic').lightlayer(
             //{ escape: false }
         );
-        //인증 코드를 받지 않은 경우에만
-        if(!$("#auth_hash").val()){
-            sendEmail();
-        }
     });
     <?php //지갑 주소 수정 버튼 클릭시 끝 ?>
     

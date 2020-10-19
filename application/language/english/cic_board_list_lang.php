@@ -14,4 +14,4 @@ $lang[9] = 'Announcement';
 $lang[10] = 'There is no post';
 $lang[11] = 'List';
 $lang[12] = 'Search list';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

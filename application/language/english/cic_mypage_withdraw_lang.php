@@ -28,4 +28,4 @@ $lang['controller_3'] = 'Approved';
 $lang['controller_4'] = 'Payment Completed';
 $lang['ajax_0'] = 'Your withdrawal request has been completed.';
 $lang['ajax_1'] = 'An error occurred while requesting withdrawal.';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

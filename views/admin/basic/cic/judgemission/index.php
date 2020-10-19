@@ -1,3 +1,17 @@
+<?php 
+	function display_warn($mem_id){
+		$CI =& get_instance();
+		$all_extra = $CI->Member_extra_vars_model->get('','', array('mem_id' => $mem_id));
+		foreach($all_extra AS $extra){
+			if(  $extra['mev_key'] == 'mem_warn_1' ||  $extra['mev_key'] == 'mem_warn_2' ){
+				if($extra['mev_value']){
+					echo '<span class="label label-danger" style="margin-left:10px;">경고</span>';
+					return;
+				}
+			}
+		}
+	}
+?>
 <div class="box">
 	<div class="box-table">
 		<?php
@@ -65,7 +79,10 @@
 							<td><a href="<?php echo element('jud_med_url', $result); ?>" target="_blank"><?php echo mb_strlen(element('jud_med_url', $result)) > 15 ? mb_substr(element('jud_med_url', $result),0,15).'...' : element('jud_med_url', $result); ?></a></td>
 							<td><img class="img_modal" src="<?php echo thumb_url('judge', element('jud_attach', $result), 200, 160); ?>" alt="제출이미지" title="제출이미지" style="cursor:pointer;" data-img="<?=thumb_url('judge', element('jud_attach', $result), 800, 600)?>"/></td>
 							<td><?php echo rs_get_state(element('jud_state', $result)); ?></td>
-							<td><?php echo element('display_name', $result); ?></td>
+							<td>
+								<?php echo element('display_name', $result); ?>
+								<?php display_warn( element('mem_id', $result['member']) )?>
+							</td>
 							<td><?php echo display_datetime(element('jud_wdate', $result), 'user', 'Y-m-d'); ?><br/><?php echo display_datetime(element('jud_wdate', $result), 'user', 'H:i:s'); ?></td>
 							<td>
 							<?php 
@@ -89,10 +106,12 @@
 									data-userid="<?php echo element('mem_userid',element('member', $result)); ?>" 
 									data-nickname="<?php echo element('jud_mem_nickname', $result); ?>" 
 									data-superfriend="<?php echo element('is_superfriend',$result); ?>"
-									data-point="<?php echo (element('mis_per_token', $result)*element('med_superpoint', $result)/(element('mip_tpoint', $result)===0? 1 : element('mip_tpoint', $result))); ?>"
+									data-point="<?php echo rs_cal_expected_point2(element('mis_per_token', $result), element('mis_max_point', $result), element('med_superpoint', $result), $result)?>"
+									data-superpoint="<?php echo element('med_superpoint',$result)?>"
 								>
 									포인트 지급
 								</a>
+						
 							<?php
 										} else {
 							?>
@@ -225,7 +244,19 @@
 								</div>
 							</div>
 						</div>
-						
+
+						<!-- Text input-->
+
+						<div class="form-group">
+							<label class="col-md-4 control-label" >신청 미디어 super point</label> 
+							<div class="col-md-4 inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+									<input name="gp_mediasuper" placeholder="로딩중" class="form-control"  type="text" readonly style="background-color:#ffffff;">
+								</div>
+							</div>
+						</div>
+
 						<!-- Text input-->
 						<div class="form-group">
 							<label class="col-md-4 control-label">예상 지급 퍼포인트</label>  
@@ -313,6 +344,7 @@ $(document).on('click', '.give_point', function(){
 	$("#pointModal .modal-body input[name=gp_userid]").val($(this).attr('data-userid'));
 	$("#pointModal .modal-body input[name=gp_expectpoint]").val(Number($(this).attr('data-point')).toLocaleString('en', {maximumFractionDigits: 1}));
 	$("#pointModal .modal-body input[name=gp_givepoint]").val(Number($(this).attr('data-point')).toLocaleString('en', {maximumFractionDigits: 1}));
+	$("#pointModal .modal-body input[name=gp_mediasuper]").val(Number($(this).attr('data-superpoint')).toLocaleString('en', {maximumFractionDigits: 1}));
 	$("#pointModal").modal({
 		backdrop:false
 	});

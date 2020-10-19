@@ -39,9 +39,15 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">관리용 메모</label>
+				<label class="col-sm-2 control-label">사용자 안내 메모</label>
 				<div class="col-sm-10">
 					<textarea class="form-control" rows="5" name="wht_memo"><?php echo set_value('wht_memo', element('wht_memo', element('data', $view))); ?></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">사용자 안내 메모(영문)</label>
+				<div class="col-sm-10">
+					<textarea class="form-control" rows="5" name="wht_memo_en"><?php echo set_value('wht_memo_en', element('wht_memo_en', element('data', $view))); ?></textarea>
 				</div>
 			</div>
 			<div class="btn-group pull-right" role="group" aria-label="...">

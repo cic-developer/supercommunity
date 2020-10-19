@@ -55,11 +55,11 @@ $lang[2]='<div class="area_cont">
 $lang[3]='<div class="area_cont">
 <h4 class="tit_policy">3. Processing and retention period of personal information</h4>
 <p class="desc_g">The company processes the user\'s personal information only during the period for achieving the purpose, and when the purpose of processing is achieved, the user\'s personal information is destroyed without delay. However, in the following cases, we save and destroy <br> separately.</p>
-<p class="desc_g_n">1. <span class="em_g">Data is kept for three months after reviewing the proposed partnership. After that, the information is destroyed without delay.</span></p>
-<p class="desc_g_n">2. <span class="em_g">Personal information will be destroyed after being kept for one year from the date of withdrawal for identification and limiting duplicate mission support.</span>
-<br>(However, it is safely converted so that the original value cannot be determined, and is used only in the form of comparison.)</p>
-<p class="desc_g_n">3.  <span class="em_g">The information allowed to be kept under the Personal Information Act shall be kept for the period specified by the Act.</span>
-<br>(However, if a separate agreement is obtained, personal information can be processed and retained within the agreed personal information purpose/use period.)</p>
+<p class="desc_g_n">1. Data is kept for three months after reviewing the proposed partnership. After that, the information is destroyed without delay.</p>
+<p class="desc_g_n">2. Personal information will be destroyed after being kept for one year from the date of withdrawal for identification and limiting duplicate mission support.
+(However, it is safely converted so that the original value cannot be determined, and is used only in the form of comparison.)</p>
+<p class="desc_g_n">3. The information allowed to be kept under the Personal Information Act shall be kept for the period specified by the Act.
+(However, if a separate agreement is obtained, personal information can be processed and retained within the agreed personal information purpose/use period.)</p>
 <ul class="list_2depth_type1">
     <li>
       <h5>
@@ -117,8 +117,8 @@ We also manage and supervise the entrusted companies to ensure that they do not 
 $lang[5]='<div class="area_cont">
 <h4 class="tit_policy">5. third party provision of personal information</h4>
 <p class="desc_g">In principle, the company does not provide the user\'s personal information to third parties without consent under the statutes, except in the following cases.</p>
-<p class="desc_g_n">1. <span class="em_g">Where prior consent is obtained from the user in accordance with the statutes</span></p>
-<p class="desc_g_n">2. <span class="em_g">in the case of other statutes</span></p>
+<p class="desc_g_n">1. Where prior consent is obtained from the user in accordance with the statutes</p>
+<p class="desc_g_n">2. in the case of other statutes</p>
 </div>';
 $lang[6]='<div class="area_cont">
 <h4 class="tit_policy">6. Procedure and method of destruction of personal information</h4>
@@ -138,7 +138,7 @@ $lang[7]='<div class="area_cont">
 </div>';
 $lang[8]='<div class="area_cont">
 <h4 class="tit_policy">8. Matters concerning the installation, operation, and rejection of automatic collection of personal information.</h4>
-<p class="desc_g">Cookies are installed and operated, and users can reject them.<br>
+<p class="desc_g">Cookies are installed and operated, and users can reject them.
 Cookies are used to help users use websites faster and more conveniently and to provide customized services.</p>
 <strong class="tit_subject2">1. What is a cookie?</strong>
 <p class="desc_g">A cookie is a very small text file sent to your browser by the server used to run the website and is stored on your computer.</p>
@@ -179,6 +179,6 @@ $lang[9]='<div class="area_cont">
   </li>
 </ul>
 </div>';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';
 
 ?>

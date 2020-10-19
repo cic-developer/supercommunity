@@ -35,16 +35,59 @@ if ( ! function_exists('rs_get_state')) {
 	}
 }
 
-if( ! function_exists('rs_cal_expected_point')){
-  function rs_cal_expected_point($mis_per_token, $med_superpoint, $total_super = 0){
-    // echo "mis_per_token : ". $mis_per_token;
-    // echo "med_superpoint : ".$med_superpoint;
-    // echo "total_super : ".$total_super;
-    // exit;
-    $max_total = $mis_per_token*($med_superpoint/($total_super + $med_superpoint));
-    if($max_total > $med_superpoint){
-      return $med_superpoint;
+if( ! function_exists('rs_cal_expected_point2')){
+  function rs_cal_expected_point($mis_per_token, $med_superpoint, $total_super, $jud_data){
+    switch($jud_data['jud_state']){
+      case 0 :
+        if(isset($jud_data['jud_state'])){
+          $max_total = 0;
+          // var_dump($jud_data['jud_state']);
+          // exit;
+        }else{
+          $max_total = $mis_per_token * ($med_superpoint/($total_super + $med_superpoint));
+          if($max_total > $med_superpoint){
+            $max_total = $med_superpoint;
+          }
+        }
+      break;
+      case 1 :
+      case 3 :
+        if($total_super <= 0){ //아무도 신청 안한경우 무한대가 되니까
+          $total_super = 1; //1로 변경
+        }
+        $max_total = $mis_per_token * ($med_superpoint / $total_super);
+        if($max_total > $med_superpoint){
+          $max_total = $med_superpoint;
+        }
+      break;
+      case 5 :
+        $max_total = $jud_data['jud_point']; //지급 완료인 경우
+      break;
     }
+    
+    return $max_total;
+  }
+}
+
+if( ! function_exists('rs_cal_expected_point2')){
+  function rs_cal_expected_point2($mis_per_token, $mis_max_point, $med_superpoint, $jud_data){
+    switch($jud_data['jud_state']){
+      case 0 :
+        if(isset($jud_data['jud_state'])){
+          $max_total = 0;
+        }else{
+          $max_total = $med_superpoint*($mis_per_token/$mis_max_point);
+        }
+      break;
+      case 1 :
+      case 3 :
+        $max_total = $med_superpoint*($mis_per_token/$mis_max_point);
+      break;
+      case 5 :
+        $max_total = $jud_data['jud_point']; //지급 완료인 경우
+      break;
+    }
+    
     return $max_total;
   }
 }

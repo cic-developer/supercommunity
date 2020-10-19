@@ -6,4 +6,4 @@ $lang[1] = 'List';
 $lang[2] = 'Search list';
 $lang[3] = 'Previous';
 $lang[4] = 'Next';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

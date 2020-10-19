@@ -14,7 +14,7 @@ The mission will end when all the reward tokens assigned for the mission comes t
 PER points given as a reward for the mission will be distributed from the exclusive wallet for rewards, and 100 million PER points will always be deposited in the wallet. ';
 $lang[7] = '<b>3</b>. Please check before practice! ';
 $lang[8] = 'In case of a fraudulent act found in the process of point acquisition, the account may be disadvantaged such as, suspension of account and recall of existing points. 
-<br><span class="gray">*Various abusing actions such as, impersonating as a platform administrator, manipulating the number of people, and immediately deleting posts.)</span><br>
+<br><span class="gray">(Various abusing actions such as, impersonating as a platform administrator, manipulating the number of people, and immediately deleting posts.)</span><br>
 In a non-posting form of media that does not require posts of postings or videos such as, open chat room type real-time chat communication, there should be a verification and mentioning to the topic of the meeting. This policy may change depending on the progress of the business. ';
 $lang[9] = 'Start Now';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

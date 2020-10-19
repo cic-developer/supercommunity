@@ -12,6 +12,8 @@
     color:#000;
     display: block;
     margin-top:50px;
+    line-height: 1.5;
+    word-break: break-word;
 }
 
 
@@ -20,7 +22,8 @@
     color:#999999;
 	display: block;
     padding-top:35px;
-    line-height: 1.5;
+    line-height: 1.7;
+    word-break: break-word;
 }
 
 /*오늘의샤우팅과 미션어쩌구 회색텍스트 끝*/
@@ -563,7 +566,7 @@
 /*************제이쿼리 타이머 퍼샤우팅*****************/
 
 /************미션상세 타임바******************/
-#time_btn_bar {margin-top:0px!important; display: none; width: 100%; padding: 20px 0!important; position: fixed; bottom:0; background:rgb(250,185,8,0.9); z-index:999;}
+#time_btn_bar {margin-top:0px!important; display: none; width: 100%; padding: 20px 0!important; position: fixed; bottom:0; background:rgb(250,185,8,0.9); z-index:998;}
 #time_btn_bar .time_bar_cont {width: 90%; margin:0 auto; overflow:hidden;}
 #time_btn_bar .time_bar_cont .btn1 {float:right;     padding: 0px 15px}
 #time_btn_bar .time_bar_cont p.m_txt {width: 47%; float: left; font-weight: 500; margin-top: 13px; font-size: 1.4em; color:#fff; border-bottom: 1px solid #fff; padding-bottom: 8px; text-align: center;}

@@ -1,15 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 // PER 광고 컨설팅 문의
-$lang[0] = '<h2>The Shouting Keyword for Today</h2><p>The mission is accepted in order of application and ends at time-out. If there are fewer final participants, the participants will be able to receive more points. </p>';  //상단 문자
+$lang[0] = '<h2>The Shouting Keyword for Today</h2><p>The mission is accepted in order of application and ends at time-out.If there are fewer final participants, the participants will be able to receive more points. </p>';  //상단 문자
 $lang[1] = 'Enter search terms.'; //검색어 placeholder
 $lang[2] = 'General';   //미션 상태 분류
 $lang[3] = 'Progress'; //미션 상태 분류
 $lang[4] = 'Closed';   //미션 상태 분류
-$lang[5] = 'Planed';   //미션 상태 분류
+$lang[5] = 'planned';   //미션 상태 분류
 $lang[6] = 'Point Icon';//
 $lang['c_1'] = 'Closed';   //미션 상태 표시
-$lang['c_2'] = 'Planed';   //미션 상태 표시
+$lang['c_2'] = 'planned';   //미션 상태 표시
 $lang['c_3'] = 'Process';   //미션 상태 표시
 $lang[''] = '공개 예정중인 미션입니다. \n PER SHOUTING 메뉴로 돌아갑니다.';  //미션예정 진입시
 $lang[] =''; 
@@ -18,7 +18,7 @@ $lang[] = '';
 $lang[] = '';
 $lang[] = '';
 $lang[] = '';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';
 $lang[] = '';
 $lang[] = '';
 $lang[] = '';

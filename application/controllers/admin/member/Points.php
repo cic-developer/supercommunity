@@ -93,7 +93,7 @@ class Points extends CB_Controller
 				$result['list'][$key]['num'] = $list_num--;
 			}
 		}
-
+		$result['total_point'] = $this->{$this->modelname}->get_all_point_sum();
 		$view['view']['data'] = $result;
 
 		/**

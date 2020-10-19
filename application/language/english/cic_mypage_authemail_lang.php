@@ -9,4 +9,4 @@ $lang[4] = '.';
 $lang[5] = 'Thank you.';
 $lang['ajax_0'] = 'Per Community Wallet Address Authentication number.';
 $lang['ajax_1'] = 'Per Community Email Authentication number.';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

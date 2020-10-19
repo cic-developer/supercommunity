@@ -11,4 +11,4 @@ $lang[6] = 'You can apply for a <b>review of the SUPER POINT media</b>'; // '<b>
 $lang[7] = 'Review criteria are based on company policy.';
 $lang[8] = 'MY SUPER POINT';
 $lang[9] = 'Media Review Request';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

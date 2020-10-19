@@ -58,6 +58,7 @@ var cb_board_url = <?php echo ( isset($view) && element('board_key', $view)) ? '
 var cb_device_type = "<?php echo $this->cbconfig->get_device_type() === 'mobile' ? 'mobile' : 'desktop' ?>";
 var cb_csrf_hash = "<?php echo $this->security->get_csrf_hash(); ?>";
 var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
+var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 </script>
 <!--[if lt IE 9]>
 <script type="text/javascript" src="<?php echo base_url('assets/js/html5shiv.min.js'); ?>"></script>

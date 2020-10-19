@@ -21,6 +21,7 @@
 	overflow: hidden;
 	padding-left: 20px;
 	padding-right: 20px;
+	margin-bottom: 30px;
 	
 	
 }
@@ -38,7 +39,6 @@
 	margin: 0 auto;
 	display: block;
 	margin-bottom: 50px;
-	margin-top:60px;
 }
 
 
@@ -88,27 +88,29 @@
 	display: block;
 	padding-bottom: 25px;
 	margin: 0 auto;
-	padding-left: 55px;
-	padding-right: 55px;
+
 
 }
 
 #login_wrap .right ul li a{
 	display: block;
-	width:100%;
+	width:50%;
 	overflow: auto;
 	border-radius: 10px;
 	text-transform: uppercase;
 	text-align: center;
 	padding-bottom: 10px;
+	margin:0 auto;
+
 }
 
 #login_wrap .right ul li a img{
 	display: block;
 	padding-top:10px;
-	padding-left:11px ;
-	padding-right:2px ;
+	padding-left:19px ;
+	padding-right:10px ;
 	float: left;
+
 	
 }
 
@@ -120,7 +122,7 @@
 	font-weight: 500;
 	float: left;
 	padding-top:13px;
-	padding-left: 15%;
+
 	box-sizing: border-box;
 	
 }

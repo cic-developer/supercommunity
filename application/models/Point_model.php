@@ -53,6 +53,14 @@ class Point_model extends CB_Model
 		return $result['poi_point'];
 	}
 
+	public function get_all_point_sum()
+	{
+		$this->db->select_sum('poi_point');
+		$result = $this->db->get('point');
+		$result = $result->row_array();
+
+		return $result['poi_point'];
+	}
 
 	public function point_ranking_all($limit = '')
 	{

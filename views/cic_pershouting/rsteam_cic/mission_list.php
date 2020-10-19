@@ -58,6 +58,7 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
                         $state = 'lock';
                         $start_day = time();
                         $end_day = strtotime(element('mis_opendate',$d));
+                        $realterm = strtotime(element('mis_enddate',$d)) - strtotime(element('mis_opendate',$d));
                     break;
                     case $this->lang->line('c_1') :
                         $state = false;
@@ -82,8 +83,10 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
                         <?php
                             $countdown_on = ($d['state'] == $this->lang->line('c_2') || $d['mis_endtype'] == '1' || $d['mis_endtype'] == '2') && $d['state'] != $this->lang->line('c_1');
                                             //오픈예정이거나                            마감형식이 날짜를 활용하는 경우 이고,                    //상태가 마감이 아닌 경우 카운트다운 사용
+                            if($d['state'] == $this->lang->line('c_2')){
+                                //오픈예정의 경우
                         ?>
-                            <h1 class='timer <?php echo $countdown_on ? 'countdown' : ''; ?>' data-fixTime='{"Seconds": "<?php echo $end_day-$start_day; ?>"}' data-isend="<?php echo $d['state'] == $this->lang->line('c_1') ? 'true' : 'false'; ?>" data-endText='미션마감' data-page="list">
+                            <h1 class='timer <?php echo $countdown_on ? 'countdown' : ''; ?>' data-state="planned" data-fixTime='{"Seconds": "<?php echo $end_day-$start_day; ?>"}' data-realTerm='{"Seconds": "<?php echo $realterm; ?>"}' data-isend="false" data-processText='<?php echo $this->lang->line('c_3') ?>' data-endText='<?php echo $this->lang->line('c_1') ?>' data-hidden="<?php echo $d['mis_per_token']; ?>" data-page="list">
                                 <div class="running">
                                     <timer>
                                         <span class="days">00</span>:<span class="hours">00</span>:<span class="minutes">00</span>:<span class="seconds">00</span>
@@ -91,6 +94,21 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
                                 </div>
                             </h1>
                             <section class='actions'></section>
+                        <?php
+                            } else {
+                                //진행중인 경우
+                        ?>
+                            <h1 class='timer <?php echo $countdown_on ? 'countdown' : ''; ?>' data-state="process" data-fixTime='{"Seconds": "<?php echo $end_day-$start_day; ?>"}' data-isend="false" data-endText='<?php echo $this->lang->line('c_1') ?>' data-page="list">
+                                <div class="running">
+                                    <timer>
+                                        <span class="days">00</span>:<span class="hours">00</span>:<span class="minutes">00</span>:<span class="seconds">00</span>
+                                    </timer>
+                                </div>
+                            </h1>
+                            <section class='actions'></section>
+                        <?php
+                            }
+                        ?>
                         </div>   
                         <?php
                         }
@@ -140,7 +158,7 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
 </div>
 <!--//퍼샤우팅 shouting_all-->
 
-<script src="/assets/js/multi-countdown.js"></script>
+<script src="/assets/js/multi-countdown.js?ver=2"></script>
 <script>
     //미션 검색
     function searchShouting(state = false){

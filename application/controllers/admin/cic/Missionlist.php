@@ -213,9 +213,9 @@ class Missionlist extends CB_Controller
 		*/
 		$search_option = array(
 			'mis_title' => '제목',
-			'mis_content' => '본문',
+			// 'mis_content' => '본문',
 			'mis_per_token' => '지급 PER TOKEN',
-			'mis_max_point' => '최대 슈퍼포인트',
+			// 'mis_max_point' => '최대 슈퍼포인트',
 			'mis_wdate' => '날짜'
 		);
 		$view['view']['skeyword'] = ($sfield && array_key_exists($sfield, $search_option)) ? $skeyword : '';

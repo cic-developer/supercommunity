@@ -19,9 +19,10 @@
     padding-top: 10px;
     font-weight: bold;
     font-size: 1.538em;
-    line-height: 1.5;
+    line-height: 1.7;
 	color: #1e1e1e;
 	font-weight: 600;
+	word-break: break-word;
 	
 
 		
@@ -29,18 +30,22 @@
 
 #privacy_wrap .desc_g {
     padding-top: 20px;
-	line-height: 1.5;
+	line-height: 1.7;
 	color:#333;
 	font-size: 1.077em;
 	font-weight: 300;
-		
+	text-align: justify;
 }
+		
+
 
 #privacy_wrap .desc_g_n{
-	line-height: 1.5;
+	line-height: 1.7;
 	font-size:1em;
 	color:#333;
 	font-weight: 300;
+	text-align: justify;
+	padding-bottom: 5px;
 }
 
 
@@ -76,7 +81,7 @@
 	font-size: 1.077em;
 	font-weight: 400;
 	color:#999;
-	
+	line-height: 1.7;
 	
 }
 
@@ -97,6 +102,7 @@
 	color: #1e1e1e;
 	font-style:normal;
 	font-weight: 500;
+	line-height: 1.7;
 	
 }
 
@@ -107,7 +113,7 @@
 	font-size: 1em;
 	font-weight: normal;
 	color: #666;
-	line-height: 1.5;
+	line-height: 1.7;
 	word-break:keep-all;
 	width: 100%;
 	box-sizing: border-box;
@@ -138,7 +144,7 @@
 .list_2depth li {
 	padding-top: 0;
     font-size: 0.923em;
-    line-height: 1.5;
+    line-height: 1.7;
 }
 
 .list_2depth li:before {
@@ -158,7 +164,7 @@
 
 .list_2depth_type1 li {
     font-size: 0.923em;
-	line-height: 1.5;
+	line-height: 1.7;
 	font-weight: 400;
 }
 
@@ -190,7 +196,6 @@
     border-bottom: 1px solid #e6e6e6;
     font-weight: normal;
 	font-size: 1em;
-	line-height:5;
 	font-weight: 500;
 	color:#333;
 
@@ -226,7 +231,7 @@
 
 .list_2depth_type2 li {
     font-size: 1em;
-	line-height: 1.5;
+	line-height: 1.7;
 	font-weight: 400;
 }
 
@@ -236,9 +241,6 @@
 	font-weight: 500;
 	padding-top:8px;
 	font-size: 1em;
+	word-break: break-word;
 }
 
-.tit_terms{
-	overflow: hidden;
-	
-}

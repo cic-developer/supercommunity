@@ -49,6 +49,7 @@
 	line-height: 40px;
 	color:#333;
 	font-weight: 400;
+	word-break: break-word;
 }
 
 #ask_wrap ul li h4{

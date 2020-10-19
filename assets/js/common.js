@@ -101,7 +101,12 @@ if (typeof(COMMON_JS) === 'undefined') {
 	});
 
 	$(document).on('click', '.btn-one-delete', function() {
-		if (confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+		if( rs_lang == 'korean' ){
+			message = "한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?";
+		} else {
+			message = "if you delete, there is no way to recover.\n\nDo you really want to delete?";
+		}
+		if (confirm(message)) {
 			document.location.href= $(this).attr('data-one-delete-url');
 			return true;
 		} else {

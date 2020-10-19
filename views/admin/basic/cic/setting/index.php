@@ -48,6 +48,15 @@
 					코리아 Coin Master 코코마님이 회원가입 하였습니다.
 				</div>
 			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">회원 경고 경감일</label>
+				<div class="col-sm-10">
+					<label for="mcf_warningdate" >
+						<input type="number" class="form-control" name="mcf_warningdate" max="100000" min="0" value="<?php echo element('mcf_warningdate', element('data', $view)); ?>"/>
+						일
+					</label>
+				</div>
+			</div>
 			<div class="btn-group pull-right" role="group" aria-label="...">
 				<button type="submit" class="btn btn-success btn-sm">저장하기</button>
 			</div>

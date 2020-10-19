@@ -58,7 +58,7 @@
 	font-size: 1.154em;
 	font-weight: 300;
 	color:#333;
-	line-height:1.5;
+	line-height:1.7;
 	display: block;
 	width: 100%;
 }
@@ -90,6 +90,7 @@
 #white_wrap .white_content .text_g li{
 	padding-bottom:30px;
 	display: block;
+	line-height: 1.7;
 }
 
 #white_wrap .white_content .text_g li .list{
@@ -104,6 +105,7 @@
 	color:#999;
 	font-weight: 400;
 	padding-bottom: 15px;
+	line-height: 1.7;
 }
 
 
@@ -116,7 +118,8 @@
 	padding-bottom:20px;
 	color:#333;
 	display: block;
-	line-height: 1.3;
+	line-height: 1.7;
+	text-align: left;
 	
 }
 

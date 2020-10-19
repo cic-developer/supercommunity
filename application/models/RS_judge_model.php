@@ -274,7 +274,11 @@ class RS_judge_model extends CB_Model
     foreach($jud_arr AS $jud){
 		//미디어가 심사중에 있는지 확인
 		$other_judge = $this->RS_media_model->check_other_judge($jud['jud_med_id']);
-		if($other_judge != '미션심사 진행중입니다.' && $other_judge != false){
+		if(
+			!(strcmp ($other_judge , '미션심사 진행중입니다.') == 0 ||
+			strcmp ($other_judge , 'Mission review in progress.') == 0) && 
+			$other_judge != false
+		){
 			if($other_judge === true){
 				return 'error occur for check other judge';
 			}else{
@@ -354,7 +358,8 @@ class RS_judge_model extends CB_Model
 			case 1 :
 			if(element('jud_attach', $jud)){
 				$updateArr = array(
-				'jud_attach'  =>  element('jud_attach', $jud)
+				'jud_attach'  	=>  element('jud_attach', $jud),
+				'jud_post_link'	=>	element('jud_post_link', $jud)
 				);
 				if(!$this->update($med_data['jud_id'], $updateArr)){
 					return 'jud_attach update error occur';

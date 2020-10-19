@@ -37,4 +37,4 @@ $lang[32] = 'Regist E-mail';
 $lang['controller_0'] = 'NAME';
 $lang['controller_1'] = 'You need to log in to use it.';
 $lang['controller_2'] = 'It has been modified.';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

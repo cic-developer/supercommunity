@@ -1,3 +1,17 @@
+<?php 
+	function display_warn($mem_id){
+		$CI =& get_instance();
+		$all_extra = $CI->Member_extra_vars_model->get('','', array('mem_id' => $mem_id));
+		foreach($all_extra AS $extra){
+			if(  $extra['mev_key'] == 'mem_warn_1' ||  $extra['mev_key'] == 'mem_warn_2' ){
+				if($extra['mev_value']){
+					echo '<span class="label label-danger" style="margin-left:10px;">경고</span>';
+					return;
+				}
+			}
+		}
+	}
+?>
 <div class="box">
 	<div class="box-table">
 		<?php
@@ -8,10 +22,17 @@
 		?>
 			<input type="hidden" name="<?php echo element('primary_key', $view); ?>"	value="<?php echo element(element('primary_key', $view), element('data', $view)); ?>" />
 			<div class="form-group">
+				<label class="col-sm-2 control-label">신청자</label>
+				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
+					<?php echo element('display_name', element('data', $view)); ?>
+					<?php display_warn( element('mem_id' , element('member', element('data',$view))) )?>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">미션제목</label>
 				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
 					<?php echo element('mis_title', element('data', $view)); ?>
-          <a href="" target="_blank" style="padding-left:10px;" >유저페이지 <span class="glyphicon glyphicon-new-window"></span></a>
+          <a href="/Mission/detailMission/<?=element('mis_id', element('data', $view))?>" target="_blank" style="padding-left:10px;" >유저페이지 <span class="glyphicon glyphicon-new-window"></span></a>
           <a href="/admin/cic/missionlist/write/<?=element('mis_id', element('data', $view))?>" target="_blank" style="padding-left:10px;" >관리페이지 <span class="glyphicon glyphicon-new-window"></span></a>
 				</div>
 			</div>
@@ -29,11 +50,11 @@
 						case '0': 
 							echo 0;
 						break;
-						case '1': 
-							echo number_format(rs_cal_expected_point( element('mis_per_token', element('data', $view)),element('mip_tpoint', element('data', $view)), element('med_superpoint', element('data', $view)) ),1);
+						case '1':
+						case '3':
+							echo number_format(rs_cal_expected_point2( element('mis_per_token', element('data', $view)), element('mis_max_point', element('data', $view)), element('med_superpoint', element('data', $view)), element('data', $view) ),1);
 						break;
-						case '3': 
-							echo number_format((element('mis_per_token', element('data', $view))*element('med_superpoint', element('data', $view))/(element('mip_tpoint', element('data', $view))===0? 1 : element('mip_tpoint', element('data', $view)) )),1);
+							// echo number_format((element('mis_per_token', element('data', $view))*element('med_superpoint', element('data', $view))/(element('mip_tpoint', element('data', $view))===0? 1 : element('mip_tpoint', element('data', $view)) )),1);
 						break;
 						case '5':
 							echo number_format(element('jud_point', element('data', $view)),1);
@@ -67,15 +88,15 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">첨부 이미지</label>
+				<label class="col-sm-2 control-label">게시물 링크</label>
 				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-          <img  src="<?php echo thumb_url('judge', element('jud_attach', element('data', $view)), 800, 600); ?>" alt="제출이미지" title="제출이미지"/>
+					<a href="<?php echo element('jud_post_link', element('data', $view)); ?>" target="_blank"><?php echo element('jud_post_link', element('data', $view)); ?></a>
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label">신청자</label>
+				<label class="col-sm-2 control-label">첨부 이미지</label>
 				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
-					<?php echo element('display_name', element('data', $view)); ?>
+          <img  src="<?php echo thumb_url('judge', element('jud_attach', element('data', $view)), 800, 600); ?>" alt="제출이미지" title="제출이미지"/>
 				</div>
 			</div>
 			<?php if(element('judn_reason',element('this_denied_reason',$view))) { ?>
@@ -93,7 +114,13 @@
 					data-userid="<?php echo element('mem_userid',element('member', element('data', $view))); ?>" 
 					data-nickname="<?php echo element('jud_mem_nickname', element('data', $view)); ?>" 
 					data-superfriend="<?php echo element('is_superfriend',element('data', $view)); ?>"
-					data-point="<?php echo (element('mis_per_token', element('data', $view))*element('med_superpoint', element('data', $view))/(element('mip_tpoint', element('data', $view))===0? 1 : element('mip_tpoint', element('data', $view)))); ?>"
+					data-point="<?php echo rs_cal_expected_point2(
+						element('mis_per_token', element('data', $view)),
+						element('mis_max_point', element('data', $view)),
+						element('med_superpoint', element('data', $view)),
+						element('data', $view)
+					)?>"
+					data-superpoint="<?php echo element('med_superpoint',element('data',$view))?>"
 				>
 					포인트 지급
 				</button>
@@ -147,6 +174,18 @@
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 									<input name="gp_userid" placeholder="로딩중" class="form-control"  type="text" readonly style="background-color:#ffffff;">
+								</div>
+							</div>
+						</div>
+
+						<!-- Text input-->
+						
+						<div class="form-group">
+							<label class="col-md-4 control-label" >신청 미디어 super point</label> 
+							<div class="col-md-4 inputGroupContainer">
+								<div class="input-group">
+									<span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+									<input name="gp_mediasuper" placeholder="로딩중" class="form-control"  type="text" readonly style="background-color:#ffffff;">
 								</div>
 							</div>
 						</div>
@@ -341,6 +380,7 @@ $(document).on('click', '.give_point', function(){
 	$("#pointModal .modal-body input[name=gp_userid]").val($(this).attr('data-userid'));
 	$("#pointModal .modal-body input[name=gp_expectpoint]").val(Number($(this).attr('data-point')).toLocaleString('en', {maximumFractionDigits: 1}));
 	$("#pointModal .modal-body input[name=gp_givepoint]").val(Number($(this).attr('data-point')).toLocaleString('en', {maximumFractionDigits: 1}));
+	$("#pointModal .modal-body input[name=gp_mediasuper]").val(Number($(this).attr('data-superpoint')).toLocaleString('en', {maximumFractionDigits: 1}));
 	$("#pointModal").modal({
 		backdrop:false
 	});

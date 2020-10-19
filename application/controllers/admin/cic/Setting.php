@@ -78,12 +78,19 @@ class Setting extends CB_Controller
 			$this->view = element('view_skin_file', element('layout', $view));
 		}else{
 			$postData = $this->input->post();
+			$mcf_warningdate = element('mcf_warningdate',$postData,0);
+			if($mcf_warningdate < 0){
+				$mcf_warningdate = 0;
+			}else if($mcf_warningdate > 10000){
+				$mcf_warningdate = 10000;
+			}
 			$dataArr = array(
 				'mcf_perfriends_setting'	=> element('mcf_perfriends_setting',$postData,0),
 				'mcf_message_setting' 	 	=> element('mcf_message_setting',$postData,0),
 				'mcf_messages'				=> nl2br(element('mcf_messages',$postData, '')),
 				'mcf_messages_en'			=> nl2br(element('mcf_messages_en',$postData, '')),
 				'mcf_main'					=> 'Y',
+				'mcf_warningdate'			=> $mcf_warningdate,
 				'mcf_ip'					=> $this->input->ip_address(),
 				'mcf_userid'				=> element('mem_userid',$this->Member_model->get_by_memid($this->session->userdata('mem_id'), 'mem_userid')),
 				'mcf_date'					=> date('Y-m-d H:i:s')
@@ -473,7 +480,9 @@ class Setting extends CB_Controller
 				$countwhere = array(
 					'met_id' => element('met_id', $val),
 				);
-				$result['list'][$key]['member_count'] = $this->RS_mediatype_map_model->count_by($countwhere);
+				// $result['list'][$key]['member_count'] = $this->RS_mediatype_map_model->count_by($countwhere);
+				$join = array('table' => 'rs_media','on' => 'rs_media.med_id = rs_mediatype_map.med_id AND rs_media.med_state = 3 AND `rs_media`.`med_deletion` = "N"','type' => 'inner');
+				$result['list'][$key]['member_count'] = count($this->RS_mediatype_map_model->get("",'mtm_id',$countwhere,"","","","",$join));
 				$result['list'][$key]['num'] = $list_num--;
 			}
 		}
@@ -731,6 +740,7 @@ class Setting extends CB_Controller
 				'wht_title_en' => $this->input->post('wht_title_en', null, ''),
 				'wht_domains' => strtolower($this->input->post('wht_domains', null, '')),
 				'wht_memo' => $this->input->post('wht_memo', null, ''),
+				'wht_memo_en' => $this->input->post('wht_memo_en', null, ''),
 			);
 			$datetime = cdate('Y-m-d H:i:s');
 
@@ -938,5 +948,4 @@ class Setting extends CB_Controller
 		header('Content-Disposition: attachment; filename=화이트리스트목록_' . cdate('Y_m_d') . '.xls');
 		echo $this->load->view('admin/' . ADMIN_SKIN . '/' . $this->pagedir  . '/whitelist_excel', $view, true);
 	}
-	
 }

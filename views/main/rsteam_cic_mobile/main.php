@@ -70,7 +70,7 @@
                 <?=$csrf['name']?> : "<?=$csrf['hash']?>"
             },
             success : function(result){
-                if(result != false){
+                if(result){
                     if(result >= 100000){
                         $('.num').css('font-size','45px');
                     }else if(per_friends >= 10000000){

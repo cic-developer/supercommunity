@@ -154,7 +154,7 @@ class Medialist extends CB_Controller
 			'med_url' => '링크',
 			// 'met_id' => '미디어 성격',
 			'mem_nickname' => '닉네임',
-			'med_wdate' => '날짜'
+			// 'med_wdate' => '날짜'
 		);
 		$view['view']['skeyword'] = ($sfield && array_key_exists($sfield, $search_option)) ? $skeyword : '';
 		$view['view']['search_option'] = search_option($search_option, $sfield);

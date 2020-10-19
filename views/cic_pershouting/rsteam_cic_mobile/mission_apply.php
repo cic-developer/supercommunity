@@ -14,27 +14,56 @@
    <!--my_right_box-->
    <div id="my_right_box">
             <h5><?php echo $this->lang->line(0)?></h5>
-                <h6>
+                <h6 class="apply_head">
                     <?php echo $this->lang->line(1)?>
-                    <small><?php echo $this->lang->line(13)?><br/>
-                        <?php echo $this->lang->line(14)?>
-                     </small>
+                    <small>
+                        <b><?php echo $this->lang->line(19)?></b>
+                        <?php echo $this->lang->line(13)?><br/>
+                        <?php echo $this->lang->line(14)?> <br/>
+                        <?php echo $this->lang->line(20)?>
+                        <b><?php echo $this->lang->line(21)?></b>
+                        <?php echo $this->lang->line(22)?><br/>
+                        <?php echo $this->lang->line(23)?>
+                    </small>
                 </h6>
                 <?php echo form_open_multipart(''); ?>
                 <input type="hidden" name="dummy" value="1" />
+                
+                <ul class="mob_list_table">            
 <?php 
 foreach($medList AS $ml){ 
     $media_check = ($ml['jud_state'] == 1 || $ml['jud_state'] == 3); //해당 미디어가 미션 심사 진행 또는 완료된 미디어인지 체크
     $media_comp_check =  ($ml['jud_state'] == 3);
-    $expected_point = rs_cal_expected_point($missionData['mis_per_token'], $ml['med_superpoint'], $total_super); //예상 지급 토큰값
+    $expected_point = rs_cal_expected_point2($missionData['mis_per_token'], $missionData['mis_max_point'], $ml['med_superpoint'], $ml); //예상 지급 토큰값
+    switch($ml['jud_state']){   //심사 상태 표시
+        case 0 :    //반려
+            if($ml['jud_state'] === 0){
+                $_state = $this->lang->line(16);    
+            }else if($ml['jud_state'] === NULL){
+                $_state = $this->lang->line(25);  
+            }
+        break;
+        case 1 :    //심사중
+            $_state = $this->lang->line(17);    
+        break;
+        case 3 :    //승인
+            $_state = $this->lang->line(15);    
+        break;
+        case 5 :    //지급완료(사실 이건 나오면 안됨)
+            $_state = $this->lang->line(18);    
+        break;
+    }
 ?>
-                  <ul class="mob_list_table">
-                      <li>
+                      <li> 
+<!---20.10.15 미션신청 상태 버튼(신청가능, 심사중, 승인완료)-->
+                            <?php if($_state){ ?><u class="state"><?php echo $_state?></u><?php } // 미션 신청 상태가 있는 경우에만 ?>
                           <dl>
                               <dt><?php echo $this->session->userdata('lang') == 'korean' ? element('mis_title', $missionData) : element('mis_title_en',$missionData);?></dt> <!--미션명 :: 모바일에서는 환경고려상 물고온 미션이름만 노출함-->
                               <dd><span><?php echo $this->lang->line(2)?></span> <?=$ml['med_name']?></dd>
                               <dd><span><?php echo $this->lang->line(3)?></span> <?=$ml['med_admin']?></dd>
                               <dd><span><?php echo $this->lang->line(4)?></span> <a target="_blank" href="<?=$ml['med_url']?>"><?=$ml['med_url']?></a></dd>
+<!--20.10.14추가수정 포스팅url-->                              
+                              <dd><span><?php echo $this->lang->line(24)?></span><input type="text" id="post_url" name="post_link[]" value="<?php echo element('jud_post_link', $ml)?>" <?php echo $media_comp_check? 'readonly' : '' ?>/></dd>
                               <dd><span><?php echo $this->lang->line(5)?></span> <i class="super_p"></i><b><?=$ml['med_superpoint']?></b></dd>
                               <dd><span><?php echo $this->lang->line(6)?></span> <i class="per_p"></i><b><?= number_format($expected_point, 1) ?></b></dd>
                             </dl>
@@ -53,9 +82,9 @@ foreach($medList AS $ml){
                                 </span>
                           </div>
                         </li>
-                  </ul>
+                  
 <?php } ?>
-
+</ul>
                   <div class="btn_box">
                     <input type="submit" value="<?php echo $this->lang->line(1)?>" class="btn1 btn_black" style="White-space: normal;"/>
                   </div>

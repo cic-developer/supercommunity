@@ -4,6 +4,8 @@
       'name' => $this->security->get_csrf_token_name(),
       'hash'  => $this->security->get_csrf_hash()
   );
+//   print_r($mis_total_super);
+//   exit;
 ?>
 
 <!--my_right_box-->
@@ -13,32 +15,69 @@
     <div class="my_cont_area">
 <?php echo form_open_multipart(''); ?>
         <input type="hidden" name="dummy" value="1" />
-        <h6><?php echo $this->lang->line(1)?>
-            <small><?php echo $this->lang->line(8)?> <br/>
-                <?php echo $this->lang->line(9)?>
+        <h6 class="apply_head"><?php echo $this->lang->line(1)?>
+            <!--새 알림 추가-->
+            <small class="noti_type1">
+                <b><?php echo $this->lang->line(15)?></b>
+                <?php echo $this->lang->line(8)?><br/>
+                <?php echo $this->lang->line(9)?> <br/>
+                <?php echo $this->lang->line(16)?>
+            </small>
+            <small class="noti_type2">
+                <b><?php echo $this->lang->line(17)?></b>
+                <?php echo $this->lang->line(18)?><br/>
+                <?php echo $this->lang->line(19)?>
             </small>
         </h6>
         <table cellpadding="0" class="list_table" cellspacing="0" width="100%">
             <colgroup> <!--칸의 width조절을 여기서해-->
-                <col width="12%">
-                <col width="12%">
+                <col width="13%">
+                <col width="11.5%">
+                <col width="16%">
+<!--20.10.14추가사항 게시링크 타이틀-->    
+                <col width="16%">
+<!--20.10.14추가사항 게시링크 타이틀-//-->       
+                <col width="11%">
+                <col width="11%">
+                <col width="11%">
                 <col width="*">
-                <col width="18%">
-                <col width="13%">
-                <col width="13%">
-                <col width="10%">
             </colgroup>
             <?php echo $this->lang->line(2)?>
 <?php 
+
 foreach($medList AS $ml){ 
     $media_check = ($ml['jud_state'] == 1 || $ml['jud_state'] == 3); //해당 미디어가 미션 심사 진행 또는 완료된 미디어인지 체크
-    $media_comp_check =  ($ml['jud_state'] == 3);
-    $expected_point = rs_cal_expected_point($missionData['mis_per_token'], $ml['med_superpoint'], $total_super); //예상 지급 토큰값
+    $media_comp_check =  ($ml['jud_state'] == 3 || $ml['jud_state'] == 5);
+    $expected_point = rs_cal_expected_point2($missionData['mis_per_token'], $missionData['mis_max_point'], $ml['med_superpoint'], $ml); //예상 지급 토큰값
+    switch($ml['jud_state']){   //심사 상태 표시
+        case 0 :    //반려
+            if($ml['jud_state'] === 0){
+                $_state = $this->lang->line(12);    
+            }else{
+                $_state = $this->lang->line(20);
+            }
+        break;
+        case 1 :    //심사중
+            $_state = $this->lang->line(13);    
+        break;
+        case 3 :    //승인
+            $_state = $this->lang->line(11);    
+        break;
+        case 5 :    //지급완료(사실 이건 나오면 안됨)
+            $_state = $this->lang->line(14);    
+        break;
+    }
 ?>
                     <tr>
                         <td><?=$ml['med_name']?></td>
                         <td><?=$ml['med_admin']?></td>
                         <td><?=$ml['med_url']?></td>
+<!---20.10.14추가사항 게시링크 url 입력-->
+                        <td>
+                            <small><?php echo $this->lang->line(10)?></small>
+                            <input type="text" id="post_link" name="post_link[]" value="<?php echo element('jud_post_link', $ml)?>" <?php echo $media_comp_check? 'readonly' : '' ?>/>
+                        </td>
+<!---20.10.14추가사항 게시링크 url 입력//-->
                         <td> 
                             <span class="img_check"><img class="<?=$media_comp_check ? 'finish_img' : 'attach_img'?>" src="<?php echo thumb_url('judge', element('jud_attach', $ml), 400, 300); ?>" alt='인증 사진' />
                             <input class="jud_attach" name="jud_attach[]" type="file" style="display:none;"></span>
@@ -50,6 +89,7 @@ foreach($medList AS $ml){
                             <i class="per_p"></i><b><?= number_format($expected_point, 1) ?></b> 
                         </td>
                         <td>
+                            <?php if($_state){ ?><p class="state"><?php echo $_state?></p><?php } // 미션 신청 상태가 있는 경우에만 ?>
                             <input class="applycheck" name="med_id[]" type="checkbox" value="<?=$ml['med_id']?>" <?= ($media_check)? 'checked' : '' ?>  onclick="return false" <?=$media_comp_check ? 'disabled' : ''?>>
                              <input name="all_med_id[]" value="<?=$ml['med_id']?>" style="display:none;"/>   
                         </td>

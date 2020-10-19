@@ -18,7 +18,7 @@ class Mypage extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('RS_media','RS_auth_mail', 'RS_judge', 'RS_judge_log', 'RS_advertise', 'Member', 'Member_meta', 'Member_extra_vars', 'Point');
+	protected $models = array('RS_media','RS_auth_mail', 'RS_judge', 'RS_judge_log', 'RS_advertise', 'Member', 'Member_meta', 'Member_extra_vars', 'Point','Member_nickname');
 
 	/**
 	 * 헬퍼를 로딩합니다
@@ -156,7 +156,28 @@ class Mypage extends CB_Controller
 				//지갑 주소 인증인 경우에도 해당 이메일로 인증한것으로 간주, 이메일을 업데이트 한다
 				$this->Member_model->update($mem_id, array('mem_email' => $this->input->post('email')));
 			}
-			$this->Member_model->update($mem_id, array('mem_nickname' => $nick_name));
+			$member_data = $this->Member_model->get_by_memid($mem_id,'mem_nickname');
+			if($nick_name != element('mem_nickname',$member_data)){
+				$this->Member_model->update($mem_id, array('mem_nickname' => $nick_name));
+
+				$upnick = array(
+					'mni_end_datetime' => cdate('Y-m-d H:i:s'),
+				);
+				$nickwhere = array(
+					'mem_id' => $mem_id,
+					'mni_nickname' => element('mem_nickname',$member_data),
+				);
+				$this->Member_nickname_model->update('', $upnick, $nickwhere);
+	
+				$nickinsert = array(
+					'mem_id' => $mem_id,
+					'mni_nickname' => $nick_name,
+					'mni_start_datetime' => cdate('Y-m-d H:i:s'),
+				);
+				$this->Member_nickname_model->insert($nickinsert);
+			}
+			
+
 			$this->session->set_flashdata('message',$this->lang->line('controller_2'));
 			redirect('/Mypage');
 		}
@@ -211,49 +232,6 @@ class Mypage extends CB_Controller
 		$this->view = element('view_skin_file', element('layout', $view));
 	}
 	
-	//mypage 슈퍼포인트 조회 페이지
-	// function superpoint_mobile(){
-	// 	/**
-	// 	 * 로그인이 필요한 페이지입니다
-	// 	 */
-	// 	required_user_login();
-
-	// 	$mem_id = $this->member->is_member();
-
-	// 	/**
-	// 	* 레이아웃을 정의합니다
-	// 	*/
-	// 	$page_title = $this->cbconfig->item('site_meta_title_mypage');
-	// 	$meta_description = $this->cbconfig->item('site_meta_description_mypage');
-	// 	$meta_keywords = $this->cbconfig->item('site_meta_keywords_mypage');
-	// 	$meta_author = $this->cbconfig->item('site_meta_author_mypage');
-	// 	$page_name = $this->cbconfig->item('site_page_name_mypage');
-		
-	// 	$layoutconfig = array(
-	// 		'path' => 'mypage',
-	// 		'layout' => 'layout',
-	// 		'skin' => 'superpoint',
-	// 		'layout_dir' => '/rsteam_cic_mobile',
-	// 		'mobile_layout_dir' => '/rsteam_cic_mobile',
-	// 		'use_sidebar' => $this->cbconfig->item('sidebar_mypage'),
-	// 		'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_mypage'),
-	// 		'skin_dir' => '/rsteam_cic_mobile',
-	// 		'mobile_skin_dir' => '/rsteam_cic_mobile',
-	// 		'page_title' => $page_title,
-	// 		'meta_description' => $meta_description,
-	// 		'meta_keywords' => $meta_keywords,
-	// 		'meta_author' => $meta_author,
-	// 		'page_name' => $page_name,
-	// 	);
-	// 	$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
-	// 	$view['member_data'] = $this->Member_model->get_by_memid($mem_id);
-	// 	$view['total_super'] = $this->RS_media_model->get_total_super($mem_id);
-	// 	$view['header']['menu'] = 'mypage';
-	// 	$this->data = $view;
-	// 	$this->layout = element('layout_skin_file', element('layout', $view));
-	// 	$this->view = element('view_skin_file', element('layout', $view));
-	// }
-
 	//출금 요청 페이지
 	function withdraw(){
 		/**
@@ -366,43 +344,6 @@ class Mypage extends CB_Controller
 		$this->view = element('view_skin_file', element('layout', $view));
 	}
 	
-	//출금 요청 페이지
-	function withdraw_mobile(){
-		/**
-		 * 로그인이 필요한 페이지입니다
-		 */
-		required_user_login();
-		/**
-		* 레이아웃을 정의합니다
-		*/
-		$page_title = $this->cbconfig->item('site_meta_title_mypage');
-		$meta_description = $this->cbconfig->item('site_meta_description_mypage');
-		$meta_keywords = $this->cbconfig->item('site_meta_keywords_mypage');
-		$meta_author = $this->cbconfig->item('site_meta_author_mypage');
-		$page_name = $this->cbconfig->item('site_page_name_mypage');
-		
-		$layoutconfig = array(
-			'path' => 'mypage',
-			'layout' => 'layout',
-			'skin' => 'withdraw',
-			'layout_dir' => '/rsteam_cic_mobile',
-			'mobile_layout_dir' => '/rsteam_cic_mobile',
-			'use_sidebar' => $this->cbconfig->item('sidebar_mypage'),
-			'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_mypage'),
-			'skin_dir' => '/rsteam_cic_mobile',
-			'mobile_skin_dir' => '/rsteam_cic_mobile',
-			'page_title' => $page_title,
-			'meta_description' => $meta_description,
-			'meta_keywords' => $meta_keywords,
-			'meta_author' => $meta_author,
-			'page_name' => $page_name,
-		);
-		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
-		$view['header']['menu'] = 'mypage';
-		$this->data = $view;
-		$this->layout = element('layout_skin_file', element('layout', $view));
-		$this->view = element('view_skin_file', element('layout', $view));
-	}
 
 	//회원탈퇴 페이지
 	function signout(){
@@ -477,65 +418,6 @@ class Mypage extends CB_Controller
 				$this->session->set_flashdata('message', $this->lang->line('c_2'));
 			}
 			redirect('/Mypage/signout');
-		}
-	}
-
-	
-	//회원탈퇴 페이지
-	function signout_mobile(){
-		/**
-		 * 로그인이 필요한 페이지입니다
-		 */
-		required_user_login();
-
-		$this->load->library(array('form_validation'));
-
-		/**
-		 * 전송된 데이터의 유효성을 체크합니다
-		 */
-		$config = array(
-			array(
-				'field' => 'mem_password',
-				'label' => '패스워드',
-				'rules' => 'trim|required|min_length[4]|callback__cur_password_check',
-			),
-		);
-		$this->form_validation->set_rules($config);
-		if ($this->form_validation->run() === false) {
-			/**
-			* 레이아웃을 정의합니다
-			*/
-			$page_title = $this->cbconfig->item('site_meta_title_mypage');
-			$meta_description = $this->cbconfig->item('site_meta_description_mypage');
-			$meta_keywords = $this->cbconfig->item('site_meta_keywords_mypage');
-			$meta_author = $this->cbconfig->item('site_meta_author_mypage');
-			$page_name = $this->cbconfig->item('site_page_name_mypage');
-			
-			$layoutconfig = array(
-				'path' => 'mypage',
-				'layout' => 'layout',
-				'skin' => 'signout',
-				'layout_dir' => 'rsteam_cic_mobile',//$this->cbconfig->item('layout_mypage'),
-				'mobile_layout_dir' => 'rsteam_cic_mobile',//$this->cbconfig->item('mobile_layout_mypage'),
-				'use_sidebar' => $this->cbconfig->item('sidebar_mypage'),
-				'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_mypage'),
-				'skin_dir' => 'rsteam_cic_mobile',//$this->cbconfig->item('skin_mypage'),
-				'mobile_skin_dir' => 'rsteam_cic_mobile',//$this->cbconfig->item('mobile_skin_mypage'),
-				'page_title' => $page_title,
-				'meta_description' => $meta_description,
-				'meta_keywords' => $meta_keywords,
-				'meta_author' => $meta_author,
-				'page_name' => $page_name,
-			);
-			$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
-			
-			$this->data = $view;
-			$this->layout = element('layout_skin_file', element('layout', $view));
-			$this->view = element('view_skin_file', element('layout', $view));
-		}else{
-			$mem_id = $this->member->is_member();
-			$this->member->delete_member($mem_id);
-			$this->session->sess_destroy();
 		}
 	}
 

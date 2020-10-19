@@ -216,14 +216,14 @@ class Mission extends CB_Controller
 				break;
 			}
 			$result['list'][$key]['jud_ko_state'] =  $jud_kr_state;
-			if($result['list'][$key]['jud_point']){
-				$result['list'][$key]['jud_expected_value'] = $result['list'][$key]['jud_point'];
-			}else{
-				$mission_total = $this->RS_missionpoint_model->get_one('','mip_tpoint',array('mip_mis_id' => $result['list'][$key]['jud_mis_id']))['mip_tpoint'];
-				$mission_reword = $this->RS_missionlist_model->get_one($result['list'][$key]['jud_mis_id'],'mis_per_token')['mis_per_token'];
-				$media_super_point = $result['list'][$key]['jud_superpoint'];
-				$result['list'][$key]['jud_expected_value'] = rs_cal_expected_point($mission_reword, $media_super_point, $mission_total);
-			}
+		
+			$result['list'][$key]['jud_expected_value'] = $result['list'][$key]['jud_point'];
+
+			$mission_data	= $this->RS_missionlist_model->get_one($result['list'][$key]['jud_mis_id']);
+			$mis_per_token  = $mission_data['mis_per_token'];
+			$mis_max_point	= $mission_data['mis_max_point'];
+			$media_super_point = $result['list'][$key]['jud_superpoint'];
+			$result['list'][$key]['jud_expected_value'] = rs_cal_expected_point2($mis_per_token, $mis_max_point, $media_super_point, $result['list'][$key]);
 		}
 		
 		$view['view']['judList'] = $result['list'];
@@ -296,6 +296,9 @@ class Mission extends CB_Controller
 			$this->session->set_flashdata('message', $this->lang->line('c_1')); //공개예정 미션은 보지 못하도록 튕겨낸다.
 			redirect('/Mission');
 			exit;
+		}else if(!$view['mission_data']){
+			redirect('/Mission');
+			exit;
 		}
 
 		$layoutconfig = array(
@@ -333,6 +336,9 @@ class Mission extends CB_Controller
 			redirect('/login');
 		}
 		$mission_data = $this->RS_missionlist_model->get_one_mission($misid);
+		if(!$mission_data){
+			redirect('/Mission');
+		}
 		// print_r($mission_data['state']); exit;
 		if($mission_data['state'] != 'process'){
 			$this->session->set_flashdata('message', $this->lang->line('c_1'));
@@ -378,16 +384,18 @@ class Mission extends CB_Controller
 				$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
 				$view['medList'] = $med_list;
 				$view['member_data'] = $this->Member_model->get_by_memid($mem_id);
-				$view['total_super'] = $this->RS_missionpoint_model->get_one($misid)['mip_tpoin'];
+				$view['total_super'] = $this->RS_media_model->get_total_super($mem_id);
+				$view['mis_total_super'] = $this->RS_missionpoint_model->get_one('','',array('mip_mis_id' => $misid))['mip_tpoint'];
+				// echo $this->db->last_query(); exit;
 				$view['missionData'] = $mission_data;
 				$view['header']['menu'] = 'pershouting';
 				$this->data = $view;
 				$this->layout = element('layout_skin_file', element('layout', $view));
 				$this->view = element('view_skin_file', element('layout', $view));
 			 }else{
-					$this->session->set_flashdata('message',$this->lang->line('c_4'));
-					redirect('/Media/editMedia');
-					exit;
+				$this->session->set_flashdata('message',$this->lang->line('c_4'));
+				redirect('/Media/editMedia');
+				exit;
 			 }
 		}else{
 			$this->load->library('upload');
@@ -428,6 +436,7 @@ class Mission extends CB_Controller
 			$upload_result = $this->multy_upload($_FILES, $uploadconfig,'jud_attach');
 			$med_id = $this->input->post('med_id');
 			$all_med_id = $this->input->post('all_med_id');
+			$jud_post_link = $this->input->post('post_link');
 			$jud_insert_arr = array();
 			for($i = 0; $i < count($all_med_id); $i++){
 				if(in_array($all_med_id[$i],$med_id)){
@@ -435,14 +444,17 @@ class Mission extends CB_Controller
 						'jud_jug_id' => 1,
 						'jud_mis_id' => $misid,
 						'jud_med_id' => $all_med_id[$i],
-						'jud_attach' => element('file_name', $upload_result['list'][$i]) ? (cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $upload_result['list'][$i])) : ''
+						'jud_attach' => element('file_name', $upload_result['list'][$i]) ? (cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $upload_result['list'][$i])) : '',
+						'jud_post_link' => htmlspecialchars($jud_post_link[$i], ENT_QUOTES, 'UTF-8')
 					);
 				}
 			}
 
 			$result = $this->RS_judge_model->replace_apply_mission_judge($jud_insert_arr);
 	
-			
+			// print_r($result);
+			// exit;
+
 			$message = $this->lang->line('c_2');
 			
 			if($upload_result['err_count'] == $upload_result['all_count']){
@@ -462,7 +474,10 @@ class Mission extends CB_Controller
 				strcmp ($result ,'error occur for check other judge') == 0 ||
 				strcmp ($result ,'미디어심사 진행중입니다.')  == 0 ||
 				strcmp ($result , '출금심사 진행중입니다.') == 0 ||
-				strcmp ($result ,'미디어 재심사 진행중입니다.') == 0
+				strcmp ($result ,'미디어 재심사 진행중입니다.') == 0 ||
+				strcmp ($result , 'Media review is in progress.') == 0||
+				strcmp ($result , 'The withdrawal examination is in progress.') == 0||
+				strcmp ($result , 'Media review is in progress.') == 0
 			){
 				$message = $this->lang->line('c_6');
 			}

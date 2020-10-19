@@ -15,4 +15,4 @@ $lang['c_1'] = 'Refused';
 $lang['c_2'] = 'under examination';
 $lang['c_3'] = 'Approved';
 $lang['c_4'] = 'Payment completed';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';

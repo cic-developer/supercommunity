@@ -31,4 +31,4 @@ $lang['controller_3'] = 'Approved'; //'승인';
 $lang['controller_4'] = 'Payment Completed'; //'지급 완료';
 $lang['ajax_0'] = 'Your withdrawal request has been completed';//'출금 요청이 완료되었습니다.';
 $lang['ajax_1'] = 'An error occurred while requesting withdrawal';//'출금 요청중 오류가 발생하였습니다.';
-$lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['require_login'] = 'This service requires login.';
