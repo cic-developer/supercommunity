@@ -110,17 +110,23 @@
                         ?>
                         <a href="<?php echo base_url('Mission/detailMission/'.$d['mis_id'])?>">
                             <span class="opacity"> </span>
-<?php if(element('mis_thumb_type', $d) == 1){ ?>
+<?php if(element('mis_thumb_type', $d) == 1 &&  $d['state'] != $this->lang->line('c_1')){ ?>
                             <img 
                                 src="<?= thumb_url('mission_thumb_img', element('mis_thumb_image', $d), 400, 300)?>" 
                                 alt="<?=element('mis_thumb_image', $d)?>"
                                 class=""
                             />
-<?php }else if(element('mis_thumb_type', $d) == 2){ ?>
+<?php }else if(element('mis_thumb_type', $d) == 2 && $d['state'] != $this->lang->line('c_1') ){ ?>
                             <iframe src="https://www.youtube.com/embed/<?=rs_get_YT_id(element('mis_thumb_youtube',$d))?>?mute=1&controls=0&rel=0" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
                             allowfullscreen></iframe>
+<?php }else if($d['state'] == $this->lang->line('c_1')){ ?>
+                            <img 
+                                src="<?php echo thumb_url('tmp', 'closed.png', 400, 300)?>" 
+                                alt="<?=element('mis_thumb_image', $d)?>"
+                                class=""
+                            />
 <?php } ?>
                         </a>  
                 </div>
@@ -140,7 +146,7 @@
                             <h2>
                             [MISSION] <?php echo $this->session->userdata('lang') == 'korean' ? $d['mis_title'] : $d['mis_title_en']?>
                             </h2>
-                            <?php echo mb_substr(strip_tags($this->session->userdata('lang') == 'korean' ? $d['mis_content'] : $d['mis_content_en']), 0, 100)?>
+                            <?php //echo mb_substr(strip_tags($this->session->userdata('lang') == 'korean' ? $d['mis_content'] : $d['mis_content_en']), 0, 100)?>
                         </a>                               
                     </div>                   
                 </div>

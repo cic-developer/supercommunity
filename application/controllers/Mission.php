@@ -296,6 +296,10 @@ class Mission extends CB_Controller
 			$this->session->set_flashdata('message', $this->lang->line('c_1')); //공개예정 미션은 보지 못하도록 튕겨낸다.
 			redirect('/Mission');
 			exit;
+		}else if($view['mission_data']['state'] == 'end'){
+			$this->session->set_flashdata('message', $this->lang->line('c_2')); //마감 미션은 보지 못하도록 튕겨낸다.
+			redirect('/Mission');
+			exit;
 		}else if(!$view['mission_data']){
 			redirect('/Mission');
 			exit;
@@ -357,7 +361,7 @@ class Mission extends CB_Controller
 			if($this->input->post('dummy')){
 				echo "<script>alert('".$this->lang->line('c_10')."')</script>";
 			}
-			$med_list = $this->RS_media_model->getMissionMedia($misid,$mem_id);
+			$med_list = $this->RS_media_model->getMissionMedia($misid,$mem_id, $mission_data['mis_apply_wht_id']);
 			if($med_list){ 
 				$page_title = $this->cbconfig->item('site_meta_title_main');
 				$meta_description = $this->cbconfig->item('site_meta_description_main');

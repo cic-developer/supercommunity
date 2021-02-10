@@ -28,6 +28,17 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label">참여가능 플랫폼</label>
+				<div class="col-sm-10 form-inline">
+					<select name="mis_apply_wht_id" class="form-control" <?=$disabled?>>
+						<option value="0">전체</option>
+						<?php foreach(element('wht_list' ,$view) as $wht_data){	?>
+							<option value="<?php echo $wht_data['wht_id']?>" <?php echo element('mis_apply_wht_id',element('data',$view)) == $wht_data['wht_id'] ? 'selected':''?>><?php echo $wht_data['wht_title']?></option>
+						<?php }?>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">썸네일 유형</label>
 				<div class="col-sm-10 form-inline">
 					<select name="mis_thumb_type" class="form-control" <?=$disabled?>>
@@ -122,7 +133,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">본문</label>
 				<div class="col-sm-10">
-					<!-- <textarea class="form-control" rows="10" name="mis_content"><?php echo set_value('mis_content', element('mis_content', element('data', $view))); ?></textarea> -->
+					<!-- <textarea class="form-control" rows="10" name="mis_content"><?php //echo set_value('mis_content', element('mis_content', element('data', $view))); ?></textarea> -->
 					<?php 
 					if($disabled){
 						echo element('mis_content', element('data', $view));
@@ -220,8 +231,9 @@ $(document).ready(function(){
 				return true;
 			}
 		}
-	}, "마감일은 무조건 오픈일보다 늦어야합니다.");	
+	}, '마감일은 무조건 오픈일보다 늦어야합니다.');	
 });
+
 $(function() {
 	$('#fadminwrite').validate({
 		rules: {
@@ -229,9 +241,7 @@ $(function() {
 			mis_thumb_type: { required :true, digits:true, range:[1,2] },
 			mis_thumb_youtube: { url :true },
 			mis_per_token: { required :true, digits :true, min :1, maxlength :11},
-			// mis_max_point: { required :true, digits :true, min :1, maxlength :11},
 			mis_allowed: { required :true, digits :true, range :[0,1] },
-			// mis_opendate: { date :true },
 			mis_enddate: { check_opendate :true },
 			mis_content: { '<?='required_' . $this->cbconfig->item('post_editor_type')?>' :true },
 			mis_content_en: { '<?='required_' . $this->cbconfig->item('post_editor_type')?>' :true }

@@ -181,7 +181,8 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 ?>
 		<div id="sub_menu">
 			<ul> 
-				<li><a href="<?=base_url('/board/noti')?>" class="on"><?=$this->lang->line('cic_15')?></a></li>
+				<li><a href="<?=base_url('/board/noti')?>" <?php echo (strpos(uri_string(),'/noti') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_15')?></a></li>
+				<li><a href="<?=base_url('/board/wallet_noti')?>" <?php echo (strpos(uri_string(),'/wallet_noti') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_29')?></a></li>
 			</ul>
 		</div>
 <?php 

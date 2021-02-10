@@ -2,7 +2,7 @@
     $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); 
 
     $mem_id = $this->member->is_member();
-    $_total_point =  $this->Point_model->get_point_sum($mem_id);
+    $_total_point =  round($this->Point_model->get_point_sum($mem_id), 1);
 ?>
 
 <!--마이페이지> 내정보 >출금요청-->

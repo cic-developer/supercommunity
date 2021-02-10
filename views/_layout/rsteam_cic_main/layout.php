@@ -78,7 +78,6 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 <!--파비콘-->
 <link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/images/favicon.ico');?>">
 <!--유튜브 동영상 백그라운드-->
-<!-- <script type="text/javascript" src="<?php// echo base_url('assets/js/yt-video-background.min.js'); ?>"></script> -->
 <script type="text/javascript" src="<?php echo base_url('assets/js/YTPlayer/jquery.mb.YTPlayer.min.js'); ?>"></script>
 <link href="/assets/js/YTPlayer/css/jquery.mb.YTPlayer.min.css" rel="stylesheet" />
 <!--숫자 스크롤-->
@@ -184,7 +183,8 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 ?>
 			<div id="sub_menu">
 				<ul> 
-					<li><a href="<?=base_url('/board/noti')?>" class="on"><?=$this->lang->line('cic_15')?></a></li>
+					<li><a href="<?=base_url('/board/noti')?>" <?php echo (strpos(uri_string(),'/noti') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_15')?></a></li>
+					<li><a href="<?=base_url('/board/wallet_noti')?>" <?php echo (strpos(uri_string(),'/wallet_noti') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_29')?></a></li>
 				</ul>
 			</div>
 <?php 

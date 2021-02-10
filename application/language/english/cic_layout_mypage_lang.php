@@ -33,3 +33,4 @@ $lang['cic_25'] = 'PER Wallet DOWnload';
 $lang['cic_26'] = 'Preparing to download.';
 $lang['cic_27'] = 'Google Download';
 $lang['cic_28'] = 'Apple Download';
+$lang['cic_29'] = 'wallet noti';

@@ -60,7 +60,7 @@
 							<th>링크</th>
 							<th>첨부이미지</th>
 							<th><a href="<?php echo element('jud_state', element('sort', $view)); ?>">상태</a></th>
-							<th>신청자</th>
+							<th><a href="<?php echo element('jud_mem_nickname', element('sort', $view)); ?>">신청자</a></th>
 							<th><a href="<?php echo element('jud_wdate', element('sort', $view)); ?>">신청일</a></th>
 							<th>승인</th>
 							<th>자세히</th>
@@ -168,6 +168,8 @@
 					</select>
 					<div class="input-group">
 						<input type="text" class="form-control" name="skeyword" value="<?php echo html_escape(element('skeyword', $view)); ?>" placeholder="Search for..." />
+						<input type="hidden" name="wht_id" value="<?php echo $this->input->get('wht_id')?>" />
+						<input type="hidden" name="jud_state" value="<?php echo $this->input->get('jud_state')?>" />
 						<span class="input-group-btn">
 							<button class="btn btn-default btn-sm" name="search_submit" type="submit">검색!</button>
 						</span>
@@ -282,9 +284,27 @@
 										<option value="60" >60%</option>
 										<option value="50" >50%</option>
 										<option value="40" >40%</option>
+										<option value="35" >35%</option>
 										<option value="30" >30%</option>
+										<option value="28" >28%</option>
+										<option value="26" >26%</option>
+										<option value="24" >24%</option>
+										<option value="22" >22%</option>
 										<option value="20" >20%</option>
+										<option value="18" >18%</option>
+										<option value="16" >16%</option>
+										<option value="14" >14%</option>
+										<option value="12" >12%</option>
 										<option value="10" >10%</option>
+										<option value="9" >9%</option>
+										<option value="8" >8%</option>
+										<option value="7" >7%</option>
+										<option value="6" >6%</option>
+										<option value="5" >5%</option>
+										<option value="4" >4%</option>
+										<option value="3" >3%</option>
+										<option value="2" >2%</option>
+										<option value="1" >1%</option>
 										<option value="0" >0%</option>
 									</select>
 								</div>

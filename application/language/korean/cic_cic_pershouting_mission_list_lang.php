@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 // PER SHOUTING
-$lang[0] = '<h2>오늘의 샤우팅 키워드</h2><p>미션은 선착순 마감 및 타임 마감입니다. 최종 참여자가 적은 경우 내가 더 많은  포인트를 받아 갈 수 있습니다.</p>';  //상단 문자
+$lang[0] = '<h2>오늘의 샤우팅 키워드</h2><p>미션은 선착순 마감 및 타임 마감입니다.</p>';  //상단 문자
 $lang[1] = '검색어를 입력해주세요.'; //검색어 placeholder
 $lang[2] = '전체미션';   //미션 상태 분류
 $lang[3] = '진행중미션'; //미션 상태 분류

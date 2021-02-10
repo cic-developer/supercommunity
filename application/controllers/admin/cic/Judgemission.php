@@ -74,6 +74,7 @@ class Judgemission extends CB_Controller
 			'jud_med_wht_id' => $param->sort('jud_med_wht_id', 'asc'),
 			'jud_state' => $param->sort('jud_state', 'asc'),
 			'jud_wdate' => $param->sort('jud_wdate', 'asc'),
+			'jud_mem_nickname' => $param->sort('jud_mem_nickname', 'asc')
 		);
 		$findex = $this->input->get('findex') ? $this->input->get('findex') : $this->{$this->modelname}->primary_key;
 		$forder = $this->input->get('forder', null, 'desc');
@@ -86,9 +87,9 @@ class Judgemission extends CB_Controller
 		/**
 		 * 게시판 목록에 필요한 정보를 가져옵니다.
 		 */
-		$this->{$this->modelname}->allow_search_field = array('mis_title','jud_med_admin', 'jud_med_url', 'jud_mem_nickname', 'jud_wdate'); // 검색이 가능한 필드
+		$this->{$this->modelname}->allow_search_field = array('mis_title','jud_med_admin', 'jud_med_url', 'jud_mem_nickname', 'jud_wdate', 'jud_mem_nickname'); // 검색이 가능한 필드
 		$this->{$this->modelname}->search_field_equal = array(); // 검색중 like 가 아닌 = 검색을 하는 필드
-		$this->{$this->modelname}->allow_order_field = array('mis_title','jud_id','jud_med_wht_id','jud_state','jud_wdate'); // 정렬이 가능한 필드
+		$this->{$this->modelname}->allow_order_field = array('mis_title','jud_id','jud_med_wht_id','jud_state','jud_wdate', 'jud_mem_nickname'); // 정렬이 가능한 필드
 
 		
 		$where = array();
@@ -588,7 +589,7 @@ class Judgemission extends CB_Controller
 			array(
 				'field' => 'gp_giveperc',
 				'label' => 'percentage',
-				'rules' => 'trim|required|is_natural|in_list[0,10,20,30,40,50,60,70,80,90,100]',
+				'rules' => 'trim|required|is_natural|in_list[0,1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,22,24,26,28,30,35,40,50,60,70,80,90,100]',
 			),
 		);
 		$this->form_validation->set_rules($config);

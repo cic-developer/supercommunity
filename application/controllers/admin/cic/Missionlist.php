@@ -24,7 +24,7 @@ class Missionlist extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('RS_missionlist','RS_missionlist_log','RS_missionpoint');
+	protected $models = array('RS_missionlist','RS_missionlist_log','RS_missionpoint', 'RS_whitelist');
 
 	/**
 	 * 이 컨트롤러의 메인 모델 이름입니다
@@ -303,7 +303,7 @@ class Missionlist extends CB_Controller
 			array(
 				'field' => 'mis_title',
 				'label' => '제목',
-				'rules' => 'trim|min_length[2]|max_length[20]|required',
+				'rules' => 'trim|min_length[2]|max_length[255]|required',
 			),
 			array(
 				'field' => 'mis_title_en',
@@ -427,6 +427,8 @@ class Missionlist extends CB_Controller
 
 			$view['view']['data'] = $getdata;
 
+			$view['view']['wht_list'] = $this->RS_whitelist_model->get_whitelist_list()['list'];
+
 			/**
 			 * primary key 정보를 저장합니다
 			 */
@@ -467,9 +469,9 @@ class Missionlist extends CB_Controller
 				'mis_enddate' => $this->input->post('mis_enddate', null, ''),
 				'mis_content' => $this->input->post('mis_content', null, ''),
 				'mis_content_en' => $this->input->post('mis_content_en', null, ''),
+				'mis_apply_wht_id' => $this->input->post('mis_apply_wht_id', null, 0),
 			);
-			// print_r($this->input->post('mis_content_en', null, ''));
-			// exit;
+
 			if ($this->input->post('mis_thumb_image_del')) {
 				$updatedata['mis_thumb_image'] = '';
 			} elseif ($updatephoto) {

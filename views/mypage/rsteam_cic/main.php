@@ -42,33 +42,6 @@
 </div>
 <!--//메일인증 팝업-->
 
-<?php //E-mail 등록 및 수정 팝업 ?>
-<!-- <div class="popup popup_content popup_basic" id="popup_email">
-        <div class="head">
-            <label class="ttl-popup"><?php //echo $this->lang->line(0)?></label>
-        </div>
-        <div class="body">
-            <p><?php //echo $this->lang->line(1)?></p>
-            <div class="mail_box">
-                <input type="text" id="cert_email" placeholder="<?php //echo $this->lang->line(2)?>" value="<?php //echo element('mem_email', $member_data)?>" style="width:280px"/>
-                <input type="submit" class="btn2 btn_black" id="send2" value="<?php //echo $this->lang->line(3)?>" onclick="certEmail()" />
-                <div class="mail_code" style="display:none;" id="mail_code2"> 
-                    <input type="text" id="certyfy_string2" placeholder="<?php //echo $this->lang->line(4)?>" style="width:180px" />
-                    <input type="button" class="btn2 btn_line" value="<?php //echo $this->lang->line(5)?>" onclick="authEmail2()"/>
-                </div>
-            </div>
-        </div>
-
-        <div class="foot"> 
-            <div class="buttons">
-                <input class="btn custom-close" type="button" value="<?php //echo $this->lang->line(6)?>"/>  
-            </div>
-        </div>
-</div> -->
-<?php //E-mail 등록 및 수정 팝업 끝 ?>
-
-
-<?php// } ?>
        <!--페이지별 변경되는 오른쪽 영역 page_right_box-->
        <div id="my_right_box">
             <h5><?php echo $this->lang->line(7)?></h5> <!--마이페이지 상세 타이틀-->

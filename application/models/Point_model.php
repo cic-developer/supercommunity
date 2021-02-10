@@ -50,7 +50,7 @@ class Point_model extends CB_Model
 		$result = $this->db->get('point');
 		$result = $result->row_array();
 
-		return $result['poi_point'];
+		return round($result['poi_point'], 1);
 	}
 
 	public function get_all_point_sum()

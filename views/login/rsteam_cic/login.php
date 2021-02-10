@@ -5,7 +5,9 @@
 
 
 <?php
-if($this->input->ip_address() == '59.26.134.158'){
+if($this->input->ip_address() == '59.26.134.158' 
+// || $this->input->ip_address() == '49.163.50.132'
+){
 	echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
 	echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
 	echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
@@ -13,7 +15,7 @@ if($this->input->ip_address() == '59.26.134.158'){
 	echo form_open(current_full_url(), $attributes);
 ?>
 	<div class="rs_login" style="position:absolute; top:100px; left:0;">
-	<strong>천민 로그인 입구---------</strong> <br/>
+	<strong>사무실에서만 보이는 로그인 입구---------</strong> <br/>
 	<input type="hidden" name="url" value="<?php echo html_escape($this->input->get_post('url')); ?>" />
 	<ol class="loginform">
 		<li>

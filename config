@@ -1,0 +1,10 @@
+# Read more about SSH config files: https://linux.die.net/man/5/ssh_config
+Host alias
+    HostName hostname
+    User user
+
+Host 3.34.2.173_SuperCommunity
+    HostName 3.34.2.173
+    User ubuntu
+    AddKeysToAgent yes
+    IdentityFile C:/Program Files/.ssh/ciccommunity-ec2.pem

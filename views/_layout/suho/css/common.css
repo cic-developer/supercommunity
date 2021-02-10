@@ -1,0 +1,173 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+/**{word-break: keep-all; }*/
+a{text-decoration: none; color: inherit;}
+/*.wrap {width: 100%; margin: 0 auto; }*/
+
+#conA {width: 100%; height: 1080px; background-image:url(../images/main_background.jpg); background-repeat: no-repeat; background-position: center; background-size: cover; position: relative; }
+
+header{width:100%; height:70px; margin: 0 auto; position: absolute;  z-index: 999; margin-top: 30px;  }
+header:hover { transition: 0.5s;}
+
+.logo img{width:155px; height: 108px; /*text-indent: -999px;*/ float: left; position: absolute; top:-15px;left: 372px;}
+.gnb{float: left; position: absolute;top:25px; left: 36%; transition: 0.9s; }
+.gnb ul li{float: left ;margin-right: 5.2083vw;}
+.gnb ul li:last-child{margin-right: 0;}
+.gnb ul li a{font-size: 15px; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; }
+.gnb ul li a:hover{color: red;}
+
+
+#panel {width: 100%;height: 230px; background: rgba(255, 255, 255, 0.89); position: relative; z-index:-10;top:70px;left: 0px; /*outline: 1px dotted red;*/}
+
+#panel .panel_wrap{position: absolute; top:10%; left: 35%;}
+#panel ul{float: left;margin-right: 85px;}
+#panel ul:nth-child(1){margin-left:12px;}
+#panel ul:nth-child(2){margin-left:7px;}
+#panel ul:nth-child(3){margin-left:0px;}
+#panel ul:nth-child(4){margin-left:-25px;}
+#panel ul:last-child{margin-left:-25px;}
+#panel ul li{text-align: center; margin-bottom: 8px;}
+#panel ul li a{color:#333;font-size: 14px;}
+#panel ul li a:hover{color:red; font-weight: bold;}
+
+#conB {width: 1180px; height: 1080px; margin: 0 auto; }
+#conB .conB_box {position: relative; width: 1180px; height: 1080px; margin: 0 auto;}
+
+#conB .mainvege {position: absolute; top: -90px; left: 300px; width: 818px; height: 730px; }
+#conB .mainvege img {width: 1150px; height: 1060px; /*transition: 0.7s;*/ }
+
+
+#conB .conB_text {position: absolute; top: 33%; left:0; width: 515px; height: 250px; }
+
+#conB .conB_text .bold {font-family: 'Noto Sans KR', sans-serif; font-size: 40px; font-weight: 600; letter-spacing: -3px;}
+#conB .conB_text .nomal {margin-top: 25px; font-family: 'Noto Sans KR', sans-serif; font-size: 16px; font-weight: 400; color: #333;}
+
+#conB .conB_delivery {position: absolute; top: 65%; left: -7%; /*width: 800px; height: 200px;*/}
+
+#conC {position: relative; width: 100%; height: 533px;}
+#conC .conC_box {width: 1180px; height: 533px; margin: 0 auto; }
+#conC .conC_to {position: absolute; top: -120px; right: -260px;} 
+#conC .conC_to img {width: 600px; height: 600px; }
+
+#conC .conC_ja {position: absolute; top:390px; left:-40px;} 
+#conC .conC_ja img {width: 130px; height: 160px;}
+
+#conC .conC_title {width: 523px; height: 140px; margin: 0 auto; }
+#conC .conC_title .conC_bold {font-family: 'Noto Sans KR', sans-serif; font-size: 33px; font-weight: 700; color: #000; text-align: center; letter-spacing: -2px;}
+#conC .conC_title .conC_nomal {font-family: 'Noto Sans KR', sans-serif; font-size: 15px; font-weight: 400; color: #333; text-align: center; margin-top: 30px; letter-spacing: -1px;}
+
+#conC .conC_icon {width: 950px; height: 350px; margin: 0 auto; margin-top: 35px; display: flex; }
+
+#conC .conC_icon1 {width: 235px; height: 250px; }
+#conC .conC_icon1 img {width: 91px; height: 98px; margin-left: 70px; margin-top: 10px; transition: 0.3s;}
+#conC .conC_icon1 img:hover {background: linear-gradient(top, rgba(0,0,0,0) 15%,rgba(255,255,255,1) 90%); transform: translateY(-25px); }
+#conC .conC_icon1 .icon1_title {text-align: center; font-family: 'Noto Sans KR', sans-serif; font-size: 28px; font-weight: 700; color: #333; text-align: center; margin-top: 30px; letter-spacing: -1px;}
+#conC .conC_icon1 .icon1_text {text-align: center; font-family: 'Noto Sans KR', sans-serif; font-size: 16px; font-weight: 400; color: #333; text-align: center; margin-top: 10px; letter-spacing: -1px;}
+
+#conC .conC_icon2 {width: 235px; height: 250px; margin: 0 auto; } 
+#conC .conC_icon2 img {width: 91px; height: 98px; margin-left: 70px; margin-top: 10px; transition: 0.3s;}
+#conC .conC_icon2 img:hover {background: linear-gradient(top, rgba(0,0,0,0) 15%,rgba(255,255,255,1) 90%); transform: translateY(30px); }
+#conC .conC_icon2 .icon2_title {text-align: center; font-family: 'Noto Sans KR', sans-serif; font-size: 28px; font-weight: 700; color: #333; text-align: center; margin-top: 30px; letter-spacing: -1px;}
+#conC .conC_icon2 .icon2_text {text-align: center; font-family: 'Noto Sans KR', sans-serif; font-size: 16px; font-weight: 400; color: #333; text-align: center; margin-top: 10px; letter-spacing: -1px;}
+
+#conC .conC_icon3 {width: 235px; height: 250px; margin-left: 0px;}
+
+#conC .conC_icon3 img {width: 115px; height: 125px; margin-left: 60px; margin-top: 5px; transition: 0.3s;}
+#conC .conC_icon3 img:hover {background: linear-gradient(top, rgba(0,0,0,0) 15%,rgba(255,255,255,1) 90%); transform: translateX(60px); }
+#conC .conC_icon3 .icon3_title {text-align: center; font-family: 'Noto Sans KR', sans-serif; font-size: 28px; font-weight: 700; color: #333; text-align: center; margin-top: 10px; letter-spacing: -1px;}
+#conC .conC_icon3 .icon3_text {text-align: center; font-family: 'Noto Sans KR', sans-serif; font-size: 16px; font-weight: 400; color: #333; text-align: center; margin-top: 10px; letter-spacing: -1px;}
+
+#conD {width: 100%; }
+#conD .conD_box {width: 1180px; margin: 0 auto; o }
+#conD .conD_box .conD_title_pink {font-family: 'Noto Sans KR', sans-serif; font-size: 40px; font-weight: 700; color: #333; text-align: center; letter-spacing: -1px; display: flex; width: 310px; height: 60px; margin: 0 auto; padding-top: 50px; }
+
+#conD .conD_box .menubox_01 {display: flex; width: 1180px; height: 600px; margin: 0 auto;  margin-top: 100px; }
+
+#conD .conD_box .menubox_01 .menu01 {position: relative; width: 380px; height: 600px; background-image: url(../images/menu_01.png); background-repeat: no-repeat; background-position:center; background-size: cover; margin: 0 auto;}
+#conD .conD_box .menu01_title {position: absolute; top: 265px; left: 145px; font-family: 'Noto Sans KR', sans-serif; font-size: 34px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu01_en {position: absolute; top: 306px; left: 107px; font-family: 'Noto Sans KR', sans-serif; font-size: 34px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu01_je {position: absolute; top: 360px; left: 96px; font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 700; color: #666; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu01_won {position: absolute; top:412px; left: 160px; font-family: 'Noto Sans KR', sans-serif; font-size: 26px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+
+#conD .conD_box .click {margin: 0 auto; margin-top: 470px; width: 280px; height: 70px; border: 0px solid #000; border-radius: 15px; background: linear-gradient( to right, #3b6c27, #68b545 );}
+#conD .conD_box .click .shopping {font-family: 'Noto Sans KR', sans-serif; font-size: 20px; font-weight: 400; color: #666; text-align: center; letter-spacing: -1px; color: #fff; line-height: 3.5; transition: 0.8s;}
+#conD .conD_box .click .shopping:hover {background: rgba(0,0,0,0.5);}
+
+
+#conD .conD_box .menubox_01 .menu02 {position: relative; width: 380px; height: 600px; background-image: url(../images/menu_02.png); background-repeat: no-repeat; background-position:center; background-size: cover; margin: 0 auto;}
+#conD .conD_box .menu02_title {position: absolute; top: 265px; left: 145px; font-family: 'Noto Sans KR', sans-serif; font-size: 34px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu02_en {position: absolute; top: 306px; left: 107px; font-family: 'Noto Sans KR', sans-serif; font-size: 34px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu02_je {position: absolute; top: 360px; left: 140px; font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 700; color: #666; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu02_won {position: absolute; top:412px; left: 160px; font-family: 'Noto Sans KR', sans-serif; font-size: 26px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+
+#conD .conD_box .menubox_01 .menu03 {position: relative; width: 380px; height: 600px; background-image: url(../images/menu_03.png); background-repeat: no-repeat; background-position:center; background-size: cover; margin: 0 auto;}
+#conD .conD_box .menu03_title {position: absolute; top: 265px; left: 145px; font-family: 'Noto Sans KR', sans-serif; font-size: 34px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu03_en {position: absolute; top: 306px; left: 130px; font-family: 'Noto Sans KR', sans-serif; font-size: 34px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu03_je {position: absolute; top: 360px; left: 96px; font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 700; color: #666; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu03_won {position: absolute; top:412px; left: 160px; font-family: 'Noto Sans KR', sans-serif; font-size: 26px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+
+#conD .conD_box .menubox_02 {display: flex; width: 1180px; height: 600px; margin: 0 auto; margin-top: 110px;}
+
+#conD .conD_box .menubox_02 .menu04 {position: relative; width: 380px; height: 600px; background-image: url(../images/menu_04.png); background-repeat: no-repeat; background-position:center; background-size: cover; margin: 0 auto;}
+#conD .conD_box .menu04_title {position: absolute; top: 275px; left: 110px; font-family: 'Noto Sans KR', sans-serif; font-size: 34px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu04_en {position: absolute; top: 315px; left: 75px; font-family: 'Noto Sans KR', sans-serif; font-size: 34px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu04_je {position: absolute; top: 365px; left: 100px; font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 700; color: #666; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu04_won {position: absolute; top:412px; left: 160px; font-family: 'Noto Sans KR', sans-serif; font-size: 26px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+
+#conD .conD_box .menubox_02 .menu05 {position: relative; width: 380px; height: 600px; background-image: url(../images/menu_05.png); background-repeat: no-repeat; background-position:center; background-size: cover; margin: 0 auto;}
+#conD .conD_box .menu05_title {position: absolute; top: 275px; left: 130px; font-family: 'Noto Sans KR', sans-serif; font-size: 34px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu05_en {position: absolute; top: 315px; left: 95px; font-family: 'Noto Sans KR', sans-serif; font-size: 34px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu05_je {position: absolute; top: 365px; left: 90px; font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 700; color: #666; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu05_won {position: absolute; top:412px; left: 160px; font-family: 'Noto Sans KR', sans-serif; font-size: 26px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+
+#conD .conD_box .menubox_02 .menu06 {position: relative; width: 380px; height: 600px; background-image: url(../images/menu_06.png); background-repeat: no-repeat; background-position:center; background-size: cover; margin: 0 auto;}
+#conD .conD_box .menu06_title {position: absolute; top: 275px; left: 105px; font-family: 'Noto Sans KR', sans-serif; font-size: 34px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu06_en {position: absolute; top: 315px; left: 90px; font-family: 'Noto Sans KR', sans-serif; font-size: 34px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu06_je {position: absolute; top: 365px; left: 120px; font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 700; color: #666; text-align: center; letter-spacing: -1px;}
+#conD .conD_box .menu06_won {position: absolute; top:412px; left: 160px; font-family: 'Noto Sans KR', sans-serif; font-size: 26px; font-weight: 700; text-align: center; letter-spacing: -1px;}
+
+#conD .conD_box .menuplus {margin: 0 auto; margin-top: 63px; width: 310px; height: 70px; border: 2px solid #333; border-radius: 15px;}
+#conD .conD_box .menuplus a {display: block; font-family: 'Noto Sans KR', sans-serif; font-size: 20px; font-weight: 700; color: #666; text-align: center; letter-spacing: -1px; color: #333; line-height: 3.7; transition: 0.5s;}
+#conD .conD_box .menuplus a:hover { color: green; background: rgba(0,0,0,0.2); /*opacity: 0.5;*/}
+
+
+#conD .conD_box .click {margin: 0 auto; margin-top: 470px; width: 280px; height: 70px; border: 0px solid #000; border-radius: 15px; background: linear-gradient( to right, #3b6c27, #68b545 );}
+#conD .conD_box .click .shopping {font-family: 'Noto Sans KR', sans-serif; font-size: 20px; font-weight: 400; color: #666; text-align: center; letter-spacing: -1px; color: #fff; line-height: 3.5; transition: 0.8s;}
+#conD .conD_box .click .shopping:hover {background: rgba(0,0,0,0.5);}
+
+
+#conE { width: 100%; height: 534px;}
+#conE .conE_box {position: relative; width: 1180px; height: 534px; margin: 0 auto; margin-top: 118px;  }
+#conE .conE_to {position: absolute; top: 10px; right: 100px; } 
+#conE .conE_to img {width: 153px; height: 135px;} 
+
+#conE .conE_sa {position: absolute; top: 265px; right: 20px; } 
+#conE .conE_sa img {width: 295px; height: 255px;} 
+
+#conE .conE_to02 {position: absolute; top:30px; left:20px;} 
+#conE .conE_to02 img {width: 153px; height: 135px;}
+
+#conE .conE_ja {position: absolute; top:350px; left:10px;} 
+#conE .conE_ja img {width: 153px; height: 135px;}
+
+#conE .conE_title {width: 630px; height: 327px; margin: 0 auto; padding-top: 85px; }
+#conE .conE_title .conE_bold {font-family: 'Noto Sans KR', sans-serif; font-size: 33px; font-weight: 700; color: #000; text-align: center; letter-spacing: -2px;}
+
+#conE .conE_title .conE_nomal {font-family: 'Noto Sans KR', sans-serif; font-size: 15px; font-weight: 400; color: #333; text-align: center; letter-spacing: -1px; margin-top: 30px; }
+#conE .conE_title p {font-family: 'Noto Sans KR', sans-serif; font-size: 15px; font-weight: 400; color: #333; text-align: center; margin-bottom: 10px; }
+
+#conE .conE_title .conE_bt {margin: 0 auto; margin-top: 63px; width: 260px; height: 51px; border: 0px solid #333; border-radius: 8px; background: #68b545;}
+#conE .conE_title .conE_bt a {display: block; font-family: 'Noto Sans KR', sans-serif; font-size: 16px; font-weight: 700;  text-align: center; letter-spacing: -1px; color: #333; line-height: 3; transition: 0.5s; color: #fff;}
+#conE .conE_title .conE_bt a:hover {color: #fff; background: #44782c;}
+
+footer {width: 100%;  height: 273px; margin-top: 92px; margin: 0 auto; background: #4a4c4a; outline: 1px dotted red;}
+.ftlogo {display: flex; width: 1500px; height: 273px; margin: 0 auto;}
+.ftlogo img {width: 128px; height: 95px; margin-top: 80px;}
+.ftlogo .fttext {width: 900px; height: 70px; margin-top: 98px; margin-left: 117px; }
+
+.ftlogo .fttext p {font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 400; color: #333; color: #ccc;}
+
+.ftlogo .fttext .fttext03 {font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 400; color: #333; color: #999; margin-top: 15px;}
+

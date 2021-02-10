@@ -79,7 +79,7 @@ class RS_media_model extends CB_Model
 
 
   //미션에 신청한 미디어들 전부 가져옴
-  function getMissionMedia($mis_id, $mem_id){
+  function getMissionMedia($mis_id, $mem_id, $med_wht_id = 0){
     $_join = array(
       'table' => 'rs_judge juge',
       'on'    => 'jud_mis_id = '.$mis_id.' AND jud_jug_id = 1 AND jud_state != 0 AND jud_med_id = med_id',
@@ -87,8 +87,11 @@ class RS_media_model extends CB_Model
     );
     $where = array(
       'mem_id' => $mem_id,
-      'med_state' => 3
+      'med_state' => 3,
     );
+    if($med_wht_id){
+      $where['med_wht_id'] = $med_wht_id;
+    }
     
     return $this->get('','', $where, '', 0,'jud_state', 'ASC', $_join);
   }
