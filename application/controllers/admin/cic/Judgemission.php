@@ -246,10 +246,10 @@ class Judgemission extends CB_Controller
 			$where = array(
 				'mem_id' => element('jud_mem_id', $getdata),
 			);
-			$result['list'][$key]['member_group_member'] = $this->Member_group_member_model->get('', '', $where, '', 0, 'mgm_id', 'ASC');
+			$result['list']['member_group_member'] = $this->Member_group_member_model->get('', '', $where, '', 0, 'mgm_id', 'ASC');
 			$mgroup = array();
-			if ($result['list'][$key]['member_group_member']) {
-				foreach ($result['list'][$key]['member_group_member'] as $mk => $mv) {
+			if ($result['list']['member_group_member']) {
+				foreach ($result['list']['member_group_member'] as $mk => $mv) {
 					if (element('mgr_id', $mv)) {
 						$mgroup[] = element('mgr_title',$this->Member_group_model->item(element('mgr_id', $mv)));
 					}
