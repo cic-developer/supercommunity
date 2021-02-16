@@ -39,6 +39,9 @@
                     <p>[MISSION] <?php echo $this->session->userdata('lang') == 'korean' ? element('mis_title',$mission_data) : element('mis_title_en',$mission_data)?></p>
                 </dt>
                 <dd>
+                    <?php if(element('wht_attach', $mission_data)){ ?>
+                    <img src="<?php echo thumb_url('wht_attach', element('wht_attach', $mission_data)); ?>" class="icon" />
+                    <?php }?>
                     <u id="mis_state"><?php echo $mission_state == 'end' ? $this->lang->line(12) : $this->lang->line(6); ?></u>
                     <ul class="detail_title">
                         <li>               

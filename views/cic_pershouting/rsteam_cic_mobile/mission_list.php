@@ -136,6 +136,7 @@
                         <span class="yet">
                             <?=$d['state']?>
                         </span>
+                        <!-- <span class="icon">안녕</span> -->
                         <h3>
                             <img src="<?php echo base_url('assets/images/sub_01_point_logo.png');?>" alt="<?php echo $this->lang->line(6)?>"/>
                             <b><?php echo ($state === true || $state === false) ? number_format($d['mis_per_token']) : 'HIDDEN'?></b> PER POINT
@@ -148,7 +149,10 @@
                             </h2>
 
                             <?php //echo mb_substr(strip_tags($this->session->userdata('lang') == 'korean' ? $d['mis_content'] : $d['mis_content_en']), 0, 100)?>
-                        </a>                              
+                            <?php if(element('wht_attach', $d)){ ?>
+                        <img src="<?php echo thumb_url('wht_attach', element('wht_attach', $d)); ?>" class="icon" />
+                        <?php } ?>
+                        </a>                            
                     </div>                   
                 </div>
             </li>

@@ -271,6 +271,10 @@
 
 }
 
+#shouting_all .sc_b .txt_box .txt_t .icon {
+line-height: 1.7;
+    }
+
 
 #shouting_all .sc_b .txt_box .txt_t h3 {
 	display:block;
@@ -278,7 +282,7 @@
     line-height: 1.7;
     color:#333;
 	font-weight: 500;
-    float: left;
+    float: right;
     background:url(/assets/images/nav_line_bg.gif) repeat-x center 22px;
 
 }
@@ -296,10 +300,15 @@
     
 }
 
+#shouting_all .sc_b li .misson_t .icon{
+    margin-left:5px;
+    width: 40px;
+    height: 40px;
+}
+
 #shouting_all .sc_b .txt_box .misson_t a {
     display: block;
     text-decoration:none;
-    height:35vw;
     overflow: hidden;
     color:#656565;
     font-weight: normal;
@@ -453,6 +462,7 @@
 	
 }
 
+
 .event_title dd ul{
     overflow: hidden;
     display: block;   
@@ -485,6 +495,12 @@
     width: 100%;
     
 }
+
+.event_title .icon{   
+    width: 40px;
+    height: 40px;
+}
+
 
 .event_title dd ul.detail_title li {
     display: block;
@@ -523,11 +539,6 @@
     
   
  }
- 
-
-
-
-
 
 .event_main{
     height: 100vmin; 

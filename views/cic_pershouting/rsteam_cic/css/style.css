@@ -251,6 +251,7 @@
 
 #shouting_all .sc_b .txt_box .txt_t {
   overflow:hidden;
+  
 }
 
 
@@ -348,7 +349,13 @@
 }
 
 
-
+.txt_box .txt_t .icon{
+    position: relative;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    
+}
 
 
 #shouting_all .sc_b .lock .txt_box .txt_t .yet{
@@ -457,6 +464,12 @@
 	padding-bottom:10px;
 	overflow: hidden;
 	
+}
+.event_title dd .icon{
+    position: relative;
+    right: 580px;
+    width: 30px;
+    height: 30px;
 }
 
 .event_title dd ul{

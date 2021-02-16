@@ -50,7 +50,10 @@
                         <?php echo $this->lang->line(7)?><b><?php echo number_format(element('mis_max_point',$mission_data))?></b> SUPER POINT
                         </li>
                     </ul>    
-                </dd>       
+                </dd> 
+                <dd>
+                <img src="<?php echo thumb_url('wht_attach', element('wht_attach', $mission_data)); ?>" class="icon" />
+                </dd>      
             </dl>
             <div class="write">
             <?php if( element('mis_thumb_youtube',$mission_data)){?>
