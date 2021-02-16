@@ -474,7 +474,7 @@ class Setting extends CB_Controller
 		$this->RS_mediatype_model->allow_order_field = array('met_order'); // 정렬이 가능한 필드
 		$result = $this->RS_mediatype_model
 			->get_mediatype_list('', '', '', '', $findex, $forder);
-		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
+		// $list_num = $result['total_rows'] - ($page - 1) * $per_page;
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {
 				$countwhere = array(
@@ -483,7 +483,7 @@ class Setting extends CB_Controller
 				// $result['list'][$key]['member_count'] = $this->RS_mediatype_map_model->count_by($countwhere);
 				$join = array('table' => 'rs_media','on' => 'rs_media.med_id = rs_mediatype_map.med_id AND rs_media.med_state = 3 AND `rs_media`.`med_deletion` = "N"','type' => 'inner');
 				$result['list'][$key]['member_count'] = count($this->RS_mediatype_map_model->get("",'mtm_id',$countwhere,"","","","",$join));
-				$result['list'][$key]['num'] = $list_num--;
+				// $result['list'][$key]['num'] = $list_num--;
 			}
 		}
 		$view['view']['data'] = $result;
@@ -496,8 +496,8 @@ class Setting extends CB_Controller
 		/**
 		 * 쓰기 주소, 삭제 주소등 필요한 주소를 구합니다
 		 */
-		$view['view']['skeyword'] = ($sfield && array_key_exists($sfield, $search_option)) ? $skeyword : '';
-		$view['view']['search_option'] = search_option($search_option, $sfield);
+		// $view['view']['skeyword'] = ($sfield && array_key_exists($sfield, $search_option)) ? $skeyword : '';
+		// $view['view']['search_option'] = search_option($search_option, $sfield);
 		$view['view']['listall_url'] = admin_url($this->pagedir . '/mediatype');
 		$view['view']['whitelist_url'] = admin_url($this->pagedir . '/whitelist');
 		$view['view']['mediatype_url'] = admin_url($this->pagedir . '/mediatype');
@@ -665,6 +665,57 @@ class Setting extends CB_Controller
 			$getdata = $this->RS_whitelist_model->get_one($pid);
 		}
 
+		//----------------- 이미지 파일 업로드 있는지 확인 -------------------------------
+		$this->load->library('upload');
+		$updatephoto = '';
+		$file_error = '';
+
+		if (isset($_FILES) && isset($_FILES['wht_attach']) && isset($_FILES['wht_attach']['name']) && $_FILES['wht_attach']['name']) {
+			$upload_path = config_item('uploads_dir') . '/wht_attach/';
+			if (is_dir($upload_path) === false) {
+				mkdir($upload_path, 0707);
+				$file = $upload_path . 'index.php';
+				$f = @fopen($file, 'w');
+				@fwrite($f, '');
+				@fclose($f);
+				@chmod($file, 0644);
+			}
+			$upload_path .= cdate('Y') . '/';
+			if (is_dir($upload_path) === false) {
+				mkdir($upload_path, 0707);
+				$file = $upload_path . 'index.php';
+				$f = @fopen($file, 'w');
+				@fwrite($f, '');
+				@fclose($f);
+				@chmod($file, 0644);
+			}
+			$upload_path .= cdate('m') . '/';
+			if (is_dir($upload_path) === false) {
+				mkdir($upload_path, 0707);
+				$file = $upload_path . 'index.php';
+				$f = @fopen($file, 'w');
+				@fwrite($f, '');
+				@fclose($f);
+				@chmod($file, 0644);
+			}
+
+			$uploadconfig = array();
+			$uploadconfig['upload_path'] = $upload_path;
+			$uploadconfig['allowed_types'] = 'jpg|jpeg|png|gif';
+			$uploadconfig['max_size'] = '20000';
+			$uploadconfig['encrypt_name'] = true;
+
+			$this->upload->initialize($uploadconfig);
+
+			if ($this->upload->do_upload('wht_attach')) {
+				$img = $this->upload->data();
+				$updatephoto = cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $img);
+			} else {
+				$file_error = $this->upload->display_errors();
+			}
+		}
+		//----------------- 이미지 파일 업로드 있는지 확인 -------------------------------
+
 		/**
 		 * Validation 라이브러리를 가져옵니다
 		 */
@@ -692,10 +743,6 @@ class Setting extends CB_Controller
 		);
 		$this->form_validation->set_rules($config);
 		$form_validation = $this->form_validation->run();
-		$file_error = '';
-		$updatephoto = '';
-		$file_error2 = '';
-		$updateicon = '';
 
 
 		/**
@@ -731,16 +778,21 @@ class Setting extends CB_Controller
 			 * 유효성 검사를 통과한 경우입니다.
 			 * 즉 데이터의 insert 나 update 의 process 처리가 필요한 상황입니다
 			 */
-
 			// 이벤트가 존재하면 실행합니다
 			$view['view']['event']['formruntrue'] = Events::trigger('formruntrue', $eventname);
 
+			if (element('wht_attach', $getdata) && ($this->input->post('wht_attach_del') OR $updatephoto)) {
+				// 기존 파일 삭제
+				@unlink(config_item('uploads_dir') . '/wht_attach/' . element('wht_attach', $getdata));
+			}
+			
 			$updatedata = array(
 				'wht_title' => $this->input->post('wht_title', null, ''),
 				'wht_title_en' => $this->input->post('wht_title_en', null, ''),
 				'wht_domains' => strtolower($this->input->post('wht_domains', null, '')),
 				'wht_memo' => $this->input->post('wht_memo', null, ''),
 				'wht_memo_en' => $this->input->post('wht_memo_en', null, ''),
+				'wht_attach'	=> $updatephoto ? $updatephoto : ( $this->input->post('wht_attach_del') ? '' : element('wht_attach', $getdata) ),
 			);
 			$datetime = cdate('Y-m-d H:i:s');
 

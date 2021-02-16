@@ -137,6 +137,9 @@ class Judgemission extends CB_Controller
 					element('mem_icon', $dbmember)
 				);
 				$result['list'][$key]['num'] = $list_num--;
+
+				//잔여 포인트보다 출금 포인트 량이 많을 경우, 즉 DB에서 소유하고 있는 포인트가
+				// $result['list'][$key]['poi_warn']
 			}
 		}
 		$view['view']['data'] = $result;

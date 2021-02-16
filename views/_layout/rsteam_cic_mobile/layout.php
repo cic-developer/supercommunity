@@ -121,7 +121,7 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 						</a>
 						<ul class="sidebar-submenu" style="display: none;">
 							<li><a href="<?=base_url('About/provision')?>"><?php echo $this->lang->line('cic_18')?> <i class="fa fa-angle-right pull-right"></i></a></li>
-							<li><a href="<?=base_url('About/status')?>"><?php echo $this->lang->line('cic_19')?> <i class="fa fa-angle-right pull-right"></i></a></li>
+							<!-- <li><a href="<?php //echo base_url('About/status')?>"><?php //echo $this->lang->line('cic_19')?> <i class="fa fa-angle-right pull-right"></i></a></li> -->
 							<li><a href="<?=base_url('About/whitepaper')?>"><?php echo $this->lang->line('cic_20')?> <i class="fa fa-angle-right pull-right"></i></a></li>
 						</ul>
 					</li>
@@ -234,7 +234,7 @@ switch(element('menu',$header)){
 	<div id="sub_menu">
 		<ul> 
 			<li><a href="<?=base_url('About/provision')?>" <?php echo (strpos(uri_string(),'About/provision') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_18')?></a></li>
-			<li><a href="<?=base_url('About/status')?>" <?php echo (strpos(uri_string(),'About/status') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_19')?></a></li>
+			<!-- <li><a href="<?php //echo base_url('About/status')?>" <?php //echo (strpos(uri_string(),'About/status') !== false) ? 'class="on"': ''?>><?php //echo $this->lang->line('cic_19')?></a></li> -->
 			<li><a href="<?=base_url('About/whitepaper')?>" <?php echo (strpos(uri_string(),'About/whitepaper') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_20')?></a></li>
 		</ul>
 	</div>

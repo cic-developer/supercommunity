@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang[0] = 'SUPER COMMUNITY';
-$lang[1] = 'PER POINT 분배정책';
+$lang[1] = 'PER POINT 지급정책';
 $lang[2] = '<b>1</b>. 포인트란?';
 $lang[3] = 'PER 포인트의 분배는 PER Friends 인증 계정의 SUPER포인트 보유정도에 비례합니다.
             Super 포인트는 PER Friends 계정에 귀속되어 계정의 커뮤니티 기여도를 측정하는 일종의 레벨 부여 용도로 사용됩니다.
