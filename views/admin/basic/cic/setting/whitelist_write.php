@@ -28,6 +28,23 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label">이미지</label>
+				<div class="col-sm-10">
+				<?php
+					if (element('wht_attach', element('data', $view))) {
+				?>
+						<img src="<?php echo thumb_url('wht_attach', element('wht_attach', element('data', $view)), 200, 100); ?>" alt="썸네일" title="썸네일" />
+						<label for="wht_attach_del">
+							<input type="checkbox" name="wht_attach_del" id="wht_attach_del" value="1" <?php echo set_checkbox('wht_attach_del', '1'); ?> /> 삭제
+						</label>
+				<?php
+					}
+				?>
+				
+					<input type="file" name="wht_attach" id="wht_attach" />
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">도메인</label>
 				<div class="col-sm-10">
 					<textarea class="form-control" rows="5" name="wht_domains"><?php echo set_value('wht_domains', element('wht_domains', element('data', $view))); ?></textarea>

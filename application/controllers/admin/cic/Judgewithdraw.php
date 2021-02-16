@@ -24,7 +24,7 @@ class Judgewithdraw extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('RS_judge','RS_whitelist','RS_judge_log','RS_judge_denied','RS_judge_denyreason','Member_extra_vars');
+	protected $models = array('RS_judge','RS_whitelist','RS_judge_log','RS_judge_denied','RS_judge_denyreason','Member_extra_vars','Point');
 
 	/**
 	 * 이 컨트롤러의 메인 모델 이름입니다
@@ -109,10 +109,17 @@ class Judgewithdraw extends CB_Controller
 					element('mem_icon', $dbmember)
 				);
 				$result['list'][$key]['num'] = $list_num--;
+				$result['list'][$key]['save_point'] = $this->Point_model->get_point_sum(element('jud_mem_id', $val));
+				if(element('jud_state', $val) == 1){
+					$result['list'][$key]['point_wrong'] = ($this->Point_model->get_point_sum(element('jud_mem_id', $val)) < -1) ? true : false;
+				}else{
+					$result['list'][$key]['point_wrong'] = false;
+				}
+
 			}
 		}
 		$view['view']['data'] = $result;
-
+		
 		/**
 		 * primary key 정보를 저장합니다
 		 */

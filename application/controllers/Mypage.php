@@ -1575,7 +1575,8 @@ class Mypage extends CB_Controller
 		$withdraw_point = $this->input->post('withdraw_point');
 		$member_point = $this->Point_model->get_point_sum($mem_id);
 
-		if($withdraw_point > $member_point && !is_numeric($withdraw_point)){
+		//2021/2/15일 $withdraw_point > $member_point && !is_numeric($withdraw_point) 조건을 || 로 수정함 문제시 롤백
+		if($withdraw_point > $member_point || !is_numeric($withdraw_point)){
 			$this->session->set_flashdata('message',$this->lang->line('ajax_1'));
 			echo json_decode('fail');
 			exit;

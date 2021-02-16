@@ -51,7 +51,7 @@
 							<td><?php echo html_escape(element('jud_wallet', $result)); ?></td>
 							<td class="text-right"><?php echo number_format(element('jud_point', $result),1); ?></td>
 							<td><?php echo rs_get_state(element('jud_state', $result)); ?></td>
-							<td><?php echo element('display_name', $result); ?></td>
+							<td><?php echo element('display_name', $result); ?> <?php echo element('point_wrong', $result) ? '<span class="label label-danger" style="margin-left:10px;">부정사용의심</span>': '' ; ?></td>
 							<td><?php echo display_datetime(element('jud_wdate', $result), 'user', 'Y-m-d H:i:s'); ?></td>
 							<td>
 								<div class="btn-group">
