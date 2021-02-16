@@ -77,6 +77,8 @@ class Mission extends CB_Controller
 			$result =$this->{$this->modelname}->get_clientMissionlist($per_page, $offset, $state, $search);
 		}
 		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
+		
+
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {
 				/*
@@ -137,7 +139,7 @@ class Mission extends CB_Controller
 		$view['header']['menu'] = 'pershouting';
 
 		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
+		// $view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
 		
 		$layoutconfig = array(
 			'path' => 'cic_pershouting',
@@ -149,11 +151,11 @@ class Mission extends CB_Controller
 			'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_main'),
 			'skin_dir' => 'rsteam_cic',
 			'mobile_skin_dir' => 'rsteam_cic_mobile',
-			'page_title' => $page_title,
-			'meta_description' => $meta_description,
-			'meta_keywords' => $meta_keywords,
-			'meta_author' => $meta_author,
-			'page_name' => $page_name,
+			// 'page_title' => $page_title,
+			// 'meta_description' => $meta_description,
+			// 'meta_keywords' => $meta_keywords,
+			// 'meta_author' => $meta_author,
+			// 'page_name' => $page_name,
 		);
 		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
 		$this->data = $view;

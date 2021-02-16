@@ -146,8 +146,9 @@
                             <h2>
                             [MISSION] <?php echo $this->session->userdata('lang') == 'korean' ? $d['mis_title'] : $d['mis_title_en']?>
                             </h2>
+
                             <?php //echo mb_substr(strip_tags($this->session->userdata('lang') == 'korean' ? $d['mis_content'] : $d['mis_content_en']), 0, 100)?>
-                        </a>                               
+                        </a>                              
                     </div>                   
                 </div>
             </li>

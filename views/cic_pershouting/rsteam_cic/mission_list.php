@@ -154,6 +154,12 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
                             <h2>
                             [MISSION] <?php echo $this->session->userdata('lang') == 'korean' ? $d['mis_title'] : $d['mis_title_en']?>
                             </h2>
+                            <div class="icons">
+                            <?php if(element('wht_attach', $d)) { ?>
+                             <img src="<?php echo thumb_url('wht_attach', element('wht_attach', $d)); ?>"  alt="icons alt"/>
+                             <?php }?>
+                            </div>
+                            
                             <?php //echo mb_substr(strip_tags($this->session->userdata('lang') == 'korean' ? $d['mis_content'] : $d['mis_content_en']), 0, 100)?>
                         </a>                               
                     </div>                   
@@ -206,14 +212,14 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
 
     //썸네일 호버링 끝 작동 함수
     function thumbnail_out(obj){
-        let this_iframe = $(obj).find('iframe');
-        if(this_iframe){
-            let this_iframe_src = this_iframe.attr('src');
-            let autoplay_index = this_iframe_src.lastIndexOf('&autoplay=1');
-            if(autoplay_index >= 0){
-                this_iframe_src = this_iframe_src.substr(0, autoplay_index);
-                this_iframe.attr('src',this_iframe_src);
-            }
-        }
+        // let this_iframe = $(obj).find('iframe');
+        // if(this_iframe){
+        //     let this_iframe_src = this_iframe.attr('src');
+        //     let autoplay_index = this_iframe_src.lastIndexOf('&autoplay=1');
+        //     if(autoplay_index >= 0){
+        //         this_iframe_src = this_iframe_src.substr(0, autoplay_index);
+        //         this_iframe.attr('src',this_iframe_src);
+        //     }
+        // }
     }
 </script>

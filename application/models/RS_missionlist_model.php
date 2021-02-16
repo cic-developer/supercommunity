@@ -59,10 +59,12 @@ class RS_missionlist_model extends CB_Model
               END
             END
           END
-        END state'
+        END state',
+        'rs_whitelist.wht_attach'
     );
     // join 방법
     $join[] = array('table' => 'rs_missionpoint', 'on' => 'rs_missionlist.mis_id = rs_missionpoint.mip_mis_id', 'type' => 'inner');
+    $join[] = array('table' => 'rs_whitelist', 'on' => 'rs_missionlist.mis_apply_wht_id = rs_whitelist.wht_id', 'type' => 'left outer');
     $result = $this->_get_list_common($select, $join, $limit, $offset, $where, $like, $findex, $forder, $sfield, $skeyword, $sop);
 		return $result;
   }
@@ -80,6 +82,7 @@ class RS_missionlist_model extends CB_Model
   
 
   public function get_clientMissionlist($limit = 10, $offset = 0, $state = false, $search = false){
+      $this->db->select('rs_pershoutinglist.*, rs_whitelist.wht_attach');
       if($state){
         $this->db->where('state', $state);
       }
@@ -91,9 +94,13 @@ class RS_missionlist_model extends CB_Model
         $this->db->or_like('en_title', $search);
         $this->db->group_end();
       }
-      $this->db->from($subquery);
+      $this->db->join('rs_whitelist', 'rs_pershoutinglist.mis_wht_id = rs_whitelist.wht_id', 'LEFT OUTER');
+      // $this->db->from($subquery);
       $this->db->limit($limit, $offset);
       $result['list'] = $this->db->get('rs_pershoutinglist')->result_array();
+
+      // print_r($result['list']); 
+      // exit;
 
       $this->db->select('count(*) as rownum');
       if($state){
@@ -107,7 +114,7 @@ class RS_missionlist_model extends CB_Model
         $this->db->or_like('en_title', $search);
         $this->db->group_end();
       }
-      $this->db->from($subquery);
+      // $this->db->from($subquery);
       $result['total_rows'] = $this->db->get('rs_pershoutinglist')->row_array()['rownum'];
 
       return $result;
