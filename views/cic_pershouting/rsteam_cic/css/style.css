@@ -324,12 +324,15 @@
 }
 
 #shouting_all .sc_b .txt_box .misson_t a .icons 
-{width: 91px; height: 83px; margin-left: 1px;
+{   width: 91px; 
+    height: 83px; 
+    margin-left: 1px;
 
 }
 #shouting_all .sc_b .txt_box .misson_t a .icons img 
-{width: 91px; height: 83px; 
-
+{   width: 91px; 
+    height: 83px; 
+    opacity: 0.4;
 }
 
 /*미션진행중 css 종료*/
@@ -355,6 +358,14 @@
     width: 30px;
     height: 30px;
     
+}
+.txt_box .txt_t .icon_close{
+    position: relative;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    opacity: 0.4;
+    filter:grayscale(40); 
 }
 
 
