@@ -54,17 +54,20 @@
                         $start_day = time();
                         $end_day = strtotime(element('mis_opendate',$d));
                         $realterm = strtotime(element('mis_enddate',$d)) - strtotime(element('mis_opendate',$d));
+                        $icon_class = 'icon';
                     break;
                     case $this->lang->line('c_1') :
                         $state = false;
                         echo 'endgame';
                         $start_day = 0;
                         $end_day = 0;
+                        $icon_class = 'icon_close';
                     break;
                     default :
                         $state = true;
                         $start_day = time();
                         $end_day = strtotime(element('mis_enddate',$d));
+                        $icon_class = 'icon';
                 }
               ?>
               ">   <!--일단 여기는 일반 미션진행중인 글입니다. 오픈예정: class="lock"  미션마감: class="endgame"-->
@@ -150,7 +153,7 @@
 
                             <?php //echo mb_substr(strip_tags($this->session->userdata('lang') == 'korean' ? $d['mis_content'] : $d['mis_content_en']), 0, 100)?>
                             <?php if(element('wht_attach', $d)){ ?>
-                        <img src="<?php echo thumb_url('wht_attach', element('wht_attach', $d)); ?>" class="icon" />
+                        <img src="<?php echo thumb_url('wht_attach', element('wht_attach', $d)); ?>" class="<?php echo $icon_class?>" />
                         <?php } ?>
                         </a>                            
                     </div>                   

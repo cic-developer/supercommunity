@@ -306,6 +306,14 @@ line-height: 1.7;
     height: 40px;
 }
 
+#shouting_all .sc_b li .misson_t .icon_close{
+    margin-left:5px;
+    width: 40px;
+    height: 40px;
+    opacity: 0.4;
+    filter:grayscale(40);
+}
+
 #shouting_all .sc_b .txt_box .misson_t a {
     display: block;
     text-decoration:none;

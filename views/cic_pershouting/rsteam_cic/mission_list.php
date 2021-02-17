@@ -59,17 +59,20 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
                         $start_day = time();
                         $end_day = strtotime(element('mis_opendate',$d));
                         $realterm = strtotime(element('mis_enddate',$d)) - strtotime(element('mis_opendate',$d));
+                        $icon_class = 'icon';
                     break;
                     case $this->lang->line('c_1') :
                         $state = false;
                         echo 'endgame';
                         $start_day = 0;
                         $end_day = 0;
+                        $icon_class = 'icon_close';
                     break;
                     default :
                         $state = true;
                         $start_day = time();
                         $end_day = strtotime(element('mis_enddate',$d));
+                        $icon_class = 'icon';
                 }
               ?>
               ">   <!--일단 여기는 일반 미션진행중인 글입니다. 오픈예정: class="lock"  미션마감: class="endgame"-->
@@ -142,7 +145,7 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
                 <div class="txt_box">
                     <div class="txt_t">
                         <?php if(element('wht_attach', $d)){ ?>
-                        <img src="<?php echo thumb_url('wht_attach', element('wht_attach', $d)); ?>" class="icon" />
+                        <img src="<?php echo thumb_url('wht_attach', element('wht_attach', $d)); ?>" class="<?php echo $icon_class?>" />
                         <?php } ?>
                         <span class="yet">
                             <?php echo $d['state']?>
