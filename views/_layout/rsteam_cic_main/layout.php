@@ -8,11 +8,6 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<<<<<<< HEAD
-<meta property="og:image" content="<?php echo element('favicon', $layout); ?>" />
-
-=======
->>>>>>> aed3555e50357e6283ce46e57a3c621ae5779411
 <?php // 카카오톡 미리보기 이미지 변경을 위한 설정?>
 <meta property="og:url" content="<?php echo $_SERVER["HTTP_HOST"] ?>">
 <meta property="og:title" content="<?php echo html_escape(element('page_title', $layout)) ?>">
