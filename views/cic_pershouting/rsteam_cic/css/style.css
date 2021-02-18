@@ -477,11 +477,11 @@
 	
 }
 .event_title dd .icon{
-    position: relative;
+    /* position: relative; */
     right: 580px;
     width: 30px;
     height: 30px;
-    opacity: 0.3;
+    margin-right: 570px;
 }
 
 .event_title dd ul{
