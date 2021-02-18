@@ -481,6 +481,7 @@
     right: 580px;
     width: 30px;
     height: 30px;
+    opacity: 0.3;
 }
 
 .event_title dd ul{
