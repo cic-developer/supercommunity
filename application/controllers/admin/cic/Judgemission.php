@@ -691,4 +691,59 @@ class Judgemission extends CB_Controller
 		}
 
 	}
+
+
+	//리스트 선택 승인
+	public function set_state_list(){
+		$postdata = $this->input->post();
+		$jud_list = element('chk',$postdata);
+
+		$list = [];
+
+		$join = array(
+			array('table' => 'rs_missionlist', 'on' => 'rs_judge.jud_mis_id = rs_missionlist.mis_id', 'type' => 'inner'),
+			array('table' => 'rs_media', 'on' => 'rs_judge.jud_med_id = rs_media.med_id', 'type' => 'inner'),
+			array('table' => 'rs_missionpoint', 'on' => 'rs_judge.jud_mis_id = rs_missionpoint.mip_mis_id', 'type' => 'inner'),
+		);
+		
+		foreach($jud_list as $_jud_id){
+			$getdata = $this->{$this->modelname}->get_one_judge(1, $_jud_id,'','',$join);
+			if($getdata){
+				if(element('jud_state', $getdata) == 1){
+					$list[] = $getdata;
+				}
+			}
+		}
+
+		$datetime = cdate('Y-m-d H:i:s');
+		$update = array(
+			'jud_state' => 3,
+			'jud_mdate' => $datetime,
+			'jud_modifier_mem_id' => $this->session->userdata('mem_id'),
+			'jud_modifier_ip' => $this->input->ip_address(),
+		);
+
+		foreach($list as $l){
+			$this->{$this->modelname}->update(element('jud_id',$l), $update);
+			$getuserdata = $this->Member_model->get_by_memid(element('jud_mem_id',$l), 'mem_id, mem_userid, mem_denied');
+			/*
+			** 로그 쌓기
+			*/
+			$insert = array(
+				'jul_jug_id' 		=> element('jud_jug_id',$l),
+				'jul_jud_id' 		=> element('jud_id',$l),
+				'jul_state'  		=> $this->input->post('state'),
+				'jul_mem_id'  	=> element('jud_mem_id',$l),
+				'jul_user_id' 	=> element('mem_userid',$getuserdata),
+				'jul_datetime'  => $datetime,
+				'jul_ip'  	  	=> $this->input->ip_address(), 
+				'jul_useragent' => $this->agent->agent_string(),
+			);
+			$this->RS_judge_log_model->insert($insert);
+		}
+
+		$this->session->set_flashdata('message','승인이 완료되었습니다.');
+		$redirecturl = admin_url($this->pagedir . '?' . $this->querystring->output());
+		redirect($redirecturl);
+	}
 }
