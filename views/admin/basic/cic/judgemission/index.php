@@ -42,6 +42,9 @@
 					<div class="btn-group pull-right" role="group" aria-label="...">
 						<button type="button" class="btn btn-outline btn-success btn-sm" id="export_to_excel"><i class="fa fa-file-excel-o"></i> 엑셀 다운로드</button>
 						<a href="<?php echo element('listall_url', $view); ?>" class="btn btn-outline btn-default btn-sm">전체목록</a>
+						<?php if($this->input->get('jud_state') == 1){ ?>
+						<button type="button" class="btn btn-outline btn-default btn-sm btn-list-update btn-list-selected disabled" data-list-update-url="https://www.percommunity.com/admin/cic/judgemission/set_state_list/?" >선택승인</button>
+						<?php } ?>
 					</div>
 				<?php
 				$buttons = ob_get_contents();
@@ -72,12 +75,12 @@
 						foreach (element('list', element('data', $view)) as $result) {
 					?>
 						<tr>
-							<td><?php echo number_format(element('num', $result)); ?></td>
+							<td><?php echo number_format(element('num', $result)); ?> <?php if($this->input->get('jud_state') == 1){ ?><input type="checkbox" name="chk[]" class="list-chkbox" value="<?php echo element('jud_id', $result)?>"  /> <?php } ?> </td>
 							<td><a href="/admin/cic/missionlist/write/<?php echo element('mis_id', $result) ?>" target="_blank"><?php echo html_escape(element('mis_title', $result)); ?></a></td>
 							<td><?php echo html_escape(element('wht_title', $result)); ?></td>
 							<td><?php echo html_escape(element('jud_med_admin', $result)); ?></td>
 							<td><a href="<?php echo element('jud_med_url', $result); ?>" target="_blank"><?php echo mb_strlen(element('jud_med_url', $result)) > 15 ? mb_substr(element('jud_med_url', $result),0,15).'...' : element('jud_med_url', $result); ?></a></td>
-							<td><img class="img_modal" src="<?php echo thumb_url('judge', element('jud_attach', $result), 200, 160); ?>" alt="제출이미지" title="제출이미지" style="cursor:pointer;" data-img="<?=thumb_url('judge', element('jud_attach', $result), 800, 600)?>"/></td>
+							<td><img class="img_modal" src="<?php echo thumb_url('judge', element('jud_attach', $result), 200, 160); ?>" alt="제출이미지" title="제출이미지" <?php //style="cursor:pointer;"?> onclick="window.open('<?php echo html_escape(element('jud_post_link', $result))?>')" <?php // echo data-img="thumb_url('judge', element('jud_attach', $result), 800, 600)"?>/></td>
 							<td><?php echo rs_get_state(element('jud_state', $result)); ?></td>
 							<td>
 								<?php echo element('display_name', $result); ?>
@@ -183,10 +186,11 @@
 
 
 <!-- 이미지 Modal -->
-<div class="modal fade" id="imageModal" role="dialog">
+<!-- 2021.02.18 이미지 모달 안씀 -->
+<!-- <div class="modal fade" id="imageModal" role="dialog">
 	<div class="modal-dialog modal-lg">
 	
-		<!-- Modal content-->
+		!-- Modal content--
 		<div class="modal-content" style="position:absolute; z-index:2000; width:100%;">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -200,7 +204,7 @@
 		</div>
 		
 	</div>
-</div>
+</div>-->
 <!-- Modal End -->
 
 <!-- 포인트 지급 Modal -->
@@ -342,13 +346,13 @@ $(document).on('click', '#export_to_excel', function(){
 	exporturl = '<?php echo admin_url($this->pagedir . '/excel' . '?' . $this->input->server('QUERY_STRING', null, '')); ?>';
 	document.location.href = exporturl;
 });
-
-$(document).on('click', '.img_modal', function(){
-	$("#imageModal .modal-body").html("<img src='"+$(this).attr('data-img')+"' alt='제출이미지' style='width:100%;height:auto;'/>" );
-	$("#imageModal").modal({
-		backdrop:false
-	});
-});
+// 2021.02.18 이미지 모달 안씀
+// $(document).on('click', '.img_modal', function(){
+// 	$("#imageModal .modal-body").html("<img src='"+$(this).attr('data-img')+"' alt='제출이미지' style='width:100%;height:auto;'/>" );
+// 	$("#imageModal").modal({
+// 		backdrop:false
+// 	});
+// });
 
 $(document).on('click', '.give_point', function(){
 	document.getElementById("gp_form").reset();

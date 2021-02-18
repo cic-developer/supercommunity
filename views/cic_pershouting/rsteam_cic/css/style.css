@@ -317,7 +317,7 @@
     font-weight: 600;
   	color:#333;
 	margin-bottom: 30px;
-	overflow: hidden;
+	/* overflow: hidden; */
 	white-space: nowrap;
 	text-overflow: ellipsis;
    
