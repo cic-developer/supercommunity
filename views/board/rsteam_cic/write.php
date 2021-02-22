@@ -244,6 +244,7 @@
 			<div class="table-bottom text-center mt20">
 				<button type="button" class="btn btn-default btn-sm btn-history-back">취소</button>
 				<button type="submit" class="btn btn-success btn-sm">작성완료</button>
+				<button type="button" class="btn btn-default btn-sm btn-history-save">임시저장</button>
 			</div>
 		</li>
 		</ul>
@@ -358,5 +359,13 @@ $(function() {
 
 <?php if (element('has_tempsave', $view)) { ?>get_tempsave(cb_board); <?php } ?>
 <?php if ( ! element('post_id', element('post', $view))) { ?>window.onbeforeunload = function () { auto_tempsave(cb_board); } <?php } ?>
+
+//2021.02.22 임시저장 동작 추가
+$(document).on('click', '.btn-history-save', function(){
+	if(confirm('임시저장 하시겠습니까?')){
+		auto_tempsave(cb_board);
+	}
+});
+
 //]]>
 </script>
