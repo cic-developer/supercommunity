@@ -11,37 +11,37 @@
             <?php echo $this->lang->line(0) ?>
         </div> 
         
-        <i class="fas fa-chevron-down" onclick="document.getElementById('hiddenContent01').style.display=(document.getElementById('hiddenContent01').style.display=='block') ? 'none' : 'block';">
-        <?php echo $this->lang->line(1) ?></i>
+        <!-- <i class="fas fa-chevron-down" onclick="document.getElementById('hiddenContent01').style.display=(document.getElementById('hiddenContent01').style.display=='block') ? 'none' : 'block';">
+        <?php //echo $this->lang->line(1) ?></i>
         <div class="white_b" id="hiddenContent01" style="display: none;">
             <div class="content_area">
-                <?php echo $this->lang->line(2) ?>
+                <?php //echo $this->lang->line(2) ?>
             </div>
 
             <div class="content_area">
-                <?php echo $this->lang->line(3) ?>
+                <?php //echo $this->lang->line(3) ?>
             </div>
 
             <div class="content_area">
-                <?php echo $this->lang->line(4) ?>   
+                <?php //echo $this->lang->line(4) ?>   
             </div>
 
             <div class="content_area">
-                <?php echo $this->lang->line(5) ?>   
+                <?php //echo $this->lang->line(5) ?>   
             </div>
 
             <div class="content_area">
-                <?php echo $this->lang->line(6) ?>
+                <?php //echo $this->lang->line(6) ?>
             </div>
 
             <div class="content_area">
-                <?php echo $this->lang->line(7) ?>   
+                <?php //echo $this->lang->line(7) ?>   
             </div>
             <div class="content_area">
-                <?php echo $this->lang->line(8) ?>       
+                <?php //echo $this->lang->line(8) ?>       
             </div>
 
-        </div>
+        </div> -->
     </div>
 
 
@@ -55,7 +55,7 @@
                 <a href="<?php //echo base_url('/About/Down_whitepaper/ko')?>" class="btn1 btn_black" onclick="alert('준비중입니다.')">KOR DOWNLOAD</a>
             </li>
             <li>
-                <a href="<?php //echo base_url('/About/Down_whitepaper/en')?>" class="btn1 btn_yellow" onclick="alert('준비중입니다.')">ENG DOWNLOAD</a>
+                <a href="<?php //echo base_url('/About/Down_whitepaper/en')?>" class="btn1 btn_black" onclick="alert('준비중입니다.')">ENG DOWNLOAD</a>
             </li>
         </ul><!--다운로드버튼끝//-->
        
