@@ -193,7 +193,7 @@ class Member_extra_vars_model extends CB_Model
 		$data = array($this->meta_value => $value);
 		$this->db->update($this->_table, $data);
 		//meta data가 경고인 경우 자동 경감을 추가해준다.
-		if(strcmp($column == 'mem_warn_1') == 0 || strcmp($column == 'mem_warn_2') == 0 ){
+		if(strcmp($column,'mem_warn_1') == 0 || strcmp($column,'mem_warn_2') == 0 ){
 			$this->load->model('RS_main_config_model');
 			$_date = $this->RS_main_config_model->get_one('','',array('mcf_main' => 'Y'))['mcf_warningdate'];
 			// print_r($_date); exit;

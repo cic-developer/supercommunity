@@ -182,21 +182,17 @@ $lang[10] ='<div class="area_cont">
 <p class="desc_g">‘SuperCommunity’는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.</p>
 <strong class="tit_subject2">개인정보 보호책임자</strong>
 <ul class=list_2depth>
-    <li>개인정보 보호책임자: 박성필</li>
-    <li>직책: 총기획자</li>
-    <li>직급: 인사관리팀장</li>
-    <li>연락처: 010-9147-3582 | TEL: 07075436565</li>
-    <li>이메일: ibys0503@hanmail.net </li>
+    <li>개인정보 보호책임자: 정인수</li>
+    <li>직급: 부사장</li>
+    <li>이메일: support@percommunity.com </li>
 </ul>
 
 <strong class="tit_subject2">개인정보 담당부서</strong>
 <ul class=list_2depth>
     <li>부서명 :관리부</li>
-    <li>담당자 :정인수</li>
-    <li>연락처 :010-8824-4738</li>
-    <li>직급: 부사장</li>
-    <li>연락처: 010-8824-4738 | TEL: 07075436565</li>
-    <li>이메일: dou17@naver.com </li>    
+    <li>담당자 :박성필</li>
+    <li>직급: 관리팀장</li>
+    <li>이메일: support@percommunity.com </li>    
 </ul>
 <p class="desc_g">정보주체께서는 ‘SuperCommunity’의 서비스(또는 사업)을 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임자 및 담당부서로 문의하실 수 있습니다. 주식회사씨아이씨커뮤니티(‘https://cic.rs-team.co.kr’이하 ‘SuperCommunity) 은(는) 정보주체의 문의에 대해 지체 없이 답변 및 처리해드릴 것입니다.</p>
 </div>';

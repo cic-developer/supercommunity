@@ -25,7 +25,7 @@ td {text-align:center; line-height:40px; font-size:12px; color:#474747; font-fam
 			<tr>
 				<td height="30"><?php echo element('jud_id', $result); ?></td>
 				<td><?php echo html_escape(element('jud_wallet', $result)); ?></td>
-				<td><?php echo number_format(element('jud_point', $result),1); ?></td>
+				<td><?php echo number_format(round(element('jud_point', $result),2),1); ?></td>
 				<td><?php echo rs_get_state(element('jud_state', $result)); ?></td>
 				<td><?php echo html_escape(element('judn_reason', $result)); ?></td>
 				<td><?php echo html_escape(element('jud_mem_nickname', $result).'('.(element('mem_userid', element('register_member', $result)) ? element('mem_userid', element('register_member', $result)) : '탈퇴회원').')'); ?></td>

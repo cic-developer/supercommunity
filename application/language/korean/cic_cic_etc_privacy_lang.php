@@ -171,13 +171,10 @@ $lang[9] ='<div class="area_cont">
     책임자: 정인수
   </li>
   <li>
-    연락처: 010-8824-4738 | TEL: 07075436565
+    직급: 관리부
   </li>
   <li>
-    담당부서: 관리부
-  </li>
-  <li>
-    문의메일: dou17@naver.com
+    문의메일: support@percommunity.com
   </li>
 </ul>
 </div>';

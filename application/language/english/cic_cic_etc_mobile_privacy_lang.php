@@ -169,13 +169,10 @@ $lang[9]='<div class="area_cont">
     Responsible: Jeong In-soo
   </li>
   <li>
-    Contact: 010-8824-4738 | TEL: 07075436565
-  </li>
-  <li>
     Department in charge: Management department
   </li>
   <li>
-    For more information, visit dou17@naver.com
+    For more information, visit support@percommunity.com
   </li>
 </ul>
 </div>';

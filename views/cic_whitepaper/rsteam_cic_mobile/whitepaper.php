@@ -16,82 +16,82 @@
             <?php echo $this->lang->line(0) ?>
         </div> 
         
-        <i class="fas fa-chevron-down" onclick="document.getElementById('hiddenContent01').style.display=(document.getElementById('hiddenContent01').style.display=='block') ? 'none' : 'block';">
-        <?php echo $this->lang->line(1) ?></i>
+        <!--<i class="fas fa-chevron-down" onclick="document.getElementById('hiddenContent01').style.display=(document.getElementById('hiddenContent01').style.display=='block') ? 'none' : 'block';">
+        <?php //echo $this->lang->line(1) ?></i>
         <div class="white_b" id="hiddenContent01" style="display: none;">
             <div class="content_area">
-                <?php echo $this->lang->line(2) ?>
+                <?php //echo $this->lang->line(2) ?>
             </div>
             <div class="content_area">
-                <?php echo $this->lang->line(3) ?>
+                <?php //echo $this->lang->line(3) ?>
             </div>
             <div class="content_area">
-                <?php echo $this->lang->line(4) ?>
+                <?php //echo $this->lang->line(4) ?>
             </div>
             <div class="content_area">
-                <?php echo $this->lang->line(5) ?>
+                <?php //echo $this->lang->line(5) ?>
             </div>
-            <div class="content_area">
-                <h4><?php echo $this->lang->line(6) ?></h4>
+             <div class="content_area">
+                <h4><?php //echo $this->lang->line(6) ?></h4>
                 <ul class="text_g">
                     <li>
-                        <p><?php echo $this->lang->line(7) ?></p>
+                        <p><?php //echo $this->lang->line(7) ?></p>
                     </li>
                     <li class="s_img">
-                        <img src="<?php echo base_url('assets/images/white011'.$is_en.'.jpg');?>" alt=" <?php echo $this->lang->line(20) ?>"/>
+                        <img src="<?php //echo base_url('assets/images/white011'.$is_en.'.jpg');?>" alt=" <?php //echo $this->lang->line(20) ?>"/>
                     </li>
                     <li>
-                    <?php echo $this->lang->line(8) ?>
+                    <?php //echo $this->lang->line(8) ?>
                     </li>
                     <li class="sub_title">
-                    <?php echo $this->lang->line(9) ?>
+                    <?php //echo $this->lang->line(9) ?>
                     </li>
                     <li>
-                        <p><?php echo $this->lang->line(10) ?>
+                        <p><?php //echo $this->lang->line(10) ?>
                         </p>
                     </li>
                     <li class="img">
-                        <img src="<?php echo base_url('assets/images/white012'.$is_en.'.jpg');?>" alt=" <?php echo $this->lang->line(21) ?>"/>
+                        <img src="<?php //echo base_url('assets/images/white012'.$is_en.'.jpg');?>" alt=" <?php //echo $this->lang->line(21) ?>"/>
                     </li>
                     <li class="sub_title">
-                        <?php echo $this->lang->line(11) ?>
+                        <?php //echo $this->lang->line(11) ?>
                     </li>
                     <li>
-                        <p> <?php echo $this->lang->line(12) ?></p>
+                        <p> <?php //echo $this->lang->line(12) ?></p>
                             <br><br>
 
-                            <!-- <i class="fas fa-chevron-down" onclick="document.getElementById('hiddenContent02').style.display=(document.getElementById('hiddenContent02').style.display=='block') ? 'none' : 'block';">
-                            <?//php echo $this->lang->line(13) ?></i> -->
-                            <!-- id="hiddenContent02" style="display: none;" -->
-                            <p class="long"><?php echo $this->lang->line(14) ?> 
+                             <i class="fas fa-chevron-down" onclick="document.getElementById('hiddenContent02').style.display=(document.getElementById('hiddenContent02').style.display=='block') ? 'none' : 'block';">
+                            <?//php echo $this->lang->line(13) ?></i> 
+                             id="hiddenContent02" style="display: none;" 
+                            <p class="long"><?php //echo $this->lang->line(14) ?> 
                             </p>
                     </li>
                     <li class="img">
-                        <img src="<?php echo base_url('assets/images/white013'.$is_en.'.jpg');?>" alt=" <?php echo $this->lang->line(22) ?>"/>
+                        <img src="<?php //echo base_url('assets/images/white013'.$is_en.'.jpg');?>" alt=" <?php //echo $this->lang->line(22) ?>"/>
                     </li>
                     <li>
-                        <p><?php echo $this->lang->line(15) ?></p>
+                        <p><?php //echo $this->lang->line(15) ?></p>
                     </li>
                     <li class="img">
-                       <img src="<?php echo base_url('assets/images/white014'.$is_en.'.jpg');?>" alt=" <?php echo $this->lang->line(23) ?>"/>
+                       <img src="<?php //echo base_url('assets/images/white014'.$is_en.'.jpg');?>" alt=" <?php //echo $this->lang->line(23) ?>"/>
                     </li>
                     <li>
-                    <p> <?php echo $this->lang->line(16) ?></p>
+                    <p> <?php //echo $this->lang->line(16) ?></p>
                     </li>
                 </ul>
-            </div>
-            <div class="content_area">
-                <?php echo $this->lang->line(17) ?>
-            </div>
-            <div class="content_area">
-                <?php echo $this->lang->line(18) ?>
+            </div> -->
+            <!-- <div class="content_area">
+                <?php //echo $this->lang->line(17) ?>
+            </div> -->
+            <!-- <div class="content_area">
+                <?php //echo $this->lang->line(18) ?>
             </div>
 
-        </div>
+        </div>-->
     </div>
 
 
-    <script> function fn_spread(id){ var getID = document.getElementById(id); getID.style.display=(getID.style.display=='block') ? 'none' : 'block'; } </script>
+    <script> //function fn_spread(id){ var getID = document.getElementById(id); getID.style.display=(getID.style.display=='block') ? 'none' : 'block'; } </script>
 
         <!--퍼백서 내용끝//-->
 
@@ -101,7 +101,7 @@
                 <a href="<?php echo base_url('/About/Down_whitepaper/ko')?>" class="btn1 btn_black">KOR DOWNLOAD</a>
             </li>
             <li>
-                <a href="<?php echo base_url('/About/Down_whitepaper/en')?>"  class="btn1 btn_yellow">ENG DOWNLOAD</a>
+                <a href="<?php //echo base_url('/About/Down_whitepaper/en')?>"  class="btn1 btn_yellow" onclick="alert('준비중입니다.')">ENG DOWNLOAD</a>
             </li>
         </ul><!--다운로드버튼끝//-->
        

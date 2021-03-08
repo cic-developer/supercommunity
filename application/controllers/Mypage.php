@@ -177,7 +177,10 @@ class Mypage extends CB_Controller
 				$this->Member_nickname_model->insert($nickinsert);
 			}
 			
-
+			$this->db->set('log_datas', json_encode($this->input->post()));
+			$this->db->set('log_mem_id', $mem_id);
+			$this->db->set('log_wdate', date('Y-m-d H:i:s'));
+			$this->db->insert('log');
 			$this->session->set_flashdata('message',$this->lang->line('controller_2'));
 			redirect('/Mypage');
 		}

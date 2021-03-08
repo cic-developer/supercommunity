@@ -188,20 +188,18 @@ $lang[10] = '<div class="area_cont">
 <p class="desc_g">‘SuperCommunity’ is responsible for handling personal information and appoints a person in charge of personal information protection as follows for handling complaints and damage relief of information subjects related to personal information processing.</p>
 <strong class="tit_subject2">Personal Information Protection Officer</strong>
 <ul class=list_2depth>
-    <li>Personal Information Protection Officer: Park Sung-pil</li>
+    <li>Personal Information Protection Officer: Jeong In-soo</li>
     <li>Position: General planner</li>
     <li>rank: Director of Personnel Management</li>
-    <li>Contact: 010-9147-3582 | TEL: 07075436565</li>
-    <li>Email: ibys0503@hanmail.net </li>
+    <li>Email: support@percommunity.com </li>
 </ul>
 
 <strong class="tit_subject2">Department in charge of personal information</strong>
 <ul class=list_2depth>
     <li>Department name: Management department</li>
-    <li>Responsible: Jeong In-soo</li>
+    <li>Responsible: Park Sung-pil</li>
     <li>Position: Vice Presiden</li>
-    <li>Contact: 010-8824-4738 | TEL: 07075436565</li>
-    <li>Email: dou17@naver.com</li>    
+    <li>Email: support@percommunity.com</li>    
 </ul>
 <p class="desc_g">The information subject can contact the Personal Information Protection Officer and the department in charge of all personal information protection inquiries, complaints handling, and damage relief that occurred while using the service (or business) of ‘SuperCommonity’. The CIC community ("https://www.percommunity" or SuperCommonity) will answer and process inquiries from the information subject without delay.</p>
 </div>';
