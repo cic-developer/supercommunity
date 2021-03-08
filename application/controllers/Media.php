@@ -92,7 +92,7 @@ class Media extends CB_Controller
 		$member_data = $this->Member_model->get_by_memid($mem_id);
 		$mediadata = $this->RS_media_model->get('', '', array('mem_id' => $mem_id), '', 0, '', '');
 		
-		if($message){ echo "<script>alert('".$message."')</script>";}
+		// if($message){ echo "<script>alert('".$message."')</script>";}
 		
 		/**
 		 * 레이아웃을 정의합니다
@@ -434,7 +434,7 @@ class Media extends CB_Controller
 				$view['validation_err'] = json_encode($this->form_validation->error_string());
 			}
 
-			$datas = $this->RS_media_model->get('', '', array('med_id' => $med_id, 'mem_id' => $mem_id));
+			// $datas = $this->RS_media_model->get('', '', array('med_id' => $med_id, 'mem_id' => $mem_id));
 			
 			$view['mem_data'] = $this->Member_model->get_by_memid($mem_id);
 			$view['white_list'] = $this->RS_whitelist_model->get_whitelist_list()['list'];

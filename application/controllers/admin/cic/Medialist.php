@@ -264,6 +264,16 @@ class Medialist extends CB_Controller
 				'rules' => 'trim|required|min_length[2]|max_length[255]',
 			),
 		);
+
+		//만일 미디어 데이터가 있고 상태가 심사중이 아니라면
+		if(element('med_state',$getdata) == 3){
+			$config[] = array(
+				'field' => 'med_superpoint',
+				'label' => '슈퍼포인트',
+				'rules' => 'trim|required|is_natural',
+			);
+		}
+		
 		$this->form_validation->set_rules($config);
 		$form_validation = $this->form_validation->run();
 		$file_error = '';
@@ -335,6 +345,7 @@ class Medialist extends CB_Controller
 					'med_wht_id' => $this->input->post('med_wht_id', null, ''),
 					'med_url' => $this->input->post('med_url', null, ''),
 					'med_admin' => $this->input->post('med_admin', null, ''),
+					'med_superpoint' => $this->input->post('med_superpoint', null, ''),
 				);
 				$med_id = $this->input->post($primary_key);
 				$this->{$this->modelname}->update($med_id, $updatedata);

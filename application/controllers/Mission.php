@@ -247,7 +247,7 @@ class Mission extends CB_Controller
 		$view['view']['page'] = $page;
 
 		// 이벤트가 존재하면 실행합니다
-		$view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
+		// $view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
 		
 		/**
 		 * 레이아웃을 정의합니다
@@ -317,11 +317,11 @@ class Mission extends CB_Controller
 			'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_main'),
 			'skin_dir' => 'rsteam_cic',
 			'mobile_skin_dir' => 'rsteam_cic_mobile',
-			'page_title' => $page_title,
-			'meta_description' => $meta_description,
-			'meta_keywords' => $meta_keywords,
-			'meta_author' => $meta_author,
-			'page_name' => $page_name,
+			// 'page_title' => $page_title,
+			// 'meta_description' => $meta_description,
+			// 'meta_keywords' => $meta_keywords,
+			// 'meta_author' => $meta_author,
+			// 'page_name' => $page_name,
 		);
 		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
 		$view['header']['menu'] = 'pershouting';

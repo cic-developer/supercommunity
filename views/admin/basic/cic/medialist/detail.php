@@ -58,7 +58,11 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">SUPERPOINT</label>
 				<div class="col-sm-10">
+				<?php if(element('med_state', element('data', $view)) == 3) {?>
+					<input type="number" class="form-control" name="med_superpoint" value="<?php echo set_value('med_superpoint', element('med_superpoint', element('data', $view))); ?>" />
+				<?php }else{  ?>
 					<input type="text" style="all:unset; height:30px; display:inline-block; vertical-align:middle;" disabled value="<?php echo number_format(element('med_superpoint', element('data', $view))); ?>" />
+				<?php }?>
 				</div>
 			</div>
 			<div class="form-group">
