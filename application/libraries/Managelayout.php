@@ -43,7 +43,7 @@ class Managelayout extends CI_Controller
 				'admin_menu_100',
 				'admin_menu_400',
 			);
-			if($CI->session->userdata('mem_id') != 12 && in_array($entry, $disallowed_menu)) continue;
+			// if($CI->session->userdata('mem_id') != 12 && in_array($entry, $disallowed_menu)) continue;
 			$menu_files[] = $entry;
 		}
 		if ($menu_files) {

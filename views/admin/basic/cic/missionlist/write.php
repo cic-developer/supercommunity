@@ -31,7 +31,7 @@
 				<label class="col-sm-2 control-label">참여가능 플랫폼</label>
 				<div class="col-sm-10 form-inline">
 					<select name="mis_apply_wht_id" class="form-control" <?=$disabled?>>
-						<option value="0">전체</option>
+						<option disabled selected>미디어를 선택해주세요</option>
 						<?php foreach(element('wht_list' ,$view) as $wht_data){	?>
 							<option value="<?php echo $wht_data['wht_id']?>" <?php echo element('mis_apply_wht_id',element('data',$view)) == $wht_data['wht_id'] ? 'selected':''?>><?php echo $wht_data['wht_title']?></option>
 						<?php }?>
@@ -244,7 +244,8 @@ $(function() {
 			mis_allowed: { required :true, digits :true, range :[0,1] },
 			mis_enddate: { check_opendate :true },
 			mis_content: { '<?='required_' . $this->cbconfig->item('post_editor_type')?>' :true },
-			mis_content_en: { '<?='required_' . $this->cbconfig->item('post_editor_type')?>' :true }
+			mis_content_en: { '<?='required_' . $this->cbconfig->item('post_editor_type')?>' :true },
+			mis_apply_wht_id: { required :true }
 		}
 	});
 });
