@@ -5,10 +5,10 @@
 
 
 <?php
-// if(
-// 	$this->input->ip_address() == '49.163.50.132      이거지우면 사무실에서만 보임'
-// || $this->input->ip_address() == '59.26.134.158'
-// ){
+if(
+	$this->input->ip_address() == '49.163.50.132      이거지우면 사무실에서만 보임'
+|| $this->input->ip_address() == '59.26.134.158'
+){
 	echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
 	echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
 	echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
@@ -41,7 +41,7 @@
 </div>	
 <?php 
 	echo form_close(); 
-// }
+}
 ?>
 
  <!--login_wrap-->
