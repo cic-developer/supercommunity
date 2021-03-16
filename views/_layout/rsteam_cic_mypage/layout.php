@@ -28,6 +28,8 @@
 	CSS href 사용방법 : <?php echo element('layout_skin_url', $layout); ?>/css/style.css
 	CSS href 실질경로 : /views/_layout/example_main/css/style.css
 */ ?>
+<!--파비콘-->
+<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/images/favicon.ico');?>">
 <!--RS 스타일-->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/common.css'); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo element('layout_skin_url', $layout); ?>/css/style.css" />
