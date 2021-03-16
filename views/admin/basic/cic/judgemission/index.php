@@ -80,7 +80,7 @@
 							<td><?php echo html_escape(element('wht_title', $result)); ?></td>
 							<td><?php echo html_escape(element('jud_med_admin', $result)); ?></td>
 							<td><a href="<?php echo element('jud_med_url', $result); ?>" target="_blank"><?php echo mb_strlen(element('jud_med_url', $result)) > 15 ? mb_substr(element('jud_med_url', $result),0,15).'...' : element('jud_med_url', $result); ?></a></td>
-							<td><img class="img_modal" src="<?php echo thumb_url('judge', element('jud_attach', $result), 200, 160); ?>" alt="제출이미지" title="제출이미지" <?php //style="cursor:pointer;"?> onclick="window.open('<?php echo html_escape(element('jud_post_link', $result))?>')" <?php // echo data-img="thumb_url('judge', element('jud_attach', $result), 800, 600)"?>/></td>
+							<td><img class="img_modal" src="<?php echo thumb_url('judge', element('jud_attach', $result), 200, 160); ?>" alt="제출이미지" title="제출이미지" <?php //style="cursor:pointer;"?> onclick="window.open('<?php echo (element('jud_post_link', $result))?>')" <?php // echo data-img="thumb_url('judge', element('jud_attach', $result), 800, 600)"?>/></td>
 							<td><?php echo rs_get_state(element('jud_state', $result)); ?></td>
 							<td>
 								<?php echo element('display_name', $result); ?>
