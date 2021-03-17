@@ -6,7 +6,7 @@
 
 <?php
 if(
-	$this->input->ip_address() == '49.163.50.132      이거지우면 사무실에서만 보임'
+	$this->input->ip_address() == '49.163.50.132'
 // || $this->input->ip_address() == '59.26.134.158'
 ){
 	echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');

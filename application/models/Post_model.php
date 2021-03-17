@@ -35,6 +35,7 @@ class Post_model extends CB_Model
 	 */
 	public function get_post_list($limit = '', $offset = '', $where = '', $category_id = '', $orderby = '', $sfield = '', $skeyword = '', $sop = 'OR')
 	{
+		$mem_id = $this->session->userdata('mem_id') ? $this->session->userdata('mem_id') : 0;
 		if ( ! in_array(strtolower($orderby), $this->allow_order)) {
 			$orderby = 'post_num, post_reply';
 		}
@@ -130,6 +131,12 @@ class Post_model extends CB_Model
 		if ($limit) {
 			$this->db->limit($limit, $offset);
 		}
+		// 2021 03 17 비공개 글 등록 로직 추가
+		$this->db->group_start()->
+		where('post_blind', 0)->
+		or_where('post_blind', $mem_id)->
+		group_end();
+		// 2021 03 17 비공개 글 등록 로직 추가 끝
 		$qry = $this->db->get();
 		$result['list'] = $qry->result_array();
 
@@ -168,6 +175,12 @@ class Post_model extends CB_Model
 			}
 			$this->db->group_end();
 		}
+		// 2021 03 17 비공개 글 등록 로직 추가
+		$this->db->group_start()->
+		where('post_blind', 0)->
+		or_where('post_blind', $mem_id)->
+		group_end();
+		// 2021 03 17 비공개 글 등록 로직 추가 끝
 		$qry = $this->db->get();
 		$rows = $qry->row_array();
 		$result['total_rows'] = $rows['rownum'];

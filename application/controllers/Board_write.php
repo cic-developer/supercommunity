@@ -328,23 +328,23 @@ class Board_write extends CB_Controller
 			}
 		}
 
-		if ($is_post_name) {
-			$config[] = array(
-				'field' => 'post_nickname',
-				'label' => '닉네임',
-				'rules' => 'trim|required|min_length[2]|max_length[20]|callback__mem_nickname_check',
-			);
-			$config[] = array(
-				'field' => 'post_email',
-				'label' => '이메일',
-				'rules' => 'trim|required|valid_email|max_length[50]|callback__mem_email_check',
-			);
-			$config[] = array(
-				'field' => 'post_homepage',
-				'label' => '홈페이지',
-				'rules' => 'prep_url|valid_url',
-			);
-		}
+		// if ($is_post_name) {
+			// $config[] = array(
+			// 	'field' => 'post_nickname',
+			// 	'label' => '닉네임',
+			// 	'rules' => 'trim|required|min_length[2]|max_length[20]|callback__mem_nickname_check',
+			// );
+			// $config[] = array(
+			// 	'field' => 'post_email',
+			// 	'label' => '이메일',
+			// 	'rules' => 'trim|required|valid_email|max_length[50]|callback__mem_email_check',
+			// );
+			// $config[] = array(
+			// 	'field' => 'post_homepage',
+			// 	'label' => '홈페이지',
+			// 	'rules' => 'prep_url|valid_url',
+			// );
+		// }
 		if ($this->member->is_member() === false) {
 			$password_length = $this->cbconfig->item('password_length');
 			$config[] = array(
@@ -759,6 +759,7 @@ class Board_write extends CB_Controller
 
 			$post_title = $this->input->post('post_title', null, '');
 			$post_content = $this->input->post('post_content', null, '');
+			$post_blind = $this->input->post('post_blind', null, 0);
 			if (element('save_external_image', $board)) {
 				$post_content = $this->imagelib->replace_external_image($post_content);
 			}
@@ -773,6 +774,7 @@ class Board_write extends CB_Controller
 				'post_updated_datetime' => cdate('Y-m-d H:i:s'),
 				'post_ip' => $this->input->ip_address(),
 				'brd_id' => element('brd_id', $board),
+				'post_blind' => $post_blind,
 			);
 
 			if ($mem_id) {
@@ -793,11 +795,11 @@ class Board_write extends CB_Controller
 				}
 			}
 
-			if ($is_post_name) {
-				$updatedata['post_nickname'] = $this->input->post('post_nickname', null, '');
-				$updatedata['post_email'] = $this->input->post('post_email', null, '');
-				$updatedata['post_homepage'] = $this->input->post('post_homepage', null, '');
-			}
+			// if ($is_post_name) {
+			// 	$updatedata['post_nickname'] = $this->input->post('post_nickname', null, '');
+			// 	$updatedata['post_email'] = $this->input->post('post_email', null, '');
+			// 	$updatedata['post_homepage'] = $this->input->post('post_homepage', null, '');
+			// }
 
 			if ($this->member->is_member() === false && $this->input->post('post_password')) {
 				if ( ! function_exists('password_hash')) {
@@ -1585,21 +1587,21 @@ class Board_write extends CB_Controller
 		}
 
 		if ($is_post_name) {
-			$config[] = array(
-				'field' => 'post_nickname',
-				'label' => '닉네임',
-				'rules' => 'trim|required|min_length[2]|max_length[20]|callback__mem_nickname_check',
-			);
-			$config[] = array(
-				'field' => 'post_email',
-				'label' => '이메일',
-				'rules' => 'trim|valid_email|max_length[50]|callback__mem_email_check',
-			);
-			$config[] = array(
-				'field' => 'post_homepage',
-				'label' => '홈페이지',
-				'rules' => 'prep_url|valid_url',
-			);
+			// $config[] = array(
+			// 	'field' => 'post_nickname',
+			// 	'label' => '닉네임',
+			// 	'rules' => 'trim|required|min_length[2]|max_length[20]|callback__mem_nickname_check',
+			// );
+			// $config[] = array(
+			// 	'field' => 'post_email',
+			// 	'label' => '이메일',
+			// 	'rules' => 'trim|valid_email|max_length[50]|callback__mem_email_check',
+			// );
+			// $config[] = array(
+			// 	'field' => 'post_homepage',
+			// 	'label' => '홈페이지',
+			// 	'rules' => 'prep_url|valid_url',
+			// );
 		}
 		if ($this->member->is_member() === false) {
 			$password_length = $this->cbconfig->item('password_length');
@@ -1974,7 +1976,7 @@ class Board_write extends CB_Controller
 			 * 유효성 검사를 통과한 경우입니다.
 			 * 즉 데이터의 insert 나 update 의 process 처리가 필요한 상황입니다
 			 */
-
+			$mem_id = $this->session->userdata('mem_id');
 			if( $this->input->post($primary_key) != $post_id ){
 				// $_POST['post_id'] 값과 $_GET['post_id'] 값이 틀린 경우입니다.
 			}
@@ -1986,6 +1988,7 @@ class Board_write extends CB_Controller
 
 			$post_title = $this->input->post('post_title', null, '');
 			$post_content = $this->input->post('post_content', null, '');
+			$post_blind = $this->input->post('post_blind', null, 0);
 			if (element('save_external_image', $board)) {
 				$post_content = $this->imagelib->replace_external_image($post_content);
 			}
@@ -1997,12 +2000,13 @@ class Board_write extends CB_Controller
 				'post_html' => $content_type,
 				'post_updated_datetime' => cdate('Y-m-d H:i:s'),
 				'post_update_mem_id' => $mem_id,
+				'post_blind'	=> $post_blind,
 			);
 
 			if ($is_post_name) {
-				$updatedata['post_nickname'] = $this->input->post('post_nickname', null, '');
-				$updatedata['post_email'] = $this->input->post('post_email', null, '');
-				$updatedata['post_homepage'] = $this->input->post('post_homepage', null, '');
+				// $updatedata['post_nickname'] = $this->input->post('post_nickname', null, '');
+				// $updatedata['post_email'] = $this->input->post('post_email', null, '');
+				// $updatedata['post_homepage'] = $this->input->post('post_homepage', null, '');
 			}
 			if ($this->member->is_member() === false) {
 				if ($this->input->post('post_password')) {

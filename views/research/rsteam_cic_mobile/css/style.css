@@ -1,0 +1,203 @@
+/**
+	researchpaper skin css
+*/
+
+#research_wrap{
+	padding-left: 15px;
+	padding-right: 15px;
+	overflow: hidden;
+	text-align: justify;
+}
+
+#research_wrap h3{
+    margin:0 auto;
+    display: block;
+    font-size:2.692em;
+    padding-top:50px;
+	padding-bottom:60px;
+	text-align:center;
+	color:#000;
+}
+
+#research_wrap .research_content{
+	padding-bottom:50px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+/*퍼백서 내용 css 시작*/
+
+
+#research_wrap .research_content .research_top{
+	width: 100%;		
+}
+
+
+#research_wrap .research_content .research_b{
+	width: 100%;
+}
+
+#research_wrap .research_content .content_area{
+	overflow: hidden;
+	padding-top:35px;
+	width: 100%;
+}
+
+
+
+#research_wrap .research_content h4{
+	font-size: 2.154em;
+	font-weight: 500;
+	color:#1b1b1b;
+	padding-bottom:40px;
+	display: block;
+}
+
+
+#research_wrap .research_content p{
+	font-size: 1.154em;
+	font-weight: 300;
+	color:#333;
+	line-height:1.7;
+	display: block;
+	width: 100%;
+}
+
+
+#research_wrap .research_content .p_bold{
+	font-weight: 400;
+	color:#444;
+	line-height:1.5;
+	display: inline-block;
+}
+
+
+#research_wrap .research_content .p_g{
+	font-weight: 300;
+	font-size: 1.385em;
+	color:#999;
+	line-height:2.077em;
+	display: inline-block;
+}
+
+
+
+#research_wrap .research_content .text_g {
+	display: block;
+}
+
+
+#research_wrap .research_content .text_g li{
+	padding-bottom:30px;
+	display: block;
+	line-height: 1.7;
+}
+
+#research_wrap .research_content .text_g li .list{
+	display: block;
+	padding-top:5px;
+	
+}
+
+#research_wrap .research_content .text_g li .list li{
+	display: block;
+	font-size:1.077em;
+	color:#999;
+	font-weight: 400;
+	padding-bottom: 15px;
+	line-height: 1.7;
+}
+
+
+
+
+
+#research_wrap .research_content .text_g .sub_title{
+	font-size: 1.36em;
+	font-weight: 400;
+	padding-bottom:20px;
+	color:#333;
+	display: block;
+	line-height: 1.7;
+	text-align: left;
+	
+}
+
+#research_wrap .research_content .content_area .img{
+	width: 100%;
+	margin-bottom:20px;
+	display: block;
+	margin: 0 auto;
+}
+
+
+#research_wrap .research_content .content_area .s_img{
+	width: 100%;
+	margin-bottom:20px;
+	display: block;
+	margin: 0 auto;
+}
+
+#research_wrap .research_content .content_area img{
+	width: 100%;
+	margin-bottom:20px;
+	display: block;
+}
+
+#research_wrap .research_content .content_area .long i{
+	display: block;
+	width: 100%;
+	font-size: 1.2em;
+	font-weight: 300;
+	color:#333;
+	line-height:1.5;
+	padding-top:10px;
+}
+
+
+
+
+#research_wrap .bt{
+	margin-top:50px;	
+	margin-bottom: 60px;
+	display: block;
+	text-align:  center;
+		
+}
+
+
+#research_wrap .bt li{
+	display: inline-block;
+}
+
+#research_wrap .bt li:first-child{
+	padding-right: 5px;
+}
+
+
+
+
+
+#research_wrap .bt .btn1 {
+	font-size:1em ;	
+}
+
+
+
+
+
+#research_wrap .bt li{
+	display: inline-block;
+}
+
+
+
+
+
+
+
+i{
+	font-size: 1em;
+}
+
+

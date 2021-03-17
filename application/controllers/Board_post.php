@@ -1036,9 +1036,10 @@ class Board_post extends CB_Controller
 			$board['category'] = $this->Board_category_model
 				->get_all_category(element('brd_id', $board));
 		}
-
+		
 		$noticeresult = $this->Post_model
 			->get_notice_list(element('brd_id', $board), $except_all_notice, $sfield, $skeyword);
+		
 		if ($noticeresult) {
 			foreach ($noticeresult as $key => $val) {
 
@@ -1114,8 +1115,10 @@ class Board_post extends CB_Controller
 		if (empty($category_id) OR $category_id < 1) {
 			$category_id = '';
 		}
+		//#########################################################################################
 		$result = $this->Post_model
 			->get_post_list($per_page, $offset, $where, $category_id, $findex, $sfield, $skeyword);
+		//#########################################################################################
 		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {

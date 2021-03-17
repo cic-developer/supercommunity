@@ -23,14 +23,14 @@
 						<input type="password" class="input px150" name="post_password" id="post_password" />
 					</li>
 				<?php } ?>
-				<li>
+				<!-- <li>
 					<span>이메일</span>
-					<input type="text" class="input px400" name="post_email" id="post_email" value="<?php echo set_value('post_email', element('post_email', element('post', $view))); ?>" />
+					<input type="text" class="input px400" name="post_email" id="post_email" value="<?php //echo set_value('post_email', element('post_email', element('post', $view))); ?>" />
 				</li>
 				<li>
 					<span>홈페이지</span>
-					<input type="text" class="input px400" name="post_homepage" id="post_homepage" value="<?php echo set_value('post_homepage', element('post_homepage', element('post', $view))); ?>" />
-				</li>
+					<input type="text" class="input px400" name="post_homepage" id="post_homepage" value="<?php //echo set_value('post_homepage', element('post_homepage', element('post', $view))); ?>" />
+				</li> -->
 			<?php } ?>
 			<li>
 				<span>제목</span>
@@ -108,6 +108,13 @@
 					<?php } ?>
 				</li>
 			<?php } ?>
+			<li>
+				<span>비공개 여부</span>
+				<label class="checkbox-inline" for="post_blind">
+					비공개
+					<input type="checkbox" name="post_blind" id="post_blind" value="<?php echo $this->member->is_member()?>" <?php echo element('post_blind', element('post', $view)) != 0 ? 'checked' : '' ?>/>
+				</label>
+			</li>
 			<?php if (element('use_category', element('board', $view))) { ?>
 				<li>
 					<span>카테고리</span>
