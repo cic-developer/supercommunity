@@ -57,7 +57,7 @@ class Mypage extends CB_Controller
 			array(
 				'field' => 'nick_name',
 				'label' => $this->lang->line('controller_0'),
-				'rules' => 'trim|required|max_length[12]|min_length[2]',
+				'rules' => 'trim|required|max_length[12]|min_length[1]',
 			)
 		);
 		$this->form_validation->set_rules($config);
