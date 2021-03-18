@@ -72,6 +72,44 @@ class Research extends CB_Controller
         $this->layout = element('layout_skin_file', element('layout', $view));
         $this->view = element('view_skin_file', element('layout', $view));
     }
+
+    function adInquiry()
+    {
+        //페이지별 언어팩 로드
+		if($this->agent->is_mobile()){
+			$this->lang->load('cic_research_mobile', $this->session->userdata('lang'));
+		} else {
+			$this->lang->load('cic_research', $this->session->userdata('lang'));
+		}
+        
+        $page_title = $this->cbconfig->item('site_meta_title_main');
+        $meta_description = $this->cbconfig->item('site_meta_description_main');
+        $meta_keywords = $this->cbconfig->item('site_meta_keywords_main');
+        $meta_author = $this->cbconfig->item('site_meta_author_main');
+        $page_name = $this->cbconfig->item('site_page_name_main');
+
+        $layoutconfig = array(
+            'path' => 'research',
+            'layout' => 'layout',
+            'skin' => 'adInquiry',
+            'layout_dir' => '/rsteam_cic_main',
+            'mobile_layout_dir' => '/rsteam_cic_mobile',
+            'use_sidebar' => $this->cbconfig->item('sidebar_main'),
+            'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_main'),
+            'skin_dir' => 'rsteam_cic',
+            'mobile_skin_dir' => 'rsteam_cic_mobile',
+            'page_title' => $page_title,
+            'meta_description' => $meta_description,
+            'meta_keywords' => $meta_keywords,
+            'meta_author' => $meta_author,
+            'page_name' => $page_name,
+        );
+        $view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
+        $view['header']['menu'] = 'inquiry';
+        $this->data = $view;
+        $this->layout = element('layout_skin_file', element('layout', $view));
+        $this->view = element('view_skin_file', element('layout', $view));
+    }
 }
 
 ?>
