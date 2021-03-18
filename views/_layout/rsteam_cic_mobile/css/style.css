@@ -604,6 +604,7 @@ select.input {height: 30px;}
 .label-danger {background-color: #d9534f;}
 .label-danger[href]:hover,
 .label-danger[href]:focus {background-color: #c9302c;}
+.label-blind {background: LightSlateGray;}
 
 .no_padding{padding: 0 !important;}
 .text-center {text-align: center;}

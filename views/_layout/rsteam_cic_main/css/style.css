@@ -263,6 +263,7 @@ header .badge{margin-left:5px;display: inline-block;min-width: 10px;padding: 3px
 .table>tbody:last-child{border-bottom: 1px solid #ccc;}
 .table>thead{border-top: 2px solid #000;}
 .label-warning {background: lightcoral;}
+.label-blind {background: LightSlateGray;}
 .title_td {text-align: left;}
 
 .thumbnail {display: block;padding: 4px;margin-bottom: 10px;line-height: 1.42857143;background-color: #fff;border: 1px solid #ddd;border-radius: 4px;-webkit-transition: all .2s ease-in-out;transition: all .2s ease-in-out;}

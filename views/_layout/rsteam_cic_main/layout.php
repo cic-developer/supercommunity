@@ -116,8 +116,9 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 				<li><a href="<?=base_url('About/provision')?>" class="<?=element('menu',$header) == 'about' ? 'on' : '';?>"><?=$this->lang->line('cic_1')?></a></li> <!--해당메뉴 진입시 class="on"-->
 				<li><a href="<?=base_url('Mission')?>" class="<?=element('menu',$header) == 'pershouting' ? 'on' : '';?>"><?=$this->lang->line('cic_2')?></a></li>
 				<!-- <li><a href="<?php //echo base_url('About/whitepaper')?>" class="<?php //echo element('menu',$header) == 'whitepaper' ? 'on' : '';?>"><?php //echo $this->lang->line('cic_3')?></a></li> -->
-				<li><a href="<?=base_url('/board/noti')?>" class="<?=element('menu',$header) == 'noti' ? 'on' : '';?>"><?=$this->lang->line('cic_3')?></a></li>
+				<li><a href="<?=base_url('board/noti')?>" class="<?=element('menu',$header) == 'noti' ? 'on' : '';?>"><?=$this->lang->line('cic_3')?></a></li>
 				<li><a href="<?=base_url('Inquiry/ad_inquiry')?>" class="<?=element('menu',$header) == 'inquiry' ? 'on' : '';?>"><?=$this->lang->line('cic_4')?></a></li>
+				<!-- <li><a href="<?php //echo base_url('Research')?>">설문조사 테스트용</a></li> -->
 			</ul>
 			<!--//menu-->
 			<div class="box">
