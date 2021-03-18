@@ -75,7 +75,7 @@
 						foreach (element('list', element('data', $view)) as $result) {
 					?>
 						<tr>
-							<td><?php echo number_format(element('num', $result)); ?> <?php if($this->input->get('jud_state') == 1){ ?><input type="checkbox" name="chk[]" class="list-chkbox" value="<?php echo element('jud_id', $result)?>"  /> <?php } ?> </td>
+							<td><label><?php echo number_format(element('num', $result)); ?> <?php if($this->input->get('jud_state') == 1){ ?><input type="checkbox" name="chk[]" class="list-chkbox" value="<?php echo element('jud_id', $result)?>"  /> <?php } ?> </label></td>
 							<td><a href="/admin/cic/missionlist/write/<?php echo element('mis_id', $result) ?>" target="_blank"><?php echo html_escape(element('mis_title', $result)); ?></a></td>
 							<td><?php echo html_escape(element('wht_title', $result)); ?></td>
 							<td><?php echo html_escape(element('jud_med_admin', $result)); ?></td>
@@ -290,7 +290,8 @@
 							<div class="col-md-4 selectContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-hand-right"></i></span>
-									<select name="gp_giveperc" class="form-control selectpicker" >
+									<input name="gp_giveperc" placeholder="숫자만 입력해주세요" class="form-control"  type="number" style="background-color:#ffffff;">
+									<!-- <select name="gp_giveperc" class="form-control selectpicker" >
 										<option value="100" >100%</option>
 										<option value="90" >90%</option>
 										<option value="80" >80%</option>
@@ -320,7 +321,7 @@
 										<option value="2" >2%</option>
 										<option value="1" >1%</option>
 										<option value="0" >0%</option>
-									</select>
+									</select> -->
 								</div>
 							</div>
 						</div>
@@ -384,11 +385,11 @@ $(document).on('click', '.give_point', function(){
 	});
 });
 
-$(document).on('change', '#pointModal .modal-body select[name=gp_giveperc]', function(){
-	console.log('onchange')
+$(document).on('change', '#pointModal .modal-body input[name=gp_giveperc]', function(){
 	let _perc = $(this).val();
 	let _point = $("#pointModal .modal-body input[name=gp_point]").val();
 	let _calculate = _point / 100 * _perc;
+	console.log('onchange',_calculate);
 	$("#pointModal .modal-body input[name=gp_givepoint]").val(_calculate.toLocaleString('en', {maximumFractionDigits: 1}));
 });
 
