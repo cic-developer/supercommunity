@@ -290,7 +290,7 @@
 							<div class="col-md-4 selectContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-hand-right"></i></span>
-									<input name="gp_giveperc" placeholder="숫자만 입력해주세요" class="form-control"  type="number" style="background-color:#ffffff;">
+									<input name="gp_giveperc" placeholder="숫자만 입력해주세요" class="form-control"  type="number" style="background-color:#ffffff; width:100%">
 									<!-- <select name="gp_giveperc" class="form-control selectpicker" >
 										<option value="100" >100%</option>
 										<option value="90" >90%</option>
