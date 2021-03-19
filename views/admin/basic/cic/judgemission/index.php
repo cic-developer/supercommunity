@@ -484,8 +484,10 @@ $(document).on('click','.set_confirm',function(){
 
 $(document).keypress(function(event){
      if ( event.which == 13 ) {
-		$(".send_point").trigger("click");
-		return false;
+		if($(".modal-open").length > 0){
+			$(".send_point").trigger("click");
+			return false;
+		}
      }
 });
 //]]>
