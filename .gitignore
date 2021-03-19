@@ -4,3 +4,4 @@
 /application/cache
 /application/logs
 /uploads
+/views/login/rsteam_cic/login.php

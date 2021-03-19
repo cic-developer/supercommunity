@@ -404,7 +404,7 @@ $(document).on('change keyup paste', '#pointModal .modal-body input[name=gp_give
 	if($(this).val()*1 <= 0){
 		$(this).val(0);
 	}
-	
+
 	let _perc = $(this).val();
 	let _point = $("#pointModal .modal-body input[name=gp_point]").val();
 	let _calculate = _point / 100 * _perc;
@@ -484,8 +484,10 @@ $(document).on('click','.set_confirm',function(){
 
 $(document).keypress(function(event){
      if ( event.which == 13 ) {
-		$(".send_point").trigger("click");
-		return false;
+		if($(".modal-open").length > 0 && $("#reward_per").val()){
+			$(".send_point").trigger("click");
+			return false;
+		}
      }
 });
 //]]>
