@@ -290,7 +290,16 @@
 							<div class="col-md-4 selectContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-hand-right"></i></span>
-									<input name="gp_giveperc" placeholder="숫자만 입력해주세요" class="form-control"  type="number" style="background-color:#ffffff; width:100%">
+									<input 
+										id="reward_per" 
+										name="gp_giveperc" 
+										placeholder="숫자만 입력해주세요" 
+										class="form-control"  
+										type="number" 
+										style="background-color:#ffffff; width:100%"
+										min="0"
+										max="100"
+									/>
 									<!-- <select name="gp_giveperc" class="form-control selectpicker" >
 										<option value="100" >100%</option>
 										<option value="90" >90%</option>
@@ -341,7 +350,7 @@
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success send_point" >지급</button>
+				<button type="button" class="btn btn-success send_point">지급</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
@@ -383,13 +392,22 @@ $(document).on('click', '.give_point', function(){
 	$("#pointModal").modal({
 		backdrop:false
 	});
+
+	$("#reward_per").focus();
 });
 
-$(document).on('change', '#pointModal .modal-body input[name=gp_giveperc]', function(){
+$(document).on('change keyup paste', '#pointModal .modal-body input[name=gp_giveperc]', function(){
+	if($(this).val()*1 > 100){
+		$(this).val(100);
+	}
+
+	if($(this).val()*1 <= 0){
+		$(this).val(0);
+	}
+	
 	let _perc = $(this).val();
 	let _point = $("#pointModal .modal-body input[name=gp_point]").val();
 	let _calculate = _point / 100 * _perc;
-	console.log('onchange',_calculate);
 	$("#pointModal .modal-body input[name=gp_givepoint]").val(_calculate.toLocaleString('en', {maximumFractionDigits: 1}));
 });
 
@@ -454,6 +472,21 @@ $(document).on('click','.set_confirm',function(){
 			
 		}
 	});
+});
+
+
+//2021 03 19 엔터키 입력으로 modal창 데이터 전송
+// function enterkey(){
+// 	if (window.event.keyCode == 13) {
+// 		$(".send_point").trigger("click");
+// 	}
+// }
+
+$(document).keypress(function(event){
+     if ( event.which == 13 ) {
+		$(".send_point").trigger("click");
+		return false;
+     }
 });
 //]]>
 </script>
