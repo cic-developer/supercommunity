@@ -1,4 +1,4 @@
-<?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/views/mypage/rsteam_cic/css/style.css'); ?>
+<?php $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 <?php
   $csrf = array(
       'name' => $this->security->get_csrf_token_name(),
@@ -75,12 +75,13 @@ foreach($medList AS $ml){
 <!---20.10.14추가사항 게시링크 url 입력-->
                         <td>
                             <small><?php echo $this->lang->line(10)?></small>
-                            <input type="text" id="post_link" name="post_link[]" value="<?php echo element('jud_post_link', $ml)?>" <?php echo $media_comp_check? 'readonly' : '' ?>/>
+                            <input type="text" name="post_link[]" value="<?php echo element('jud_post_link', $ml)?>" <?php echo $media_comp_check? 'readonly' : '' ?>/>
                         </td>
 <!---20.10.14추가사항 게시링크 url 입력//-->
                         <td> 
                             <span class="img_check"><img class="<?=$media_comp_check ? 'finish_img' : 'attach_img'?>" src="<?php echo thumb_url('judge', element('jud_attach', $ml), 400, 300); ?>" alt='인증 사진' />
-                            <input class="jud_attach" name="jud_attach[]" type="file" style="display:none;"></span>
+                            <input class="jud_attach" name="jud_attach[]" type="file" style="display:none;">
+                            </span> 
                         </td>
                         <td>
                             <i class="super_p"></i><b><?=$ml['med_superpoint']?></b> 
@@ -119,9 +120,22 @@ foreach($medList AS $ml){
         </div>
         <!--my_right_box-->
 <?php echo form_close(); ?>
-
 </div>
 <!--//mypage-->
+
+<!--안내 Modal Start-->
+<div class="modal fade" id="infoModal" role="dialog" style="display:table;">
+	<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<?php echo $this->lang->line('modalContent')?>
+		
+	</div>
+</div>
+<!--안내 Modal End -->
+
+
+<!-- Modal Script -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 <script>
     var fileTypes = ['image/png', 'image/jpg', 'image/jpeg'];
@@ -131,6 +145,9 @@ foreach($medList AS $ml){
         if(validation_err){
             alert(validation_err);
         }
+        $("#infoModal").modal({
+            backdrop: 'static'
+        });
     });
 
     $(".attach_img").on('click', function(){

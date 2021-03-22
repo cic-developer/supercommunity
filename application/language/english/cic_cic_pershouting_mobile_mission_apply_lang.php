@@ -39,6 +39,48 @@ $lang['c_10'] = 'Please register the image.';
 $lang[] = '';
 $lang[] = '';
 $lang['require_login'] = 'This service requires login.';
+$lang['modalContent'] = '
+<div class="modal-content">
+<div class="modal-header">
+    <h4 class="modal-title">Mission participation guide</h4>
+    <button type="button" class="close" onclick="history.back()">×</button>
+</div>
+<div class="modal-body">
+    <p class="start">Supercommunity prohibits <span style="font-weight:bold; color:#f40315;">abuse</span>.<br>
+    Please check the precautions below.<br></p>
+    <br>
+    <br>
+    <span style="font-weight: bold;">1.</span> Participating in the mission by copying someone else\'s post without permission<br>
+    <br>
+    <span style="font-weight: bold;">2.</span> If you have posted a post with no sincerity (low quality)<br>
+    <br>
+    <span style="font-weight: bold;">3.</span> In case of posting content not related to the mission content<br>
+    <br>
+    <span style="font-weight: bold;">4.</span> When deleting a post after receiving a mission reward<br>
+    <br>
+    <br>
+    <p class="start2">In the case of the above, it can be regarded as <span style="font-weight:bold; color:#f40315;">Abusing and fraudulent users</span>.
+    Abusing behavior and fraudulent use are warned or rejected. <br>
+    I cannot receive the reward.<br></p>
+    <br>
+    <br>
+    If you get a warning<br>
+    <br>
+    <p class="start3">One-time warning penalty applied<br>
+    Permanent suspension of two warnings<br></p>
+    <br>
+    Sanctions are made. Thank you.
+</div>
+<div class="modal-footer">
+    <div class="btn-group">
+        <label>
+            <input type="checkbox" class="btn btn-info set_state" data-dismiss="modal">
+            I agree to the above.
+        </label>
+    </div>
+</div>
+</div>
+';
 $lang[] = '';
 $lang[] = '';
 $lang[] = '';

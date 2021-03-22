@@ -94,7 +94,15 @@ foreach($medList AS $ml){
 </div>
 <!--//mypage-->
 
-
+<!--안내 Modal Start-->
+<div class="modal fade" id="infoModal" role="dialog" style="display:table;">
+	<div class="modal-dialog modal-lg">
+        <?php echo $this->lang->line('modalContent')?>
+	</div>
+</div>
+<!--안내 Modal End -->
+<!-- Modal Script -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 <script>
     var fileTypes = ['image/png', 'image/jpg', 'image/jpeg'];
@@ -104,6 +112,9 @@ foreach($medList AS $ml){
         if(validation_err){
             alert(validation_err);
         }
+        $("#infoModal").modal({
+            backdrop: 'static'
+        });
     });
 
     $(".attach_img").on('click', function(){
