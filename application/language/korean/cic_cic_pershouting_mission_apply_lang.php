@@ -42,6 +42,48 @@ $lang['c_8'] = '미션이 마감되었습니다.';
 $lang['c_9'] = '이미지 등록중 오류가 발생하였습니다.';
 $lang['c_10'] = '이미지를 등록해주세요';
 $lang['require_login'] = '로그인이 필요한 서비스 입니다.';
+$lang['modalContent'] = '
+<div class="modal-content" >
+<div class="modal-header">
+    <h4 class="modal-title">미션 참여 안내</h4>
+    <button type="button" class="close" onclick="history.back()">×</button>
+</div>
+<div class="modal-body">
+    <p class="start">슈퍼커뮤니티에서는 <span style="font-weight:bold; color:#f40315;">어뷰징행위</span>를 금지합니다.<br>
+    아래의 주의사항을 확인해주세요.<br></p>
+    <br>
+    <br>
+    <span style="font-weight: bold;">1.</span> 타인의 게시글을 무단으로 복사하여 미션에 참여하는 경우<br>
+    <br>
+    <span style="font-weight: bold;">2.</span> 성의 없는 게시글(저품질)을 게시한 경우<br>
+    <br>
+    <span style="font-weight: bold;">3.</span> 미션 내용과 관계없는 내용을 게시한 경우<br>
+    <br>
+    <span style="font-weight: bold;">4.</span> 미션 보상 수령 후 게시글을 삭제하는 경우<br>
+    <br>
+    <br>
+    <p class="start2">위의 내용에 해당하는 경우 <span style="font-weight:bold; color:#f40315;">어뷰징 및 부정 사용자</span>로 간주할 수 있으며,<br>
+    어뷰징 행위 및 부정 사용 사항에 대해 경고 또는 반려 처리되며 <br>
+    리워드를 지급받을 수 없습니다.<br></p>
+    <br>
+    <br>
+    경고를 받는 경우<br>
+    <br>
+    <p class="start3">1회 경고 패널티 적용<br>
+    2회 경고 영구정지<br></p>
+    <br>
+    의 제재가 이루어집니다. 감사합니다.
+</div>
+<div class="modal-footer">
+    <div class="btn-group">
+        <label>
+            <input type="checkbox" class="btn btn-info set_state" data-dismiss="modal">
+            위의 내용에 동의합니다.
+        </label>
+    </div>
+</div>
+</div>
+';
 $lang[] = '';
 $lang[] = '';
 $lang[] = '';
