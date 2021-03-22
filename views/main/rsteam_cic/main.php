@@ -52,7 +52,7 @@
         containment : $("#main"),
         autoPlay:true,
         loop:true,
-        opacity: 1,
+        opacity: 0.9,
         mute: true,
         showControls: false,
         showYTLogo: false,

@@ -6,7 +6,7 @@
         <div class="research_top">
             <ul class="text_g">
                 <li class="sub_title">
-                    <iframe src="https://www.youtube.com/embed/UeEYxrPFlC0?controls=0&rel=0?enablejsapi&disablekb" 
+                    <iframe src="https://www.youtube.com/embed/UeEYxrPFlC0?rel=0?enablejsapi=1&disablekb=1&fs=1" 
                             width="100%" height="570"
                             frameborder="0" 
                             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
@@ -27,7 +27,7 @@
         <div class="research_top">
             <ul class="text_g">
                 <li class="sub_title">
-                    <img alt="여기에 대충 이미지 걸거에요"/>
+                    <img src="<?php echo base_url('assets/images/ad_platform.png');?>" alt="여기에 대충 이미지 걸거에요"/>
                 </li>
                 <li><p>
                     네이버 블로그, 유튜브, 텔레그램, 카카오 오픈채팅, 코박, 티스토리, 코인판이 있습니다.
@@ -51,7 +51,22 @@
         let this_iframe = $(document).find('iframe');
         if(this_iframe){
             let this_iframe_src = this_iframe.attr('src');
-            this_iframe.attr('src',this_iframe_src+'&autoplay=1');
+            let autoplay_index = this_iframe_src.lastIndexOf('&autoplay=1');
+            
+
+            if(autoplay_index >= 0){
+                this_iframe_src = this_iframe_src.substr(0, autoplay_index);
+                this_iframe.attr('src',this_iframe_src);
+                console.log('autoplay stop', this_iframe_src);
+
+                setTimeout(async () => {
+                    await this_iframe.attr('src',this_iframe_src+'&autoplay=1');
+                    console.log('autoplay restart', this_iframe_src);
+                }, 3000);
+            }else{
+                this_iframe.attr('src',this_iframe_src+'&autoplay=1');
+                console.log('autoplay run', this_iframe_src);
+            }
         }
     }
 </script>
