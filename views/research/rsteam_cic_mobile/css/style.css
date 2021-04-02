@@ -25,8 +25,7 @@
 	padding-right: 5px;
 }
 
-/*퍼백서 내용 css 시작*/
-
+/* 퍼백서 내용 css 시작  */ /* 모바일 버전 */
 
 #research_wrap .research_content .research_top{
 	width: 100%;		
@@ -109,19 +108,135 @@
 }
 
 
-
+#research_wrap .research_top .text_g{
+	/* font-size: 12px; */
+}
 
 
 #research_wrap .research_content .text_g .sub_title{
-	font-size: 1.36em;
-	font-weight: 400;
+	font-size: 16px;
+	font-weight: 600;
 	padding-bottom:20px;
 	color:#333;
 	display: block;
 	line-height: 1.7;
-	text-align: left;
+	font-family: 'Noto Sans KR', sans-serif;
 	
 }
+
+#research_wrap .research_content .text_g input{
+	margin-bottom: 10px;
+    outline: none;
+    border-style: none;
+    border-bottom: 2px solid #000;
+	font-size: 18px;
+}
+
+
+
+label
+
+input[type="checkbox"] {
+	display: block;
+	width: 20px;
+	height: 20px; 
+	margin-top: 5px;
+}
+
+
+
+input[type="radio"] {
+	display: block;
+	width: 20px;
+	height: 20px; 
+	margin-top: 5px;
+	
+}
+
+input[type="text"] {
+	display: block;
+	width: 300px;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+input[type="file"] {
+	display: inline-block;
+	width: 335px;
+	color: #999;
+	cursor: pointer;
+  
+  }  
+
+
+
+  select{
+	width: 120px; height: 40px; 
+}
+
+
+
+#research_wrap .research_content .text_g .form-group{
+	display: block;
+	width: 335px;
+	padding-bottom: 20px;
+}
+
+#research_wrap .research_content .text_g .form-group label{
+	display: inline-flex;
+	width: 500px;
+	height: 50px;
+	font-size: 13px;
+	margin-bottom: 10px;
+	color: red;
+}
+
+
+#research_wrap .bt {
+	margin-bottom: 30px;
+}
+
+
+#research_wrap .research_content .text_g .form-group .tex{
+	display:block;
+	font-size: 15px;
+	text-align:justify;
+	width: 180px;
+	height: 20px;
+	 padding-bottom: 10px;
+	 margin-left: 10px;
+}
+
+#research_wrap .research_content .text_g .form-group textarea{
+	display: block;
+	width: 335px;
+	height: 150px;
+	font-size: 15px;
+	resize: none;
+	
+}
+
+#res_name , #respon_email , #respon_tel {
+	width: 330px;
+	height: 30px;
+}
+
+#research_wrap h3{
+	margin-top: 35px;
+	
+	padding-bottom: 50px;
+	text-align: center;
+	font-size: 25px;
+	}
+
+#research_wrap .research_page4 small{
+	text-align: center;
+	margin-right: 70px;
+	padding-bottom: 100px;
+	padding-top: 20px;
+	}
+
+
 
 #research_wrap .research_content .content_area .img{
 	width: 100%;
@@ -197,7 +312,10 @@
 
 
 i{
-	font-size: 1em;
+		font-size: 15px;
+		font-weight: bold;
+		cursor: pointer;
+		margin-left: 5px;
 }
 
 

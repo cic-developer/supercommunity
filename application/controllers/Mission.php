@@ -24,7 +24,7 @@ class Mission extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('RS_missionlist','RS_missionlist_log','RS_missionpoint', 'RS_media', 'RS_judge');
+	protected $models = array('RS_missionlist','RS_missionlist_log','RS_missionpoint', 'RS_media', 'RS_judge', 'RS_whitelist');
 
 	/**
 	 * 이 컨트롤러의 메인 모델 이름입니다
@@ -68,6 +68,8 @@ class Mission extends CB_Controller
 		$offset = ($page - 1) * $per_page;
 		$where = array('mis_allowed' => 1, 'mis_deletion' => 'N');
 		$result = $this->{$this->modelname}->get_missionlist_list($per_page, $offset, $where , '', $findex, $forder, $sfield, $skeyword);
+		// print_r($this->db->last_query());
+		// exit;
 		//기존 검색
 
 		//조건이 존재하는 경우 검색 한번 더 추가
@@ -106,7 +108,7 @@ class Mission extends CB_Controller
 				/*
 				** 진행상태 한글화
 				*/
-				switch(element('state', $val)){
+				switch(element('state', $val)){ 
 					case 'planned':
 						$result['list'][$key]['state'] = $this->lang->line('c_2');
 					break;
@@ -115,6 +117,9 @@ class Mission extends CB_Controller
 					break;
 					case 'end':
 						$result['list'][$key]['state'] = $this->lang->line('c_1');
+					break;
+					case 'urgent' :
+						$result['list'][$key]['state'] = $this->lang->line('c_4');
 					break;
 					default:
 				}
@@ -138,8 +143,6 @@ class Mission extends CB_Controller
 		$view['view']['page'] = $page;
 		$view['header']['menu'] = 'pershouting';
 
-		// 이벤트가 존재하면 실행합니다
-		// $view['view']['event']['before_layout'] = Events::trigger('before_layout', $eventname);
 		
 		$layoutconfig = array(
 			'path' => 'cic_pershouting',
@@ -151,11 +154,6 @@ class Mission extends CB_Controller
 			'use_mobile_sidebar' => $this->cbconfig->item('mobile_sidebar_main'),
 			'skin_dir' => 'rsteam_cic',
 			'mobile_skin_dir' => 'rsteam_cic_mobile',
-			// 'page_title' => $page_title,
-			// 'meta_description' => $meta_description,
-			// 'meta_keywords' => $meta_keywords,
-			// 'meta_author' => $meta_author,
-			// 'page_name' => $page_name,
 		);
 		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
 		$this->data = $view;
@@ -346,8 +344,8 @@ class Mission extends CB_Controller
 			redirect('/Mission');
 		}
 		// print_r($mission_data['state']); exit;
-		if($mission_data['state'] != 'process'){
-			$this->session->set_flashdata('message', $this->lang->line('c_1'));
+		if($mission_data['state'] != 'process' && $mission_data['state'] != 'urgent' ){
+			$this->session->set_flashdata('message',$this->lang->line('c_1'));
 			redirect('/Mission');
 			exit;
 		}
@@ -357,12 +355,14 @@ class Mission extends CB_Controller
             'med_state' => 3
 		);
 
+		$domains = $this->RS_whitelist_model->get_one($mission_data['mis_apply_wht_id']);
+
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('med_id[]',$this->lang->line('c_3'), 'required|numeric');
 		if($this->form_validation->run() == FALSE){	
-			if($this->input->post('dummy')){
-				echo "<script>alert('".$this->lang->line('c_10')."')</script>";
-			}
+			// if($this->input->post('dummy')){
+			// 	echo "<script>alert('".$this->lang->line('c_10')."')</script>";
+			// }
 			$med_list = $this->RS_media_model->getMissionMedia($misid,$mem_id, $mission_data['mis_apply_wht_id']);
 			if($med_list){ 
 				$page_title = $this->cbconfig->item('site_meta_title_main');
@@ -395,6 +395,7 @@ class Mission extends CB_Controller
 				// echo $this->db->last_query(); exit;
 				$view['missionData'] = $mission_data;
 				$view['header']['menu'] = 'pershouting';
+				$view['domains'] = $domains;
 				$this->data = $view;
 				$this->layout = element('layout_skin_file', element('layout', $view));
 				$this->view = element('view_skin_file', element('layout', $view));
@@ -443,29 +444,41 @@ class Mission extends CB_Controller
 			$med_id = $this->input->post('med_id');
 			$all_med_id = $this->input->post('all_med_id');
 			$jud_post_link = $this->input->post('post_link');
+			$domainsArr = explode("\n", $domains['wht_domains']);
 			$jud_insert_arr = array();
-			for($i = 0; $i < count($all_med_id); $i++){
-				if(in_array($all_med_id[$i],$med_id)){
-					$jud_insert_arr[] = array(
-						'jud_jug_id' => 1,
-						'jud_mis_id' => $misid,
-						'jud_med_id' => $all_med_id[$i],
-						'jud_attach' => element('file_name', $upload_result['list'][$i]) ? (cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $upload_result['list'][$i])) : '',
-						'jud_post_link' => htmlspecialchars($jud_post_link[$i], ENT_QUOTES, 'UTF-8')
-					);
+			for($i = 0; $i < count($all_med_id); $i++){ 
+				if( in_array($all_med_id[$i],$med_id) ){
+					foreach($domainsArr AS $d){
+						if(strpos(trim($jud_post_link[$i]), trim($d)) !== false){
+							$jud_insert_arr[] = array(
+								'jud_jug_id' => 1,
+								'jud_mis_id' => $misid,
+								'jud_med_id' => $all_med_id[$i],
+								'jud_attach' => element('file_name', $upload_result['list'][$i]) ? (cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $upload_result['list'][$i])) : '',
+								'jud_post_link' => htmlspecialchars($jud_post_link[$i], ENT_QUOTES, 'UTF-8')
+							);
+							break;
+						}
+					}
 				}
 			}
+			
+			$message = $this->lang->line('c_2');
+
+			//수정인지 확인
+			$get_judge_list = $this->RS_judge_model->get_list('','', array(
+				'jud_mem_id' => $mem_id,
+				'jud_mis_id' => $misid,
+			));
+
+			if(element('list',$get_judge_list)) $message = $this->lang->line('alert_message_modify');
+			
 
 			$result = $this->RS_judge_model->replace_apply_mission_judge($jud_insert_arr);
-	
-			// print_r($result);
-			// exit;
-
-			$message = $this->lang->line('c_2');
 			
-			if($upload_result['err_count'] == $upload_result['all_count']){
-				$message = $this->lang->line('c_10');
-			}
+			// if($upload_result['err_count'] == $upload_result['all_count']){
+			// 	$message = $this->lang->line('c_10');
+			// }
 			if(strcmp($result,'not found member data') == 0){
 				$message = $this->lang->line('c_5');
 			}
@@ -477,10 +490,10 @@ class Mission extends CB_Controller
 				$message = $this->lang->line('c_9');
 			}
 			if(
-				strcmp ($result ,'error occur for check other judge') == 0 ||
-				strcmp ($result ,'미디어심사 진행중입니다.')  == 0 ||
+				strcmp ($result , 'error occur for check other judge') == 0 ||
+				strcmp ($result , '미디어심사 진행중입니다.')  == 0 ||
 				strcmp ($result , '출금심사 진행중입니다.') == 0 ||
-				strcmp ($result ,'미디어 재심사 진행중입니다.') == 0 ||
+				strcmp ($result , '미디어 재심사 진행중입니다.') == 0 ||
 				strcmp ($result , 'Media review is in progress.') == 0||
 				strcmp ($result , 'The withdrawal examination is in progress.') == 0||
 				strcmp ($result , 'Media review is in progress.') == 0

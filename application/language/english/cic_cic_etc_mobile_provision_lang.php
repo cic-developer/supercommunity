@@ -21,7 +21,7 @@ $lang[2] = '<div class="area_cont">
 <h4 class="tit_policy">2. Personal Information File Status</h4>
 <strong class="tit_subject2">1. Personal Information Item</strong>
 <ul class="list_2depth">
-  <li>Email, mobile phone number, password question and answer, password, loginID, gender, date of birth, name</li>
+  <li>Email, password, loginID</li>
 </ul> 
 <strong class="tit_subject2">2. collection method</strong>
 <ul class="list_2depth">
@@ -104,10 +104,10 @@ $lang[7] = '<div class="area_cont">
 <strong class="tit_subject2">[Subscribe and manage homepage]</strong>
 <ul class=list_2depth>
   <li>
-    Required items: Email, mobile phone number, password question and answer, password, login ID, gender, date of birth, name
+    Required items: password, loginID
   </li>
   <li>
-    Choice : Email, mobile phone number, password question and answer, password, login ID, gender, date of birth, name
+    Choice : Email
   </li>
 </ul> 
 </div>';

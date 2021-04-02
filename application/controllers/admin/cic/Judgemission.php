@@ -392,12 +392,12 @@ class Judgemission extends CB_Controller
 			array(
 				'field' => 'value', 
 				'label' => 'VALUE', 
-				'rules' => array('trim','required','in_list[confirm,deny,warn]')
+				'rules' => array('trim','required','in_list[confirm,deny,warn,cancel]')
 			),
 			array(
 				'field' => 'state', 
 				'label' => 'STATE', 
-				'rules' => array('trim','is_natural','required','in_list[0,3]')
+				'rules' => array('trim','is_natural','required','in_list[0,1,3]')
 			),
 			array(
 				'field' => 'deny', 
@@ -443,7 +443,7 @@ class Judgemission extends CB_Controller
 			** 이미 처리된 경우
 			*/
 			// if(element('jud_state',$getdata) == $this->input->post('state')){
-			if(element('jud_state',$getdata) != 1){
+			if(element('jud_state',$getdata) != 1 && ($this->input->post('value') != 'cancel' && element('jud_state',$getdata) != 3)){
 				$return = array(
 					'type' => 'error',
 					'data' => 'already_done'
@@ -460,7 +460,7 @@ class Judgemission extends CB_Controller
 				'jud_modifier_ip' => $this->input->ip_address(),
 			);
 			if($this->{$this->modelname}->update(element('jud_id',$getdata), $update)){
-				if($this->input->post('state') == 3 && element('jud_jug_id',$getdata) == 1){ //미션심사 승인인 경우 포인트 지급
+				if($this->input->post('state') == 3 && element('jud_jug_id',$getdata) == 1 && $this->input->post('value') != 'cancel'){ //미션심사 승인인 경우 포인트 지급
 					$this->point->insert_point();
 				}
 				$warn_count = 0;

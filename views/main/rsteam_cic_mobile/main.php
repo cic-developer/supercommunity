@@ -56,7 +56,6 @@
     }); /* 모바일 배너 높이 기기 height 100% */
 
 	$(".num").numScroll({
-
         number: per_friends,
         symbol: true
 	});
@@ -86,23 +85,6 @@
     }, 10000);
 	
     jQuery(document).ready(function ($) {
-        // $('.my-news-ticker-1').AcmeTicker({
-        //     type:'horizontal',/*horizontal/horizontal/Marquee/type*/
-        //     direction: 'right',/*up/down/left/right*/
-        //     controls: {
-        //         prev: $('.acme-news-ticker-prev'),/*Can be used for horizontal/horizontal/typewriter*//*not work for marquee*/
-        //         toggle: $('.acme-news-ticker-pause'),/*Can be used for horizontal/horizontal/typewriter*//*not work for marquee*/
-        //         next: $('.acme-news-ticker-next')/*Can be used for horizontal/horizontal/marquee/typewriter*/
-        //     }
-        // });
-        // $('.my-news-ticker-2').AcmeTicker({
-        //     type:'marquee',/*horizontal/horizontal/Marquee/type*/
-        //     direction: 'left',/*up/down/left/right*/
-        //     speed: 0.05,/*true/false/number*/ /*For vertical/horizontal 600*//*For marquee 0.05*//*For typewriter 50*/
-        //     controls: {
-        //         toggle: $('.acme-news-ticker-pause'),/*Can be used for horizontal/horizontal/typewriter*//*not work for marquee*/
-        //     }
-        // });
         $('.my-news-ticker-3').AcmeTicker({
             type:'typewriter',/*horizontal/horizontal/Marquee/type*/
             direction: 'right',/*up/down/left/right*/
@@ -113,14 +95,5 @@
                 next: $('.acme-news-ticker-next')/*Can be used for horizontal/horizontal/marquee/typewriter*/
             }
         });
-        // $('.my-news-ticker-4').AcmeTicker({
-        //     type:'vertical',/*vertical/horizontal/Marquee/type*/
-        //     direction: 'right',/*up/down/left/right*/
-        //     controls: {
-        //         prev: $('.acme-news-ticker-prev'),/*Can be used for vertical/horizontal/typewriter*//*not work for marquee*/
-        //         next: $('.acme-news-ticker-next'),/*Can be used for vertical/horizontal/typewriter*//*not work for marquee*/
-        //         toggle: $('.acme-news-ticker-pause')/*Can be used for vertical/horizontal/marquee/typewriter*/
-        //     }
-        // });
     });
 </script>

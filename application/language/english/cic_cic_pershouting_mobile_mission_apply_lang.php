@@ -36,7 +36,7 @@ $lang['c_7'] = 'Mission application points are more than remaining points.';
 $lang['c_8'] = 'Mission closed.';
 $lang['c_9'] = 'An error occurred while registering the image registration.';
 $lang['c_10'] = 'Please register the image.';
-$lang[] = '';
+$lang['c_11'] = 'Worng Media link.\nplease check your Media link';
 $lang[] = '';
 $lang['require_login'] = 'This service requires login.';
 $lang['modalContent'] = '
@@ -58,6 +58,9 @@ $lang['modalContent'] = '
     <br>
     <span style="font-weight: bold;">4.</span> When deleting a post after receiving a mission reward<br>
     <br>
+    <span style="font-weight: bold;">5.</span> Participating in two missions with one post<br>
+    <br>
+    <span style="font-weight: bold;">6.</span> Participating in the mission with the same content in different media<br>
     <br>
     <p class="start2">In the case of the above, it can be regarded as <span style="font-weight:bold; color:#f40315;">Abusing and fraudulent users</span>.
     Abusing behavior and fraudulent use are warned or rejected. <br>
@@ -81,9 +84,9 @@ $lang['modalContent'] = '
 </div>
 </div>
 ';
-$lang[] = '';
-$lang[] = '';
-$lang[] = '';
+$lang['alert_1'] = 'There is no media you have requested.';
+$lang['confirm_1'] = 'Please, attach Image';
+$lang['alert_message_modify'] = 'Modifications completed';
 $lang[] = '';
 $lang[] = '';
 $lang[] = '';

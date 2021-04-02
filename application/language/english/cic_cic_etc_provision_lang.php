@@ -5,7 +5,7 @@ $lang[0] ='<strong class="tit_policy">SUPER COMMUNITY Terms and Conditions</stro
 <p class="desc_g">
 Under the Personal Information Protection Act, the "SuperCommonity" (hereinafter referred to as "https://www.percommunity.com") of the stock company CCS Community (hereinafter referred to as "SuperCommonity") has the following measures to protect users\' personal information and protect their rights and interests and to smoothly deal with their personal information-related grievances.<br><br>
   When the company revises its personal information processing policy, it will notify it through the website notice (or individual notice).<br>
-  This policy goes into effect on January 1, 2020."
+  This policy will take effect from October 21, 2020."
 </p><!--이용약관 top-->';
 
 $lang[1] ='<div class="area_cont fst">
@@ -23,7 +23,7 @@ $lang[2] ='<div class="area_cont">
 <h4 class="tit_policy">2. Personal Information File Status</h4>
 <strong class="tit_subject2">1. Personal Information Item</strong>
 <ul class="list_2depth">
-  <li>Email, mobile phone number, password question and answer, password, loginID, gender, date of birth, name</li>
+  <li>Email, password, loginID</li>
 </ul> 
 <strong class="tit_subject2">2. collection method</strong>
 <ul class="list_2depth">
@@ -53,8 +53,8 @@ Personal information related to this information is collected.Retained for the p
       Purpose
       </h5>
       - Evidence of retention: Storage for service offering <br>
-      - Relevant statutes: (Contents) <br>
-      - Exception Reason :(Contents)<br>
+      - Relevant statutes: <br><br>
+      <img id="rowtable" src="http://dev.percommunity.com/assets/images/laws-table(eng).png" alt="표(영어)">
     </li>          
 </ul>
 </div>';
@@ -118,14 +118,14 @@ $lang[6] = '<div class="area_cont">
 
 $lang[7] = '<div class="area_cont">
 <h4 class="tit_policy">7. Creating items for processing personal information</h4>
-<p class="desc_g">1. ‘SuperCommunity’ handles the following personal information items.</p>
+<p class="desc_g">1. ‘SuperCommunity’ handles the following personal information items. (*This applies after VERSION UP)</p>
 <strong class="tit_subject2">[Subscribe and manage homepage]</strong>
 <ul class=list_2depth>
   <li>
-    Required items: Email, mobile phone number, password question and answer, password, login ID, gender, date of birth, name
+    Required items: password, loginID
   </li>
   <li>
-    Choice : Email, mobile phone number, password question and answer, password, login ID, gender, date of birth, name
+    Choice : Email
   </li>
 </ul> 
 </div>';
@@ -230,13 +230,7 @@ $lang[12] = '<div class="area_cont">
           3. Using a lock for document security
         </h5>
         Documents including personal information, auxiliary storage media, etc. are stored in a safe place with a lock.
-      </li>
-      <li>
-        <h5>
-          4. access control to unauthorized persons
-        </h5>
-        We have a separate physical storage area for personal information and establish and operate access control procedures.
-      </li>            
+      </li>      
   </ul> 
 </div>';
 

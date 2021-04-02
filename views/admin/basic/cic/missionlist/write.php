@@ -156,7 +156,10 @@
 				</div>
 			</div>
 			<div class="btn-group pull-right" role="group" aria-label="...">
+<?php if($this->uri->segment(5, 0) != 0){ ?>
 				<button type="button" class="btn btn-danger btn-sm" id="finish" data-finish="1" <?=$disabled?>>마감하기</button>
+				<button type="button" class="btn btn-warning btn-sm" id="urgent" <?=$disabled?>>마감임박</button>
+<?php } ?>
 				<button type="button" class="btn btn-default btn-sm btn-history-back" >취소하기</button>
 				<button type="submit" class="btn btn-success btn-sm" <?=$disabled?>>저장하기</button>
 			</div>
@@ -204,6 +207,24 @@
 					throw new error('unhandled error occur');
 				}
 				
+			}
+		});
+	});
+
+	$("#urgent").on('click', function(){
+		if(!confirm('수정 전 데이터를 기반으로 미션을 2시간 뒤 마감 상태로 변환시킵니다.\n정말 강제로 상태를 변경하시겠습니까?')) return false;
+		let csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>';
+		let csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
+		$.ajax({
+			type: 'post',
+			dataType: "json",
+			url:'/admin/cic/missionlist/ajax_urgent_mission/<?php echo element(element('primary_key', $view), element('data', $view));?>',
+			data:{
+				[csrfName]: csrfHash,
+			},
+			success(result){
+				alert(result);
+				location.reload();
 			}
 		});
 	});

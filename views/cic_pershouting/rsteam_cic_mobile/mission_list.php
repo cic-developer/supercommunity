@@ -27,6 +27,7 @@
             <li><a <?php echo element('state',$this->input->get()) == 'process' ? 'class="on"' : ''?> onclick="searchShouting('process')"><?php echo $this->lang->line(3) ?></a></li>
             <li><a <?php echo element('state',$this->input->get()) == 'end' ? 'class="on"' : ''?> onclick="searchShouting('end')"><?php echo $this->lang->line(4) ?></a> </li>
             <li><a <?php echo element('state',$this->input->get()) == 'planned' ? 'class="on"' : ''?> onclick="searchShouting('planned')"><?php echo $this->lang->line(5) ?></a></li>
+            <li><a <?php echo element('state',$this->input->get()) == 'urgent' ? 'class="on"' : ''?> onclick="searchShouting('urgent')"><?php echo $this->lang->line('c_4') ?></a></li>
         </ul>
         <div class="search_area"> 
         <?php echo form_open('',array('method' => 'get'));?>
@@ -75,9 +76,9 @@
                 <div class="thumnail" onmouseover="thumbnail_enter(this)" onmouseout="thumbnail_out(this)">
                         <?php
                         //시간을 마감에 사용하지 않으면 타이머 표시 X
-                        if($d['state'] == $this->lang->line('c_2') || ($d['mis_endtype'] > 0 && $d['mis_endtype'] < 3)){
+                        if($d['state'] == $this->lang->line('c_2') || ($d['mis_endtype'] > 0 && $d['mis_endtype'] < 3 && $d['state'] != $this->lang->line('c_1'))){
                         ?>
-                        <div class="time_box">
+                        <div class="<?php echo  $d['state'] == $this->lang->line('c_4') ? 'urgent_box':'time_box' ?>">
                         <?php
                             $countdown_on = ($d['state'] == $this->lang->line('c_2') || $d['mis_endtype'] == '1' || $d['mis_endtype'] == '2') && $d['state'] != $this->lang->line('c_1');
                                             //오픈예정이거나                            마감형식이 날짜를 활용하는 경우 이고,                    //상태가 마감이 아닌 경우 카운트다운 사용

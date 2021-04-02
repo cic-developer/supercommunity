@@ -1,109 +1,72 @@
-<?php 
-    $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); 
-    $is_en = '';
-    if($this->session->userdata('lang') == 'english'){
-        $is_en = '_en';
-    }
-?>
-<div id="research_wrap">
-    <!--퍼백서 타이틀-->
-    <h3>research PAPER</h3>
-    <!--퍼백서 타이틀//-->
+<?php echo $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css'); ?>
 
-    <!--퍼백서 내용 시작-->
+<div id="research_wrap">  
     <div class="research_content">
+        <h3>광고 컨설팅 플랫폼 SUPER COMMUNITY입니다.</h3>
         <div class="research_top">
-            <?php echo $this->lang->line(0) ?>
+            <ul class="text_g">
+                <li class="sub_title">
+                    <iframe src="https://www.youtube.com/embed/UeEYxrPFlC0?rel=0?enablejsapi=1&disablekb=1&fs=1" 
+                            width="100%" height="280"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </li>
+                <li><p>
+                    SUPER COMMUNITY는 디지털자산 광고플랫폼으로 종합적인 광고 컨설팅을 통해 여러분의 비즈니스 성장을 극대화시킬 수 있습니다.
+                    광고주님께서는 중간비용 없이 플랫폼을 무료로 이용하실 수 있으며 
+                    미션의 등록, 심사, 기본 보고서 작성 서비스는 회사에서 무료로 제공합니다. 
+                    추가적인 광고 컨설팅을 원하시는 경우 패키지서비스를 이용하실 수 있습니다. 
+                    가장 효율적인 광고를 진행해 보세요!
+                </p></li>
+            </ul>
         </div> 
-        
-        <!--<i class="fas fa-chevron-down" onclick="document.getElementById('hiddenContent01').style.display=(document.getElementById('hiddenContent01').style.display=='block') ? 'none' : 'block';">
-        <?php //echo $this->lang->line(1) ?></i>
-        <div class="research_b" id="hiddenContent01" style="display: none;">
-            <div class="content_area">
-                <?php //echo $this->lang->line(2) ?>
-            </div>
-            <div class="content_area">
-                <?php //echo $this->lang->line(3) ?>
-            </div>
-            <div class="content_area">
-                <?php //echo $this->lang->line(4) ?>
-            </div>
-            <div class="content_area">
-                <?php //echo $this->lang->line(5) ?>
-            </div>
-             <div class="content_area">
-                <h4><?php //echo $this->lang->line(6) ?></h4>
-                <ul class="text_g">
-                    <li>
-                        <p><?php //echo $this->lang->line(7) ?></p>
-                    </li>
-                    <li class="s_img">
-                        <img src="<?php //echo base_url('assets/images/research011'.$is_en.'.jpg');?>" alt=" <?php //echo $this->lang->line(20) ?>"/>
-                    </li>
-                    <li>
-                    <?php //echo $this->lang->line(8) ?>
-                    </li>
-                    <li class="sub_title">
-                    <?php //echo $this->lang->line(9) ?>
-                    </li>
-                    <li>
-                        <p><?php //echo $this->lang->line(10) ?>
-                        </p>
-                    </li>
-                    <li class="img">
-                        <img src="<?php //echo base_url('assets/images/research012'.$is_en.'.jpg');?>" alt=" <?php //echo $this->lang->line(21) ?>"/>
-                    </li>
-                    <li class="sub_title">
-                        <?php //echo $this->lang->line(11) ?>
-                    </li>
-                    <li>
-                        <p> <?php //echo $this->lang->line(12) ?></p>
-                            <br><br>
 
-                             <i class="fas fa-chevron-down" onclick="document.getElementById('hiddenContent02').style.display=(document.getElementById('hiddenContent02').style.display=='block') ? 'none' : 'block';">
-                            <?//php echo $this->lang->line(13) ?></i> 
-                             id="hiddenContent02" style="display: none;" 
-                            <p class="long"><?php //echo $this->lang->line(14) ?> 
-                            </p>
-                    </li>
-                    <li class="img">
-                        <img src="<?php //echo base_url('assets/images/research013'.$is_en.'.jpg');?>" alt=" <?php //echo $this->lang->line(22) ?>"/>
-                    </li>
-                    <li>
-                        <p><?php //echo $this->lang->line(15) ?></p>
-                    </li>
-                    <li class="img">
-                       <img src="<?php //echo base_url('assets/images/research014'.$is_en.'.jpg');?>" alt=" <?php //echo $this->lang->line(23) ?>"/>
-                    </li>
-                    <li>
-                    <p> <?php //echo $this->lang->line(16) ?></p>
-                    </li>
-                </ul>
-            </div> -->
-            <!-- <div class="content_area">
-                <?php //echo $this->lang->line(17) ?>
-            </div> -->
-            <!-- <div class="content_area">
-                <?php //echo $this->lang->line(18) ?>
-            </div>
+        <h3>SUPER COMMUNITY가 광고하는 주 플랫폼을 소개합니다.</h3>
+        <div class="research_top">
+            <ul class="text_g">
+                <li class="sub_title">
+                    <img src="<?php echo base_url('assets/images/ad_platform.png');?>" style="width:100%; height:280"/>
+                </li>
+                <li><p>
+                    네이버 블로그, 유튜브, 텔레그램, 카카오 오픈채팅, 코박, 티스토리, 코인판이 있습니다.
+                </p></li>
+            </ul>
+        </div>
 
-        </div>-->
+        <div class="bt">
+            <a href="<?php echo base_url('/Research/adInquiry')?>" class="btn1 btn_yellow">문의하기</a>
+        </div>
     </div>
-
-
-    <script> //function fn_spread(id){ var getID = document.getElementById(id); getID.style.display=(getID.style.display=='block') ? 'none' : 'block'; } </script>
-
-        <!--퍼백서 내용끝//-->
-
-        <!--다운로드버튼-->
-        <ul class="bt">
-            <li>
-                <a href="<?php echo base_url('/About/Down_researchpaper/ko')?>" class="btn1 btn_black">KOR DOWNLOAD</a>
-            </li>
-            <li>
-                <a href="<?php //echo base_url('/About/Down_researchpaper/en')?>"  class="btn1 btn_yellow" onclick="alert('준비중입니다.')">ENG DOWNLOAD</a>
-            </li>
-        </ul><!--다운로드버튼끝//-->
-       
-
 </div>
+
+<script>
+    $(document).ready(function(){
+        YT_autoPaly();
+    });
+
+    
+    function YT_autoPaly(){
+        let this_iframe = $(document).find('iframe');
+        if(this_iframe){
+            let this_iframe_src = this_iframe.attr('src');
+            let autoplay_index = this_iframe_src.lastIndexOf('&autoplay=1');
+            
+
+            if(autoplay_index >= 0){
+                this_iframe_src = this_iframe_src.substr(0, autoplay_index);
+                this_iframe.attr('src',this_iframe_src);
+                console.log('autoplay stop', this_iframe_src);
+
+                setTimeout(async () => {
+                    await this_iframe.attr('src',this_iframe_src+'&autoplay=1');
+                    console.log('autoplay restart', this_iframe_src);
+                }, 3000);
+            }else{
+                this_iframe.attr('src',this_iframe_src+'&autoplay=1');
+                console.log('autoplay run', this_iframe_src);
+            }
+        }
+    }
+</script>

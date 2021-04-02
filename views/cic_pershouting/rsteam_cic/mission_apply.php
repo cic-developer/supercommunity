@@ -23,24 +23,23 @@
                 <?php echo $this->lang->line(9)?> <br/>
                 <?php echo $this->lang->line(16)?>
             </small>
-            <small class="noti_type2">
-                <b><?php echo $this->lang->line(17)?></b>
-                <?php echo $this->lang->line(18)?><br/>
-                <?php echo $this->lang->line(19)?>
-            </small>
+            <!-- <small class="noti_type2">
+                <b><?php// echo $this->lang->line(17)?></b>
+                <?php // echo $this->lang->line(18)?><br/>
+                <?php //echo $this->lang->line(19)?>
+            </small> -->
         </h6>
         <table cellpadding="0" class="list_table" cellspacing="0" width="100%">
             <colgroup> <!--칸의 width조절을 여기서해-->
-                <col width="13%">
-                <col width="11.5%">
-                <col width="16%">
+                <col width="8%">
+                <col width="10%">
+                <col width="*">
 <!--20.10.14추가사항 게시링크 타이틀-->    
-                <col width="16%">
+                <col width="20%">
 <!--20.10.14추가사항 게시링크 타이틀-//-->       
                 <col width="11%">
-                <col width="11%">
-                <col width="11%">
-                <col width="*">
+                <col width="15%">
+                <col width="10%">
             </colgroup>
             <?php echo $this->lang->line(2)?>
 <?php 
@@ -75,17 +74,22 @@ foreach($medList AS $ml){
 <!---20.10.14추가사항 게시링크 url 입력-->
                         <td>
                             <small><?php echo $this->lang->line(10)?></small>
-                            <input type="text" name="post_link[]" value="<?php echo element('jud_post_link', $ml)?>" <?php echo $media_comp_check? 'readonly' : '' ?>/>
+                            <input class="site_url" type="text" name="post_link[]" value="<?php echo element('jud_post_link', $ml)?>" <?php echo $media_comp_check? 'readonly' : '' ?>/>
                         </td>
 <!---20.10.14추가사항 게시링크 url 입력//-->
                         <td> 
-                            <span class="img_check"><img class="<?=$media_comp_check ? 'finish_img' : 'attach_img'?>" src="<?php echo thumb_url('judge', element('jud_attach', $ml), 400, 300); ?>" alt='인증 사진' />
-                            <input class="jud_attach" name="jud_attach[]" type="file" style="display:none;">
+                            <span class="img_check">
+                                <img 
+                                    class="<?=$media_comp_check ? 'finish_img' : 'attach_img'?>" 
+                                    src="<?php echo thumb_url('judge', element('jud_attach', $ml), 400, 300); ?>" 
+                                    alt='인증 사진'
+                                />
+                                <input class="jud_attach" name="jud_attach[]" type="file" style="display:none;">
                             </span> 
                         </td>
-                        <td>
-                            <i class="super_p"></i><b><?=$ml['med_superpoint']?></b> 
-                        </td>
+                        <!-- <td>
+                            <i class="super_p"></i><b><?php //echo $ml['med_superpoint']?></b> 
+                        </td> -->
                         <td>
                             <i class="per_p"></i><b><?= number_format($expected_point, 1) ?></b> 
                         </td>
@@ -139,7 +143,7 @@ foreach($medList AS $ml){
 
 <script>
     var fileTypes = ['image/png', 'image/jpg', 'image/jpeg'];
-
+    var domains = `<?php echo $domains['wht_domains']?>`.split("\n");
     $(document).ready(function(){
         let validation_err = '<?=isset($validation_err) ? $validation_err : '' ?>';
         if(validation_err){
@@ -178,8 +182,56 @@ foreach($medList AS $ml){
             };
 
             reader.readAsDataURL(file);
-            checkbox.prop("checked", true);
-            // console.log($(this).val());
+
+            if($(this).parents('tr').find('.site_url').val()){
+                checkbox.prop("checked", true);
+            }else{
+                checkbox.prop("checked", false);
+            }
+        }
+    });
+
+    $(".site_url").on('change',async function(){
+        let thisvalue = $(this).val();
+        let flag = true;
+        let checkbox = $(this).parents('tr').find('.applycheck');
+        await domains.forEach(element => {
+            if(thisvalue.indexOf(element) != -1){
+                flag = false;
+            }
+        });
+
+        if(flag){
+            alert('<?php echo $this->lang->line('c_11')?>');
+            checkbox.prop("checked", false);
+            $(this).val('');
+            $(this).focus();
+        }else{
+            if( $(this).parents('tr').find('img').attr("src") != 'http://dev.percommunity.com/uploads/cache/thumb-noimage_400x300.png'){
+                checkbox.prop("checked", true);
+            }
+        }
+    });
+
+    $('form').on('submit', function(event){
+        if($('.applycheck:checked').length < 1){
+            event.preventDefault();
+            alert('<?php echo $this->lang->line('alert_1')?>');
+        }
+        let url_leng = $('.site_url').length;
+        let flag = false;
+        for(index = 0; url_leng >= index; index ++){
+            let this_siteurl = $('.site_url').eq(index);
+            if(this_siteurl.val()){ 
+                if(this_siteurl.parents('tr').find('img').attr("src") == 'http://dev.percommunity.com/uploads/cache/thumb-noimage_400x300.png'){
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        if(flag){
+            event.preventDefault();
+            alert('<?php echo $this->lang->line('confirm_1')?>');
         }
     });
 

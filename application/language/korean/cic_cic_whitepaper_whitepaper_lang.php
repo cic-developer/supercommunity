@@ -367,5 +367,5 @@ $lang[8] = '<h4>7. Road Map</h4>
         <img src="https://dev.percommunity.com/assets/images/white016.jpg" alt="그림16">
     </li>
 </ul>';  //
-$lang['c_1']='ENG 준비중입니다.';//영문판 다운로드 버튼 알럿창
+$lang['alert_1']='준비중입니다.';//영문판 다운로드 버튼 알럿창
 $lang['require_login'] = '로그인이 필요한 서비스 입니다.';

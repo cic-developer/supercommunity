@@ -3,9 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $lang[0] ='<strong class="tit_policy">SUPER COMMUNITY 이용약관</strong>
 <p class="desc_g">
-    주식회사씨아이씨커뮤니티(‘https://cic.rs-team.co.kr’이하 ‘SuperCommunity’)은(는) 개인정보보호법에 따라 이용자의 개인정보 보호 및 권익을 보호하고 개인정보와 관련한 이용자의 고충을 원활하게 처리할 수 있도록 다음과 같은 처리방침을 두고 있습니다.<br><br>
+    주식회사씨아이씨커뮤니티(‘https://www.percommunity.com’이하 ‘SuperCommunity’)은(는) 개인정보보호법에 따라 이용자의 개인정보 보호 및 권익을 보호하고 개인정보와 관련한 이용자의 고충을 원활하게 처리할 수 있도록 다음과 같은 처리방침을 두고 있습니다.<br><br>
     회사는 개인정보처리방침을 개정하는 경우 웹사이트 공지사항(또는 개별공지)을 통하여 공지할 것입니다.<br>
-    본 방침은부터 2020년 1월 1일부터 시행됩니다.
+    본 방침은 2020년 10월 21일부터 시행됩니다
 </p><!--이용약관 top-->';
 
 $lang[1] ='<div class="area_cont fst">
@@ -53,8 +53,9 @@ $lang[3] ='<div class="area_cont">
         목적
       </h5>
         - 보유 근거: 서비스제공을 위한 보관<br>
-        - 관련법령 :(내용)<br>
-        - 예외사유 :(내용)<br>
+        - 관련법령 : <br><br>
+        <img id="rowtable" src="http://dev.percommunity.com/assets/images/laws-table(kor).png" alt="표(한글)">
+
     </li>          
 </ul>
 </div>';
@@ -115,7 +116,7 @@ $lang[6] ='<div class="area_cont">
 </div>';
 $lang[7] =' <div class="area_cont">
 <h4 class="tit_policy">7. 처리하는 개인정보의 항목 작성</h4>
-<p class="desc_g">1. ‘SuperCommunity’는 다음의 개인정보 항목을 처리하고 있습니다.</p>
+<p class="desc_g">1. ‘SuperCommunity’는 다음의 개인정보 항목을 처리하고 있습니다 (*VERSION UP 이후 해당사항입니다)</p>
 <strong class="tit_subject2">[홈페이지 회원가입 및 관리)]</strong>
 <ul class=list_2depth>
   <li>
@@ -194,7 +195,7 @@ $lang[10] ='<div class="area_cont">
     <li>직급: 관리팀장</li>
     <li>이메일: support@percommunity.com </li>    
 </ul>
-<p class="desc_g">정보주체께서는 ‘SuperCommunity’의 서비스(또는 사업)을 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임자 및 담당부서로 문의하실 수 있습니다. 주식회사씨아이씨커뮤니티(‘https://cic.rs-team.co.kr’이하 ‘SuperCommunity) 은(는) 정보주체의 문의에 대해 지체 없이 답변 및 처리해드릴 것입니다.</p>
+<p class="desc_g">정보주체께서는 ‘SuperCommunity’의 서비스(또는 사업)을 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임자 및 담당부서로 문의하실 수 있습니다. 주식회사씨아이씨커뮤니티(‘https://www.percommunity.com’이하 ‘SuperCommunity) 은(는) 정보주체의 문의에 대해 지체 없이 답변 및 처리해드릴 것입니다.</p>
 </div>';
 $lang[11] =' <div class="area_cont">
 <h4 class="tit_policy">11. 개인정보 처리방침 변경</h4>
@@ -221,13 +222,7 @@ $lang[12] =' <div class="area_cont">
           3. 문서보안을 위한 잠금장치 사용
         </h5>
         개인정보가 포함된 서류, 보조저장매체 등을 잠금장치가 있는 안전한 장소에 보관하고 있습니다.
-      </li>
-      <li>
-        <h5>
-          4. 비인가자에 대한 출입 통제
-        </h5>
-          개인정보를 보관하고 있는 물리적 보관 장소를 별도로 두고 이에 대해 출입통제 절차를 수립, 운영하고 있습니다.
-      </li>            
+      </li>          
   </ul> 
 </div>
 ';

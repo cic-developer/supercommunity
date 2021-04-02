@@ -4,10 +4,6 @@
     $meta_data = $this->Member_extra_vars_model->get_all_meta($this->member->is_member());
     $_is_auth = element('meta_auth_eamil_datetime',$meta_data);
     $_wallet_addr = element('meta_wallet_address',$meta_data);
-    // echo "<pre>";
-    // print_r($meta_data);
-    // echo "</pre>";
-    // exit;
 ?>
 <!--마이페이지-1 :: 내정보-->
 <?php //if(!$_is_auth) { ?>
@@ -76,7 +72,6 @@
                         <span>E-mail</span>
                         <div class="my_cont">
                             <input type="text" value="<?php echo element('mem_email', $member_data); ?>" name="email" style="width:400px" readonly />
-                            <!-- <input type="button" id="is_email" class="btn2 btn_black" value="<?php //echo element('mem_email', $member_data)? $this->lang->line(27): $this->lang->line(28)?>"/> -->
                         </div>
                     </li>
                     <li>
@@ -101,8 +96,8 @@
             <!--//my_cont_area-->
             <div class="btn_box">
 				 <input type="submit" value="<?php echo $this->lang->line(17)?>" class="btn1 btn_yellow"/>
-				 <a href="<?php echo base_url('Mypage/withdraw')?>" class="btn1 btn_line"><?php echo $this->lang->line(18)?></a>
-				 <a href="<?php echo base_url('Mypage/signout')?>" class="btn1 btn_line"><?php echo $this->lang->line(19)?></a>  
+				 <!-- <a href="<?php //echo base_url('mypage/withdraw')?>" class="btn1 btn_line"><?php //echo $this->lang->line(18)?></a> -->
+				 <a href="<?php echo base_url('mypage/signout')?>" class="btn1 btn_line"><?php echo $this->lang->line(19)?></a>  
             </div>
 <?php echo form_close()?>
       </div>
@@ -118,6 +113,18 @@
     var auth_id2 = 0;
     var auth_email = '';
     var auth_email2= '';
+
+    $(document).ready(function(){
+        $("form").validate({
+            rules: {
+                nick_name : { required: true, rangelength: [2 , 15]}
+            },
+            errorPlacement:function(error, element){
+                element.after(error);
+            }
+        });
+    });
+
     $(document).on("change keyup input", "#certyfy_string", function(){
         $(this).val( $(this).val().replace(/[^0-9a-zA-Z]/g,"").substr(0,6) );
     });
@@ -139,12 +146,6 @@
     });
     <?php //지갑 주소 수정 버튼 클릭시 끝 ?>
     
-    <?php //E-mail 수정 버튼 클릭시 ?>
-    // $("#is_email").on('click', function(){
-    //     $('#popup_email').lightlayer({ escape: false });
-    //     certEmail();
-    // });
-    <?php //E-mail 수정 버튼 클릭시 끝 ?>
 
     //------------------- email 전송 ajax ------------------------------------
     function sendEmail(){
@@ -189,50 +190,6 @@
         });
     }
 
-
-    // function certEmail(){
-    //     let _email = $("#cert_email").val().trim();
-    //     if(_email){
-    //         auth_email2 = _email;
-    //     }else{
-    //         return;
-    //     }
-    //     if(!validateEmail(auth_email2)){alert('<?php //echo $this->lang->line(20)?>'); return;}
-    //     $.ajax({
-    //         url: "Mypage/ajax_emailSend", // 클라이언트가 요청을 보낼 서버의 URL 주소
-    //         data: { email: auth_email2, type: '2' },                // HTTP 요청과 함께 서버로 보낼 데이터
-    //         type: "GET",                             // HTTP 요청 방식(GET, POST)
-    //         dataType: "json",
-    //         async: false,
-    //         success: function(result){
-    //             switch(result['state']){
-    //                 case 'not found member':
-    //                     alert('<?php //echo $this->lang->line(21)?>');
-    //                     location.href = '<?php //echo base_url('login')?>';
-    //                 break;
-    //                 case 'fail':
-    //                     alert('<?php //echo $this->lang->line(22)?>');
-    //                 break;
-    //                 case 'success':
-    //                     alert('<?php //echo $this->lang->line(23)?>');
-    //                     $("#mail_code2").css('display','block');
-    //                     $("#cert_email").attr('readonly',true);
-    //                     $("#send2").attr('disabled',true);
-    //                     auth_id2 = result['id'];
-    //                 break;
-    //                 case 'overlap' :
-    //                     alert('<?php //echo $this->lang->line(24)?>');
-    //                     $("#mail_code2").css('display','block');
-    //                     $("#cert_email").attr('readonly',true);
-    //                     $("#send2").attr('disabled',true);
-    //                     auth_id2 = result['id'];
-    //                 break;
-    //             }
-    //         }
-    //     });
-    // }
-    //-----------------------------------------------------------------------------
-
     //-------------------------- 인증 ajax -----------------------------------------
     function authEmail(){
         let auth_code = $("#certyfy_string").val().trim();
@@ -269,40 +226,6 @@
         });
     }
 
-    // function authEmail2(){
-    //     let auth_code = $("#certyfy_string2").val().trim();
-    //     $.ajax({
-    //         url: "Mypage/ajax_emailAuth", // 클라이언트가 요청을 보낼 서버의 URL 주소
-    //         data: { 
-    //             code: auth_code,
-    //             id: auth_id2,
-    //             email: auth_email2,
-    //             csrf_test_name: cb_csrf_hash 
-    //         },                // HTTP 요청과 함께 서버로 보낼 데이터
-    //         type: "POST",                             // HTTP 요청 방식(GET, POST)
-    //         dataType: "json",
-    //         async: false,
-    //         success: function(result){
-    //             switch(result['result']){
-    //                 case 'fail':
-    //                     alert('<?php // echo $this->lang->line(25)?>');
-    //                 break;
-    //                 case 'success':
-    //                     alert('<?php //echo $this->lang->line(26)?>');
-    //                     $("#auth_hash").val(result['data']);
-    //                     if(result['type'] == 1){
-    //                         $("#wallet_addr").removeAttr("readonly");
-    //                         $("input[name=email]").val(auth_email);
-    //                     }else if(result['type'] == 2){
-    //                         $("input[name=email]").removeAttr("readonly");
-    //                     }  
-    //                 break;
-    //             }
-    //         }
-    //     });
-    // }
-    //-------------------------------------------------------------------------------
-
     $("form").on('submit', function(){
         $("#auth_id").val(auth_id);
         let email_val = $("input[name=email]").val();
@@ -317,8 +240,6 @@
         console.log(wallet_addr);
         if(wallet_addr){
             $("#wallet_addr").val(wallet_addr);     
-        }else{
-            //지갑 주소 안썼으면 안쓴데로 업데이트 쳐버리자
         }
            
         $("form").submit();

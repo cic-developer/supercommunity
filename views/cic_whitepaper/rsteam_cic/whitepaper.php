@@ -55,7 +55,7 @@
                 <a href="<?php echo base_url('/About/Down_whitepaper/ko')?>" class="btn1 btn_black">KOR DOWNLOAD</a>
             </li>
             <li>
-                <a href="<?php //echo base_url('/About/Down_whitepaper/en')?>" class="btn1 btn_black" onclick="alert('준비중입니다.')">ENG DOWNLOAD</a>
+                <a href="<?php //echo base_url('/About/Down_whitepaper/en')?>" class="btn1 btn_black" onclick="alert('<?php echo $this->lang->line('alert_1') ?>')">ENG DOWNLOAD</a>
             </li>
         </ul><!--다운로드버튼끝//-->
        

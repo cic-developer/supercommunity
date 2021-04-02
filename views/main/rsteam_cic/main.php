@@ -62,6 +62,9 @@
         stopMovieOnBlur: false,
         optimizeDisplay: true,
         abundance: 0.3,
+        onError: function(err){
+            window.location.reload()
+        }
     });
 
     setInterval(function(){

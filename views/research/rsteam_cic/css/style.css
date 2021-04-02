@@ -7,21 +7,34 @@
 	overflow: hidden;
 }
 
-#research_wrap h3{
+#research_wrap .research_page h3{
     margin:0 auto;
+	width: 1000px;
+    height: 110px;
     display: block;
-    font-size:50px;
-    padding-top:50px;
-	padding-bottom:60px;
+    font-size:40px;
+    padding-top:80px;
+	padding-bottom:80px;
 	text-align:center;
 	color:#000;
 }
+
+#research_wrap small{
+    margin:0 auto;
+    display: block;
+    font-size:20px;
+    padding-top:25px;
+	padding-bottom:20px;
+	text-align:center;
+	color:#7f7f7e;
+}
+
 
 #research_wrap .research_content{
 	padding-bottom:50px;
 }
 
-/*퍼백서 내용 css 시작*/
+/*퍼백서 내용 css 시작*/ /* 웹 버전 */
 
 
 #research_wrap .research_content .research_top{
@@ -50,8 +63,8 @@
 
 
 #research_wrap .research_content p{
-	font-size: 18px;
-	font-weight: 300;
+	display: block;
+	font-size: 15px;
 	color:#333;
 	line-height:1.8;
 	display: block;
@@ -106,19 +119,143 @@
 	line-height: 1.7;
 }
 
-
+#research_wrap .research_top .text_g{
+	font-size: 18px;
+}
 
 
 
 #research_wrap .research_content .text_g .sub_title{
 	font-size: 25px;
-	font-weight: 400;
+	font-weight: 600;
 	padding-bottom:20px;
 	color:#333;
 	display: block;
 	line-height: 1.7;
+	font-family: 'Noto Sans KR', sans-serif;
 	
 }
+
+
+
+#research_wrap .research_content .text_g input{
+	margin-bottom: 10px;
+    outline: none;
+    border-style: none;
+    border-bottom: 2px solid #000;
+	font-size: 20px;
+}
+
+label
+
+input[type="checkbox"] {
+	display: block;
+	width: 20px;
+	height: 20px; 
+	margin-top: 5px;
+
+}
+
+
+
+input[type="radio"] {
+	display: block;
+	width: 20px;
+	height: 20px; 
+	margin-top: 5px;
+	
+}
+
+input[type="text"] {
+	display: block;
+	width: 500px;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+input[type="file"] {
+	display: inline-block;
+	color: #999;
+	cursor: pointer;
+  
+  }  
+
+
+
+  select{
+	width: 120px; height: 40px; 
+}
+
+
+
+#research_wrap .research_content .text_g .form-group{
+	display: block;
+	width: 500px;
+	padding-bottom: 20px;
+	
+}
+
+#research_wrap .research_content .text_g .form-group label{
+	display: inline-flex;
+	width: 500px;
+	height: 50px;
+	font-size: 13px;
+	margin-bottom: 10px;
+	color: red;
+}
+
+
+#research_wrap .bt {
+	margin-bottom: 30px;
+}
+
+
+#research_wrap .research_content .text_g .form-group .tex{
+	display:block;
+	font-size: 15px;
+	text-align:justify;
+	width: 200px;
+	height: 20px;
+	 padding-bottom: 10px;
+	 margin-left: 10px;
+}
+
+
+
+#research_wrap .research_content .text_g .form-group textarea{
+	display: block;
+	width: 580px;
+	height: 150px;
+	font-size: 15px;
+	resize: none;
+	
+}
+
+
+
+#res_name , #respon_email , #respon_tel {
+	width: 580px;
+	height: 30px;
+}
+
+
+#research_wrap h3{
+margin-top: 35px;
+margin-left: 120px;
+padding-bottom: 20px;
+text-align: center;
+}
+
+
+#research_wrap .research_page4 small{
+	text-align: center;
+    font-size: 20px;
+    margin-right: 70px;
+    padding-bottom: 100px;
+    padding-top: 20px;
+}
+
+
 
 #research_wrap .research_content .content_area img{
 
@@ -161,7 +298,9 @@
 
 i{
 	font-size: 15px;
+	font-weight: bold;
 	cursor: pointer;
+	margin-left: 5px;
 }
 
 

@@ -74,12 +74,12 @@
 						<img src="<?php echo base_url('assets/images/s_user.png');?>" alt="<?php echo $this->lang->line(8)?>"><!--인플루언서 프사-->
 						<!--<img src="<?/*php echo base_url('assets/images/user.png');*/?>" alt="퍼프렌즈" />  //일반유저 프사-->
 					</div> 
-					<strong><?php echo $member_data['mem_nickname']?></strong>
+					<!-- <strong></strong> -->
 				</li>
-				<li>
+				 <li>
 					<h4><?php echo $this->lang->line(9)?></h4>
-					<p><?php echo $this->lang->line(10)?> <span><?php echo number_format($total_super)?></span></p>
-				</li>
+					<p><?php echo $member_data['mem_nickname']?><?php //echo $this->lang->line(10)?> <span><?php //echo number_format($total_super)?></span></p>
+				</li> 
 			</ul>
 		</div>
 		<!--//my_top-->
@@ -141,7 +141,7 @@
             <!--//my_cont_area-->
             <div class="btn_box">
 				 <input type="submit" value="<?php echo $this->lang->line(21)?>" class="btn1 btn_yellow"/>
-				 <a href="<?php echo base_url('Mypage/withdraw')?>" class="btn1 btn_line"><?php echo $this->lang->line(22)?></a>
+				 <!-- <a href="<?php //echo base_url('Mypage/withdraw')?>" class="btn1 btn_line"><?php //echo $this->lang->line(22)?></a> -->
 				 <a href="<?php echo base_url('Mypage/signout')?>" class="btn1 btn_line"><?php echo $this->lang->line(23)?></a>  
             </div>
         <?php echo form_close()?>

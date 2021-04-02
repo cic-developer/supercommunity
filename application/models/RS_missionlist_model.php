@@ -44,10 +44,12 @@ class RS_missionlist_model extends CB_Model
       'rs_missionpoint.mip_tpoint as tpoint',
       'CASE WHEN rs_missionlist.mis_max_point = 0 OR (rs_missionlist.mis_endtype != 1 AND rs_missionlist.mis_endtype != 3) THEN 0 ELSE (rs_missionpoint.mip_tpoint/rs_missionlist.mis_max_point*100) END percentage',
       ' CASE WHEN rs_missionlist.mis_endtype = 1 THEN
-          CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.cdate('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
+          CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.cdate('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE 
+          ( CASE WHEN rs_missionlist.mis_enddate <= "'.cdate('Y-m-d H:i:s', strtotime("+2 hours")).'" THEN "urgent" ELSE "process" END) END) END
         ELSE
           CASE WHEN rs_missionlist.mis_endtype = 2 THEN
-            CASE WHEN rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.cdate('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
+            CASE WHEN rs_missionlist.mis_end = 1 OR ( rs_missionlist.mis_enddate != "0000-00-00 00:00:00" AND rs_missionlist.mis_enddate <= "'.cdate('Y-m-d H:i:s').'") THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE
+            ( CASE WHEN rs_missionlist.mis_enddate <= "'.cdate('Y-m-d H:i:s', strtotime("+2 hours")).'" THEN "urgent" ELSE "process" END) END) END
           ELSE
             CASE WHEN rs_missionlist.mis_endtype = 3 THEN
             CASE WHEN rs_missionlist.mis_max_point <= rs_missionpoint.mip_tpoint OR rs_missionlist.mis_end = 1 THEN "end" ELSE ( CASE WHEN rs_missionlist.mis_opendate > "'.cdate('Y-m-d H:i:s').'" THEN "planned" ELSE "process" END) END
@@ -81,10 +83,12 @@ class RS_missionlist_model extends CB_Model
   }
   
 
-  public function get_clientMissionlist($limit = 10, $offset = 0, $state = false, $search = false){
+  public function get_clientMissionlist($limit = 10, $offset = 0, $state = false, $search = false)
+  {
       $this->db->select('rs_pershoutinglist.*, rs_whitelist.wht_attach');
       if($state){
         $this->db->where('state', $state);
+        if($state == 'process') $this->db->or_where('state', 'urgent');
       }
       if($search){
         $this->db->group_start();
@@ -105,6 +109,7 @@ class RS_missionlist_model extends CB_Model
       $this->db->select('count(*) as rownum');
       if($state){
         $this->db->where('state', $state);
+        if($state == 'process') $this->db->or_where('state', 'urgent');
       }
       if($search){
         $this->db->group_start();
@@ -119,6 +124,8 @@ class RS_missionlist_model extends CB_Model
 
       return $result;
   }
+
+  
   /*
   ** post 로 전송된 도메인 목록에 http, https 가 입력되어있는지
   ** 한글이 입력되지는 않았는지 확인하는 function

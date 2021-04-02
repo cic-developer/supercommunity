@@ -22,6 +22,7 @@
             <li><a onclick="searchShouting('process')"><?php echo $this->lang->line(3) ?></a></li>
             <li><a onclick="searchShouting('end')"><?php echo $this->lang->line(4) ?></a> </li>
             <li><a onclick="searchShouting('planned')"><?php echo $this->lang->line(5) ?></a></li>
+            <li><a onclick="searchShouting('urgent')"><?php echo $this->lang->line('urgent')?></a></li>
         </ul>
         <div class="search_area"> 
         <?php echo form_open('/Mission',array('method' => 'get'));?>
@@ -48,9 +49,9 @@
                         <li>               
                             <strong><b><?php echo number_format(element('mis_per_token',$mission_data))?></b> PER POINT</strong>
                         </li>
-                        <li>
-                            <?php echo $this->lang->line(7) ?> <b><?php echo number_format(element('mis_max_point',$mission_data))?></b> SUPER POINT
-                        </li>
+                        <!-- <li>
+                            <?php //echo $this->lang->line(7) ?> <b><?php //echo number_format(element('mis_max_point',$mission_data))?></b> SUPER POINT
+                        </li> -->
                     </ul>    
                 </dd>       
             </dl>
@@ -65,19 +66,13 @@
         </div>                 
     </div>
 </div>
-
 <!--//퍼샤우팅 shouting_all-->
 
 <!--타임 div-->
 <div id="time_btn_bar">
     <div class="time_bar_cont">
 <?php if($mission_state != 'end'){  ?>
-<?php if($end_type > 0 && $end_type < 3) {?>
-         <!-- 타임 리미트시-->
-        <!-- <div class='time_box'>
-            <h1 class='timer' data-seconds-left='<?php echo $_timer_time; ?>'></h1>
-            <section class='actions'></section>
-        </div> -->
+<?php if( $mission_state == 'urgent') {?>
         <!-- 마감 안됐을 때 -->
         <div class='time_box' id="ing_div_tag">
             <div class="time_label">
@@ -96,12 +91,11 @@
             <section class='actions'></section>
         </div>
         
-         <!-- //타임 리미트시-->
         <!-- 마감 됐을 때 -->
         <p class="m_txt" id="end_p_tag" style="display:none;">
             <?php echo $this->lang->line(9)?>
         </p>
-<?php }else if($end_type == 3 || $end_type === '0'){?>
+<?php }else if($mission_state == 'process'){?>
         <!-- 타임 설정 없을시-->
         <p class="m_txt">
             <?php echo $this->lang->line(8)?>
@@ -130,26 +124,13 @@
 <script type="text/javascript">
  $("#time_btn_bar").css('display','block');
     var mis_end_type = '<?php echo $end_type; ?>';
-    // $(function(){
-    //     if(mis_end_type > 0 && mis_end_type < 3){ 
-    //         $('.timer').startTimer({
-    //             onComplete: function(element){
-    //                 $('html, body').addClass('bodyTimeoutBackground');
-    //             }
-    //         });
-    //     }
-    // });
 
     $(window).on("scroll",function(){
         var scrollBottom = parseInt(window.innerHeight)+parseInt($(this).scrollTop());
         var scrollFixed  = parseInt($("#time_btn_bar").offset().top);
         var scrollTop	 = parseInt($(".scrollTop").offset().top);
         var footer		 = parseInt($("#footer").offset().top);
-        // if(scrollTop < $(this).scrollTop()){
-        //     $("#time_btn_bar").css('display','block');
-        // }else{
-        //     $("#time_btn_bar").css('display','none');
-        // }
+
         var num = scrollBottom - footer
         if(scrollBottom >= footer){
             $("#time_btn_bar").css('bottom',num+'px');

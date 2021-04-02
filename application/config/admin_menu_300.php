@@ -21,7 +21,8 @@ $config['admin_page_menu']['cic'] =
 			'judgemedia'				=> array('미디어심사', ''),
 			'judgewithdraw'			=> array('출금심사', ''),
 			'advertisementlist'	=> array('광고', ''),
-			'Inquiry'			=> array('문의사항',''),
+			// 'Inquiry'			=> array('문의사항',''),
+			'Research'			=> array('설문조사',''),
 			'setting'			=> array('CIC 설정', ''),
 			'auth'				=> array('지갑등록', '')
 		),

@@ -152,31 +152,31 @@ class CB_Model extends CI_Model
 		if ($where) {
 			$this->db->where($where);
 		}
-		if ($search_where) {
-			$this->db->where($search_where);
-		}
-		if ($like) {
-			$this->db->like($like);
-		}
-		if ($search_like) {
-			foreach ($search_like as $item) {
-				foreach ($item as $skey => $sval) {
-					$this->db->like($skey, $sval);
-				}
-			}
-		}
-		if ($search_or_like) {
-			$this->db->group_start();
-			foreach ($search_or_like as $item) {
-				foreach ($item as $skey => $sval) {
-					$this->db->or_like($skey, $sval);
-				}
-			}
-			$this->db->group_end();
-		}
-		if ($count_by_where) {
-			$this->db->where($count_by_where);
-		}
+		// if ($search_where) {
+		// 	$this->db->where($search_where);
+		// }
+		// if ($like) {
+		// 	$this->db->like($like);
+		// }
+		// if ($search_like) {
+		// 	foreach ($search_like as $item) {
+		// 		foreach ($item as $skey => $sval) {
+		// 			$this->db->like($skey, $sval);
+		// 		}
+		// 	}
+		// }
+		// if ($search_or_like) {
+		// 	$this->db->group_start();
+		// 	foreach ($search_or_like as $item) {
+		// 		foreach ($item as $skey => $sval) {
+		// 			$this->db->or_like($skey, $sval);
+		// 		}
+		// 	}
+		// 	$this->db->group_end();
+		// }
+		// if ($count_by_where) {
+		// 	$this->db->where($count_by_where);
+		// }
 		$qry = $this->db->get();
 		$rows = $qry->row_array();
 		$result['total_rows'] = $rows['rownum'];

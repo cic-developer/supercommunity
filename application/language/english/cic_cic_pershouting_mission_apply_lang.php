@@ -9,7 +9,6 @@ $lang[2] = '<tr>
 <th>Admission link</th>
 <th>Auth URL</th>
 <th>Post Confirmation</th>
-<th>SUPER POINT</th>
 <th>Estimated payment<br>PER POINT </th>
 <th>Applicable<br>Automatic check </th>
 </tr>';// 미션 테이블 헤드 th
@@ -61,6 +60,10 @@ $lang['modalContent'] = '
     <br>
     <span style="font-weight: bold;">4.</span> When deleting a post after receiving a mission reward<br>
     <br>
+    <span style="font-weight: bold;">5.</span> Participating in two missions with one post<br>
+    <br>
+    <span style="font-weight: bold;">6.</span> Participating in the mission with the same content in different media<br>
+    <br>
     <br>
     <p class="start2">In the case of the above, it can be regarded as <span style="font-weight:bold; color:#f40315;">Abusing and fraudulent users</span>.
     Abusing behavior and fraudulent use are warned or rejected. <br>
@@ -84,10 +87,10 @@ $lang['modalContent'] = '
 </div>
 </div>
 ';
-$lang[] = '';
-$lang[] = '';
-$lang[] = '';
-$lang[] = '';
+$lang['c_11'] = 'Worng Media link.\nplease check your Media link';
+$lang['alert_1'] = 'There is no media you have requested.';
+$lang['confirm_1'] = 'Please, attach Image';
+$lang['alert_message_modify'] = 'Modifications completed';
 $lang[] = '';
 $lang[] = '';
 $lang[] = '';

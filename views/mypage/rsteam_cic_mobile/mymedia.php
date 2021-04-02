@@ -29,7 +29,7 @@
                                       break;
 
                                       case 3 :
-                                          echo '<span><i class="super_p"></i><b>'.html_escape($md['med_superpoint']).'</b></span>';
+                                          //echo '<span><i class="super_p"></i><b>'.html_escape($md['med_superpoint']).'</b></span>';
                                       break;
 
                                       case 5 :
@@ -42,44 +42,6 @@
                       </li>
                       <?php } ?>
                   </ul>
-                  <!-- 모바일용 테이블 원본
-                  <ul class="mob_list_table">
-                    <li>
-                        <dl>
-                            <dt>내미디어명</dt>
-                            <dd><span>관리자명</span> 김파이어</dd>
-                            <dd><span>입장링크</span> <a href="#">www.naver.comwww.naver.comwww.naver.comwww.</a></dd>
-                          </dl>
-                          <div class="table_bottom">
-                            <a class="s_btn" href="#">증액요청</a>
-                            <span><i class="super_p"></i><b>300000</b></span>
-                          </div>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>내미디어명</dt>
-                            <dd><span>관리자명</span> 김파이어</dd>
-                            <dd><span>입장링크</span> <a href="#">www.naver.comwww.naver.comwww.naver.comwww.</a></dd>
-                          </dl>
-                           <div class="table_bottom">
-                              <a class="s_btn" href="">삭제</a>
-                              <span class="reject tooltip tooltip-default" data-content="팔로워가 0명으로 심사반려. 좋은말로할때 재업로드해라"> 
-                                  <i class="fa fa-question-circle"></i> 비승인
-                              </span>
-                          </div>
-                    </li>
-                    <li>
-                        <dl>
-                            <dt>내미디어명</dt>
-                            <dd><span>관리자명</span> 김파이어</dd>
-                            <dd><span>입장링크</span> <a href="#">www.naver.comwww.naver.comwww.naver.comwww.</a></dd>
-                          </dl>
-                           <div class="table_bottom">
-                              <span class="judge"><i class="fa fa-history"></i> 심사중</span>
-                             
-                          </div>
-                    </li>
-                </ul>-->
             <div class="btn_box">
                  <a href="<?=base_url('Media/editMedia')?>" class="btn1 btn_yellow"><?=$this->lang->line(9)?></a>
             </div>

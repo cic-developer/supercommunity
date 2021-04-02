@@ -21,35 +21,31 @@
                         <th><?=$this->lang->line(2)?></th>
                         <th><?=$this->lang->line(3)?></th>
                         <th><?=$this->lang->line(4)?></th>
-                        <th><?=$this->lang->line(5)?></th>
+                        <!-- <th><?php //echo $this->lang->line(5)?></th> -->
                         <th><?=$this->lang->line(6)?></th>
                     </tr>
 <?php foreach($media_data AS $md){ ?>
                     <tr>
                         <td><?=html_escape($md['med_name'])?></td>
                         <td><?=html_escape($md['med_admin'])?></td>
-                        <td class="link"><?php echo '<a href="'.html_escape($md['med_url']).'" target="_blank">'.html_escape($md['med_url']).'</a>'?></td>
-                        <td>
+                        <td class="link">
+                            <?php echo '<a href="'.html_escape($md['med_url']).'" target="_blank">'.html_escape($md['med_url']).'</a>'?>
                             <?php
                                 switch($md['med_state']){
                                     case 1 :
                                     case 2 :
-                                        echo '<span class="judge"><i class="fa fa-history"></i> '.$this->lang->line(7).'</span>';
-                                    break;
-
-                                    case 3 :
-                                        echo '<i class="super_p"></i><b>'.html_escape($md['med_superpoint']).'</b>';
+                                        echo '<br/><span class="judge"><i class="fa fa-history"></i> '.$this->lang->line(7).'</span>';
                                     break;
 
                                     case 0 :
-                                        echo '<span class="reject tooltip tooltip-default" data-content="'.html_escape($md['med_textarea']).'">';
+                                        echo '<br/><span class="reject tooltip tooltip-default" data-content="'.html_escape($md['med_textarea']).'">';
                                         echo '<i class="fa fa-question-circle"></i> '.$this->lang->line(8).'</span>';
                                     break;
                                 } 
                             ?>
                         </td>
                         <td>
-                            <?php if($md['med_state'] == 3) {echo '<a class="s_btn" href="'.base_url('Media/increaseMedia/'.$md['med_id']).'">'.$this->lang->line(9).'</a>';} ?>
+                            <?php //if($md['med_state'] == 3) {echo '<a class="s_btn" href="'.base_url('Media/increaseMedia/'.$md['med_id']).'">'.$this->lang->line(9).'</a>';} ?>
                             <?php if($md['med_state'] == 0) {echo '<a class="s_btn delete" onclick="deleteMedia(\''.base_url('Media/deleteMedia/'.$md['med_id']).'\')"> '.$this->lang->line(10).'</a>';}?>
                         </td>
                     </tr>
