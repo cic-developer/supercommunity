@@ -120,5 +120,9 @@
 	$.validator.addMethod('required_ckeditor', function(value, element) {
 		return validCkeditor($(element).attr('name'), value, 'required');
 	}, '내용을 입력해주세요');
+
+	$.validator.addMethod('expr', function(value, element, expr){
+		return expr.test(value)
+	}, '지정된 형식에 알맞게 입력해주세요');
  
  });

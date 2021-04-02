@@ -376,6 +376,25 @@ class RS_judge_model extends CB_Model
 					'jul_useragent'	=> $this->agent->agent_string(),
 					'jul_data'		=> json_encode($updateArr)
 				);
+			}else{
+				$updateArr = array(
+					'jud_post_link'	=>	element('jud_post_link', $jud)
+				);
+				if(!$this->update($med_data['jud_id'], $updateArr)){
+					return 'jud_attach update error occur';
+				}
+				$result[] = array(
+					'jul_jug_id' 	=> 1,
+					'jul_jud_id' 	=> $med_data['jud_id'],
+					'jul_med_id' 	=> $med_data['med_id'],
+					'jul_state'	 	=> 1,
+					'jul_mem_id' 	=> $mem_id,
+					'jul_user_id'	=> $mem_data['mem_userid'],
+					'jul_datetime'	=> $_now,
+					'jul_ip'		=> $_ip,
+					'jul_useragent'	=> $this->agent->agent_string(),
+					'jul_data'		=> json_encode($updateArr)
+				);
 			}
 			break;
 

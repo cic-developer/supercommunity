@@ -125,8 +125,11 @@
 					포인트 지급
 				</button>
 			<?php } ?>
+				<?php if(element('jud_state', element('data', $view)) == 3 ){ ?>
+				<button type="button" class="btn btn-info btn-sm set_state" data-state="1" data-value="cancel" data-text="승인취소" >승인취소</button>
+				<?php }?>
 				<button type="button" class="btn btn-success btn-sm set_state" data-value="confirm" data-state="3" data-text="승인" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>승인하기</button>
-        <button type="button" id="denyBtn" class="btn btn-danger btn-sm" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>반려하기</button>
+        		<button type="button" id="denyBtn" class="btn btn-danger btn-sm" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>반려하기</button>
 				<button type="button" class="btn btn-default btn-sm btn-history-back" >목록으로</button>
 			</div>
 		<?php echo form_close(); ?>
@@ -297,9 +300,9 @@
 			</div>
 			<div class="modal-footer">
         <div class="btn-group">
-          <button type="button" class="btn btn-danger set_state" data-value="warn" data-state="0" data-text="경고및 반려" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>경고+반려</button>
-          <button type="button" class="btn btn-warning set_state" data-value="deny" data-state="0" data-text="반려" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>반려</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+			<button type="button" class="btn btn-danger set_state" data-value="warn" data-state="0" data-text="경고및 반려" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>경고+반려</button>
+			<button type="button" class="btn btn-warning set_state" data-value="deny" data-state="0" data-text="반려" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>반려</button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
         </div>
 			</div>
 		</div>
@@ -340,36 +343,37 @@ $("#deny_reason_select").on('focus', function () {
 $(document).on('click','.set_state',function(){
   if(!confirm('정말 '+$(this).attr('data-text')+'처리 하시겠습니까?')) return false;
 	let csrfName  = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  let csrfHash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  let _jul_id   = '<?php echo element(element('primary_key', $view), element('data', $view)); ?>';
-  let _value    = $(this).attr('data-value');
-  let _state    = $(this).attr('data-state');
-  let _deny     = $("#deny_reason_text").val();
-  let _warn     = $("#deny_warning_text").val();
-  let _is_block = '<?=$this->Member_extra_vars_model->get_one('','mev_value',array('mem_id' => element('jud_mem_id',$getdata), 'mev_key' => 'mem_warn_1')) && !$this->Member_model->get_by_memid(element('jud_mem_id', element('data', $view)),'mem_denied')?>'
-	if(_value == 'warn' && _is_block) {
-    if(!confirm('해당유저는 현재 경고 1회로 차단됩니다.')) return false;
-  }
-  $.ajax({
+	let csrfHash  = '<?php echo $this->security->get_csrf_hash(); ?>';
+	let _jul_id   = '<?php echo element(element('primary_key', $view), element('data', $view)); ?>';
+	let _value    = $(this).attr('data-value');
+	let _state    = $(this).attr('data-state');
+	let _deny     = $("#deny_reason_text").val();
+	let _warn     = $("#deny_warning_text").val();
+	let _is_block = '<?=$this->Member_extra_vars_model->get_one('','mev_value',array('mem_id' => element('jud_mem_id',$getdata), 'mev_key' => 'mem_warn_1')) && !$this->Member_model->get_by_memid(element('jud_mem_id', element('data', $view)),'mem_denied')?>'
+		if(_value == 'warn' && _is_block) {
+		if(!confirm('해당유저는 현재 경고 1회로 차단됩니다.')) return false;
+	}
+	$.ajax({
 		type: 'post',
 		dataType: "json",
 		url:'/admin/cic/judgemission/ajax_set_state',
 		data:{
 			[csrfName]: csrfHash,
 			jud_id:_jul_id,
-      value:_value,
-      state:_state,
-      deny:_deny,
-      warn:_warn
+			value:_value,
+			state:_state,
+			deny:_deny,
+			warn:_warn
 		},
 		success(result){
 			if(result.type == 'success'){
-        if(_value == 'confirm') alert('승인되었습니다.');
-        if(_value == 'deny') alert('반려되었습니다.');
-        if(_value == 'warn'){
-          if(result.warn_count == 1) alert('경고 1회 및 반려처리 되었습니다.');
-          if(result.warn_count == 2) alert('경고 2회로 해당 유저 차단 및 반려처리 되었습니다.');
-        }
+				if(_value == 'confirm') alert('승인되었습니다.');
+				if(_value == 'deny') alert('반려되었습니다.');
+				if(_value == 'warn'){
+					if(result.warn_count == 1) alert('경고 1회 및 반려처리 되었습니다.');
+					if(result.warn_count == 2) alert('경고 2회로 해당 유저 차단 및 반려처리 되었습니다.');
+				}
+				if(_value == 'cancel') alert('승인취소되었습니다.');
 				location.reload();
 				return;
 			} else if (result.type == 'error'){

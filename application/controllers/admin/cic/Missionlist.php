@@ -827,4 +827,26 @@ class Missionlist extends CB_Controller
 			}
 		}
 	}
+
+	//수정페이지에서 마감임박으로 변경
+	function ajax_urgent_mission($mis_id){
+		$getdata = $this->{$this->modelname}->get_one_mission($mis_id);
+		if($getdata['state'] != 'urgent'){
+			$updateData = array(
+				'mis_enddate' => date('Y-m-d H:i:s', strtotime('+2hours')),
+				'mis_modifier_mem_id' => $this->session->userdata('mem_id'),
+				'mis_mdate'	=> cdate('Y-m-d H:i:s'),
+				'mis_modifier_ip' => $this->input->ip_address(),
+			);
+			switch($getdata['mis_endtype']){
+				case 0:
+				case 3:
+					$updateData['mis_endtype'] = 1;
+				break;
+			}
+			$this->{$this->modelname}->update($mis_id, $updateData);
+		}
+
+		echo json_encode('수정이 완료되었습니다.');
+	}
 }

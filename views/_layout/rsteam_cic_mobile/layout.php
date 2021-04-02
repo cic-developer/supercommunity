@@ -110,8 +110,8 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 			<!--right_menu_top-->
 			<div class="right_menu_top">
 				<div class="log_area">
-					<a href="<?=base_url('mypage')?>" class="top_btn1"><?=$this->lang->line('cic_0')?></a> <!--비로그인시 안보임-->
-					<a class="top_btn2" href="<?= $this->member->is_member()? site_url('login/logout?url=' . urlencode(current_full_url())) : site_url('login?url=' . urlencode(current_full_url()))  ?>"><?php echo $this->member->is_member()? $this->lang->line('cic_1') : $this->lang->line('cic_2') ?></a> <!--LOGIN / LOGOUT-->
+					<a href="<?php echo base_url('mypage')?>" class="top_btn1"><?php echo $this->lang->line('cic_0')?></a> <!--비로그인시 안보임-->
+					<a class="top_btn2" href="<?php echo  $this->member->is_member()? site_url('login/logout?url=' . urlencode(current_full_url())) : site_url('login?url=' . urlencode(current_full_url()))  ?>"><?php echo $this->member->is_member()? $this->lang->line('cic_1') : $this->lang->line('cic_2') ?></a> <!--LOGIN / LOGOUT-->
 				</div>
 				<!--menu close-->
 				<button class="burger js-contentToggle__trigger" type="button" id="menu_off">
@@ -128,18 +128,18 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 							<span><?php echo $this->lang->line('cic_29')?></span><i class="fa fa-arrow-down pull-right" aria-hidden="true"></i>
 						</a>
 						<ul class="sidebar-submenu" style="display: none;">
-							<li><a href="<?=base_url('About/provision')?>"><?php echo $this->lang->line('cic_18')?> <i class="fa fa-angle-right pull-right"></i></a></li>
+							<!-- <li><a href="<?php //echo base_url('About/provision')?>"><?php //echo $this->lang->line('cic_18')?> <i class="fa fa-angle-right pull-right"></i></a></li> -->
 							<!-- <li><a href="<?php //echo base_url('About/status')?>"><?php //echo $this->lang->line('cic_19')?> <i class="fa fa-angle-right pull-right"></i></a></li> -->
-							<li><a href="<?=base_url('About/whitepaper')?>"><?php echo $this->lang->line('cic_20')?> <i class="fa fa-angle-right pull-right"></i></a></li>
+							<li><a href="<?php echo base_url('About/whitepaper')?>"><?php echo $this->lang->line('cic_20')?> <i class="fa fa-angle-right pull-right"></i></a></li>
 						</ul>
 					</li>
 					<li>
-						<a href="<?=base_url('Mission')?>">
+						<a href="<?php echo base_url('Mission')?>">
 							<span><?php echo $this->lang->line('cic_14')?></span><i class="fa fa-arrow-down pull-right" aria-hidden="true"></i>
 						</a>
 					</li>
 					<li>
-						<a href="<?=base_url('/board/noti')?>">
+						<a href="<?php echo base_url('/board/noti')?>">
 							<span><?php echo $this->lang->line('cic_3')?></span><i class="fa fa-arrow-down pull-right" aria-hidden="true"></i>
 						</a>
 					</li>
@@ -148,8 +148,8 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 							<span><?php echo $this->lang->line('cic_4')?></span><i class="fa fa-arrow-down pull-right" aria-hidden="true"></i>
 						</a>
 						<ul class="sidebar-submenu" style="display: none;">
-							<li><a href="<?=base_url('Inquiry/ad_inquiry')?>"><?php echo $this->lang->line('cic_16')?><i class="fa fa-angle-right pull-right"></i></a></li>
-							<li><a href="<?=base_url('Inquiry/ad_consulting_inquiry')?>"><?php echo $this->lang->line('cic_17')?><i class="fa fa-angle-right pull-right"></i></a></li>
+							<li><a href="<?php echo base_url('Research')?>"><?php echo $this->lang->line('cic_16')?><i class="fa fa-angle-right pull-right"></i></a></li>
+							<!-- <li><a href="<?php //base_url('Research')?>"><?php //echo $this->lang->line('cic_17')?><i class="fa fa-angle-right pull-right"></i></a></li> -->
 						</ul>
 					</li>
 				</ul>
@@ -157,8 +157,8 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 			</nav>
 			<div class="btm_box">
 				<div class="lang">
-					<a href="?lang=korean" <?=$this->session->userdata('lang') == 'korean' ? 'class="on"' : ''?>> <?=$this->lang->line('cic_8')?>  </a>
-					<a href="?lang=english" <?=$this->session->userdata('lang') == 'english' ? 'class="on"' : ''?>> <?=$this->lang->line('cic_9')?></a>
+					<a href="?lang=korean" <?php echo $this->session->userdata('lang') == 'korean' ? 'class="on"' : ''?>> <?php echo $this->lang->line('cic_8')?>  </a>
+					<a href="?lang=english" <?php echo $this->session->userdata('lang') == 'english' ? 'class="on"' : ''?>> <?php echo $this->lang->line('cic_9')?></a>
 				</div>
 				<div class="quick_area">
 					<a href="https://pf.kakao.com/_ZExaRK" target="_blank" class="kakao_qa"><img src="<?php echo base_url('assets/images/kakao_icon.png');?>" alt="카카오톡 상담"/></a>
@@ -170,7 +170,7 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 
 	<!--header-->
 	<div id="header">
-		<h1><a href="<?=base_url()?>"><img src="<?php echo base_url('assets/images/logo.png');?>" alt="슈퍼커뮤니티"></a></h1>
+		<h1><a href="<?php echo base_url()?>"><img src="<?php echo base_url('assets/images/logo.png');?>" alt="슈퍼커뮤니티"></a></h1>
 			<!--쪽지 알림벨 로그인시-->
 		<div class="hd_right">
 <?php if ($this->member->is_member() && $this->cbconfig->item('use_notification')) { ?>
@@ -197,10 +197,10 @@ switch(element('menu',$header)){
 ?>
 	<div id="sub_menu">
 		<ul> 
-			<li><a href="<?=base_url('mypage')?>" <?php echo (strpos(uri_string(),'mypage') !== false && strpos(uri_string(),'mypage/superpoint') === false ) ? 'class="on"': ''?>><?=$this->lang->line('cic_10')?></a></li>
-			<li><a href="<?=base_url('Media/mymedia')?>" <?php echo (strpos(uri_string(),'Media/mymedia') !== false) ? 'class="on"': ''?> ><?=$this->lang->line('cic_11')?></a></li>
-			<li><a href="<?=base_url('Mission/myMission')?>" <?php echo (strpos(uri_string(),'Mission/myMission') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_12')?></a></li>
-			<li><a href="<?=base_url('mypage/superpoint')?>" <?php echo (strpos(uri_string(),'mypage/superpoint') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_13')?></a></li>
+			<li><a href="<?php echo base_url('mypage')?>" <?php echo (strpos(uri_string(),'mypage') !== false && strpos(uri_string(),'mypage/withdraw') === false ) ? 'class="on"': ''?>><?php echo $this->lang->line('cic_10')?></a></li>
+			<li><a href="<?php echo base_url('Media/mymedia')?>" <?php echo (strpos(uri_string(),'Media/mymedia') !== false) ? 'class="on"': ''?> ><?php echo $this->lang->line('cic_11')?></a></li>
+			<li><a href="<?php echo base_url('Mission/myMission')?>" <?php echo (strpos(uri_string(),'Mission/myMission') !== false) ? 'class="on"': ''?>><?php echo $this->lang->line('cic_12')?></a></li>
+			<li><a href="<?php echo base_url('mypage/withdraw')?>" <?php echo (strpos(uri_string(),'mypage/withdraw') !== false) ? 'class="on"': ''?>><?php echo $this->lang->line('cic_13')?></a></li>
 		</ul>
 	</div>
 <?php 
@@ -210,7 +210,7 @@ switch(element('menu',$header)){
 ?>
 	<div id="sub_menu">
 		<ul> 
-			<li><a href="<?=base_url('/Mission')?>" class="on"><?=$this->lang->line('cic_14')?></a></li> <!--단일메뉴-->
+			<li><a href="<?php echo base_url('/Mission')?>" class="on"><?php echo $this->lang->line('cic_14')?></a></li> <!--단일메뉴-->
 		</ul>
 	</div>
 <?php 
@@ -220,8 +220,8 @@ switch(element('menu',$header)){
 ?> 
 	<div id="sub_menu">
 		<ul> 
-			<li><a href="<?=base_url('/board/noti')?>" <?php echo (strpos(uri_string(),'/noti') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_15')?></a></li>
-			<li><a href="<?=base_url('/board/wallet_noti')?>" <?php echo (strpos(uri_string(),'/wallet_noti') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_30')?></a></li>
+			<li><a href="<?php echo base_url('/board/noti')?>" <?php echo (strpos(uri_string(),'/noti') !== false) ? 'class="on"': ''?>><?php echo $this->lang->line('cic_15')?></a></li>
+			<li><a href="<?php echo base_url('/board/wallet_noti')?>" <?php echo (strpos(uri_string(),'/wallet_noti') !== false) ? 'class="on"': ''?>><?php echo $this->lang->line('cic_30')?></a></li>
 		</ul>
 	</div>
 <?php 
@@ -229,21 +229,21 @@ switch(element('menu',$header)){
 
 	case 'inquiry' :
 ?>
-	<div id="sub_menu">
+	<!-- <div id="sub_menu">
 		<ul> 
-			<li><a href="<?=base_url('Inquiry/ad_inquiry')?>" <?php echo (strpos(uri_string(),'Inquiry/ad_inquiry') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_16')?></a></li>
-			<li><a href="<?=base_url('Inquiry/ad_consulting_inquiry')?>" <?php echo (strpos(uri_string(),'Inquiry/ad_consulting_inquiry') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_17')?></a></li>
+			<li><a href="<?php //echo base_url('Inquiry/ad_inquiry')?>" <?php // echo (strpos(uri_string(),'Inquiry/ad_inquiry') !== false) ? 'class="on"': ''?>><?php //echo $this->lang->line('cic_16')?></a></li>
+			<li><a href="<?php //echo base_url('Inquiry/ad_consulting_inquiry')?>" <?php // echo (strpos(uri_string(),'Inquiry/ad_consulting_inquiry') !== false) ? 'class="on"': ''?>><?php //echo $this->lang->line('cic_17')?></a></li>
 		</ul>
-	</div>
+	</div> -->
 <?php
 	break;
 	case 'about' :
 ?>
 	<div id="sub_menu">
 		<ul> 
-			<li><a href="<?=base_url('About/provision')?>" <?php echo (strpos(uri_string(),'About/provision') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_18')?></a></li>
+			<!-- <li><a href="<?php //echo base_url('About/provision')?>" <?php //echo (strpos(uri_string(),'About/provision') !== false) ? 'class="on"': ''?>><?php //echo $this->lang->line('cic_18')?></a></li> -->
 			<!-- <li><a href="<?php //echo base_url('About/status')?>" <?php //echo (strpos(uri_string(),'About/status') !== false) ? 'class="on"': ''?>><?php //echo $this->lang->line('cic_19')?></a></li> -->
-			<li><a href="<?=base_url('About/whitepaper')?>" <?php echo (strpos(uri_string(),'About/whitepaper') !== false) ? 'class="on"': ''?>><?=$this->lang->line('cic_20')?></a></li>
+			<li><a href="<?php echo base_url('About/whitepaper')?>" <?php echo (strpos(uri_string(),'About/whitepaper') !== false) ? 'class="on"': ''?>><?php echo $this->lang->line('cic_20')?></a></li>
 		</ul>
 	</div>
 <?php 
@@ -274,8 +274,8 @@ switch(element('menu',$header)){
 			</div>
 			<div class="footer_bottom">
 				<ul class="left_top">
-					<li><a href="<?=base_url('Terms/provision')?>"><?php echo $this->lang->line('cic_21')?></a></li>
-					<li><a href="<?=base_url('Terms/privacy')?>"><?php echo $this->lang->line('cic_22')?></a></li>
+					<li><a href="<?php echo base_url('Terms/provision')?>"><?php echo $this->lang->line('cic_21')?></a></li>
+					<li><a href="<?php echo base_url('Terms/privacy')?>"><?php echo $this->lang->line('cic_22')?></a></li>
 					<li><a href="void(0);" onclick="window.scrollTo(0,0);return false;">TOP</a></li>
 				</ul>
 				Copyright © Super Community.  All rights reserved.    

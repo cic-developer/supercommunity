@@ -21,7 +21,7 @@
             <th>관리자명</th>
             <th>입장링크</th>
             <th>게시인증</th>
-            <th>Super Point</th>
+            
             <th>예상 지급 Per Point</th>
             <th>신청가능</th>
         </thead>

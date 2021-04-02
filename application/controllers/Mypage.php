@@ -342,6 +342,7 @@ class Mypage extends CB_Controller
 			}
 		}
 		$view['header']['menu'] = 'mypage';
+		$view['member_data'] = $this->Member_model->get_by_memid($mem_id);
 		$this->data = $view;
 		$this->layout = element('layout_skin_file', element('layout', $view));
 		$this->view = element('view_skin_file', element('layout', $view));

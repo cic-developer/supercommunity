@@ -284,4 +284,5 @@ $lang[8] = '<h4>7. Road Map</h4>
         <img src="https://dev.percommunity.com/assets/images/white016_en.jpg" alt="Figure16">
     </li>
 </ul>';  //
+$lang['alert_1'] = 'Coming soon.';
 $lang['require_login'] = 'This service requires login.';

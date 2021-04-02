@@ -46,7 +46,7 @@
 					if (element('list', element('data', $view))) {
 						foreach (element('list', element('data', $view)) as $result) {
 					?>
-						<tr>
+						<tr <?php echo element('jud_state', $result) == 5 ? 'style="opacity:0.5"' : '' ?>>
 							<td><?php echo number_format(element('num', $result)); ?></td>
 							<td><?php echo html_escape(element('jud_wallet', $result)); ?></td>
 							<td class="text-right"><?php echo number_format(element('jud_point', $result),1); ?></td>

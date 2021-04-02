@@ -21,9 +21,9 @@
                         <?php echo $this->lang->line(13)?><br/>
                         <?php echo $this->lang->line(14)?> <br/>
                         <?php echo $this->lang->line(20)?>
-                        <b><?php echo $this->lang->line(21)?></b>
-                        <?php echo $this->lang->line(22)?><br/>
-                        <?php echo $this->lang->line(23)?>
+                        <!-- <b><?php //echo $this->lang->line(21)?></b>
+                        <?php //echo $this->lang->line(22)?><br/>
+                        <?php //echo $this->lang->line(23)?> -->
                     </small>
                 </h6>
                 <?php echo form_open_multipart(''); ?>
@@ -63,8 +63,8 @@ foreach($medList AS $ml){
                               <dd><span><?php echo $this->lang->line(3)?></span> <?=$ml['med_admin']?></dd>
                               <dd><span><?php echo $this->lang->line(4)?></span> <a target="_blank" href="<?=$ml['med_url']?>"><?=$ml['med_url']?></a></dd>
 <!--20.10.14추가수정 포스팅url-->                              
-                              <dd><span><?php echo $this->lang->line(24)?></span><input type="text" id="post_url" name="post_link[]" value="<?php echo element('jud_post_link', $ml)?>" <?php echo $media_comp_check? 'readonly' : '' ?>/></dd>
-                              <dd><span><?php echo $this->lang->line(5)?></span> <i class="super_p"></i><b><?=$ml['med_superpoint']?></b></dd>
+                              <dd><span><?php echo $this->lang->line(24)?></span><input class="site_url" type="text" name="post_link[]" value="<?php echo element('jud_post_link', $ml)?>" <?php echo $media_comp_check? 'readonly' : '' ?>/></dd>
+                              <!-- <dd><span><?php //echo $this->lang->line(5)?></span> <i class="super_p"></i><b><?php //echo $ml['med_superpoint']?></b></dd> -->
                               <dd><span><?php echo $this->lang->line(6)?></span> <i class="per_p"></i><b><?= number_format($expected_point, 1) ?></b></dd>
                             </dl>
                             <div class="table_bottom">
@@ -80,7 +80,7 @@ foreach($medList AS $ml){
                                     <input class="applycheck" name="med_id[]" type="checkbox" value="<?=$ml['med_id']?>" <?= ($media_check)? 'checked' : '' ?>  onclick="return false" <?=$media_comp_check ? 'disabled' : ''?>>
                                     <input name="all_med_id[]" value="<?=$ml['med_id']?>" style="display:none;"/>   
                                 </span>
-                          </div>
+                            </div>
                         </li>
                   
 <?php } ?>
@@ -106,6 +106,7 @@ foreach($medList AS $ml){
 
 <script>
     var fileTypes = ['image/png', 'image/jpg', 'image/jpeg'];
+    var domains = `<?php echo $domains['wht_domains']?>`.split("\n");
 
     $(document).ready(function(){
         let validation_err = '<?=isset($validation_err) ? $validation_err : '' ?>';
@@ -120,6 +121,28 @@ foreach($medList AS $ml){
     $(".attach_img").on('click', function(){
         let input_img = $(this).parent().find(".jud_attach");
         input_img.click();
+    });
+
+    $(".site_url").on('change',async function(){
+        let thisvalue = $(this).val();
+        let flag = true;
+        let checkbox = $(this).parents('li').find('.applycheck');
+        await domains.forEach(element => {
+            if(thisvalue.indexOf(element) != -1){
+                flag = false;
+            }
+        });
+
+        if(flag){
+            alert('<?php echo $this->lang->line('c_11')?>');
+            checkbox.prop("checked", false);
+            $(this).val('');
+            $(this).focus();
+        }else{
+            if( $(this).parents('li').find('img').attr('src') != 'http://dev.percommunity.com/uploads/cache/thumb-noimage_400x300.png'){
+                checkbox.prop("checked", true);
+            }
+        }
     });
 
     $(".jud_attach").on('change', function(){
@@ -145,8 +168,33 @@ foreach($medList AS $ml){
             };
 
             reader.readAsDataURL(file);
-            checkbox.prop("checked", true);
-            // console.log($(this).val());
+            if($(this).parents('li').find('.site_url').val()){
+                checkbox.prop("checked", true);
+            }else{
+                checkbox.prop("checked", false);
+            }
+        }
+    });
+
+    $('form').on('submit', function(event){
+        if($('.applycheck:checked').length < 1){
+            event.preventDefault();
+            alert('<?php echo $this->lang->line('alert_1')?>');
+        }
+        let url_leng = $('.site_url').length;
+        let flag = false;
+        for(index = 0; url_leng >= index; index ++){
+            let this_siteurl = $('.site_url').eq(index);
+            if(this_siteurl.val()){
+                if(this_siteurl.parents('li').find('img').attr('src') == 'http://dev.percommunity.com/uploads/cache/thumb-noimage_400x300.png'){
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        if(flag){
+            event.preventDefault();
+            alert('<?php echo $this->lang->line('confirm_1')?>');
         }
     });
 

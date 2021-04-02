@@ -287,7 +287,7 @@ class Post_model extends CB_Model
 	/**
 	 * List 페이지 커스테마이징 함수
 	 */
-	public function get_prev_next_post($post_id = 0, $post_num = 0, $type = '', $where = '', $sfield = '', $skeyword = '', $sop = 'OR')
+	public function get_prev_next_post($post_id = 0, $post_num = 0, $type = '', $where = '', $sfield = '', $skeyword = '', $sop = 'OR', $mem_id = 0)
 	{
 		$post_id = (int) $post_id;
 		if (empty($post_id) OR $post_id < 1) {
@@ -379,6 +379,15 @@ class Post_model extends CB_Model
 
 		$orderby = $type === 'next'
 			? 'post_num, post_reply' : 'post_num desc, post_reply desc';
+
+		if($mem_id != 0){
+			$this->db->group_start();
+			$this->db->where('post_blind', 0);
+			$this->db->or_where('post_blind', $mem_id);
+			$this->db->group_end();
+		}else{
+			$this->db->where('post_blind', 0);
+		}
 
 		$this->db->order_by($orderby);
 		$this->db->limit(1);

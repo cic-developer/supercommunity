@@ -11,6 +11,7 @@ $lang[6] = 'Point Icon ';  //cic 로고 alt
 $lang['c_1'] = 'Closed';   //미션 상태 표시
 $lang['c_2'] = 'planned';   //미션 상태 표시
 $lang['c_3'] = 'Progress';   //미션 상태 표시
+$lang['c_4'] = 'Imminent';
 
 $lang[] = '';
 $lang[] = '';

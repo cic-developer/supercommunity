@@ -11,6 +11,7 @@ $lang[6] = 'Point Icon';//
 $lang['c_1'] = 'Closed';   //미션 상태 표시
 $lang['c_2'] = 'planned';   //미션 상태 표시
 $lang['c_3'] = 'Process';   //미션 상태 표시
+$lang['c_4'] = 'Imminent';
 $lang[''] = '공개 예정중인 미션입니다. \n PER SHOUTING 메뉴로 돌아갑니다.';  //미션예정 진입시
 $lang[] =''; 
 $lang[] = '';

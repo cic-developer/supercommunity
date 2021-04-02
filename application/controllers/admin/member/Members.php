@@ -24,7 +24,7 @@ class Members extends CB_Controller
 	/**
 	 * 모델을 로딩합니다
 	 */
-	protected $models = array('Member_meta', 'Member_group', 'Member_group_member', 'Member_nickname', 'Member_extra_vars', 'Member_userid', 'Social_meta');
+	protected $models = array('Member_meta', 'Member_group', 'Member_group_member', 'Member_nickname', 'Member_extra_vars', 'Member_userid', 'Social_meta', 'RS_media');
 
 	/**
 	 * 이 컨트롤러의 메인 모델 이름입니다
@@ -220,9 +220,13 @@ class Members extends CB_Controller
 			$getdata = $this->{$this->modelname}->get_one($pid);
 			$getdata['extras'] = $this->Member_extra_vars_model->get_all_meta($pid);
 			$getdata['meta'] = $this->Member_meta_model->get_all_meta($pid);
+			
 			$where = array(
 				'mem_id' => $pid,
 			);
+			//media list 추가하기 위해 넣어놓음
+			$getdata['media'] = $this->RS_media_model->get_list('','', $where)['list'];
+			//-------------------------------
 			$group_member = $this->Member_group_member_model->get('', '', $where);
 			if ($group_member) {
 				foreach ($group_member as $mkey => $mval) {

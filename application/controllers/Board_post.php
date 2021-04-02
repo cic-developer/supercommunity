@@ -216,6 +216,11 @@ class Board_post extends CB_Controller
 			return false;
 		}
 
+		if(element('post_blind',$post) != 0 && element('post_blind',$post) != $mem_id){
+			alert('블라인드 처리된 글 입니다.');
+			return false;
+		}
+
 		if (element('post_secret', $post)) {
 			if (element('mem_id', $post)) {
 				if ($is_admin === false && $mem_id !== abs(element('mem_id', $post))) {
@@ -223,6 +228,7 @@ class Board_post extends CB_Controller
 					return false;
 				}
 			} else {
+
 				if ($is_admin !== false) {
 					$this->session->set_userdata(
 						'view_secret_' . element('post_id', $post),
@@ -705,6 +711,7 @@ class Board_post extends CB_Controller
 			$where['brd_id'] = element('brd_id', $post);
 			$where['post_del <>'] =2;
 			$where['post_secret'] = 0;
+
 			if (element('except_notice', $board)
 				&& $this->cbconfig->get_device_view_type() !== 'mobile') {
 				$where['post_notice'] = 0;
@@ -729,7 +736,8 @@ class Board_post extends CB_Controller
 					'next',
 					$where,
 					$sfield,
-					$skeyword
+					$skeyword,
+					$mem_id
 				);
 
 			if (element('post_id', $next_post)) {
@@ -744,7 +752,8 @@ class Board_post extends CB_Controller
 					'prev',
 					$where,
 					$sfield,
-					$skeyword
+					$skeyword,
+					$mem_id
 				);
 			if (element('post_id', $prev_post)) {
 				$view['view']['prev_post']['url'] = post_url(element('brd_key', $board), element('post_id', $prev_post)) . '?' . $param->output();

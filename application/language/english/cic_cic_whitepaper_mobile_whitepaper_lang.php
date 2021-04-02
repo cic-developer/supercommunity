@@ -302,6 +302,7 @@ $lang[21] ='Figure12';
 $lang[22] ='Figure13';
 $lang[23] ='Figure14';//토큰발행 이미지 alt끝//
 $lang['c_1'] ='ENG 준비중입니다.';//다운로드 버튼 알럿//
+$lang['alert_1'] = 'Coming soon.';
 $lang['require_login'] = 'This service requires login.';
 
 
