@@ -287,7 +287,7 @@ class RS_judge_model extends CB_Model
 		}
 	//   $this->db->join('rs_mission_apply rs_apply','rs_apply.med_id = rs_media.med_id', 'LEFT OUTER');
 		$mission_data = $this->RS_missionlist_model->get_one_mission($jud['jud_mis_id']);
-		if($mission_data['state'] != 'process'){ return 'mission closed'; }
+		if($mission_data['state'] != 'process' || $mission_data['state'] != 'urgent' ){ return 'mission closed'; }
 		$this->db->join('rs_judge', "rs_judge.jud_med_id = rs_media.med_id AND rs_judge.jud_deletion = 'N' AND rs_judge.jud_jug_id = 1 AND rs_judge.jud_mis_id = ".$jud['jud_mis_id']." AND rs_judge.jud_med_id = ".$jud['jud_med_id'], 'LEFT OUTER');
 		$this->db->where('rs_media.med_id', $jud['jud_med_id']);
 		$this->db->where('rs_media.med_deletion', 'N');
