@@ -7,9 +7,12 @@
 <?php
 	$result = $popup;
 ?>
+	
 	<div id="popup_layer_<?php echo element('pop_id', $result); ?>" class="popup_layer" style="top:<?php echo element('pop_top', $result); ?>px;left:<?php echo element('pop_left', $result); ?>px">
 		<div class="popup_layer_con" style="width:<?php echo element('pop_width', $result); ?>px;height:<?php echo element('pop_height', $result); ?>px">
+			<a href="<?php echo base_url('/post/74')?>" target="_blank">
 			<?php echo element('pop_content', $result); ?>
+			</a>
 		</div>
 		<div class="popup_layer_footer">
 			<?php if (element('pop_disable_hours', $result)) { ?>
@@ -34,14 +37,21 @@
 <script type="text/javascript">
 //<![CDATA[
 $(function() {
+	$(document).ready(function(){
+		if(get_cookie('popup_layer_<?php echo element('pop_id', $result); ?>')){
+			window.close();
+		}
+	});
 	$(document).on('click', '.popup_layer_reject', function() {
 		var cookie_name = $(this).attr('data-wrapper-id');
 		var cookie_expire = $(this).attr('data-disable-hours');
-		$('#' + $(this).attr('data-wrapper-id')).hide();
+		// $('#' + $(this).attr('data-wrapper-id')).hide();
 		set_cookie(cookie_name, 1, cookie_expire, cb_cookie_domain);
+		window.close();
 	});
 	$(document).on('click', '.popup_layer_close', function() {
-		$('#' + $(this).attr('data-wrapper-id')).hide();
+		// $('#' + $(this).attr('data-wrapper-id')).hide();
+		window.close();
 	});
 });
 //]]>

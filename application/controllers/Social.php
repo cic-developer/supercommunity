@@ -760,7 +760,7 @@ class Social extends CB_Controller
 
 				$this->member->update_login_log($mem_id, '', 1, element($social_type, $this->socialtype) . ' 로그인 성공');
 				$this->session->set_userdata('mem_id', $mem_id);
-
+				$this->session->set_userdata('popup_on', true);
 	
 
 				$url_after_login = $this->cbconfig->item('url_after_login');
@@ -783,7 +783,6 @@ class Social extends CB_Controller
 					echo "alert('".$message."')";
 				}
 				echo '</script>';
-				$this->session->set_flashdata('popup_on', true);
 				exit;
 
 			} else {
@@ -792,7 +791,7 @@ class Social extends CB_Controller
 				if ($this->cbconfig->item('use_register_block')) {
 					alert_close('현재 이 사이트는 회원가입이 금지되어 있습니다.');
 				}
-
+				$this->session->set_userdata('popup_on', true);
 				$socialwhere = array(
 					'soc_type' => $social_type,
 					'soc_account_id' => $social_id,
@@ -1127,7 +1126,6 @@ class Social extends CB_Controller
 					echo 'window.opener.location.reload();';
 				}
 				echo '</script>';
-				$this->session->set_flashdata('popup_on', true);
 				exit;
 			}
 		}

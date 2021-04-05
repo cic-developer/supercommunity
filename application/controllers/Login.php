@@ -222,7 +222,7 @@ class Login extends CB_Controller
 			// 이벤트가 존재하면 실행합니다
 			Events::trigger('after', $eventname);
 
-			$this->session->set_flashdata('popup_on',true);
+			$this->session->set_userdata('popup_on',true);
 			redirect($url_after_login);
 		}
 	}

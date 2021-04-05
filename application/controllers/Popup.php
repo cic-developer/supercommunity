@@ -32,6 +32,7 @@ class Popup extends CB_Controller
 
 
     function notiPopup($popup_id){
+            $this->session->set_userdata('popup_on',false);
         			/**
 			* 레이아웃을 정의합니다
 			*/

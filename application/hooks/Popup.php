@@ -84,8 +84,14 @@ class _Popup
 		$device_type = $detect->isMobile() ? 'mobile' : 'desktop';
 		$CI->cbconfig->set_device_type($device_type);
 
-        if($CI->session->flashdata('popup_on') && $CI->input->ip_address() == '49.163.50.132' && $device_view_type == 'desktop'){
-            echo "<script>window.open('".base_url('/Popup/notiPopup/1')."','CIC Popup', '"."location = no"."')</script>";
+        if($CI->session->userdata('popup_on') && $device_view_type == 'desktop'){
+            echo "<script>window.open('".base_url('/Popup/notiPopup/1')."','CIC Popup', '"."width=300, height=358,location = no"."')</script>";
         }
+
+		if($CI->session->userdata('popup_on')){
+			echo "<script>console.log('true')</script>";
+		}else{
+			echo "<script>console.log('false')</script>";
+		}
 	}
 }
