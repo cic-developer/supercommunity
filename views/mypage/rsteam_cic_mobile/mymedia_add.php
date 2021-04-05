@@ -140,6 +140,13 @@
         }
     });
 
+    $("form").on('submit', function(event){
+        if(!$(".img_file").val()){
+            alert('<?php echo $this->lang->line('require_image')?>');
+            event.preventDefault();
+        }
+    });
+    
     function validFileType(file) {
         for (var i = 0; i < fileTypes.length; i++) {
             if (file.type) {

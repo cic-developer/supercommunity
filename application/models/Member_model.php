@@ -89,12 +89,19 @@ class Member_model extends CB_Model
 	}
 
 
-	public function get_admin_list($limit = '', $offset = '', $where = '', $like = '', $findex = '', $forder = '', $sfield = '', $skeyword = '', $sop = 'OR')
+	public function get_admin_list($limit = '', $offset = '', $where = '', $like = '', $findex = '', $forder = '', $sfield = '', $skeyword = '', $sop = 'OR', $rewarded = 0, $partici = 0)
 	{
 		$join = array();
+		
 		if (isset($where['mgr_id'])) {
 			$select = 'member.*';
 			$join[] = array('table' => 'member_group_member', 'on' => 'member.mem_id = member_group_member.mem_id', 'type' => 'left');
+		}
+		if($rewarded){
+			$join[] = array('table' => '(SELECT * FROM rs_judge WHERE jud_jug_id = 1 AND jud_state = 5 GROUP BY jud_mem_id) AS judge', 'on' => 'member.mem_id = judge.jud_mem_id', 'type' => 'inner');
+		}
+		if($partici){
+			$join[] = array('table' => '(SELECT * FROM rs_judge WHERE jud_jug_id = 1 GROUP BY jud_mem_id) AS judge', 'on' => 'member.mem_id = judge.jud_mem_id', 'type' => 'inner');
 		}
 		$result = $this->_get_list_common($select = '', $join, $limit, $offset, $where, $like, $findex, $forder, $sfield, $skeyword, $sop);
 

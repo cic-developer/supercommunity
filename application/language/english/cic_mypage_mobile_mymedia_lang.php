@@ -11,6 +11,7 @@ $lang[6] = 'Delete';
 $lang[7] = 'Under Examination';
 $lang[8] = 'Refused';
 $lang[9] = 'Add media';
+$lang[10] = 'Approval';
 $lang['controller_0'] = 'Media was deleted.';
 $lang['controller_1'] = 'Error occur in Media deletion.';
 $lang['require_login'] = 'This service requires login.';

@@ -105,8 +105,15 @@ class Members extends CB_Controller
 				$where['mgr_id'] = $mgr_id;
 			}
 		}
+
+		$rewarded = $this->input->get('rewarded');
+		$partici = $this->input->get('partici');
+
+
 		$result = $this->{$this->modelname}
-			->get_admin_list($per_page, $offset, $where, '', $findex, $forder, $sfield, $skeyword);
+			->get_admin_list($per_page, $offset, $where, '', $findex, $forder, $sfield, $skeyword, '', $rewarded, $partici);
+			// print_r($this->db->last_query());
+			// exit;
 		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
 
 		if (element('list', $result)) {

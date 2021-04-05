@@ -19,7 +19,7 @@
                             <dd><span><?=$this->lang->line(4)?></span> <?php echo '<a href="'.html_escape($md['med_url']).'" target="_blank">'.html_escape($md['med_url']).'</a>'?></dd>
                           </dl>
                           <div class="table_bottom">
-                              <?php if($md['med_state'] == 3) {echo '<a class="s_btn" href="'.base_url('Media/increaseMedia/'.$md['med_id']).'">'.$this->lang->line(5).'</a>';} ?>
+                              <?php //if($md['med_state'] == 3) {echo '<a class="s_btn" href="'.base_url('Media/increaseMedia/'.$md['med_id']).'">'.$this->lang->line(5).'</a>';} ?>
                               <?php if($md['med_state'] == 0) {echo '<a class="s_btn" onclick="deleteMedia(\''.base_url('Media/deleteMedia/'.$md['med_id']).'\')">'.$this->lang->line(6).'</a>';}?>
                               <?php
                                   switch($md['med_state']){
@@ -29,7 +29,7 @@
                                       break;
 
                                       case 3 :
-                                          //echo '<span><i class="super_p"></i><b>'.html_escape($md['med_superpoint']).'</b></span>';
+                                          echo '<span><i class="super_p"></i>'.$this->lang->line(10).'</b></span>';
                                       break;
 
                                       case 5 :

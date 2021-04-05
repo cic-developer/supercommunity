@@ -7,9 +7,11 @@
 		?>
 			<div class="box-table-header">
 				<div class="btn-group btn-group-sm" role="group">
-					<a href="?" class="btn btn-sm <?php echo ( ! $this->input->get('mem_is_admin') && ! $this->input->get('mem_denied')) ? 'btn-success' : 'btn-default'; ?>">전체회원</a>
+					<a href="?" class="btn btn-sm <?php echo ( ! $this->input->get('mem_is_admin') && ! $this->input->get('mem_denied') && !$this->input->get('rewarded') && !$this->input->get('partici')) ? 'btn-success' : 'btn-default'; ?>">전체회원</a>
 					<a href="?mem_is_admin=1" class="btn btn-sm <?php echo ($this->input->get('mem_is_admin')) ? 'btn-success' : 'btn-default'; ?>">최고관리자</a>
 					<a href="?mem_denied=1" class="btn btn-sm <?php echo ($this->input->get('mem_denied')) ? 'btn-success' : 'btn-default'; ?>">차단회원</a>
+					<a href="?rewarded=1" class="btn btn-sm <?php echo ($this->input->get('rewarded')) ? 'btn-success' : 'btn-default'; ?>">보상 수령 회원</a>
+					<a href="?partici=1" class="btn btn-sm <?php echo ($this->input->get('partici')) ? 'btn-success' : 'btn-default'; ?>">미션 참여 회원</a>
 				</div>
 				<div class="btn-group btn-group-sm" role="group">
 					<a href="?" class="btn btn-sm <?php echo ( ! $this->input->get('mgr_id')) ? 'btn-success' : 'btn-default'; ?>">전체그룹</a>

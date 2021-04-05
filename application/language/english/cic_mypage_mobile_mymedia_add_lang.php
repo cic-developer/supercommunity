@@ -29,4 +29,5 @@ $lang['controller_5'] = 'Registration and update failed.';
 $lang['controller_6'] = 'The media review request has been completed.';
 $lang['controller_7'] = 'Media Review Registration Successful.';
 $lang['controller_8'] = 'URL input does not match classification.';
+$lang['require_image'] = 'Please attach an image.';
 $lang['require_login'] = 'This service requires login.';
