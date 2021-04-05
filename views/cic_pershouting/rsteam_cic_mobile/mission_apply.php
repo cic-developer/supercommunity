@@ -139,7 +139,7 @@ foreach($medList AS $ml){
             $(this).val('');
             $(this).focus();
         }else{
-            if( $(this).parents('li').find('img').attr('src') != 'http://dev.percommunity.com/uploads/cache/thumb-noimage_400x300.png'){
+            if( $(this).parents('li').find('img').attr('src') != 'https://www.percommunity.com/uploads/cache/thumb-noimage_400x300.png'){
                 checkbox.prop("checked", true);
             }
         }
@@ -186,7 +186,7 @@ foreach($medList AS $ml){
         for(index = 0; url_leng >= index; index ++){
             let this_siteurl = $('.site_url').eq(index);
             if(this_siteurl.val()){
-                if(this_siteurl.parents('li').find('img').attr('src') == 'http://dev.percommunity.com/uploads/cache/thumb-noimage_400x300.png'){
+                if(this_siteurl.parents('li').find('img').attr('src') == 'https://www.percommunity.com/uploads/cache/thumb-noimage_400x300.png'){
                     flag = true;
                     break;
                 }

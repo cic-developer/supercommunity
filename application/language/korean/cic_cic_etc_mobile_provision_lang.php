@@ -51,7 +51,7 @@ $lang[3] = ' <div class="area_cont">
       </h5>
         - 보유 근거: 서비스제공을 위한 보관<br>
         - 관련법령 :(내용)<br>
-        <img src="http://dev.percommunity.com/assets/images/laws-table(kor).png" alt="표(한글)">
+        <img src="https://www.percommunity.com/assets/images/laws-table(kor).png" alt="표(한글)">
     </li>          
 </ul>
 </div>';

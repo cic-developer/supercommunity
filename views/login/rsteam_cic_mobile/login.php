@@ -8,7 +8,9 @@
 
 
 <?php
-if($this->input->ip_address() == '49.163.50.132'){
+if(false
+	//$this->input->ip_address() == '49.163.50.132'
+){
 echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>');
 echo show_alert_message(element('message', $view), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');
 echo show_alert_message($this->session->flashdata('message'), '<div class="alert alert-auto-close alert-dismissible alert-info"><button type="button" class="close alertclose" >&times;</button>', '</div>');

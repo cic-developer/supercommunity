@@ -23,11 +23,7 @@
                 <?php echo $this->lang->line(9)?> <br/>
                 <?php echo $this->lang->line(16)?>
             </small>
-            <!-- <small class="noti_type2">
-                <b><?php// echo $this->lang->line(17)?></b>
-                <?php // echo $this->lang->line(18)?><br/>
-                <?php //echo $this->lang->line(19)?>
-            </small> -->
+ 
         </h6>
         <table cellpadding="0" class="list_table" cellspacing="0" width="100%">
             <colgroup> <!--칸의 width조절을 여기서해-->
@@ -207,7 +203,7 @@ foreach($medList AS $ml){
             $(this).val('');
             $(this).focus();
         }else{
-            if( $(this).parents('tr').find('img').attr("src") != 'http://dev.percommunity.com/uploads/cache/thumb-noimage_400x300.png'){
+            if( $(this).parents('tr').find('img').attr("src") != 'https://www.percommunity.com/uploads/cache/thumb-noimage_400x300.png'){
                 checkbox.prop("checked", true);
             }
         }
@@ -223,7 +219,7 @@ foreach($medList AS $ml){
         for(index = 0; url_leng >= index; index ++){
             let this_siteurl = $('.site_url').eq(index);
             if(this_siteurl.val()){ 
-                if(this_siteurl.parents('tr').find('img').attr("src") == 'http://dev.percommunity.com/uploads/cache/thumb-noimage_400x300.png'){
+                if(this_siteurl.parents('tr').find('img').attr("src") == 'https://www.percommunity.com/uploads/cache/thumb-noimage_400x300.png'){
                     flag = true;
                     break;
                 }

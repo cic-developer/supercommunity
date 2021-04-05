@@ -54,7 +54,7 @@ Personal information related to this information is collected.Retained for the p
       </h5>
       - Evidence of retention: Storage for service offering <br>
       - Relevant statutes: <br><br>
-      <img id="rowtable" src="http://dev.percommunity.com/assets/images/laws-table(eng).png" alt="표(영어)">
+      <img id="rowtable" src="https://www.percommunity.com/assets/images/laws-table(eng).png" alt="표(영어)">
     </li>          
 </ul>
 </div>';
