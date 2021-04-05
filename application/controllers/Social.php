@@ -782,10 +782,6 @@ class Social extends CB_Controller
 					$message =  (element('mem_warn_2', $all_meta) ? element('mem_warn_2', $all_meta) : element('mem_warn_1', $all_meta));
 					echo "alert('".$message."')";
 				}
-<<<<<<< HEAD
-				
-=======
->>>>>>> 589537715da8762b06a02d21401a39a25acd1630
 				echo '</script>';
 				$this->session->set_flashdata('popup_on', true);
 				exit;
@@ -1131,10 +1127,6 @@ class Social extends CB_Controller
 					echo 'window.opener.location.reload();';
 				}
 				echo '</script>';
-<<<<<<< HEAD
-=======
-
->>>>>>> 589537715da8762b06a02d21401a39a25acd1630
 				$this->session->set_flashdata('popup_on', true);
 				exit;
 			}
