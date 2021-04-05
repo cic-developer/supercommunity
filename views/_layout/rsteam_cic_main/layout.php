@@ -12,7 +12,7 @@
 <meta property="og:url" content="<?php echo $_SERVER["HTTP_HOST"] ?>">
 <meta property="og:title" content="<?php echo html_escape(element('page_title', $layout)) ?>">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://www.percommunity.com/assets/images/preview.png">
+<meta property="og:image" content="http://dev.percommunity.com/assets/images/preview.png">
 <meta property="og:description" content="<?php echo html_escape(element('meta_description', $layout)); ?>">
 
 <title><?php echo html_escape(element('page_title', $layout)); ?></title>
