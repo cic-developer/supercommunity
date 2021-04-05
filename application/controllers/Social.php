@@ -783,8 +783,10 @@ class Social extends CB_Controller
 					echo "alert('".$message."')";
 				}
 			
-				
+				$this->session->set_flashdata('popup_on', true);
 				echo '</script>';
+
+
 				exit;
 
 			} else {
@@ -1128,6 +1130,8 @@ class Social extends CB_Controller
 					echo 'window.opener.location.reload();';
 				}
 				echo '</script>';
+
+				$this->session->set_flashdata('popup_on', true);
 				exit;
 			}
 		}

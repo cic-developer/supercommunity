@@ -46,3 +46,11 @@ $hook['post_system'][] = array(
 	'filename'		=> 'Member_dormant.php',
 	'filepath'		=> 'hooks'
 );
+
+//------------------------------ 2021 04 05 팝업만들래서 만들었어요 ----------------------------------
+$hook['post_controller_constructor'][] = array(
+	'class'			=> '_Popup',
+	'function'		=> 'init',
+	'filename'		=> 'Popup.php',
+	'filepath'		=> 'hooks'
+);
