@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 $lang[0] = '<strong class="tit_policy">SUPER COMMUNITY Terms and Conditions</strong>
 <p class="desc_g">
-Under the Personal Information Protection Act, the "SuperCommonity" (hereinafter referred to as "https://www.percommunity.com") of the stock company CCS Community (hereinafter referred to as "SuperCommonity") has the following measures to protect users\' personal information and protect their rights and interests and to smoothly deal with their personal information-related grievances.<br><br>
+Under the Personal Information Protection Act, the "SuperCommonity" (hereinafter referred to as "http://dev.percommunity.com") of the stock company CCS Community (hereinafter referred to as "SuperCommonity") has the following measures to protect users\' personal information and protect their rights and interests and to smoothly deal with their personal information-related grievances.<br><br>
   When the company revises its personal information processing policy, it will notify it through the website notice (or individual notice).<br>
   This policy goes into effect on January 1, 2020."
 </p><!--이용약관 top-->';
