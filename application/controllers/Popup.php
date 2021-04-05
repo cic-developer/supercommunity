@@ -28,7 +28,7 @@ class Popup extends CB_Controller
 	function __construct()
 	{
 		parent::__construct();
-	}
+	} 
 
 
     function notiPopup($popup_id){

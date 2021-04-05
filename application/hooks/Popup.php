@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  *
  * @author CIBoard (develop@ciboard.co.kr)
  */
-
+ 
 class _Popup
 {
 
