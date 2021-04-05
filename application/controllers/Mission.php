@@ -472,10 +472,9 @@ class Mission extends CB_Controller
 			));
 
 			if(element('list',$get_judge_list)) $message = $this->lang->line('alert_message_modify');
-			
 
 			$result = $this->RS_judge_model->replace_apply_mission_judge($jud_insert_arr);
-			
+
 			// if($upload_result['err_count'] == $upload_result['all_count']){
 			// 	$message = $this->lang->line('c_10');
 			// }
