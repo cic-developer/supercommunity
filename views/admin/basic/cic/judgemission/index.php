@@ -43,7 +43,7 @@
 						<button type="button" class="btn btn-outline btn-success btn-sm" id="export_to_excel"><i class="fa fa-file-excel-o"></i> 엑셀 다운로드</button>
 						<a href="<?php echo element('listall_url', $view); ?>" class="btn btn-outline btn-default btn-sm">전체목록</a>
 						<?php if($this->input->get('jud_state') == 1){ ?>
-						<button type="button" class="btn btn-outline btn-default btn-sm btn-list-update btn-list-selected disabled" data-list-update-url="http://dev.percommunity.com/admin/cic/judgemission/set_state_list/?" >선택승인</button>
+						<button type="button" class="btn btn-outline btn-default btn-sm btn-list-update btn-list-selected disabled" data-list-update-url="https://www.percommunity.com/admin/cic/judgemission/set_state_list/?" >선택승인</button>
 						<?php } ?>
 					</div>
 				<?php
