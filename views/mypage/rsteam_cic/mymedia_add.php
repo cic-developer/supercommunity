@@ -149,7 +149,7 @@
     });
 
     $("form").on('submit', function(event){
-        if(!$(".img_file").val()){
+        if(!$("#img_file").val()){
             alert('<?php echo $this->lang->line('require_image')?>');
             event.preventDefault();
         }

@@ -245,6 +245,7 @@ class Media extends CB_Controller
 				$updatephoto = cdate('Y') . '/' . cdate('m') . '/' . element('file_name', $img);
 			} else {
 				$file_error = $this->upload->display_errors();
+				echo "<script>alert('".$file_error."')</script>";
 				redirect('/Media/editMedia/'.$med_id);
 				exit;
 				$updatephoto = '';
