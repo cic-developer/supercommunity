@@ -31,7 +31,7 @@
 				<label class="col-sm-2 control-label">참여가능 플랫폼</label>
 				<div class="col-sm-10 form-inline">
 					<select name="mis_apply_wht_id" class="form-control" <?=$disabled?>>
-						<option disabled selected>미디어를 선택해주세요</option>
+						<option disabled selected value="0">미디어를 선택해주세요</option>
 						<?php foreach(element('wht_list' ,$view) as $wht_data){	?>
 							<option value="<?php echo $wht_data['wht_id']?>" <?php echo element('mis_apply_wht_id',element('data',$view)) == $wht_data['wht_id'] ? 'selected':''?>><?php echo $wht_data['wht_title']?></option>
 						<?php }?>
@@ -155,6 +155,32 @@
 					?>
 				</div>
 			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">지급정책</label>
+				<div class="col-sm-10">
+					<!-- <textarea class="form-control" rows="10" name="mis_content"><?php //echo set_value('mis_content', element('mis_content', element('data', $view))); ?></textarea> -->
+					<?php 
+					if($disabled){
+						echo element('mis_payment_policy_ko', element('data', $view));
+					} else {
+						echo display_dhtml_editor('mis_payment_policy_ko', set_value('mis_payment_policy_ko', element('mis_payment_policy_ko', element('data', $view))), $classname = 'dhtmleditor', true, $editor_type = $this->cbconfig->item('post_editor_type')); 
+					}
+					?>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">영문 지급정책</label>
+				<div class="col-sm-10">
+					<!-- <textarea class="form-control" rows="10" name="mis_content"><?php //echo set_value('mis_content', element('mis_content', element('data', $view))); ?></textarea> -->
+					<?php 
+					if($disabled){
+						echo element('mis_payment_policy_en', element('data', $view));
+					} else {
+						echo display_dhtml_editor('mis_payment_policy_en', set_value('mis_payment_policy_en', element('mis_payment_policy_en', element('data', $view))), $classname = 'dhtmleditor', true, $editor_type = $this->cbconfig->item('post_editor_type')); 
+					}
+					?>
+				</div>
+			</div>
 			<div class="btn-group pull-right" role="group" aria-label="...">
 <?php if($this->uri->segment(5, 0) != 0){ ?>
 				<button type="button" class="btn btn-danger btn-sm" id="finish" data-finish="1" <?=$disabled?>>마감하기</button>
@@ -266,7 +292,9 @@ $(function() {
 			mis_enddate: { check_opendate :true },
 			mis_content: { '<?='required_' . $this->cbconfig->item('post_editor_type')?>' :true },
 			mis_content_en: { '<?='required_' . $this->cbconfig->item('post_editor_type')?>' :true },
-			mis_apply_wht_id: { required :true }
+			mis_payment_policy_ko: { '<?='required_' . $this->cbconfig->item('post_editor_type')?>' :true },
+			mis_payment_policy_en: { '<?='required_' . $this->cbconfig->item('post_editor_type')?>' :true },
+			mis_apply_wht_id: { required :true, min :1 }
 		}
 	});
 });
