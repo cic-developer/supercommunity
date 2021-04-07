@@ -360,6 +360,17 @@ class Missionlist extends CB_Controller
 				'label' => '영문본문',
 				'rules' => 'required',
 			),
+			array(
+				'field' => 'mis_payment_policy_ko',
+				'label' => '지급정책',
+				'rules' => 'required',
+			),
+			array(
+				'field' => 'mis_payment_policy_en',
+				'label' => '영문 지급정책',
+				'rules' => 'required',
+			),
+			
 		);
 		$this->form_validation->set_rules($config);
 		$form_validation = $this->form_validation->run();
@@ -470,6 +481,8 @@ class Missionlist extends CB_Controller
 				'mis_content' => $this->input->post('mis_content', null, ''),
 				'mis_content_en' => $this->input->post('mis_content_en', null, ''),
 				'mis_apply_wht_id' => $this->input->post('mis_apply_wht_id', null, 0),
+				'mis_payment_policy_ko' => $this->input->post('mis_payment_policy_ko', null, ''),
+				'mis_payment_policy_en' => $this->input->post('mis_payment_policy_en', null, ''),
 			);
 
 			if ($this->input->post('mis_thumb_image_del')) {

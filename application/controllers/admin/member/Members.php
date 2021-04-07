@@ -264,11 +264,11 @@ class Members extends CB_Controller
 				'label' => '이름',
 				'rules' => 'trim|min_length[2]|max_length[20]',
 			),
-			array(
-				'field' => 'mem_level',
-				'label' => '레벨',
-				'rules' => 'trim|required|numeric|less_than_equal_to[' . element('config_max_level', $getdata) . ']|is_natural_no_zero',
-			),
+			// array(
+			// 	'field' => 'mem_level',
+			// 	'label' => '레벨',
+			// 	'rules' => 'trim|required|numeric|less_than_equal_to[' . element('config_max_level', $getdata) . ']|is_natural_no_zero',
+			// ),
 			array(
 				'field' => 'mem_homepage',
 				'label' => '홈페이지',
@@ -356,11 +356,11 @@ class Members extends CB_Controller
 			// 	'label' => '회원이메일',
 			// 	'rules' => 'trim|required|valid_email|is_unique[member.mem_email.mem_id.' . element('mem_id', $getdata) . ']',
 			// );
-			$config[] = array(
-				'field' => 'mem_nickname',
-				'label' => '회원닉네임',
-				'rules' => 'trim|required|min_length[2]|max_length[20]|callback__mem_nickname_check|is_unique[member.mem_nickname.mem_id.' . element('mem_id', $getdata) . ']',
-			);
+			// $config[] = array(
+			// 	'field' => 'mem_nickname',
+			// 	'label' => '회원닉네임',
+			// 	'rules' => 'trim|required|min_length[2]|max_length[20]|callback__mem_nickname_check|is_unique[member.mem_nickname.mem_id.' . element('mem_id', $getdata) . ']',
+			// );
 		} else {
 			$config[] = array(
 				'field' => 'mem_userid',

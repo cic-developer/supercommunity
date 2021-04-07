@@ -96,6 +96,7 @@ class Main extends CB_Controller
 		// exit;
 		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
 		$view['per_friends'] = $this->db->get('rs_perfriends')->row_array()['PERFRIENDS'];
+
 		$main_config = $this->RS_main_config_model->get_one();
 		if(element('mcf_main',$main_config) == 'Y'){
 			if(!element('mcf_messages',$main_config)) $main_config['mcf_messages'] = '"CIC 설정 > 메인 페이지" 에 문구를 입력해 주세요.';
