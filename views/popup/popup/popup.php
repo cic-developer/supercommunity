@@ -37,6 +37,14 @@
 <script type="text/javascript">
 //<![CDATA[
 $(function() {
+
+	$(window).load(function() {
+		var strWidth = $('#popup_layer_1').outerWidth() + (window.outerWidth - window.innerWidth);
+		var strHeight = $('#popup_layer_1').outerHeight() + (window.outerHeight - window.innerHeight);
+		//resize 
+		window.resizeTo( strWidth, strHeight );
+	});
+
 	$(document).ready(function(){
 		if(get_cookie('popup_layer_<?php echo element('pop_id', $result); ?>')){
 			window.close();
