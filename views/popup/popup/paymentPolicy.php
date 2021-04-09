@@ -8,7 +8,7 @@
         background-size : cover;  display: block; margin: 0px auto;}
 .popup_layer_footer {padding:10px 0;background:#000;color:#fff;text-align:right}
 .popup_layer_footer button {margin-right:10px;padding:5px 10px;border:0;background:#4F4F4F;color:#FFFFFF}
-.popup_contents {width: 500px; height: 300px; outline: 1px dotted red;}
+/* .popup_contents {width: 500px; height: 300px;} */
 </style>
 
 	<div id="popup_layer" class="popup_layer">
