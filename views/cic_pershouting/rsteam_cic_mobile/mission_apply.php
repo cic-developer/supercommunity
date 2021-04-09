@@ -65,7 +65,7 @@ foreach($medList AS $ml){
 <!--20.10.14추가수정 포스팅url-->                              
                               <dd><span><?php echo $this->lang->line(24)?></span><input class="site_url" type="text" name="post_link[]" value="<?php echo element('jud_post_link', $ml)?>" <?php echo $media_comp_check? 'readonly' : '' ?>/></dd>
                               <!-- <dd><span><?php //echo $this->lang->line(5)?></span> <i class="super_p"></i><b><?php //echo $ml['med_superpoint']?></b></dd> -->
-                              <dd><span><?php echo $this->lang->line(6)?></span> <i class="per_p"></i><b><?= number_format($expected_point, 1) ?></b></dd>
+                              <dd><span><?php echo $this->lang->line(6)?></span> </i><b onclick="popup('<?php echo site_url('/Popup/paymentPolicy/'.element('mis_id',$missionData))?>')"><?php echo $this->lang->line('paymentPolicy_popup') ?></b></dd>
                             </dl>
                             <div class="table_bottom">
                                 <div class="img_area">
@@ -208,5 +208,13 @@ foreach($medList AS $ml){
             } 
         } 
         return false;
+    }
+
+    function popup(url){
+        let name = '<?php echo $this->session->userdata('lang') == 'korean' ? element('mis_title', $missionData) : element('mis_title_en', $missionData);?>';
+        let options = 'location = no'
+        var win = window.open(url, name, options);
+        win.focus();
+        return win;
     }
 </script>

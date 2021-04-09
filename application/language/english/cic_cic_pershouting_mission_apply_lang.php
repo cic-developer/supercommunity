@@ -9,7 +9,7 @@ $lang[2] = '<tr>
 <th>Admission link</th>
 <th>Auth URL</th>
 <th>Post Confirmation</th>
-<th>Estimated payment<br>PER POINT </th>
+<th>Policy check</th>
 <th>Applicable<br>Automatic check </th>
 </tr>';// 미션 테이블 헤드 th
 $lang[3] = 'Mission View'; //미션 더보기 버튼
@@ -91,7 +91,7 @@ $lang['c_11'] = 'Worng Media link.\nplease check your Media link';
 $lang['alert_1'] = 'There is no media you have requested.';
 $lang['confirm_1'] = 'Please, attach Image';
 $lang['alert_message_modify'] = 'Modifications completed';
-$lang[] = '';
+$lang['paymentPolicy_popup']  = 'View Policy';
 $lang[] = '';
 $lang[] = '';
 $lang[] = '';

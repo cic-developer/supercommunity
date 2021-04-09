@@ -10,7 +10,7 @@ $lang[2] = '<tr>
 <th>게시링크</th>
 <th>게시인증</th>
 
-<th>예상지급 <br>PER POINT</th>
+<th>정책확인</th>
 <th>신청상태<br>자동체크</th>
 </tr>';// 미션 테이블 헤드 th
 $lang[3] = '미션보기'; //미션 더보기 버튼
@@ -92,6 +92,7 @@ $lang['modalContent'] = '
 $lang['c_11'] = '게시링크가 정확하지 않습니다.\n다시 확인해주세요';
 $lang['alert_1'] = '신청한 미디어가 없습니다.';
 $lang['confirm_1'] = '이미지를 첨부해주세요';
+$lang['paymentPolicy_popup'] = '정책확인';
 $lang[] = '';
 $lang[] = '';
 $lang[] = '';

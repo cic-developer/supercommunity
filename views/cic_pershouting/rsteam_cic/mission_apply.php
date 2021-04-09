@@ -87,7 +87,10 @@ foreach($medList AS $ml){
                             <i class="super_p"></i><b><?php //echo $ml['med_superpoint']?></b> 
                         </td> -->
                         <td>
-                            <i class="per_p"></i><b><?= number_format($expected_point, 1) ?></b> 
+                            <p class="state" onclick="popup('<?php echo site_url('/Popup/paymentPolicy/'.element('mis_id',$missionData))?>')">
+                                <?php echo $this->lang->line('paymentPolicy_popup')?>
+                            </p>
+                            <!-- <i class="per_p"></i><b><?php //echo number_format($expected_point, 1) ?></b>  -->
                         </td>
                         <td>
                             <?php if($_state){ ?><p class="state"><?php echo $_state?></p><?php } // 미션 신청 상태가 있는 경우에만 ?>
@@ -241,5 +244,13 @@ foreach($medList AS $ml){
             } 
         } 
         return false;
+    }
+
+    function popup(url){
+        let name = '<?php echo $this->session->userdata('lang') == 'korean' ? element('mis_title', $missionData) : element('mis_title_en', $missionData);?>';
+        let options = 'location = no'
+        var win = window.open(url, name, options);
+        win.focus();
+        return win;
     }
 </script>

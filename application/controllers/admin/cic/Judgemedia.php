@@ -577,7 +577,7 @@ class Judgemedia extends CB_Controller
 			** 이미 처리된 경우
 			*/
 			// if(element('jud_state',$getdata) == $this->input->post('state')){
-			if(element('jud_state',$getdata) != 1){
+			if(!(element('jud_state',$getdata) == 1 || element('jud_state',$getdata) == 3)){
 				$return = array(
 					'type' => 'error',
 					'data' => 'already_done'

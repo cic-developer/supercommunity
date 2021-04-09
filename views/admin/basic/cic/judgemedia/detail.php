@@ -140,7 +140,7 @@
 			</div>
 			<div class="btn-group pull-right" role="group" aria-label="...">
 				<button type="button" class="btn btn-success btn-sm" id="confirm" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>승인하기</button>
-				<button type="button" class="btn btn-danger btn-sm" id="denyBtn" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>반려하기</button>
+				<button type="button" class="btn btn-danger btn-sm" id="denyBtn" <?=element('jud_state', element('data', $view)) == 0 ? 'disabled' : ''?>>반려하기</button>
 				<button type="button" class="btn btn-default btn-sm btn-history-back" >취소하기</button>
 			</div>
 		<?php echo form_close(); ?>
@@ -178,8 +178,8 @@
 			</div>
 			<div class="modal-footer">
         <div class="btn-group">
-          <button type="button" class="btn btn-danger set_state" data-value="warn" data-state="0" data-text="경고및 반려" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>경고+반려</button>
-          <button type="button" class="btn btn-warning set_state" data-value="deny" data-state="0" data-text="반려" <?=element('jud_state', element('data', $view)) != 1 ? 'disabled' : ''?>>반려</button>
+          <button type="button" class="btn btn-danger set_state" data-value="warn" data-state="0" data-text="경고및 반려" <?=element('jud_state', element('data', $view)) == 0 ? 'disabled' : ''?>>경고+반려</button>
+          <button type="button" class="btn btn-warning set_state" data-value="deny" data-state="0" data-text="반려" <?=element('jud_state', element('data', $view)) == 0 ? 'disabled' : ''?>>반려</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
         </div>
 			</div>

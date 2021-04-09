@@ -7,6 +7,7 @@ $lang[0] = '<strong class="tit_policy">SUPER COMMUNITY 이용약관</strong>
     본 방침은 2020년 10월 21일부터 시행됩니다
 </p><!--이용약관 top-->
 ';
+
 $lang[1] = '<div class="area_cont fst">
 <h4 class="tit_policy">1. 개인정보의 처리 목적</h4>
 <p class="tit_subject1">* 개인정보를 다음의 목적을 위해 처리합니다. 처리한 개인정보는 다음의 목적이외의 용도로는 사용되지 않으며 이용 목적이 변경될 시에는 사전동의를 구할 예정입니다.</p>

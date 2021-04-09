@@ -6,7 +6,7 @@ $lang[2] = '미디어네임';//미디어 리스트 테이블 시작
 $lang[3] = '관리자명';
 $lang[4] = '입장링크';
 $lang[5] = '슈퍼포인트';
-$lang[6] = '예상지급 <br/>PER포인트';
+$lang[6] = '정책확인';
 $lang[7] ='게시인증';
 $lang[8] ='인증 사진';
 $lang[9] ='인증자동체크';
@@ -86,7 +86,7 @@ $lang['modalContent'] = '
 ';
 $lang['alert_1'] = '신청한 미디어가 없습니다.';
 $lang['confirm_1'] = '이미지를 첨부해주세요';
-$lang[] = '';
+$lang['paymentPolicy_popup'] = '정책 확인';
 $lang[] = '';
 $lang[] = '';
 $lang[] = '';
