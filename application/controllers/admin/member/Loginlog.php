@@ -567,7 +567,7 @@ class Loginlog extends CB_Controller
 		/**
 		 * 게시판 목록에 필요한 정보를 가져옵니다.
 		 */
-		$this->{$this->modelname}->allow_search_field = array('mll_id', 'mll_userid', 'mll_success', 'member_login_log.mem_id', 'mll_datetime', 'mll_ip', 'mll_reason', 'mll_log_agent', 'mll_url', 'mll_referer'); // 검색이 가능한 필드
+		$this->{$this->modelname}->allow_search_field = array('mll_id', 'mll_userid', 'mll_success', 'member_login_log.mem_id', 'mll_datetime', 'member_login_log.mll_ip', 'mll_reason', 'mll_log_agent', 'mll_url', 'mll_referer'); // 검색이 가능한 필드
 		$this->{$this->modelname}->search_field_equal = array('mll_id', 'member_login_log.mem_id'); // 검색중 like 가 아닌 = 검색을 하는 필드
 		$this->{$this->modelname}->allow_order_field = array('mll_id'); // 정렬이 가능한 필드
 		$result = $this->{$this->modelname}

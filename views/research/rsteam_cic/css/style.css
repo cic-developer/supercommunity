@@ -12,7 +12,7 @@
 	width: 1000px;
     height: 110px;
     display: block;
-    font-size:40px;
+    font-size:50px;
     padding-top:80px;
 	padding-bottom:80px;
 	text-align:center;
@@ -32,6 +32,14 @@
 
 #research_wrap .research_content{
 	padding-bottom:50px;
+}
+
+#research_wrap .research_content h3{
+	padding-bottom:50px;
+	font-size: 30px;
+	text-align: center;
+	vertical-align: middle;
+	padding-right: 100px;
 }
 
 /*퍼백서 내용 css 시작*/ /* 웹 버전 */
@@ -64,13 +72,31 @@
 
 #research_wrap .research_content p{
 	display: block;
+	margin: 0 auto;
+	width:922px; height: 100px;
 	font-size: 15px;
 	color:#333;
 	line-height:1.8;
 	display: block;
-	text-align: justify;
+	text-align: center
 
 }
+
+#research_wrap .research_content .sub_title{
+	position: relative; height: auto; padding-bottom: 42%; 
+	
+}
+
+
+#research_wrap .research_content iframe{
+	position: absolute;
+    left:50%;top: 0;
+	transform:translateX(-50%);
+	width:922px; height:519px; 
+
+}
+
+
 
 
 #research_wrap .research_content .p_bold{
@@ -134,6 +160,14 @@
 	line-height: 1.7;
 	font-family: 'Noto Sans KR', sans-serif;
 	
+	
+}
+
+#research_wrap .research_content .text_g .sub_title iframe{
+	position: absolute;
+    top: 0;
+	left:50%; transform:translateX(-50%);
+	width:922px; height:519px;
 }
 
 

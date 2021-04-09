@@ -5,13 +5,13 @@
         <h3><?php echo $this->lang->line('h3_1')?></h3>
         <div class="research_top">
             <ul class="text_g">
-                <li class="sub_title">
+                <li class="sub_title" style="position: relative; height: 0; padding-bottom: 45%;">
+
                     <iframe src="https://www.youtube.com/embed/UeEYxrPFlC0?rel=0?enablejsapi=1&disablekb=1&fs=1" 
-                            width="100%" height="570"
                             frameborder="0" 
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                    </iframe>
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                            > 
+                    </iframe> 
                 </li>
                 <li><p>
                     <?php echo $this->lang->line('p_1')?>
@@ -26,8 +26,12 @@
                     <img src="<?php echo base_url('assets/images/ad_platform.png');?>"/>
                 </li>
                 <li><p>
-                    <?php echo $this->lang->line('p_2')?>
-                </p></li>
+                    <?php echo $this->lang->line('p_2')?><br>
+                    관련 미디어는 계속 추가될 예정입니다.
+                블록체인 외 분야는 추후 업데이트/지원될 예정입니다.
+                </p>
+                
+                </li>
             </ul>
         </div>
 
