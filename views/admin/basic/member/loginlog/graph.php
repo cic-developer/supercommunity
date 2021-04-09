@@ -3,6 +3,7 @@
 		<div class="box-table-header">
 			<ul class="nav nav-pills">
 				<li role="presentation"><a href="<?php echo admin_url($this->pagedir); ?>">목록</a></li>
+				<li role="presentation"><a href="<?php echo admin_url($this->pagedir. '/badlogin'); ?>">중복 ip 로그인</a></li>
 				<li role="presentation" class="active"><a href="<?php echo admin_url($this->pagedir . '/graph'); ?>">로그인 성공 그래프</a></li>
 				<li role="presentation"><a href="<?php echo admin_url($this->pagedir . '/graph_fail'); ?>">로그인 실패 그래프</a></li>
 				<li role="presentation"><a href="<?php echo admin_url($this->pagedir . '/cleanlog'); ?>">오래된 로그삭제</a></li>
