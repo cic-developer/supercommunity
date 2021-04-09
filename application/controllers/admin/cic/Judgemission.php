@@ -147,6 +147,7 @@ class Judgemission extends CB_Controller
 						$result['list'][$key]['jud_med_url'] = str_replace($domain,'' ,$result['list'][$key]['jud_med_url']);
 					}
 				}
+				$result['list'][$key]['jud_med_url'] = mb_substr($result['list'][$key]['jud_med_url'], 1);
 				$result['list'][$key]['num'] = $list_num--;
 
 				//잔여 포인트보다 출금 포인트 량이 많을 경우, 즉 DB에서 소유하고 있는 포인트가
