@@ -45,7 +45,7 @@ class RS_whitelist_model extends CB_Model
 		// 	$join[] = array('table' => 'member_group_member', 'on' => 'member.mem_id = member_group_member.mem_id', 'type' => 'left');
     // }
     //$select = array('wht_id','wht_title','wht_domain');
-    $result = $this->_get_list_common($select = '', $join, $limit, $offset, $where, $like, $findex, $forder, $sfield, $skeyword, $sop);
+    $result = $this->_get_list_common($select = '', '', $limit, $offset, $where, $like, $findex, $forder, $sfield, $skeyword, $sop);
 		return $result;
   }
   

@@ -111,6 +111,7 @@ class Judgemission extends CB_Controller
 		$result = $this->{$this->modelname}
 			->get_judge_list($this->jug_id,$per_page, $offset, $where, '', $findex, $forder, $sfield, $skeyword,'','', $join);
 		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
+		$domain_list = $this->RS_whitelist_model->get_whitelist_domain();
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {
 				
@@ -136,12 +137,23 @@ class Judgemission extends CB_Controller
 					element('jud_mem_nickname', $val).'('.(element('mem_userid', $dbmember) ? element('mem_userid', $dbmember) : '탈퇴회원').')',
 					element('mem_icon', $dbmember)
 				);
+				
+				//미디어 인증을 받았던 링크의 화이트 리스트 삭제하고 표시되게끔 추가
+				$result['list'][$key]['jud_med_url'] = str_replace('https://','' ,$result['list'][$key]['jud_med_url']);
+				$result['list'][$key]['jud_med_url'] = str_replace('http://','' ,$result['list'][$key]['jud_med_url']);
+				$result['list'][$key]['jud_med_url'] = str_replace('m.','' ,$result['list'][$key]['jud_med_url']);
+				foreach($domain_list AS $domain){
+					if(strpos($result['list'][$key]['jud_med_url'] , $domain) !== false){
+						$result['list'][$key]['jud_med_url'] = str_replace($domain,'' ,$result['list'][$key]['jud_med_url']);
+					}
+				}
 				$result['list'][$key]['num'] = $list_num--;
 
 				//잔여 포인트보다 출금 포인트 량이 많을 경우, 즉 DB에서 소유하고 있는 포인트가
 				// $result['list'][$key]['poi_warn']
 			}
 		}
+
 		$view['view']['data'] = $result;
 		$view['view']['all_whitelist'] = $this->RS_whitelist_model->get_whitelist_list();
 

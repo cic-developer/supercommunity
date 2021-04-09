@@ -79,7 +79,14 @@
 							<td><a href="/admin/cic/missionlist/write/<?php echo element('mis_id', $result) ?>" target="_blank"><?php echo html_escape(element('mis_title', $result)); ?></a></td>
 							<td><?php echo html_escape(element('wht_title', $result)); ?></td>
 							<td><?php echo html_escape(element('jud_med_admin', $result)); ?></td>
-							<td><a href="<?php echo element('jud_med_url', $result); ?>" target="_blank"><?php echo mb_strlen(element('jud_med_url', $result)) > 15 ? mb_substr(element('jud_med_url', $result),0,15).'...' : element('jud_med_url', $result); ?></a></td>
+							<td>
+								<a href="<?php echo element('med_url', $result); ?>" target="_blank">
+									<?php 
+										echo element('jud_med_url', $result);
+										//mb_strlen(element('jud_med_url', $result)) > 15 ? mb_substr(element('jud_med_url', $result),0,15).'...' : element('jud_med_url', $result); 
+									?>
+								</a>
+							</td>
 							<td>
 								<img 
 									class="img_modal" 
