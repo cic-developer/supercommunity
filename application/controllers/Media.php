@@ -151,6 +151,9 @@ class Media extends CB_Controller
 		$this->form_validation->set_rules('med_admin',$this->lang->line('controller_2'), 'required|min_length[2]|max_length[30]');
 		$this->form_validation->set_rules('med_name',$this->lang->line('controller_3'), 'required|min_length[3]|max_length[255]');
 		$this->form_validation->set_rules('met_type[]',$this->lang->line('controller_4'), 'required|numeric');
+		if(empty($_FILES['jud_attach']['name'])){
+			$this->form_validation->set_rules('jud_attach',$this->lang->line('media_attach'), 'required');
+		}
 
 		if($this->form_validation->run() == FALSE){	// 만일 form_validation을 만족하지 못하는 경우 다시 입력폼 창으로
 			if($this->form_validation->error_string()){

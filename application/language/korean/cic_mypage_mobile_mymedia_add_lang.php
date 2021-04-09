@@ -32,3 +32,4 @@ $lang['controller_8'] = 'URL 입력이 분류와 맞지 않습니다.';
 $lang['require_login'] = '로그인이 필요한 서비스 입니다.';
 $lang['require_image'] = '이미지를 첨부해주세요.';
 $lang['already_judge'] = '다른 심사 진행중인 미디어는 미디어 재심사를 진행하실 수 없습니다.';
+$lang['media_attach'] = '스크린샷 첨부';

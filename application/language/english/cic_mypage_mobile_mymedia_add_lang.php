@@ -31,3 +31,4 @@ $lang['controller_7'] = 'Media Review Registration Successful.';
 $lang['controller_8'] = 'URL input does not match classification.';
 $lang['require_image'] = 'Please attach an image.';
 $lang['require_login'] = 'This service requires login.';
+$lang['media_attach'] = 'Media Image'
