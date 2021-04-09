@@ -4,10 +4,11 @@
 	overflow: hidden; 
 	
 }  */
-.popup_layer {position:absolute; width: 580px; height:980px; margin-left:50px; background-image:url("/assets/images/popupbackground.png"); background-repeat : no-repeat;
+.popup_layer {position:absolute; right:-10px; width: 580px; height:980px; margin-left:50px; background-image:url("/assets/images/popupbackground.png"); background-repeat : no-repeat;
         background-size : cover;  display: block; margin: 0px auto;}
 .popup_layer_footer {padding:10px 0;background:#000;color:#fff;text-align:right}
 .popup_layer_footer button {margin-right:10px;padding:5px 10px;border:0;background:#4F4F4F;color:#FFFFFF}
+.popup_contents {width: 500px; height: 300px; outline: 1px dotted red;}
 </style>
 
 	<div id="popup_layer" class="popup_layer">
