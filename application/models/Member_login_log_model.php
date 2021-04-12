@@ -53,6 +53,7 @@ class Member_login_log_model extends CB_Model
 				mll_ip
 		) AS overlap_table" , 'member_login_log.mll_ip = overlap_table.mll_ip', 'left');
 		$this->db->join('member', 'member_login_log.mem_id = member.mem_id', 'left');
+		$this->db->order_by('member_login_log.mll_datetime', 'DESC');
 		$this->db->order_by('member_login_log.mll_ip');
 		$this->db->where('overlap_table.overlap_count >', 1);
 		$this->db->where('member.mem_denied < ', 1);
