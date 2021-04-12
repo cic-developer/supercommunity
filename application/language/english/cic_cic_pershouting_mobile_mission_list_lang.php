@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 // PER 광고 컨설팅 문의
-$lang[0] = '<h2>The Shouting Keyword for Today</h2><p>The mission is accepted in order of application and ends at time-out.If there are fewer final participants, the participants will be able to receive more points. </p>';  //상단 문자
+$lang[0] = '<h2>The Shouting Keyword for Today</h2><p>The mission is accepted in order of application and ends at time-out. </p>';  //상단 문자
 $lang[1] = 'Enter search terms.'; //검색어 placeholder
 $lang[2] = 'General';   //미션 상태 분류
 $lang[3] = 'Progress'; //미션 상태 분류

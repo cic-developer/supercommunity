@@ -133,6 +133,10 @@ class Member_login_log_model extends CB_Model
 			$this->db->group_end();
 		}
 		$qry = $this->db->get('member_login_log');
+		// echo "<pre>";
+		// print_r($this->db->last_query());
+		// echo "</pre>";
+		// exit;
 		$result['list'] = $qry->result_array();
 
 		$this->db->select('member_login_log.*, member.mem_id, member.mem_userid, member.mem_nickname, member.mem_is_admin, member.mem_icon, member.mem_denied, overlap_table.overlap_count');

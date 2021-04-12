@@ -34,7 +34,7 @@
 							<th>번호</th>
 							<th>회원아이디</th>
 							<th>회원명</th>
-							<th>로그인시입력한아이디</th>
+							<!-- <th>로그인시입력한아이디</th> -->
 							<th>로그인여부</th>
 							<th>이유</th>
 							<th>IP</th>
@@ -53,10 +53,10 @@
 							<td><?php echo number_format(element('num', $result)); ?></td>
 							<td><a href="?sfield=member_login_log.mem_id&amp;skeyword=<?php echo element('mem_id', $result); ?>"><?php echo html_escape(element('mem_userid', $result)); ?></a></td>
 							<td><?php echo element('display_name', $result); ?></td>
-							<td><a href="?sfield=mll_userid&amp;skeyword=<?php echo html_escape(element('mll_userid', $result)); ?>"><?php echo html_escape(element('mll_userid', $result)); ?></a></td>
+							<!-- <td><a href="?sfield=mll_userid&amp;skeyword=<?php //echo html_escape(element('mll_userid', $result)); ?>"><?php //echo html_escape(element('mll_userid', $result)); ?></a></td> -->
 							<td><?php echo element('mll_success', $result) === '1' ? "<span class=\"label label-success\">Success</span>":"<span class=\"label label-danger\">Fail</span>"; ?></td>
 							<td><?php echo element('mll_reason', $result); ?></td>
-							<td><a href="?sfield=mll_ip&amp;skeyword=<?php echo display_admin_ip(element('mll_ip', $result)); ?>"><?php echo display_admin_ip(element('mll_ip', $result)); ?></a></td>
+							<td><a href="?sfield=member_login_log.mll_ip&amp;skeyword=<?php echo display_admin_ip(element('mll_ip', $result)); ?>"><?php echo display_admin_ip(element('mll_ip', $result)); ?></a></td>
 							<td><?php echo element('os', $result); ?></td>
 							<td><?php echo element('browsername', $result); ?> <?php echo element('browserversion', $result); ?> <?php echo element('engine', $result); ?></td>
 							<td><?php echo display_datetime(element('mll_datetime', $result), 'full'); ?></td>
