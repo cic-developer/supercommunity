@@ -40,7 +40,7 @@
                                 <td>
                             <?php echo $_is_super ? '<span class="tooltip tooltip-default" data-content="['.$this->lang->line(5).']">' : '' ?>
                                     <i class="per_p"></i>
-                                    <b><?=number_format($data['jud_expected_value'],1)?></b>
+                                    <b><?php echo $data['jud_state'] == 5? number_format($data['jud_expected_value'],1) : "0" ?></b>
                             <?php echo $_is_super ? '</span>' : '' ?>
                                 </td>
                                 <?php 

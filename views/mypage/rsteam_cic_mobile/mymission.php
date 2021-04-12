@@ -26,7 +26,7 @@
                     <li>
                         <dl>
                             <dt><?=$this->lang->line(3)?>: <?=$this->session->userdata('lang') == 'korean' ? $data['mis_title'] : $data['mis_title_en']?></dt>
-                            <dd><span><?=$this->lang->line(4)?></span> <i class="per_p"></i><b><?=number_format($data['jud_expected_value'],1)?></b></dd>
+                            <dd><span><?=$this->lang->line(4)?></span> <i class="per_p"></i><b><?php echo $data['jud_state'] == 5? number_format($data['jud_expected_value'],1) : "0" ?></b></dd>
                         </dl>
                         <div class="table_bottom">
                             <?php 

@@ -22,7 +22,7 @@ $config['admin_page_menu']['cic'] =
 			'judgewithdraw'			=> array('출금심사', ''),
 			'advertisementlist'	=> array('광고', ''),
 			// 'Inquiry'			=> array('문의사항',''),
-			'Research'			=> array('설문조사',''),
+			'Research'			=> array('광고문의',''),
 			'setting'			=> array('CIC 설정', ''),
 			'auth'				=> array('지갑등록', '')
 		),

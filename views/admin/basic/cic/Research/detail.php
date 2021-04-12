@@ -11,6 +11,24 @@
 		?>
 			<input type="hidden" name="<?php echo element('primary_key', $view); ?>"value="<?php echo element(element('primary_key', $view), element('data', $view)); ?>" />
 			<div class="form-group">
+				<label class="col-sm-2 control-label">이메일</label>
+				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
+					<?php echo html_escape(element('res_email', $datas)); ?>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">전화번호</label>
+				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
+					<?php echo html_escape(element('res_tel', $datas)); ?>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">문의자</label>
+				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
+					<?php echo element('display_name', $view); ?>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">제품 또는 프로젝트 이름</label>
 				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
 					<?php echo html_escape(element('res_name', $datas)); ?>

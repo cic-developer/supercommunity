@@ -127,6 +127,9 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 			</script>
 			<ul class="nav-top">
 				<li>
+					<a href="<?php echo admin_url("/cic/Research")?>"><i class="fa fa-bell"><div id="research_div">0</div></i>광고문의 알림</a>
+				</li>
+				<li>
 					<a href="<?php echo site_url(); ?>" target="_blank">홈페이지로 이동</a>
 				</li>
 				<li><a href="<?php echo site_url('login/logout'); ?>"><i class="fa fa-sign-out"></i> Log out</a></li>
@@ -162,6 +165,38 @@ $(document).ready(function() {
 				skeyword: { required:true, minlength:2}
 			}
 		});
+
+		$.ajax({
+			url: "<?php echo admin_url("/cic/Research/ajax_notifiAlarm")?>",
+			type: "get",
+			dataType: "json",
+			success: function(data){
+				if(data.result == 'success'){
+					$("#research_div").text(data.value);
+				}else{
+					alert(data.value);
+				}
+			}
+		});
+
+		setInterval(
+			function(){
+				$.ajax({
+					url: "<?php echo admin_url("/cic/Research/ajax_notifiAlarm")?>",
+					type: "get",
+					dataType: "json",
+					success: function(data){
+						if(data.result == 'success'){
+							$("#research_div").text(data.value);
+						}else{
+							alert(data.value);
+						}
+					}
+				});
+			},
+			10000
+		)
+
 	});
 });
 //]]>

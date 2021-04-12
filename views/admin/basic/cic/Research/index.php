@@ -37,7 +37,7 @@
 					if (element('list', element('data', $view))) {
 						foreach (element('list', element('data', $view)) as $result) {
 					?>
-						<tr>
+						<tr <?php echo $result['res_checked'] ? 'style="opacity:0.6;"': '' ?> >
 							<td><?php echo html_escape(element('res_type', $result)); ?></td>
 							<td><?php echo element('mem_nickname',$result)."(".element('mem_userid',$result).")"?></td>
 							<td><?php echo html_escape(element('res_ip', $result)); ?></td>

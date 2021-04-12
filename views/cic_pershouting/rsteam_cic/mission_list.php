@@ -81,7 +81,7 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
                 <div class="thumnail" onmouseover="thumbnail_enter(this)" onmouseout="thumbnail_out(this)">
                         <!--타이머클릭방지--> 
                         <?php
-                        if( ($d['state'] == $this->lang->line('c_2') || ($d['mis_endtype'] > 0 && $d['mis_endtype'] < 3)) && $d['state'] == $this->lang->line('c_4') ){
+                        if( ($d['state'] == $this->lang->line('c_2') || $d['state'] == $this->lang->line('c_4') ||($d['mis_endtype'] > 0 && $d['mis_endtype'] < 3))  ){
                         ?>
                         <div class="<?php echo $d['state'] == $this->lang->line('c_4') ? 'urgent_box'  :  'time_box'?>">
                         <?php

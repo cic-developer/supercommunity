@@ -166,14 +166,15 @@ class Research extends CB_Controller
 			}
 		}
 
-		$view['view']['event']['formrunfalse'] = Events::trigger('formrunfalse', $eventname);
+		$this->{$this->modelname}->update($res_id, array('res_checked' => 1));
 
+		$view['view']['event']['formrunfalse'] = Events::trigger('formrunfalse', $eventname);
 		$view['view']['data'] = $getdata;
 
 		$view['view']['member'] = $dbmember = $this->Member_model->get_by_memid(element('mem_id', $getdata), 'mem_id, mem_userid, mem_nickname, mem_icon');
 		$view['view']['display_name'] = display_username(
 			element('mem_userid', $dbmember),
-			element('mem_nickname', $getdata).'('.(element('mem_userid', $dbmember) ? element('mem_userid', $dbmember) : '탈퇴회원').')',
+			element('mem_nickname', $dbmember).'('.(element('mem_userid', $dbmember) ? element('mem_userid', $dbmember) : '탈퇴회원').')',
 			element('mem_icon', $dbmember)
 		);
 		/**
@@ -235,5 +236,15 @@ class Research extends CB_Controller
 
 		redirect($redirecturl);
 	}
+
+	function ajax_notifiAlarm(){
+        if(!$this->member->is_admin()){ echo json_encode(array('result' => 'error', 'value' => '관리자가 아닙니다.')); exit;}
+        $checked_list = $this->{$this->modelname}->getList('','', array('res_checked' => 0));
+		if($checked_list){
+			$row_num = element('total_rows' , $checked_list); 
+			echo json_encode(array('result' => 'success', 'value' => $row_num)); exit;
+		}
+		echo json_encode(array('result' => 'error', 'value' => '리스트를 가져오는 도중 문제가 발생하였습니다.'));
+    }
 }
 ?>

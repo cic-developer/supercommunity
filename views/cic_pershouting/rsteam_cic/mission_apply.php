@@ -27,7 +27,7 @@
         </h6>
         <table cellpadding="0" class="list_table" cellspacing="0" width="100%">
             <colgroup> <!--칸의 width조절을 여기서해-->
-                <col width="8%">
+                <col width="10%">
                 <col width="10%">
                 <col width="*">
 <!--20.10.14추가사항 게시링크 타이틀-->    

@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $lang[0] = '미션인증현황';
 $lang[1] = '내 미션인증 현황';
 $lang[2] = '참여미션';
-$lang[3] = '지급/예정 토큰';
+$lang[3] = '지급 토큰';
 $lang[4] = '승인여부';
 $lang[5] = '슈퍼 프랜즈는 미션 수행 시 추가 혜택이 부여됩니다';
 $lang[6] = '미션인증 현황이 없습니다.';

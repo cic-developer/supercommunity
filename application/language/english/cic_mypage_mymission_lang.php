@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $lang[0] = 'Mission certification status';
 $lang[1] = 'My mission confirmation status';
 $lang[2] = 'Participating mission';
-$lang[3] = 'Tokens to be paid/planned';
+$lang[3] = 'Tokens to be paid';
 $lang[4] = 'Status';
 $lang[5] = 'Super friends have the advantage of clearing missions';
 $lang[6] = 'There is no mission confirmation status.';
