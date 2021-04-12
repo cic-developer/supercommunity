@@ -142,6 +142,7 @@ class Judgemission extends CB_Controller
 				$result['list'][$key]['jud_med_url'] = str_replace('https://','' ,$result['list'][$key]['jud_med_url']);
 				$result['list'][$key]['jud_med_url'] = str_replace('http://','' ,$result['list'][$key]['jud_med_url']);
 				$result['list'][$key]['jud_med_url'] = str_replace('m.','' ,$result['list'][$key]['jud_med_url']);
+				$result['list'][$key]['jud_med_url'] = str_replace('www.','' ,$result['list'][$key]['jud_med_url']);
 				foreach($domain_list AS $domain){
 					if(strpos($result['list'][$key]['jud_med_url'] , $domain) !== false){
 						$result['list'][$key]['jud_med_url'] = str_replace($domain,'' ,$result['list'][$key]['jud_med_url']);
