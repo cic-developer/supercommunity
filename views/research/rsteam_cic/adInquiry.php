@@ -200,7 +200,7 @@
              
                     <i class="fas fa-chevron-down" onclick="view_hiddenContent($(this))">&nbsp;<?php echo $this->lang->line('more')?></i>
                     <div id="hiddenContent" style="display:none;">
-                        <img src="<?php echo site_url('assets/images/package.jpg')?>" />
+                        <img src="<?php echo site_url('assets/images/service.jpg')?>" />
                     </div>            
                 </li>
                 <li>
