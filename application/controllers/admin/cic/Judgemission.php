@@ -606,7 +606,7 @@ class Judgemission extends CB_Controller
 			array(
 				'field' => 'gp_giveperc',
 				'label' => 'percentage',
-				'rules' => 'trim|required|is_natural',
+				'rules' => 'trim|required|numeric',
 			),
 		);
 		$this->form_validation->set_rules($config);
