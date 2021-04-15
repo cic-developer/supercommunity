@@ -17,7 +17,7 @@ li{list-style:none;}
 textarea.dhtmleditor {width:90%;height:350px;}
 select.select-wide {min-width:200px}
 input[type=number] {text-align:right;width:100px;}
-input[type=number].form-control {text-align:right;width:100px;}
+input[type=number].form-control {text-align:right;width:100%;}
 .clearfix {clear:both;}
 
 .per5{width:5%;}

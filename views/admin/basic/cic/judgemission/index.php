@@ -348,7 +348,7 @@
 							<div class="col-md-4 inputGroupContainer">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-gift"></i></span>
-									<input name="gp_givepoint" class="form-control"  type="text" value="0" readonly style="background-color:#ffffff;">
+									<input name="gp_givepoint" class="form-control"  type="number" value="0" min="0" style="background-color:#ffffff;">
 								</div>
 							</div>
 						</div>
@@ -393,8 +393,9 @@ $(document).on('click', '.give_point', function(){
 	$("#pointModal .modal-body input[name=gp_point]").val($(this).attr('data-point'));
 	$("#pointModal .modal-body input[name=gp_nickname]").val($(this).attr('data-nickname'));
 	$("#pointModal .modal-body input[name=gp_userid]").val($(this).attr('data-userid'));
-	$("#pointModal .modal-body input[name=gp_expectpoint]").val(Number($(this).attr('data-point')).toLocaleString('en', {maximumFractionDigits: 1}));
-	$("#pointModal .modal-body input[name=gp_givepoint]").val(Number($(this).attr('data-point')).toLocaleString('en', {maximumFractionDigits: 1}));
+	$("#pointModal .modal-body input[name=gp_expectpoint]").val(Number($(this).attr('data-point')));
+	$("#pointModal .modal-body input[name=gp_givepoint]").val(Number($(this).attr('data-point')));
+	$("#pointModal .modal-body input[name=gp_giveperc]").val(100);
 	$("#pointModal .modal-body input[name=gp_mediasuper]").val(Number($(this).attr('data-superpoint')).toLocaleString('en', {maximumFractionDigits: 1}));
 	$("#pointModal").modal({
 		backdrop:false
@@ -415,7 +416,27 @@ $(document).on('change keyup paste', '#pointModal .modal-body input[name=gp_give
 	let _perc = $(this).val();
 	let _point = $("#pointModal .modal-body input[name=gp_point]").val();
 	let _calculate = _point / 100 * _perc;
-	$("#pointModal .modal-body input[name=gp_givepoint]").val(_calculate.toLocaleString('en', {maximumFractionDigits: 1}));
+	console.log(_calculate);
+	// $("#pointModal .modal-body input[name=gp_givepoint]").val(_calculate.toLocaleString('en', {maximumFractionDigits: 1}));
+	$("#pointModal .modal-body input[name=gp_givepoint]").val(_calculate);
+});
+
+$(document).on('change keyup paste', '#pointModal .modal-body input[name=gp_givepoint]', function(){
+
+	let _expect_val = $('#pointModal .modal-body input[name=gp_expectpoint]').val() * 1;
+	if(!_expect_val){ console.log(_expect_val); return;}
+	if($(this).val()*1 > _expect_val){
+		$(this).val(_expect_val);
+	}
+
+	if($(this).val()*1 <= 0){
+		$(this).val(0);
+	}
+
+	let _point = $(this).val();
+	let _calculate = Math.round( (_point * 100 / _expect_val) * 1000 ) / 1000;
+	
+	$("#pointModal .modal-body input[name=gp_giveperc]").val(_calculate);
 });
 
 $(document).on('click','.send_point',function(){

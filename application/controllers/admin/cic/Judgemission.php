@@ -608,6 +608,11 @@ class Judgemission extends CB_Controller
 				'label' => 'percentage',
 				'rules' => 'trim|required|numeric',
 			),
+			array(
+				'field' => 'gp_givepoint',
+				'label' => 'send point',
+				'rules' => 'trim|required|numeric'
+			)
 		);
 		$this->form_validation->set_rules($config);
 
@@ -660,10 +665,11 @@ class Judgemission extends CB_Controller
 				echo json_encode($return,JSON_UNESCAPED_UNICODE);
 				exit;
 			}
-			$expect_point = rs_cal_expected_point2(element('mis_per_token', $getdata), element('mis_max_point', $getdata), element('med_superpoint', $getdata), $getdata);
-			$percentage = $this->input->post('gp_giveperc');
-			$give_point = $expect_point * $percentage / 100;
-			$give_point = floor($give_point*10)/10; //소숫점 버림을 위해
+			// $expect_point = rs_cal_expected_point2(element('mis_per_token', $getdata), element('mis_max_point', $getdata), element('med_superpoint', $getdata), $getdata);
+			// $percentage = $this->input->post('gp_giveperc');
+			$give_point = $this->input->post('gp_givepoint');
+			// $give_point = $expect_point * $percentage / 100;
+			// $give_point = floor($give_point*10)/10; //소숫점 버림을 위해
 			$left_point = element('mis_per_token',$getdata) - $give_point;
 			if($left_point<0){
 				$return = array(
