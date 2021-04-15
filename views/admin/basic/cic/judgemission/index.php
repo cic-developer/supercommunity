@@ -471,25 +471,25 @@ $(document).on('click','.send_point',function(){
 
 $(document).on('click','.set_confirm',function(){
 	if(typeof($(this).attr('disabled')) !== 'undefined') return false;
-  if(!confirm('정말 승인처리 하시겠습니까?')) return false;
-	let csrfName  = '<?php echo $this->security->get_csrf_token_name(); ?>';
-  let csrfHash  = '<?php echo $this->security->get_csrf_hash(); ?>';
-  let _jul_id   = $(this).attr('data-judid');
-  let _value    = $(this).attr('data-value');
-  let _state    = 3;
-  $.ajax({
+	if(!confirm('정말 승인처리 하시겠습니까?')) return false;
+		let csrfName  = '<?php echo $this->security->get_csrf_token_name(); ?>';
+	let csrfHash  = '<?php echo $this->security->get_csrf_hash(); ?>';
+	let _jul_id   = $(this).attr('data-judid');
+	let _value    = $(this).attr('data-value');
+	let _state    = 3;
+	$.ajax({
 		type: 'post',
 		dataType: "json",
 		url:'/admin/cic/judgemission/ajax_set_state',
 		data:{
 			[csrfName]: csrfHash,
 			jud_id:_jul_id,
-      value:_value,
-      state:_state
+	value:_value,
+	state:_state
 		},
 		success(result){
 			if(result.type == 'success'){
-        alert('승인되었습니다.');
+		alert('승인되었습니다.');
 				location.reload();
 			} else if (result.type == 'error'){
 				alert(result.data);
