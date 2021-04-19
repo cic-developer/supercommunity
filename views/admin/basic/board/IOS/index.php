@@ -30,6 +30,12 @@
 					?>
 				</div>
 			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">월렛가이드 확인하기</label>
+				<div class="col-sm-10">
+					<a href="<?php echo base_url("/IOS/walletNoti")?>" target="_blank">게시 공지 확인</a>
+				</div>
+			</div>
 
 			<div class="form-group">
 				<label class="col-sm-2 control-label">스테이킹 가이드</label>
@@ -52,6 +58,12 @@
                         ); 
 					}
 					?>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">스테이킹 가이드 미리보기</label>
+				<div class="col-sm-10">
+					<a href="<?php echo base_url("/IOS/stackingNoti")?>" target="_blank">게시 공지 확인</a>
 				</div>
 			</div>
 
