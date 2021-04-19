@@ -30,5 +30,6 @@ $config['admin_page_menu']['board'] =
 			'linkclick'				=> array('링크클릭', ''),
 			'like'					=> array('추천/비추', ''),
 			'blame'					=> array('신고', ''),
+			'IOS'					=> array('IOS 공지 등록/수정', ''),
 		),
 	);
