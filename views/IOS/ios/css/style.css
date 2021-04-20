@@ -2,11 +2,11 @@
 	whitepaper skin css
 */
 #white_wrap{
-	width: 1300px;
+ 
     margin:0 auto;
 	overflow: hidden;
 	height: auto;
-	margin-bottom: 185px;
+	margin-bottom: 180px;
 	padding-right: 20px;
 	padding-left: 20px;
 }
@@ -183,9 +183,19 @@ body{
 
 #white_wrap .searchbox{
 	overflow: hidden;
-	float: right;
-	margin-bottom: 20px;
 }
+
+#white_wrap .searchbox .btn-primary {
+	background:#fbb906;
+	border:0;
+}
+
+#white_wrap .btn-success {
+	background: #2a2a2a;
+	color:#fff;
+	border:0;
+}
+
 #white_wrap .form-group .px100 {
 	width: 104px;
 }
@@ -215,10 +225,12 @@ margin-bottom: 10px;
 }
 
 
+
 .form-group .input{
 	padding:3px 12px;
 	display: block;
 	float: left;
+	width: 109px;
 }
 
 /*공지사항 리스트끝 디테일시작*/
@@ -228,8 +240,7 @@ margin-bottom: 10px;
 	padding-left: 20px; 
 	margin: 0 auto;
 	margin-bottom: 100px;
-	width: 1300px;
-
+	
 }
 
 
@@ -239,6 +250,9 @@ margin-bottom: 10px;
 	margin-bottom: 170px;;
 }
 
+#board_wrap .board .input {
+	width: 100%;
+}
 
 #board_wrap h5{
 	padding-bottom: 50px;
@@ -300,6 +314,18 @@ margin-bottom: 10px;
 	padding-top:100px;
 } */
 
+#board_wrap .btn-success {
+	background: #2a2a2a!important;
+	color: #fff!important;
+	border:0!important;
+}
+
+#board_wrap .btn {
+	background: none;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
 #board_wrap #viewcomment{
 	border-bottom:1px solid #eee;
 	padding-bottom: 50px;
@@ -321,6 +347,7 @@ margin-bottom: 10px;
 	color:#333;
 	padding-bottom: 5px;
 }
+
 
 /******글쓰기 폼 정의*********/
 #board_wrap .board .writeform {
@@ -328,41 +355,32 @@ margin-bottom: 10px;
 }
 #board_wrap .board .writeform li{
 	float: none;
+	list-style: none;
 }
 
 
-#board_wrap .board .autosize{
-	padding-bottom: 0px!important;
+#board_wrap .board .writeform .btn-success{
+	background: #333;
+	color:#fff;
+
 }
 
+#board_wrap .board .writeform li span {
+	display: block;
+	margin-bottom: 8px;
+}
 
-/* 
-#board_wrap .pull-left{
-	border:1px #ddd solid;
+#board_wrap .board .writeform .input, #board_wrap .board .writeform textarea {
+	width: 100%;
+	box-sizing: border-box;
 	
-} */
-
-
-#board_wrap #viewcomment{
-	border-bottom:1px solid #eee;
-	padding-bottom: 50px;
 }
 
-#board_wrap .mb20{
-	margin-bottom:0px;
+#board_wrap .board .writeform .input {
+	height: 40px;
 }
 
-#board_wrap .media-body{
-	font-size: 12px;
-	font-weight: 300;
-	color:#333;
-	line-height: 1.5;
+#board_wrap .board .writeform input[type="file"] {
+	width: 100%;
+	border:1px solid #ccc;
 }
-#board_wrap .media-heading{
-	font-size: 13px;
-	font-weight: 500;
-	color:#333;
-	padding-bottom: 5px;
-}
-
-

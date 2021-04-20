@@ -97,14 +97,14 @@ class IOS extends CB_Controller
 		);
 		// exit;
 		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
-		$view['data'] = $this->db->get('IOS')->result_array()[0];
+		$view['data'] = display_html_content(element('ios_wallet_noti' ,$this->db->get('IOS')->result_array()[0]), 1, 400, false, false);
         $this->data = $view;
 		$this->layout = element('layout_skin_file', element('layout', $view));
 		$this->view = element('view_skin_file', element('layout', $view));
     }
 
 	function stackingNoti(){
-        /**
+		/**
 		 * 레이아웃을 정의합니다
 		 */
 		$page_title = $this->cbconfig->item('site_meta_title_main');
@@ -131,7 +131,7 @@ class IOS extends CB_Controller
 		);
 		// exit;
 		$view['layout'] = $this->managelayout->front($layoutconfig, $this->cbconfig->get_device_view_type());
-		$view['data'] = $this->db->get('IOS')->result_array()[0];
+		$view['data'] = display_html_content(element('ios_stacking_noti' ,$this->db->get('IOS')->result_array()[0]), 1, 400, false, false);
         $this->data = $view;
 		$this->layout = element('layout_skin_file', element('layout', $view));
 		$this->view = element('view_skin_file', element('layout', $view));
