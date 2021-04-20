@@ -44,6 +44,8 @@
 <!--프로그레스바-->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/progress.css'); ?>" />
 <!-- 커스텀 CSS 끝 -->
+<!-- favicon -->
+<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/images/favicon.ico');?>">
 
 <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css" />
 <?php echo $this->managelayout->display_css(); ?>
