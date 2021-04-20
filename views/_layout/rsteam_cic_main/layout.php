@@ -110,7 +110,7 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 	<!--header-->
 	<div id="header">
 		<nav>
-			<h1><a href="<?=base_url()?>"><img src="<?php echo base_url('assets/images/logo.png');?>" alt="슈퍼커뮤니티"></a></h1>
+			<h1><a href="<?=base_url()?>"><img src="<?php echo base_url('assets/images/officiallogo.png');?>" alt="슈퍼커뮤니티"></a></h1>
 			<!--menu-->
 			<ul id="menu">  
 				<li><a href="<?=base_url('About/whitepaper')?>" class="<?=element('menu',$header) == 'about' ? 'on' : '';?>"><?=$this->lang->line('cic_1')?></a></li> <!--해당메뉴 진입시 class="on"-->

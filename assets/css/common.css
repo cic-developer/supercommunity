@@ -15,7 +15,7 @@
 #header nav {width: 1300px; height: 84px; margin:0 auto;}
 #header h1 {width: 271px; float: left; padding:22px 0;}
 #header h1 a {display: block;}
-#header h1 a img {width: 100%;}
+#header h1 a img {width: 100%; margin: 7px;}
 #header #menu li {width: 150px; float:left; text-align: center; text-decoration: none; line-height: 84px; font-size:15px; margin:0 auto; }   
 #header #menu {overflow: hidden; float: left; margin-right: 30px; margin-left: 90px;}    
 #header #menu li a{ display: inline-block; text-decoration:none; color:#333; font-size: 17px; font-weight: 600; }

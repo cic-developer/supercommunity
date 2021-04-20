@@ -170,7 +170,7 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 
 	<!--header-->
 	<div id="header">
-		<h1><a href="<?php echo base_url()?>"><img src="<?php echo base_url('assets/images/logo.png');?>" alt="슈퍼커뮤니티"></a></h1>
+		<h1><a href="<?php echo base_url()?>"><img src="<?php echo base_url('assets/images/officiallogo.png');?>" alt="슈퍼커뮤니티"></a></h1>
 			<!--쪽지 알림벨 로그인시-->
 		<div class="hd_right">
 <?php if ($this->member->is_member() && $this->cbconfig->item('use_notification')) { ?>
