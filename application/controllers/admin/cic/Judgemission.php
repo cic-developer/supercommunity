@@ -667,7 +667,7 @@ class Judgemission extends CB_Controller
 			}
 			// $expect_point = rs_cal_expected_point2(element('mis_per_token', $getdata), element('mis_max_point', $getdata), element('med_superpoint', $getdata), $getdata);
 			// $percentage = $this->input->post('gp_giveperc');
-			$give_point = $this->input->post('gp_givepoint');
+			$give_point = round($this->input->post('gp_givepoint'), 1);
 			// $give_point = $expect_point * $percentage / 100;
 			// $give_point = floor($give_point*10)/10; //소숫점 버림을 위해
 			$left_point = element('mis_per_token',$getdata) - $give_point;
@@ -681,7 +681,8 @@ class Judgemission extends CB_Controller
 			}
 			$mem_id = element('jud_mem_id',$getdata);
 			$content = '"' . element('mis_title', $getdata) . '" 미션 "' . element('wht_title',$getdata) . '( '.element('jud_med_name',$getdata) . ' | ' . element('jud_med_id',$getdata) . ' )' . '" 미디어에 해당하는 PERPOINT 지급';
-			$this->point->insert_point(
+			
+			$insert_result = $this->point->insert_point(
 				$mem_id,
 				$give_point,
 				$content,
@@ -689,6 +690,15 @@ class Judgemission extends CB_Controller
 				$mem_id,
 				$this->member->item('mem_id') . '-' . uniqid('')
 			);
+
+			if(!$insert_result){
+				$return = array(
+					'type' => 'error',
+					'data' => 'insert point error'
+				);
+				echo json_encode($return,JSON_UNESCAPED_UNICODE);
+				exit;
+			}
 
 			$update_jud = array(
 				'jud_point' => $give_point,

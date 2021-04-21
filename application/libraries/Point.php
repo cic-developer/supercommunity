@@ -36,7 +36,11 @@ class Point extends CI_Controller
 
 		// 포인트가 없다면 업데이트 할 필요 없음
 		// $point = (int) $point; //소수도 가능하므로 int 사용 불가.
-		if (empty($point) || !preg_match('/^(-{1})?\d+(\.\d{1})?$/',$point)) {
+		// if (empty($point) || !preg_match('/^(-{1})?\d+(\.\d{1})?$/',$point)) {
+		// 	print_r($point); exit;
+		// 	return false;
+		// }
+		if (empty($point) || !preg_match('/^(-{1})?\d/',$point)) {
 			return false;
 		}
 

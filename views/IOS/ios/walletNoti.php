@@ -89,7 +89,7 @@
 		<!--content-->
 		<div id="content">
 			<div id="board_wrap">
-				<h5>퍼 월렛(PER WALLET) 이용 가이드	</h5>
+				<h5>퍼 월렛(PER WALLET) 이용 가이드 - IOS	</h5>
 
 				<div class="board">
 					<div class="contents-view"><div class="contents-view-img"></div>

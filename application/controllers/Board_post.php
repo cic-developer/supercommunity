@@ -487,6 +487,7 @@ class Board_post extends CB_Controller
 						$autolink,
 						$popup
 					);
+					// print_r($image_width); exit;
 
 				if (element('syntax_highlighter', $board)) {
 					if (element('post_html', $post)) {
@@ -902,7 +903,6 @@ class Board_post extends CB_Controller
 			$this->data = $view;
 			$this->layout = element('layout_skin_file', element('layout', $view));
 			$this->view = element('view_skin_file', element('layout', $view));
-
 		}
 	}
 
