@@ -86,6 +86,28 @@ if ( ! function_exists('post_url')) {
 	}
 }
 
+/**
+ * 게시물 열람 페이지 주소를 return 합니다
+ */
+if ( ! function_exists('ios_post_url')) {
+	function ios_post_url($ios_path = 'IOS',$key = '', $post_id = '')
+	{
+		$key = trim($key, '/');
+		$post_id = trim($post_id, '/');
+		$ios_path = trim($ios_path, '/');
+
+		$post_url = '';
+		if (strtoupper(config_item('uri_segment_post_type')) === 'B') {
+			$post_url = site_url($ios_path.'/'.$key . '/' . config_item('uri_segment_post') . '/' . $post_id);
+		} elseif (strtoupper(config_item('uri_segment_post_type')) === 'C') {
+			$post_url = site_url($ios_path.'/'.config_item('uri_segment_post') . '/' . $key . '/' . $post_id);
+		} else {
+			$post_url = site_url($ios_path.'/'.config_item('uri_segment_post') . '/' . $post_id);
+		}
+		return $post_url;
+	}
+}
+
 
 /**
  * 게시물 작성 페이지 주소를 return 합니다

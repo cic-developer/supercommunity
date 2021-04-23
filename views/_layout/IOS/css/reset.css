@@ -2,7 +2,6 @@
 
 
 /**explorer IE notosans 폰트 문제**/
-
 @font-face {
     font-family: 'Noto Sans KR';
     font-style: normal;
@@ -52,12 +51,6 @@
           url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');
    }
 
-   @font-face {
-      font-family: 'Orbitron', sans-serif;
-      font-style:  normal;
-      <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
-   }
-
 
 
 /* 초기화 */
@@ -73,7 +66,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav {
 
 ul, dl, ol  {margin:0;padding:0;list-style:none;}
 legend, .hid {margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;}
-/* label, input, button, select, img {vertical-align:middle} */
+label, input, button, select, img {vertical-align:middle}
 input, button {margin:0;padding:0; font-size:15px;font-family:'Noto Sans KR', sans-serif;  font-weight:bold; color:#333;}
 input[type="text"] {font-weight: normal;}
 button, input[type="submit"], input[type="button"] {cursor:pointer; font-family:'Noto Sans KR', sans-serif; }

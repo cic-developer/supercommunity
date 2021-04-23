@@ -1,13 +1,14 @@
 <?php
 	//페이지별 언어팩 로드
-	$this->lang->load('cic_layout', $this->session->userdata('lang'));
+	$this->lang->load('cic_layout_mobile', $this->session->userdata('lang'));
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html> <!--mobile layout-->
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <?php // 카카오톡 미리보기 이미지 변경을 위한 설정?>
 <meta property="og:url" content="<?php echo $_SERVER["HTTP_HOST"] ?>">
 <meta property="og:title" content="<?php echo html_escape(element('page_title', $layout)) ?>">
@@ -27,22 +28,24 @@
 	CSS href 사용방법 : <?php echo element('layout_skin_url', $layout); ?>/css/style.css
 	CSS href 실질경로 : /views/_layout/example_main/css/style.css
 */ ?>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/common.css'); ?>" />
+<!--RS css-->
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/m_common.css'); ?>" />
 <link rel="stylesheet" type="text/css" href="<?php echo element('layout_skin_url', $layout); ?>/css/style.css" />
-<!--RS 스타일-->
 <link rel="stylesheet" type="text/css" href="<?php echo element('layout_skin_url', $layout); ?>/css/reset.css" />
-<!-- <link rel="stylesheet" type="text/css" href="<?php echo element('layout_skin_url', $layout); ?>/css/rs_style.css" /> -->
 <!--google fonts-->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,900&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet" type="text/css">
 <!--fontawesome-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
 <!--툴팁-->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/tooltip.css'); ?>" />
 <!--제이쿼리 레이어 팝업-->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/lightlayer.min.css'); ?>" />
-<!-- //커스텀 CSS 끝 -->
+<!--프로그레스바-->
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/progress.css'); ?>" />
+<!-- 커스텀 CSS 끝 -->
+<!-- favicon -->
+<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/images/favicon.ico');?>">
 
 <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css" />
 <?php echo $this->managelayout->display_css(); ?>
@@ -67,10 +70,14 @@ var cb_csrf_hash = "<?php echo $this->security->get_csrf_hash(); ?>";
 var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 </script>
+<!--[if lt IE 9]>
+<script type="text/javascript" src="<?php echo base_url('assets/js/html5shiv.min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/respond.min.js'); ?>"></script>
+<![endif]-->
 <script type="text/javascript" src="<?php echo base_url('assets/js/common.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/jquery.validate.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/jquery.validate.extension.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo base_url('assets/js/sideview.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/sideview.js?v=1'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/js.cookie.js'); ?>"></script>
 
 <!-- 커스텀 자바스크립트 시작 -->
@@ -78,15 +85,54 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 	JS src 사용방법 : <?php echo base_url('assets/js/common.js'); ?>
 	JS 실질 경로 : /assats/js/commons.js
 */ ?>
-<!--파비콘-->
-<link rel="shortcut icon" type="image/x-icon" href="<?php echo base_url('assets/images/favicon.ico');?>">
+<!--모바일 right menu-->
+<script type="text/javascript" src="<?php echo base_url('assets/js/sidebar-menu.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo base_url('assets/js/jquery.contenttoggle.js'); ?>"></script>
+<!--숫자 스크롤-->
+<script type="text/javascript" src="<?php echo base_url('assets/js/jquery.numscroll.js'); ?>"></script>
+<!--한줄 가입뉴스-->
+<script type="text/javascript" src="<?php echo base_url('assets/js/acmeticker.js'); ?>"></script>
+<!--툴팁-->
+<script type="text/javascript" src="<?php echo base_url('assets/js/jquery.tooltip.js'); ?>"></script>
+<!--제이쿼리레이어 팝업 (20/09/09 얘 못불러온데용 <-- 그게무슨말이져 )-->
+<script type="text/javascript" src="<?php echo base_url('assets/js/jquery.lightlayer.min.js'); ?>"></script>
+<!--로딩 프로그레스바-->
+<script type="text/javascript" src="<?php echo base_url('assets/js/jquery.progressBarTimer.min.js'); ?>"></script>
+<!--제이쿼리카운트다운 타이머-->
+<script type="text/javascript" src="<?php echo base_url('assets/js/jquery.simple.timer.js'); ?>"></script>
 <!-- 커스텀 자바스크립트 끝 -->
+
 <?php echo $this->managelayout->display_js(); ?>
 </head>
 <body <?php echo isset($view) ? element('body_script', $view) : ''; ?>>
 <!--wrap-->
 <div class="lightlayer-general">
 	<div id="wrap">
+	
+		<div id="header">
+			<h1><a href=""><img src="<?php echo base_url('assets/images/officiallogo.png');?>" alt="슈퍼커뮤니티"></a></h1>
+				<!--쪽지 알림벨 로그인시-->
+			<div class="hd_right">
+	<?php if ($this->member->is_member() && $this->cbconfig->item('use_notification')) { ?>
+				<div class="note_alram">
+					<a href="javascript:;" onClick="note_list();">
+						<small style="display:block;"><?php echo $this->Note_model->get_unread_recv_note_num($this->member->is_member())?></small></small> <!--새쪽지 숫자 또는 new-->
+						<i class="fas fa-bell"></i>
+					</a>	
+				</div>
+	<?php }?>
+			</div>
+			<nav>
+				
+			</nav>
+		</div>	
+
+		<div id="sub_menu">
+			<ul> 
+				<li><a href="<?php echo base_url('/IOS/lists/noti')?>" <?php echo (strpos(uri_string(),'/noti') !== false) ? 'class="on"': ''?>>공지사항</a></li>
+				<li><a href="<?php echo base_url('/IOS/lists/wallet_noti')?>" <?php echo (strpos(uri_string(),'/wallet_noti') !== false) ? 'class="on"': ''?>>wallet 공지사항</a></li>
+			</ul>
+		</div>
 		<div id="content">
 			<!-- 본문 시작(Contents) -->
 			<?php if (isset($yield))echo $yield; ?>
