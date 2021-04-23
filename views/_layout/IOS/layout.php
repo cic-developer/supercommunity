@@ -113,7 +113,7 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 			<h1><a href=""><img src="<?php echo base_url('assets/images/officiallogo.png');?>" alt="슈퍼커뮤니티"></a></h1>
 				<!--쪽지 알림벨 로그인시-->
 			<div class="hd_right">
-	<?php if ($this->member->is_member() && $this->cbconfig->item('use_notification')) { ?>
+	<?php if ($this->member->is_member() && $this->cbconfig->item('use_notification') && false) { ?>
 				<div class="note_alram">
 					<a href="javascript:;" onClick="note_list();">
 						<small style="display:block;"><?php echo $this->Note_model->get_unread_recv_note_num($this->member->is_member())?></small></small> <!--새쪽지 숫자 또는 new-->
@@ -127,12 +127,6 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 			</nav>
 		</div>	
 
-		<div id="sub_menu">
-			<ul> 
-				<li><a href="<?php echo base_url('/IOS/lists/noti')?>" <?php echo (strpos(uri_string(),'/noti') !== false) ? 'class="on"': ''?>>공지사항</a></li>
-				<li><a href="<?php echo base_url('/IOS/lists/wallet_noti')?>" <?php echo (strpos(uri_string(),'/wallet_noti') !== false) ? 'class="on"': ''?>>wallet 공지사항</a></li>
-			</ul>
-		</div>
 		<div id="content">
 			<!-- 본문 시작(Contents) -->
 			<?php if (isset($yield))echo $yield; ?>
