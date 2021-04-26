@@ -56,9 +56,9 @@ $lang['res_platform_7'] = '카카오톡 오픈톡';
 $lang['res_platform_8'] = '티스토리';
 $lang['res_platform_9'] = '협의가 필요해요';
 
-$lang['res_package_per'] = 'PER 패키지';
-$lang['res_package_super'] = 'SUPER 패키지';
-$lang['res_package_perperman'] = 'PERPERMAN 패키지';
+$lang['res_package_per'] = '1. 필요해요';
+$lang['res_package_super'] = '2. 상담을 원해요';
+$lang['res_package_perperman'] = '3. 괜찮습니다';
 $lang['res_package_supershouting'] = 'SUPER SHOUTING 패키지';
 
 $lang['more'] = '패키지 자세히 보기';

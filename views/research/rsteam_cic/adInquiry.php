@@ -182,25 +182,22 @@
                 </li>
                 <li class="form-group">
                     <label for="pack_per">
-                        <input name="res_package"  id="pack_per" type="radio" value="PER 패키지"/>
+                        <input name="res_package"  id="pack_per" type="radio" value="1. 필요해요"/>
                         <p class="tex"><?php echo $this->lang->line('res_package_per')?></p>
                     </label>
                     <label for="pack_super">
-                        <input name="res_package"  id="pack_super" type="radio" value="SUPER 패키지"/>
+                        <input name="res_package"  id="pack_super" type="radio" value="2. 상담을 원해요"/>
                         <p class="tex"><?php echo $this->lang->line('res_package_super')?></p>
                     </label>
                     <label for="pack_pereprman">
-                        <input name="res_package"  id="pack_pereprman" type="radio" value="PERPERMAN 패키지"/>
+                        <input name="res_package"  id="pack_pereprman" type="radio" value="3. 괜찮습니다"/>
                         <p class="tex"><?php echo $this->lang->line('res_package_perperman')?></p>
                     </label>
-                    <label for="pack_supershouting">
-                        <input name="res_package"  id="pack_supershouting" type="radio" value="SUPER SHOUTING패키지"/>
-                        <p class="tex"><?php echo $this->lang->line('res_package_supershouting')?></p>
-                    </label>
+                    
              
                     <i class="fas fa-chevron-down" onclick="view_hiddenContent($(this))">&nbsp;<?php echo $this->lang->line('more')?></i>
                     <div id="hiddenContent" style="display:none;">
-                        <img src="<?php echo site_url('assets/images/service.jpg')?>" />
+                        <img src="<?php echo site_url('assets/images/extra_service.jpg')?>" />
                     </div>            
                 </li>
                 <li>
