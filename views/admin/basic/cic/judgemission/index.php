@@ -395,7 +395,7 @@ $(document).on('click', '.give_point', function(){
 	$("#pointModal .modal-body input[name=gp_userid]").val($(this).attr('data-userid'));
 	$("#pointModal .modal-body input[name=gp_expectpoint]").val(Number($(this).attr('data-point')));
 	$("#pointModal .modal-body input[name=gp_givepoint]").val(Number($(this).attr('data-point')));
-	$("#pointModal .modal-body input[name=gp_giveperc]").val(100);
+	$("#pointModal .modal-body input[name=gp_giveperc]").val(0);
 	$("#pointModal .modal-body input[name=gp_mediasuper]").val(Number($(this).attr('data-superpoint')).toLocaleString('en', {maximumFractionDigits: 1}));
 	$("#pointModal").modal({
 		backdrop:false
