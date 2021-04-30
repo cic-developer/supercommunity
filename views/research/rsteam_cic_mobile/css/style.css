@@ -62,6 +62,15 @@
 	width: 100%;
 }
 
+#research_wrap .research_content .exp{
+	display: block;
+	width:922px;
+	font-size: 12px;
+	color: rgb(233, 2, 2);
+	text-align: start;
+
+}
+
 
 #research_wrap .research_content .p_bold{
 	font-weight: 400;
@@ -155,7 +164,8 @@ input[type="radio"] {
 
 input[type="text"] {
 	display: block;
-	width: 300px;
+	width: 290px;
+	color:#c3c1c1;
 	margin-top: 5px;
 	margin-left: 5px;
 }
@@ -180,6 +190,22 @@ input[type="file"] {
 	display: block;
 	width: 335px;
 	padding-bottom: 20px;
+	position: relative;
+}
+
+#research_wrap .research_content .text_g .copyButton {
+    position: absolute;
+    top: 2px;
+    left: 300px;
+    background: #fbb906;
+    color: #fff;
+    border: none;
+    height: 30px;
+    font-size: 0.8em;
+    padding: 0 2em;
+    cursor: pointer;
+    transition: 600ms ease all;
+    outline: none;
 }
 
 #research_wrap .research_content .text_g .form-group label{

@@ -98,6 +98,14 @@
 					<?php echo html_escape(element('res_package', $datas)); ?>
 				</div>
 			</div>
+			<?php if(element('respon_transaction', $datas)){ ?>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">트랜잭션</label>
+				<div class="col-sm-10" style="min-height:30px; padding-top:7px;">
+					<?php echo html_escape(element('respon_transaction', $datas)); ?>
+				</div>
+			</div>
+			<?php } ?>
 			<div class="btn-group pull-right" role="group" aria-label="...">
 				<button type="button" class="btn btn-default btn-sm btn-history-back" >목록으로</button>
 			</div>

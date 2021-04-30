@@ -27,8 +27,7 @@
                 </li>
                 <li><p>
                     <?php echo $this->lang->line('p_2')?><br>
-                    관련 미디어는 계속 추가될 예정입니다.
-                블록체인 외 분야는 추후 업데이트/지원될 예정입니다.
+                    <?php echo $this->lang->line('p_3')?>
                 </p>
                 
                 </li>

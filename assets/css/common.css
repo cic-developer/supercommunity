@@ -177,7 +177,7 @@ input:-moz-read-only { /* For Firefox */
 }
 input:read-only, textarea:read-only {
 	background:#eee; 
-	color:#888;
+	color:#c3c1c1;
   }
 
 

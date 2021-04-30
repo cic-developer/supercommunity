@@ -73,14 +73,24 @@
 #research_wrap .research_content p{
 	display: block;
 	margin: 0 auto;
-	width:922px; height: 100px;
+	width:922px;
 	font-size: 15px;
-	color:#333;
+	color: #333;
 	line-height:1.8;
 	display: block;
-	text-align: center
+	text-align: center;
 
 }
+
+#research_wrap .research_content .exp{
+	display: block;
+	width:922px;
+	font-size: 13px;
+	color: rgb(233, 2, 2);
+	text-align: start;
+
+}
+
 
 #research_wrap .research_content .sub_title{
 	position: relative; height: auto; padding-bottom: 42%; 
@@ -180,6 +190,9 @@
 	font-size: 20px;
 }
 
+
+
+
 label
 
 input[type="checkbox"] {
@@ -227,9 +240,33 @@ input[type="file"] {
 #research_wrap .research_content .text_g .form-group{
 	display: block;
 	width: 500px;
-	padding-bottom: 20px;
+	margin-bottom: 50px;
+	position: relative;
 	
 }
+
+
+
+#research_wrap .research_content .text_g .copyButton{
+	position: absolute; top: 2px; left: 520px;
+	background:#fbb906;
+  color:#fff;
+  border:none;
+  height:30px;
+  font-size:0.8em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:600ms ease all;
+  outline:none;
+	
+}
+
+#research_wrap .research_content .text_g .copyButton:hover{
+	background:#000;
+	color:#fff;
+  }
+
+
 
 #research_wrap .research_content .text_g .form-group label{
 	display: inline-flex;
@@ -338,5 +375,4 @@ i{
 	cursor: pointer;
 	margin-left: 5px;
 }
-
 

@@ -69,3 +69,6 @@ $lang['submit_button'] = 'Submit';
 
 $lang['controller_message_success'] = 'Your inquiry has been registered.';
 $lang['controller_message_error'] = 'Inquiry registration failed.';
+
+$lang['explain1'] = '(This is a wallet address dedicated to depositing advertising expenses. Advertising fee is only received in PER coin)';
+$lang['explain2'] = '(Please write the transaction address of the PER coin deposited as advertising fee)';
