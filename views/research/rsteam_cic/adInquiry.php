@@ -238,7 +238,7 @@
                     <li class="form-group">
                         <input name="res_tel" id="respon_tel" type="text" placeholder="-(하이픈) 없이 입력 예) 01012345678" />
                     </li>
-                    <li class="sub_title">
+                    <li class="sub_title" style="font-size: 18px;">
                     <?php echo $this->lang->line('subtitle_13')?>
                     </li>
                     <li class="sub_title">

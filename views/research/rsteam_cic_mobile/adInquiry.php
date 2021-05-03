@@ -242,12 +242,13 @@
                     <li class="form-group">
                         <input name="res_tel" id="respon_tel" type="text" placeholder="010-123-4567 OR 0101234567" />
                     </li>
-                    <li class="sub_title">
+                    <li class="sub_title" style="font-size: 13px;">
                     <?php echo $this->lang->line('subtitle_13')?> 
                     </li>
                     <li class="sub_title">
                         <?php echo $this->lang->line('subtitle_11')?> 
                     </li>
+
                     <li class="form-group">
                         <input id="respon_wallet" type="text" readonly value="0x148c7f3d1f883b4069a734ac83acb926b5bb5226" />
                         <button type="button" class="copyButton" onclick="copy_to_clipboard()">복사</button>
