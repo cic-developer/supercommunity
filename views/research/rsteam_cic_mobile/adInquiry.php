@@ -242,9 +242,11 @@
                     <li class="form-group">
                         <input name="res_tel" id="respon_tel" type="text" placeholder="010-123-4567 OR 0101234567" />
                     </li>
-                    
                     <li class="sub_title">
-                        <?php echo $this->lang->line('subtitle_11')?>
+                    <?php echo $this->lang->line('subtitle_13')?> 
+                    </li>
+                    <li class="sub_title">
+                        <?php echo $this->lang->line('subtitle_11')?> 
                     </li>
                     <li class="form-group">
                         <input id="respon_wallet" type="text" readonly value="0x148c7f3d1f883b4069a734ac83acb926b5bb5226" />

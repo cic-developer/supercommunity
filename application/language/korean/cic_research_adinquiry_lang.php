@@ -19,8 +19,9 @@ $lang['subtitle_7'] = '2. 마케팅을 원하시는 플랫폼을 선택해주세
 $lang['subtitle_8'] = '3. 광고 컨설팅이 필요하신가요? (유료, 선택사항)';
 $lang['subtitle_9'] = '1. 이메일을 적어주세요 *';
 $lang['subtitle_10'] = '2. 연락처를 적어주세요 *';
-$lang['subtitle_11'] = '3. 광고비를 먼저 입금하고 광고를 신속하게 진행하고 싶으신가요?';
-$lang['subtitle_12'] = '4. 트랜잭션 주소';
+$lang['subtitle_11'] = '- 광고비를 먼저 입금하고 광고를 신속하게 진행하고 싶으신가요?';
+$lang['subtitle_12'] = '- 트랜잭션 주소';
+$lang['subtitle_13'] = '* 선택사항';
 
 $lang['res_name_placehold'] = '프로젝트 제목';
 

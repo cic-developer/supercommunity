@@ -19,6 +19,7 @@ $lang['subtitle_7'] = '2. Please select the platform you want to market *';
 $lang['subtitle_8'] = '3. Do you need advertising consulting? (Pay, optional)';
 $lang['subtitle_9'] = '1. Please write your email *';
 $lang['subtitle_10'] = '2. Please write your contact information *';
+$lang['subtitle_11'] = '* Option';
 
 $lang['res_name_placehold'] = 'Project title';
 
