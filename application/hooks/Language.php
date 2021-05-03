@@ -78,5 +78,11 @@ class _Language
     } else if($this->CI->session->userdata('lang') == 'english' && ($this->CI->uri->segment(1) == 'board' || $this->CI->uri->segment(1) == 'post') && $this->CI->uri->segment(2) == 'noti'){
       redirect('/board/noti_en');
     }
+
+    if($this->CI->session->userdata('lang') == 'korean' && ($this->CI->uri->segment(1) == 'board' || $this->CI->uri->segment(1) == 'post') && $this->CI->uri->segment(2) == 'wallet_noti_en'){
+      redirect('/board/wallet_noti');
+    } else if($this->CI->session->userdata('lang') == 'english' && ($this->CI->uri->segment(1) == 'board' || $this->CI->uri->segment(1) == 'post') && $this->CI->uri->segment(2) == 'wallet_noti'){
+      redirect('/board/wallet_noti_en');
+    }
 	}
 }
