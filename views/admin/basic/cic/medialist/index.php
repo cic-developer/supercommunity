@@ -60,7 +60,7 @@
 							<td><?php echo html_escape(element('wht_title', $result)); ?></td>
 							<td><?php echo html_escape(element('med_admin', $result)); ?></td>
 							<td>
-								<a href="<?php echo element('med_url', $result); ?>"><?php echo element('med_url', $result); ?></a>
+								<a href="<?php echo element('med_url', $result); ?>"><?php echo substr(element('med_url', $result), 0, 30); ?></a>
 								<?php if(element('med_duplicate',$result)){ ?>
 									<a href="/admin/cic/medialist?sfield=med_url&skeyword=<?php echo urlencode(element('med_url', $result)); ?>&search_submit=">
 										<span class="label label-danger" style="margin-left:10px;">중복</span>

@@ -272,6 +272,12 @@ class Medialist extends CB_Controller
 				'label' => '슈퍼포인트',
 				'rules' => 'trim|required|is_natural',
 			);
+
+			$config[] = array(
+				'field' => 'med_member',
+				'label' => 'PERFRIEND',
+				'rules' => 'trim|required|is_natural'
+			);
 		}
 		
 		$this->form_validation->set_rules($config);
@@ -346,6 +352,7 @@ class Medialist extends CB_Controller
 					'med_url' => $this->input->post('med_url', null, ''),
 					'med_admin' => $this->input->post('med_admin', null, ''),
 					'med_superpoint' => $this->input->post('med_superpoint', null, ''),
+					'med_member'	=> $this->input->post('med_member',null,'')
 				);
 				$med_id = $this->input->post($primary_key);
 				$this->{$this->modelname}->update($med_id, $updatedata);

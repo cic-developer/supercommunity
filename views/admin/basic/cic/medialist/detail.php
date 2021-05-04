@@ -68,7 +68,14 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">PERFRIEND</label>
 				<div class="col-sm-10">
-					<input type="text" style="all:unset; height:30px; display:inline-block; vertical-align:middle;" disabled value="<?php echo number_format(element('med_member', element('data', $view))); ?>" />
+				<?php if(element('med_state', element('data', $view)) == 3) {?>
+					<input type="number" class="form-control" name="med_member" value="<?php echo set_value('med_member', element('med_member', element('data', $view))); ?>" />
+				<?php }else{  ?>
+					<input type="text" style="all:unset; height:30px; display:inline-block; vertical-align:middle;" disabled value="<?php echo number_format(element('med_superpoint', element('data', $view))); ?>" />
+				<?php }?>
+
+
+					<!-- <input type="text" style="all:unset; height:30px; display:inline-block; vertical-align:middle;" value="<?php //echo number_format(element('med_member', element('data', $view))); ?>" /> -->
 				</div>
 			</div>
 			<div class="form-group">
