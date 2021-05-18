@@ -1,6 +1,7 @@
 <?php
 	//페이지별 언어팩 로드
 	$this->lang->load('cic_layout', $this->session->userdata('lang'));
+	$u_agent = $_SERVER['HTTP_USER_AGENT'];
 ?>
 
 <!DOCTYPE html>
@@ -77,17 +78,18 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 <script type="text/javascript" src="<?php echo base_url('assets/js/jquery.validate.extension.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/sideview.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/js.cookie.js'); ?>"></script>
-
+<?php if(!(preg_match('/Chrome/i',$u_agent) || preg_match('/Safari/i',$u_agent) || preg_match('/Firefox/i',$u_agent))) {?>
 <script> // 상단 띠배너
-var bannerFunc = function(){
-    $('.promotionBanner .btnClose').bind("click", function(){
-        $('.promotionBanner').animate({height: 0}, 500);
-    });
-};
-$(function($){
-    bannerFunc();
-});
+	var bannerFunc = function(){
+		$('.promotionBanner .btnClose').bind("click", function(){
+			$('.promotionBanner').animate({height: 0}, 500);
+		});
+	};
+	$(function($){
+		bannerFunc();
+	});
 </script>
+<?php } ?>
 
 <!-- 커스텀 자바스크립트 시작 -->
 <?php /*
@@ -248,26 +250,26 @@ $(function($){
 		break;
 	}
 ?>
-
+<?php if(!(preg_match('/Chrome/i',$u_agent) || preg_match('/Safari/i',$u_agent) || preg_match('/Firefox/i',$u_agent))) {?>
 <div class="promotionBanner">
-    <a href="#none" class="bannerLink">	
+    <a href="https://www.google.co.kr/intl/ko/chrome/" target="_blank" class="bannerLink">	
         지금 사용하고 계신 브라우저는 미리캔버스 및 일부 기능 사용이 제한될 수 있습니다.
     </a>
-	<a href="#" class="bannerLink01">최적화 브라우저 다운받기</a>
+	<a href="https://www.google.co.kr/intl/ko/chrome/" target="_blank" class="bannerLink01">최적화 브라우저 다운받기</a>
     <a href="#none" class="btnClose"><img src="http://sdsupport.cafe24.com/img/guide/tip/btn_close.png" alt="배너 닫기" /></a>
 </div>
+<?php  } ?>
 
 
 
 
 <!--서브메뉴 끝!!! 입니다. -->
 	<!--content-->
-	<!-- id="content">
+	<!-- id="content" -->
 	<!-- 본문 시작(Contents) -->
 		
 		<?php if (isset($yield))echo $yield; ?>
 		<!-- 본문 끝(Contents) -->
-	</!-->
 	<!--//content-->
 
 	<!--footer-->
