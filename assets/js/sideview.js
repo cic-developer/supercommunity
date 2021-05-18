@@ -133,7 +133,7 @@ if (typeof(SIDEVIEW_JS) === 'undefined') // 한번만 실행
 		if (is_admin == 'super') {
 			// 회원정보변경
 			if (userid)
-				this.insertTail('modify', '<a href="' + cb_admin_url + '/member/members/write/' + memid + '" target="_blank">회원정보변경</a>');
+				this.insertTail('modify', '<a href="' + cb_admin_url + '/member/members/write/' + memid + '" target="_blank">회원정보관리</a>');
 			// 포인트내역
 			if (userid)
 				this.insertTail('point', '<a href="' + cb_admin_url + '/member/points?sfield=point.mem_id&skeyword=' + memid + '" target="_blank">포인트내역</a>');

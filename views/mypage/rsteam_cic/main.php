@@ -12,7 +12,7 @@
         <div class="head">
             <label class="ttl-popup"><?php echo $this->lang->line(0)?></label>
         </div>
-         <!--body-->
+        <!--body-->
         <div class="body">
             <p><?php echo $this->lang->line(1)?></p>
             <div class="mail_box">

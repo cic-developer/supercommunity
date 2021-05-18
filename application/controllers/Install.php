@@ -4653,7 +4653,7 @@ flvr.pandora.tv',
 
 
 	/**
-	 * 회원가입시 닉네임을 체크하는 함수입니다
+	 * 회원가입시 을 체크하는 함수입니다
 	 */
 	public function _mem_nickname_check($str)
 	{

@@ -45,6 +45,11 @@ class Judgewithdraw extends CB_Controller
 		 * 라이브러리를 로딩합니다
 		 */
 		$this->load->library(array('pagination', 'querystring'));
+
+		if($this->session->userdata('reconfirm_access') != 1){
+			redirect('/admin/reconfirm?returnURL=' . rawurlencode(site_url('/admin/cic/judgewithdraw')));
+		}
+
 	}
 
 	/**

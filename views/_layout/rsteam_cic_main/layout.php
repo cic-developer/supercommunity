@@ -2,6 +2,7 @@
 	//페이지별 언어팩 로드
 	$this->lang->load('cic_layout', $this->session->userdata('lang'));
 ?>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -77,6 +78,17 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 <script type="text/javascript" src="<?php echo base_url('assets/js/sideview.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo base_url('assets/js/js.cookie.js'); ?>"></script>
 
+<script> // 상단 띠배너
+var bannerFunc = function(){
+    $('.promotionBanner .btnClose').bind("click", function(){
+        $('.promotionBanner').animate({height: 0}, 500);
+    });
+};
+$(function($){
+    bannerFunc();
+});
+</script>
+
 <!-- 커스텀 자바스크립트 시작 -->
 <?php /*
 	JS src 사용방법 : <?php echo base_url('assets/js/common.js'); ?>
@@ -108,6 +120,8 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 		<div style="cursor:pointer;" onclick="window.scrollTo(0,0);" class="top"><i class="far fa-arrow-alt-circle-up"></i><br/><?=$this->lang->line('cic_0')?></div>
 	</div>
 	<!--header-->
+
+
 	<div id="header">
 		<nav>
 			<h1><a href="<?=base_url()?>"><img src="<?php echo base_url('assets/images/officiallogo.png');?>" alt="슈퍼커뮤니티"></a></h1>
@@ -127,12 +141,25 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 				<div class="logout">
 				<a href="<?= $this->member->is_member()? site_url('login/logout?url=' . urlencode(current_full_url())) : site_url('login?url=' . urlencode(current_full_url()))  ?>"><?php echo $this->member->is_member()? $this->lang->line('cic_6') : $this->lang->line('cic_7') ?></a> <!--LOGIN / LOGOUT-->
 				</div>
+
+
+				<!--  -->
+				<?php if($this->member->is_admin()){
+					?>
+				<div class="admin">	
+				<a href="<?=base_url('admin')?>">관리자</a>
+				</div>
+				<?php } ?>
 			</div>
 			<!--쪽지 알림벨 추가-->
 <?php if ($this->member->is_member() && $this->cbconfig->item('use_notification')) { ?>
 			<div class="note_alram">
 				<a href="javascript:;" onClick="note_list();">
-					<small style="display:block;"><?php echo $this->Note_model->get_unread_recv_note_num($this->member->is_member())?></small> <!--새쪽지 숫자 또는 new-->
+					<?php if($this->Note_model->get_unread_recv_note_num($this->member->is_member()) != 0) { ?>
+					<small style="display:block;">
+					<?php  echo $this->Note_model->get_unread_recv_note_num($this->member->is_member());?>
+					</small> <!--새쪽지 숫자 또는 new-->
+					<?php } ?>
 					<i class="fas fa-bell"></i>
 				</a>	
 			</div>
@@ -156,7 +183,6 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 			}
 		?>
 		<!-- 알림 div 끝 -->
-
 	</div>
 	<!--//header-->
 
@@ -178,6 +204,7 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 
 		case 'pershouting' : 
 ?>
+
 			<div id="sub_menu">
 				<ul> 
 					<li><a href="<?=base_url('/Mission')?>" class="on"><?=$this->lang->line('cic_14')?></a></li> <!--단일메뉴-->
@@ -221,13 +248,26 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 		break;
 	}
 ?>
+
+<div class="promotionBanner">
+    <a href="#none" class="bannerLink">	
+        지금 사용하고 계신 브라우저는 미리캔버스 및 일부 기능 사용이 제한될 수 있습니다.
+    </a>
+	<a href="#" class="bannerLink01">최적화 브라우저 다운받기</a>
+    <a href="#none" class="btnClose"><img src="http://sdsupport.cafe24.com/img/guide/tip/btn_close.png" alt="배너 닫기" /></a>
+</div>
+
+
+
+
 <!--서브메뉴 끝!!! 입니다. -->
 	<!--content-->
-	<div id="content">
-		<!-- 본문 시작(Contents) -->
+	<!-- id="content">
+	<!-- 본문 시작(Contents) -->
+		
 		<?php if (isset($yield))echo $yield; ?>
 		<!-- 본문 끝(Contents) -->
-	</div>
+	</!-->
 	<!--//content-->
 
 	<!--footer-->

@@ -27,7 +27,7 @@ class Scheduler extends CB_Controller
 		$ip = $this->CI->input->ip_address();
 		log_message('debug', $ip . '에서 Sample_scheduler 가 실행되었습니다.');
 		echo $ip . '에서 Sample_scheduler 가 실행되었습니다.';
-		if(strcmp('127.0.0.1',$ip) == 0 || strcmp('172.31.45.165',$ip) == 0){
+		if(strcmp('127.0.0.1',$ip) == 0 || strcmp('172.31.32.47',$ip) == 0){
 		}
 	}
 
@@ -41,8 +41,8 @@ class Scheduler extends CB_Controller
 	//경고 자동차감
 	public function delete_warn(){
 		$ip = $this->CI->input->ip_address();
-		// echo $ip . '에서 scheduler 에 접근하였습니다.';
-		if(strcmp('127.0.0.1',$ip) == 0 || strcmp('3.34.227.207',$ip) == 0){
+		echo $ip . '에서 scheduler 에 접근하였습니다.';
+		if(strcmp('127.0.0.1',$ip) == 0 || strcmp('172.31.32.47',$ip) == 0){
 			// echo $ip . '에서 scheduler 가 실행되었습니다.';
 			log_message('error', $ip . '에서 scheduler 가 실행되었습니다.');
 			$_now = date('Y-m-d H:i:s');
@@ -58,6 +58,5 @@ class Scheduler extends CB_Controller
 			$this->CI->db->delete('member_delete_warn',array('mdw_ddate <=' => $_now));
 		}
 	}
-
 }
 ?>

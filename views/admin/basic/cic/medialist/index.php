@@ -15,6 +15,7 @@
 				<div class="btn-group btn-group-sm" role="group">
 					<a href="<?=$this->input->get('med_state')||$this->input->get('med_state')==='0' ? '?med_state='.$this->input->get('med_state') : '?'?>" class="btn btn-sm <?php echo ( ! $this->input->get('wht_id')) ? 'btn-success' : 'btn-default'; ?>">화이트리스트 전체</a>
 					<?php
+					
 					foreach (element('list',element('all_whitelist', $view)) as $wkey => $wval) {
 					?>
 						<a href="?wht_id=<?php echo element('wht_id', $wval); ?><?=$this->input->get('med_state')||$this->input->get('med_state')==='0' ? '&med_state='.$this->input->get('med_state') : ''?>" class="btn btn-sm <?php echo (element('wht_id', $wval) === $this->input->get('wht_id')) ? 'btn-success' : 'btn-default'; ?>"><?php echo element('wht_title', $wval); ?></a>
@@ -45,7 +46,7 @@
 							<th>관리자명</th>
 							<th>링크</th>
 							<th>상태</th>
-							<th>닉네임</th>
+							<th>신청자</th>
 							<th>자세히</th>
 							<th><input type="checkbox" name="chkall" id="chkall" /></th>
 						</tr>
@@ -86,11 +87,13 @@
 					</tbody>
 				</table>
 			</div>
+			<?php if(element('list', element('data', $view))){ ?>
 			<div class="box-info">
 				<?php echo element('paging', $view); ?>
 				<div class="pull-left ml20"><?php echo admin_listnum_selectbox();?></div>
 				<?php echo $buttons; ?>
 			</div>
+			<?php } ?>
 		<?php echo form_close(); ?>
 	</div>
 	<form name="fsearch" id="fsearch" action="<?php echo current_full_url(); ?>" method="get">

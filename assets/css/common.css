@@ -9,10 +9,15 @@
 #wrap #quick_area .top {width: 50px; height: 50px; padding-top:10px; box-sizing: border-box; text-align: center;  color: #515151;  font-size:14px;  font-family:'Montserrat', sans-serif; font-weight:bold; background-color: rgba(235,235,235,0.7); border-radius: 50%; }
 #wrap #quick_area .top i {display: inline-block; margin-bottom: 2px;}
 
+.promotionBanner { position:relative; overflow:hidden; text-align:center; height: 55px; background:#fab908; }
+.promotionBanner .bannerLink { display:inline-block; font-size: 15px; margin-top: 21px; color: #fff; text-align: center;  }
+.promotionBanner .bannerLink01 { display:inline-block; font-size: 15px; font-weight: 400; color: #fff; text-align: center; margin-top: 20px; 
+	margin-left: 20px; border-bottom: 1px solid #fff;}
+.promotionBanner .btnClose { position:absolute; top: 17px; left:50%; margin-left:590px; }
 
 /***********header 헤더**************/
 #header {width: 100%; height:84px; border-bottom:1px solid #ccc; position: fixed; top:0; background:#fff; z-index: 99; transition: all 0.2s ease;}
-#header nav {width: 1300px; height: 84px; margin:0 auto;}
+#header nav {width: 1300px; height: 84px; margin:0 auto; position: relative;}
 #header h1 {width: 271px; float: left; padding:22px 0;}
 #header h1 a {display: block;}
 #header h1 a img {width: 100%; margin: 7px;}
@@ -21,6 +26,18 @@
 #header #menu li a{ display: inline-block; text-decoration:none; color:#333; font-size: 17px; font-weight: 600; }
 #header #menu li a:hover, #header #menu li a.on {background:url(/assets/images/nav_line_bg.gif) repeat-x center 45px ;font-weight: 600;}
 #header .box {float: left; margin-top:26px;}
+
+/* ***************관리자 버튼*************** */
+#header .admin { position:absolute; top: 23px; width: 4%; left: 1320px; right: 0;  background:#fab908;border:none;height:30px;padding:3px 12px;cursor:pointer;transition:800ms ease all;
+outline:none;}
+#header .admin:hover{background:#fff;color:#333;}
+#header .admin:before,button:after{content:'';position:absolute;top:0;right:0;height:2px;width:0;background: #fab908; color: #333; transition:400ms ease all;}
+#header .admin:after{right:inherit;top:inherit;left:0;bottom:0;}
+#header .admin:hover:before,#header .admin:hover:after{width:100%; transition:800ms ease all;}
+#header .admin	a:hover {color: #333;}
+#header .admin	a {display: block; color: #fff; font-size: 18px; text-align: center; margin-top: 4px;}
+/* ***************************************** */
+
 #header .mypage {width: 71px; height:31px; float: left; background-color: #000; border: 1px solid #000; line-height: 31px; text-align:center;}
 #header .mypage>a {color: #fff; font-size:13px; text-decoration:none;}
 #header .mypage>a:hover { color: #fff; font-size:13px;  text-decoration:none;}
@@ -39,7 +56,7 @@
 #header .lang li a.on {color:#3b3b3b;}
 
 /*********서브메뉴 css sub_menu***********/
-#sub_menu {width: 100%; height:50px;  position: fixed; top:85px; background:#fbfbfb; border-bottom:1px solid #ccc; transition: all 0.2s ease;}
+#sub_menu {width: 100%; height:50px; top:85px; background:#fbfbfb; border-bottom:1px solid #ccc; transition: all 0.2s ease;}
 #sub_menu ul {width: 1300px; margin:0 auto; overflow:hidden;}
 #sub_menu ul li {display: block; float:left; width: 130px; text-align: center; border-right:1px solid #ccc; }
 #sub_menu ul li:first-child { border-left:1px solid #ccc;}

@@ -77,7 +77,7 @@ class Medialist extends CB_Controller
 		$forder = $this->input->get('forder', null, 'desc');
 		$sfield = $this->input->get('sfield', null, '');
 		$skeyword = $this->input->get('skeyword', null, '');
-
+		
 		$per_page = admin_listnum();
 		$offset = ($page - 1) * $per_page;
 
@@ -106,6 +106,7 @@ class Medialist extends CB_Controller
 		$where['med_deletion'] = 'N';
 		$result = $this->{$this->modelname}
 			->get_list($per_page, $offset, $where, '', $findex, $forder, $sfield, $skeyword);
+
 		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {
@@ -153,7 +154,7 @@ class Medialist extends CB_Controller
 		$search_option = array(
 			'med_url' => '링크',
 			// 'met_id' => '미디어 성격',
-			'mem_nickname' => '닉네임',
+			'mem_nickname' => '신청자',
 			// 'med_wdate' => '날짜'
 		);
 		$view['view']['skeyword'] = ($sfield && array_key_exists($sfield, $search_option)) ? $skeyword : '';
@@ -520,6 +521,8 @@ class Medialist extends CB_Controller
 		}
 		$result = $this->{$this->modelname}
 			->get_list('', '', $where, '', $findex, $forder, $sfield, $skeyword);
+		
+		
 
 		if (element('list', $result)) {
 			foreach (element('list', $result) as $key => $val) {

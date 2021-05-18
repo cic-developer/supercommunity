@@ -15,7 +15,7 @@ $config['admin_page_menu']['member'] =
 	array(
 		'__config'					=> array('회원설정', 'fa-users'),
 		'menu'						=> array(
-			'members'				=> array('회원관리', ''),
+			'members'				=> array('회원정보관리', ''),
 			// 'membergroup'			=> array('회원그룹관리', ''),
 			'points'				=> array('퍼포인트관리', ''),
 			// 'memberfollow'			=> array('팔로우현황', ''),

@@ -127,7 +127,9 @@ var cookie_prefix = "<?php echo config_item('cookie_prefix'); ?>";
 			</script>
 			<ul class="nav-top">
 				<li>
-					<a href="<?php echo admin_url("/cic/Research")?>"><i class="fa fa-bell"><div id="research_div">0</div></i>광고문의 알림</a>
+					<a href="<?php echo admin_url("/cic/Research")?>"><i class="fa fa-bell">
+					<div id="research_div" style="display:none">0</div>
+					</i>광고문의 알림</a>
 				</li>
 				<li>
 					<a href="<?php echo site_url(); ?>" target="_blank">홈페이지로 이동</a>
@@ -172,6 +174,11 @@ $(document).ready(function() {
 			dataType: "json",
 			success: function(data){
 				if(data.result == 'success'){
+					if($("#research_div").text() == 0){
+						$("#research_div").hide();
+					}else{
+						$("#research_div").show();
+					}
 					$("#research_div").text(data.value);
 				}else{
 					alert(data.value);
@@ -187,6 +194,12 @@ $(document).ready(function() {
 					dataType: "json",
 					success: function(data){
 						if(data.result == 'success'){
+							if($("#research_div").text() == 0){
+								$("#research_div").hide();
+							}else{
+								$("#research_div").show();
+							}
+
 							$("#research_div").text(data.value);
 						}else{
 							alert(data.value);

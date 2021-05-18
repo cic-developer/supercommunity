@@ -152,6 +152,9 @@ class CB_Model extends CI_Model
 		if ($where) {
 			$this->db->where($where);
 		}
+		if($skeyword != null){
+			$this->db->like($sfield,$skeyword);
+		}
 		// if ($search_where) {
 		// 	$this->db->where($search_where);
 		// }

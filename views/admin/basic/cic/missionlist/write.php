@@ -102,6 +102,12 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label">SUPER POINT 당 지급 PER 비율</label>
+				<div class="col-sm-10 form-inline">
+					<input type="text" class="form-control" name="per_rate" value="<?php echo element('mis_max_point', element('data', $view)) && element('mis_per_token', element('data', $view)) ? element('mis_per_token', element('data', $view)) / element('mis_max_point', element('data', $view)) : 0 ?>"  disabled/>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">노출/미노출</label>
 				<div class="col-sm-10">
 					<div class="input-group">
@@ -195,6 +201,24 @@
 
 <script type="text/javascript">
 <?php if(!$disabled){ ?>
+	$("input[name=mis_per_token]").on('keyup', function(){
+		changePerRate()
+	});
+
+	$("input[name=mis_max_point]").on('keyup', function(){
+		changePerRate()
+	});
+
+	function changePerRate(){
+		let mis_per_token = $("input[name=mis_per_token]").val();
+		let mis_max_point = $("input[name=mis_max_point]").val();
+		if(mis_per_token && mis_max_point){
+			$("input[name=per_rate]").val((mis_per_token/mis_max_point).toFixed(5));
+		}else{
+			$("input[name=per_rate]").val('숫자를 정확히 입력해주세요');
+		}
+	}
+
 	$("input[name=mis_opendate]").datetimepicker({
 		format: 'yyyy-mm-dd hh:ii:00',
 		startDate: moment().format("YYYY-MM-DD HH:mm:00"),
@@ -232,7 +256,6 @@
 				} else {
 					throw new error('unhandled error occur');
 				}
-				
 			}
 		});
 	});

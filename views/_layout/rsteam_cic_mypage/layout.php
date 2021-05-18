@@ -129,11 +129,20 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 				<div class="logout">
 					<a href="<?= $this->member->is_member()? site_url('login/logout?url=' . urlencode(current_full_url())) : site_url('login?url=' . urlencode(current_full_url()))  ?>"><?php echo $this->member->is_member()? $this->lang->line('cic_6') : $this->lang->line('cic_7') ?></a> <!--LOGIN / LOGOUT-->
 				</div>
+				<?php if($this->member->is_admin()){
+					?>
+				<a href="<?=base_url('admin')?>">관리자</a>
+				<?php } ?>
 			</div>
+			
 			<!--쪽지 알림벨 추가-->
 			<div class="note_alram">
 				<a href="javascript:;" onClick="note_list();">
-					<small><?php echo $this->Note_model->get_unread_recv_note_num($this->member->is_member())?></small>
+					<?php if($this->Note_model->get_unread_recv_note_num($this->member->is_member()) != 0) { ?>
+					<small style="display:block;">
+					<?php  echo $this->Note_model->get_unread_recv_note_num($this->member->is_member());?>
+					</small> <!--새쪽지 숫자 또는 new-->
+					<?php } ?>
 					<i class="fas fa-bell"></i>
 				</a>
 			</div>

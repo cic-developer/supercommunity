@@ -240,13 +240,16 @@
 							<th>미디어 링크</th>
 						</thead>
 						<tbody>
-						<?php foreach(element('media' ,element('data',$view)) AS $media) {?>
+						<?php foreach(element('media' ,element('data',$view)) AS $media) {
+							if(element('med_state',$media) != '0'){
+							?>
 							<tr>
 								<td><?php echo element('med_admin',$media)?></td>
 								<td><?php echo element('med_name',$media)?></td>
 								<td><a href="<?php echo element('med_url',$media)?>"><?php echo element('med_url',$media)?></a></td>
 							</tr>
-						<?php } ?>
+						<?php }
+					} ?>
 						</tbody>
 					</table>
 					</pre>

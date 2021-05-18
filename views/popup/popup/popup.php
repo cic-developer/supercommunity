@@ -43,7 +43,7 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 	
 	<div id="popup_layer_<?php echo element('pop_id', $result); ?>" class="popup_layer" style="top:<?php echo element('pop_top', $result); ?>px;left:<?php echo element('pop_left', $result); ?>px">
 		<div class="popup_layer_con" style="width:<?php echo element('pop_width', $result); ?>px;height:<?php echo element('pop_height', $result); ?>px">
-			<a href="<?php echo base_url('/post/74')?>" target="_blank">
+			<a href="" target="_blank">
 			<?php echo element('pop_content', $result); ?>
 			</a>
 		</div>

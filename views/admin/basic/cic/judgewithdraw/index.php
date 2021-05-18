@@ -42,13 +42,18 @@
 						</tr>
 					</thead>
 					<tbody>
+					<!-- 지갑 주소 복사를 위한 input 태그입니다-->
+					<input type="text" id="copy_text" style="position:absolute;top:-9999em;">
+					
 					<?php
 					if (element('list', element('data', $view))) {
 						foreach (element('list', element('data', $view)) as $result) {
 					?>
-						<tr <?php echo element('jud_state', $result) == 5 ? 'style="opacity:0.5"' : '' ?>>
+						<tr <?php echo (element('jud_state', $result) == 5 || element('jud_state', $result) == 0 ) ? 'style="opacity:0.5"' : '' ?>>
 							<td><?php echo number_format(element('num', $result)); ?></td>
-							<td><?php echo html_escape(element('jud_wallet', $result)); ?></td>
+							<td class='copy_wallet'>
+								<?php echo html_escape(element('jud_wallet', $result)); ?>
+							</td>
 							<td class="text-right"><?php echo number_format(element('jud_point', $result),1); ?></td>
 							<td><?php echo rs_get_state(element('jud_state', $result)); ?></td>
 							<td><?php echo element('display_name', $result); ?> <?php echo element('point_wrong', $result) ? '<span class="label label-danger" style="margin-left:10px;">부정사용의심</span>': '' ; ?></td>
@@ -153,8 +158,19 @@
 <!-- Modal End -->
 
 <script type="text/javascript">
-//<![CDATA[
 
+		// 지갑 클릭시 주소 복사하는 부분입니다. 
+		$(document).ready(function(){
+            $('.copy_wallet').click(function() {//클릭 이벤트
+              $("#copy_text").val($(this).html());//해당 문구 가져와 텍스트박스에 입력
+              document.getElementById("copy_text").select(); //텍스트 박스 선택
+              document.execCommand("copy");//클립보드 복사
+              alert("복사 되었습니다");
+            });
+            
+        });
+
+//<![CDATA[
 	$(document).ready(function(){
     $('[data-toggle="popover"]').popover({
 			container: 'body'

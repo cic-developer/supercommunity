@@ -121,8 +121,7 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
                             <span class="opacity"> </span>
 <?php if(element('mis_thumb_type', $d) == 1 && $d['state'] != $this->lang->line('c_1')
 ){ ?>
-                            <img 
-                                src="<?php echo thumb_url('mission_thumb_img', element('mis_thumb_image', $d), 400, 300); ?>" 
+                            <img src="<?php echo thumb_url('mission_thumb_img', element('mis_thumb_image', $d), 400, 300); ?>" 
                                 alt="<?php echo element('mis_thumb_image', $d); ?>"
                                 class=""
                             />

@@ -42,7 +42,6 @@ class Mypage extends CB_Controller
 	 */
 	public function index()
 	{
-
 		//페이지별 언어팩 로드
 		if($this->agent->is_mobile()){
 			$this->lang->load('cic_mypage_mobile_main', $this->session->userdata('lang'));
