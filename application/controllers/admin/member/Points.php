@@ -44,7 +44,7 @@ class Points extends CB_Controller
 		 * 라이브러리를 로딩합니다
 		 */
 		$this->load->library(array('pagination', 'querystring', 'point'));
-		if($this->session->userdata('reconfirm_access') != 1){
+		if($this->session->userdata('reconfirm_access') <= 0){
 			redirect('/admin/reconfirm?returnURL=' . rawurlencode(site_url('/admin/member/points')));
 		}
 	}

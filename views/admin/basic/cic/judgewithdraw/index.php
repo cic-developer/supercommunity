@@ -162,7 +162,7 @@
 		// 지갑 클릭시 주소 복사하는 부분입니다. 
 		$(document).ready(function(){
             $('.copy_wallet').click(function() {//클릭 이벤트
-              $("#copy_text").val($(this).html());//해당 문구 가져와 텍스트박스에 입력
+              $("#copy_text").val($(this).html().trim());//해당 문구 가져와 텍스트박스에 입력
               document.getElementById("copy_text").select(); //텍스트 박스 선택
               document.execCommand("copy");//클립보드 복사
               alert("복사 되었습니다");

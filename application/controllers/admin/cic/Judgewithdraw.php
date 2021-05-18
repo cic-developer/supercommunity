@@ -46,7 +46,7 @@ class Judgewithdraw extends CB_Controller
 		 */
 		$this->load->library(array('pagination', 'querystring'));
 
-		if($this->session->userdata('reconfirm_access') != 1){
+		if($this->session->userdata('reconfirm_access') <= 0){
 			redirect('/admin/reconfirm?returnURL=' . rawurlencode(site_url('/admin/cic/judgewithdraw')));
 		}
 
