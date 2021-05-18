@@ -46,10 +46,6 @@ class Judgemission extends CB_Controller
 		 */
 		$this->load->library(array('pagination', 'querystring'));
 		$this->load->helper('rs_common');
-
-		if($this->session->userdata('reconfirm_access') != 1){
-			redirect('/admin/reconfirm?returnURL=' . rawurlencode(site_url('/admin/cic/judgemission')));
-		}
 	}
 
 	/**
