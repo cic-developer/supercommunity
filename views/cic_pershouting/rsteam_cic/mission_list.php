@@ -184,24 +184,6 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
         $("form").submit();
     }
 
-    //타이머 설정 함수
-    // $(document).ready(function(){
-    //     var timers = $(".timer");
-
-    //     $(function(){
-    //         $.each(timers, function(index, element){
-    //             let start_day = $(element).attr('data-start-day');
-    //             let end_day = $(element).attr('data-end-day');
-    //             $(element).attr('data-seconds-left', end_day-start_day);
-    //         });
-    //         timers.startTimer({
-    //             onComplete: function(element){
-                    // $('html, body').addClass('bodyTimeoutBackground');
-    //             }
-    //         })
-    //     });
-    // });
-
     //썸네일 호버링시 작동 함수
     function thumbnail_enter(obj){
         let this_iframe = $(obj).find('iframe');

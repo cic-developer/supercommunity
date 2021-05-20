@@ -170,12 +170,12 @@
 
 #shouting_all .sc_b ul.list_box li .timer{
     height: 43px;
-    max-width: 50%;
+    max-width: 100%;
     overflow: hidden;
-    background-color: rgb(241 4 4 / 50%);
+    /* background-color: rgb(241 4 4 / 50%); */
     padding: 0px 15px;
     text-align: center;
-    position: absolute;
+    /* position: absolute; */
     z-index: 3;
     color: #fff;
     font-size: 20px;
@@ -253,6 +253,28 @@
     
 }
 
+#shouting_all .sc_b .thumnail .urgent_box{
+    height: 43px;
+    max-width: 50%;
+    overflow: hidden;
+    background-color: rgb(241 4 4 / 50%);
+    padding: 0px 15px;
+    text-align: center;
+    position: absolute;
+    z-index: 3;
+    color:#fff;
+    font-size: 20px;
+    font-weight: bold;
+    line-height:43px;
+    
+}
+
+#shouting_all .sc_b .thumnail .urgent_box h1 {
+    font-size: 20px;
+    overflow: hidden;
+    text-align: center;
+}
+
 #shouting_all .sc_b .thumnail .time_box h1 {
     font-size: 1.538em;
     overflow: hidden;
@@ -298,6 +320,26 @@
     box-sizing: border-box;
     margin-top:4px;
 
+    
+
+}
+
+#shouting_all .sc_b .txt_box .txt_t .emergency{
+    width:18%;
+    height: 28px;
+    border-radius: 0 15px 15px 0;
+    background:red;
+    text-align: center;
+    line-height: 2.5;
+    color:#fff;
+    font-size: 0.846em;
+    float: left;
+    font-weight: 500;
+    display: block;
+    text-decoration:none;
+    margin-right: 10px;
+    box-sizing: border-box;
+    margin-top:4px;
     
 
 }

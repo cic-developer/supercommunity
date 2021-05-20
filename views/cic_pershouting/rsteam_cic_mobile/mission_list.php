@@ -76,7 +76,8 @@
                 <div class="thumnail" onmouseover="thumbnail_enter(this)" onmouseout="thumbnail_out(this)">
                         <?php
                         //시간을 마감에 사용하지 않으면 타이머 표시 X
-                        if($d['state'] == $this->lang->line('c_2') || ($d['mis_endtype'] > 0 && $d['mis_endtype'] < 3 && $d['state'] != $this->lang->line('c_1'))){
+                        if( ($d['state'] == $this->lang->line('c_2') || $d['state'] == $this->lang->line('c_4') ||($d['mis_endtype'] > 0 && $d['mis_endtype'] < 3))  ){
+                        // if($d['state'] == $this->lang->line('c_2') || ($d['mis_endtype'] > 0 && $d['mis_endtype'] < 3 && $d['state'] != $this->lang->line('c_1'))){
                         ?>
                         <div class="<?php echo  $d['state'] == $this->lang->line('c_4') ? 'urgent_box':'time_box' ?>">
                         <?php
@@ -137,9 +138,12 @@
     <!--//thumnail-->
                 <div class="txt_box">
                     <div class="txt_t">
-                        <span class="yet">
-                            <?=$d['state']?>
+                        <span class="<?php echo $d['state'] == $this->lang->line('c_4') ? 'emergency'  :  'yet'?>">
+                            <?php echo $d['state']?>
                         </span>
+                        <!-- <span class="yet">
+                            <?=$d['state']?>
+                        </span> -->
                         <!-- <span class="icon">안녕</span> -->
                         <h3>
                             <img src="<?php echo base_url('assets/images/sub_01_point_logo.png');?>" alt="<?php echo $this->lang->line(6)?>"/>
