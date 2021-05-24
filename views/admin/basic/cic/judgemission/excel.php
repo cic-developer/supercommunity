@@ -13,7 +13,7 @@ td {text-align:center; line-height:40px; font-size:12px; color:#474747; font-fam
 			<th>미디어링크</th>
 			<!-- <th>첨부이미지</th> -->
 			<th>지급 포인트</th>
-			<th>첨부이미지경로</th>
+			<th>미션심사 링크</th>
 			<!-- <th>승인여부</th> -->
 			<!-- <th>반려사유</th> -->
 			<th>신청자</th>
@@ -38,7 +38,8 @@ td {text-align:center; line-height:40px; font-size:12px; color:#474747; font-fam
 				<td><?php echo html_escape(element('jud_med_url', $result)); ?></td>
 				<!-- <td style="width:200px;"><img src="<?php //echo thumb_url('judge', element('jud_attach', $result), 200, 160); ?>" alt="제출이미지" title="제출이미지"/></td> -->
 				<td><?php echo html_escape(element('jud_state',$result)) == 5 ? html_escape(element('jud_point',$result)) : 0?></td>
-				<td><?php echo thumb_url('judge', element('jud_attach', $result), 200, 160); ?></td>
+				<!-- <td><?php echo thumb_url('judge', element('jud_post_link', $result), 200, 160); ?></td> -->
+				<td><?php echo element('jud_post_link',$result); ?></td>
 				<!-- <td><?php //echo rs_get_state(element('jud_state', $result)); ?></td> -->
 				<!-- <td><?php //echo html_escape(element('judn_reason', $result)); ?></td> -->
 				<td><?php echo html_escape(element('jud_mem_nickname', $result).'('.(element('mem_userid', element('register_member', $result)) ? element('mem_userid', element('register_member', $result)) : '탈퇴회원').')'); ?></td>
