@@ -146,8 +146,10 @@
                         </span> -->
                         <!-- <span class="icon">안녕</span> -->
                         <h3>
-                            <img src="<?php echo base_url('assets/images/sub_01_point_logo.png');?>" alt="<?php echo $this->lang->line(6)?>"/>
+                            <img src="<?php echo base_url('assets/images/sub_01_point_logo2.png');?>" alt="<?php echo $this->lang->line(6)?>"/>
+                            <div class="yellowline">
                             <b><?php echo ($state === true || $state === false) ? number_format($d['mis_per_token']) : 'HIDDEN'?></b> PER POINT
+                            </div>
                         </h3>
                     </div>
                     <div class="misson_t">

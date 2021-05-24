@@ -151,8 +151,10 @@ $this->managelayout->add_css(element('view_skin_url', $layout) . '/css/style.css
                             <?php echo $d['state']?>
                         </span>
                         <h3>
-                            <img src="<?php echo base_url('assets/images/sub_01_point_logo.png');?>" alt="<?php echo $this->lang->line(6)?>"/>
+                            <img src="<?php echo base_url('assets/images/sub_01_point_logo2.png');?>" alt="<?php echo $this->lang->line(6)?>"/>
+                            <div class="yellowline">
                             <b><?php echo ($state === true || $state === false) ? number_format($d['mis_per_token']) : 'HIDDEN'?></b> PER POINT
+                            </div>
                         </h3>
                     </div>
                     <div class="misson_t">

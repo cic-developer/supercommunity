@@ -47,7 +47,10 @@
                     <?php }?>
                     <ul class="detail_title">
                         <li>               
-                            <strong><b><?php echo number_format(element('mis_per_token',$mission_data))?></b> PER POINT</strong>
+                            <strong>
+                            <img src="<?php echo base_url('assets/images/sub_01_point_logo2.png');?>" alt="<?php echo $this->lang->line(6)?>"/>
+                            <b><?php echo number_format(element('mis_per_token',$mission_data))?></b> PER POINT
+                            </strong>
                         </li>
                         <!-- <li>
                             <?php //echo $this->lang->line(7) ?> <b><?php //echo number_format(element('mis_max_point',$mission_data))?></b> SUPER POINT

@@ -321,6 +321,16 @@
     color:#333;
 	font-weight: 500;
     float: right;
+    /* background:url(/assets/images/nav_line_bg.gif) repeat-x center 16px; */
+
+}
+
+#shouting_all .sc_b .txt_box .txt_t h3 .yellowline {
+	display:block;
+    font-size: 20px;
+    color:#333;
+	font-weight: 500;
+    float: right;
     background:url(/assets/images/nav_line_bg.gif) repeat-x center 16px;
 
 }
@@ -560,16 +570,26 @@
 
 
  .event_title dd ul.detail_title li strong{   
+    margin-top: 4px;
     color:#333;
     display: inline-block;
     font-weight: normal;
-    background:url(/assets/images/nav_line_bg.gif) repeat-x center 21px;
+    /* background:url(/assets/images/nav_line_bg.gif) repeat-x center 21px; */
  }
+
+ .event_title dd ul.detail_title li strong img {
+    width: 25px;
+    height: 25px;
+    vertical-align: sub;
+
+}
+
 
  .event_title dd ul.detail_title li b {
      font-weight:600;
 
  }
+
 
  /* .event_title dd ul.detail_title li:first-child{
    padding-right: 12px;

@@ -354,7 +354,19 @@ line-height: 1.7;
     color:#333;
 	font-weight: 500;
     float: right;
-    background:url(/assets/images/nav_line_bg.gif) repeat-x center 22px;
+    /* background:url(/assets/images/nav_line_bg.gif) repeat-x center 22px; */
+
+}
+
+
+#shouting_all .sc_b .txt_box .txt_t h3 .yellowline {
+	display:block;
+    font-size: -0.462em;
+    line-height: 1.7;
+    color:#333;
+	font-weight: 500;
+    float: right;
+    background:url(/assets/images/nav_line_bg.gif) repeat-x center 25px;
 
 }
 
@@ -363,7 +375,9 @@ line-height: 1.7;
 }
 
 #shouting_all .sc_b .txt_box .txt_t h3 img {
-    width: 5vw;
+    width: 25px;
+	height: 25px;
+	vertical-align: sub;
 }
 
 #shouting_all .sc_b li .misson_t{
@@ -538,6 +552,7 @@ line-height: 1.7;
 	padding-top:13px;
 	padding-bottom:13px;
 	overflow: hidden;
+    position: relative;
 	
 }
 
@@ -575,11 +590,6 @@ line-height: 1.7;
     
 }
 
-.event_title .icon{   
-    width: 40px;
-    height: 40px;
-    margin-left: 170px;
-}
 
 
 .event_title dd ul.detail_title li {
@@ -592,6 +602,16 @@ line-height: 1.7;
     box-sizing: border-box;
     padding-right: 1.5%;
     
+    
+}
+
+.event_title .icon{   
+    width: 40px;
+    height: 40px;
+    /* margin-left: 170px; */
+    position: absolute;
+    top: 10px; right: 5px;
+
 }
 
 
@@ -599,9 +619,15 @@ line-height: 1.7;
     color:#333;
     display: inline-block;
     font-weight: normal;
-    background:url(/assets/images/nav_line_bg.gif) repeat-x center 21px;
+    /* background:url(/assets/images/nav_line_bg.gif) repeat-x center 21px; */
     
  }
+
+ .event_title dd ul.detail_title li strong img {
+    width: 25px;
+    height: 25px;
+    vertical-align: sub;
+}
 
  .event_title dd ul.detail_title li b {
      font-weight:600;

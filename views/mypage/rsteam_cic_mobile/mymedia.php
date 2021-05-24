@@ -29,7 +29,7 @@
                                       break;
 
                                       case 3 :
-                                          echo '<span><i class="super_p"></i>'.$this->lang->line(10).'</b></span>';
+                                          echo '<span>'.$this->lang->line(10).'</b></span>';
                                       break;
 
                                       case 5 :

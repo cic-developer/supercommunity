@@ -253,8 +253,8 @@ table.list_table td .img_check img{ width: 100%; }
 
 /***퍼포인트, 슈퍼포인트 텍스트 아이콘***/
 i.super_p, i.per_p {display: inline-block; width:17px; height:17px; vertical-align: middle; margin-right:3px;}
-i.super_p {background:url(/assets/images/super_p.gif) no-repeat center;}
-i.per_p {background:url(/assets/images/per_p.gif) no-repeat center;}
+i.super_p {background:url(/assets/images/per_p.png) no-repeat center;}
+i.per_p {background:url(/assets/images/per_p.png) no-repeat center;}
 
 
 /*작성 수정 폼*/
