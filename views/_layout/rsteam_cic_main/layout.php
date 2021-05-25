@@ -288,7 +288,7 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 					<dl class="bt_all">
 						<dt><?=$this->lang->line('cic_25')?></dt>
 						<dd>
-							<a href="void(0);" onclick="alert('<?=$this->lang->line('cic_26')?>');return false;" > <img src="<?php echo base_url('assets/images/google.png');?>" alt="<?=$this->lang->line('cic_27')?>"/> </a>
+							<a href="https://play.google.com/store/apps/details?id=com.perwallet"> <img src="<?php echo base_url('assets/images/google.png');?>" alt="<?=$this->lang->line('cic_27')?>"/> </a>
 						</dd>
 						<dd>
 							<a href="https://apps.apple.com/kr/app/per-wallet/id1562810925"><img src="<?php echo base_url('assets/images/apple.png');?>" alt="<?=$this->lang->line('cic_28')?>" /></a>
