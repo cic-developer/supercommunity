@@ -23,7 +23,7 @@
         <div class="research_top">
             <ul class="text_g">
                 <li class="sub_title" style="text-align: center;">
-                    <img src="<?php echo base_url('assets/images/ad_platform.png');?>"/>
+                    <img src="<?php echo base_url('assets/images/ad_platform02.png');?>"/>
                 </li>
                 <li><p>
                     <?php echo $this->lang->line('p_2')?><br>

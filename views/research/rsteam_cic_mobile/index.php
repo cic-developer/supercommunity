@@ -27,7 +27,7 @@
         <div class="research_top">
             <ul class="text_g">
                 <li class="sub_title">
-                    <img src="<?php echo base_url('assets/images/ad_platform.png');?>" style="width:100%; height:280"/>
+                    <img src="<?php echo base_url('assets/images/ad_platform02.png');?>" style="width:100%; height:280"/>
                 </li>
                 <li><p>
                     네이버 블로그, 유튜브, 텔레그램, 카카오 오픈채팅, 코박, 티스토리, 코인판이 있습니다.
