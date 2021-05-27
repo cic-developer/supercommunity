@@ -109,7 +109,7 @@ class Judgemission extends CB_Controller
 			array('table' => 'rs_media', 'on' => 'rs_judge.jud_med_id = rs_media.med_id', 'type' => 'inner'),
 		);
 		$result = $this->{$this->modelname}
-			->get_judge_list($this->jug_id,$per_page, $offset, $where, '', $findex, $forder, $sfield, $skeyword,'','', $join);
+			->get_judge_list($this->jug_id,$per_page, $offset, $where, '', $findex, $forder, $sfield, $skeyword,'AND','', $join);
 		$list_num = $result['total_rows'] - ($page - 1) * $per_page;
 		$domain_list = $this->RS_whitelist_model->get_whitelist_domain();
 		if (element('list', $result)) {

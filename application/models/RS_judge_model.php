@@ -34,23 +34,29 @@ class RS_judge_model extends CB_Model
 	}
 
 	public function get_judge_list($jug_id = 0, $limit = '', $offset = '', $where = '', $like = '', $findex = '', $forder = '', $sfield = '', $skeyword = '', $sop = 'OR', $select = '', $join = ''){
-
-    if($where && is_array($where)){
-      if(!element('jud_jug_id',$where)) {
-				if(is_array($jug_id)){
-					$where_jug = '(';
-					for($i=0;$i<count($jug_id);$i++){
-						if($i != 0) $where_jug .= ' or ';
-						$where_jug .= 'jud_jug_id = '.element($i,$jug_id);
+		//2021.05.27 추가 더이상 미션 제목은  LIKE 검색하지 않는다.
+		if($sfield == 'mis_title'){
+			$where['mis_title'] = $skeyword;
+			$skeyword = '';
+		}
+		if($where && is_array($where)){
+			if(!element('jud_jug_id',$where)) {
+					if(is_array($jug_id)){
+						$where_jug = '(';
+						for($i=0;$i<count($jug_id);$i++){
+							if($i != 0) $where_jug .= ' or ';
+							$where_jug .= 'jud_jug_id = '.element($i,$jug_id);
+						}
+						$where_jug .= ')';
+						$where[$where_jug] = null;
+					} else {
+						$where['jud_jug_id'] = $jug_id;
 					}
-					$where_jug .= ')';
-					$where[$where_jug] = null;
-				} else {
-					$where['jud_jug_id'] = $jug_id;
-				}
 			}
-      if(!element('jud_deletion',$where)) $where['jud_deletion'] = 'N';
-    } else {
+
+			if(!element('jud_deletion',$where)) $where['jud_deletion'] = 'N';
+
+		} else {
 			if(!element('jud_jug_id',$where)){
 				if(is_array($jug_id)){
 					$where_jug = '(';
@@ -137,11 +143,11 @@ class RS_judge_model extends CB_Model
 			);
 			if($jug_id != 3) $join[] = array('table' => 'rs_whitelist', 'on' => 'rs_judge.jud_med_wht_id = rs_whitelist.wht_id', 'type' => 'inner');
 		}
-    $result = $this->_get_list_common($select, $join, $limit, $offset, $where, $like, $findex, $forder, $sfield, $skeyword, $sop);
+		$result = $this->_get_list_common($select, $join, $limit, $offset, $where, $like, $findex, $forder, $sfield, $skeyword, $sop);
 		return $result;
 	}
 
-  public function get_one_judge($jug_id, $primary_value = '', $select = '', $where = '', $join = '')
+public function get_one_judge($jug_id, $primary_value = '', $select = '', $where = '', $join = '')
 	{
 		$search_where = array(
 			$this->primary_key => $primary_value
@@ -152,9 +158,9 @@ class RS_judge_model extends CB_Model
     //get_one으로는 join이 안되서 어쩔 수 없이 위 함수를 활용
     $result = $this->get_judge_list($jug_id,1,0,$search_where, '', $this->primary_key, 'desc', '', '','',$select,$join);
     if(element('total_rows',$result) === 0){
-      return array();
+		return array();
     } else {
-      return element(0,element('list',$result));
+		return element(0,element('list',$result));
     }
 	}
 
@@ -162,9 +168,8 @@ class RS_judge_model extends CB_Model
   ** 클릭한 버튼에 따라 필수값 여부 확인을 위해 데이터 저장
   ** 한글이 입력되지는 않았는지 확인하는 function
   */
-  public $post_form_data = array(
-		'value'		=> null
-  );
+	public $post_form_data = array('value'=> null);
+
 	public function check_deny_data($value){
 		$this->lang->load('cic_formvalidation_callback', $this->session->userdata('lang'));
 		$data = $this->post_form_data;
