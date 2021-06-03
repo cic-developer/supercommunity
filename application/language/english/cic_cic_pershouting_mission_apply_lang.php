@@ -98,8 +98,8 @@ $lang['modalContentWarning'] = '
 <p>Since the Super Community is a self-participation rewarding</p><br>
 <p>influencer advertising platform, it supports automated matching</p><br>
 <p>between advertisers and influencers as much as possible. The Super</p><br>
-<p>Community is responsible for the performance, stability, etc. of the </p><br>
-<p><span style="font-weight:bold; color:#f40315;">project and does not take any legal responsibilities found.</span></p><br>
+<p>Community is responsible for the performance, stability, etc. of the</p><br>
+<p>project and<span style="font-weight:bold; color:#f40315;"> we do not take any legal responsibilities found.</span></p><br>
 </div>
 <div class="modal-footer">
     <div class="btn-group" >
