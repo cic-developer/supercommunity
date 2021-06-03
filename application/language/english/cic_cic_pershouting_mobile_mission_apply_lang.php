@@ -1,19 +1,19 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 $lang[0] = 'My Media';   //상단 문자
 $lang[1] = 'Application for mission';   //미디어 리스트 테이블 위 글자
 $lang[2] = 'Media name';
 $lang[3] = 'administrator';
 $lang[4] = 'Link'; //미션 더보기 버튼
-$lang[5] = 'SUPER POINT';//"Post Confirmation" ; //이미지 로드 실패시 메시지
-$lang[6] = 'Policy check';//'SUPER POINT';    //이미지 업로드시 validation 메시지
+$lang[5] = 'SUPER POINT'; //"Post Confirmation" ; //이미지 로드 실패시 메시지
+$lang[6] = 'Policy check'; //'SUPER POINT';    //이미지 업로드시 validation 메시지
 $lang[7] = 'Post Confirmation';           //이미지 업로드시 validation 메시지
-$lang[8] = 'picture';//'Applicable<br>Automatic check ';           //이미지 업로드시 validation 메시지
+$lang[8] = 'picture'; //'Applicable<br>Automatic check ';           //이미지 업로드시 validation 메시지
 $lang[9] = 'Automatic check';
 $lang[10] = 'Up to 10MB of files can be uploaded';
 $lang[11] = 'Only image files can be uploaded';
-$lang[12] = 'Unsupported image file format'; 
-$lang[13] = '*Post Confirmation can be modified until confirm'; 
+$lang[12] = 'Unsupported image file format';
+$lang[13] = '*Post Confirmation can be modified until confirm';
 $lang[14] = "*When manager confirms, Post Confirmation can't be modified";
 $lang[15] = 'approved'; // 미디어 상태 표시(승인)
 $lang[16] = 'refused'; // 미디어 상태 표시(반려)
@@ -77,13 +77,36 @@ $lang['modalContent'] = '
 <div class="modal-footer">
     <div class="btn-group">
         <label>
-            <input type="checkbox" class="btn btn-info set_state" data-dismiss="modal">
+            <input type="checkbox" class="btn btn-info set_state" id="infoModalBtn">
             I agree to the above.
         </label>
     </div>
 </div>
 </div>
 ';
+
+$lang['modalContentWarning'] = '
+<div class="modal-content">
+<div class="modal-header">
+    <h4 class="modal-title">Precautions</h4>
+    <button type="button" class="close" id="warningModalXBtn">×</button>
+</div>
+<div class="modal-body">
+<p>Since the Super Community is a self-participation rewarding</p><br>
+<p>influencer advertising platform, it supports automated matching</p><br>
+<p>between advertisers and influencers as much as possible. The Super</p><br>
+<p>Community is responsible for the performance, stability, etc. of the </p><br>
+<p><span style="font-weight:bold; color:#f40315;">project and does not take any legal responsibilities found.</span></p><br>
+</div>
+<div class="modal-footer">
+    <div class="btn-group" >
+        <label>
+            <input type="checkbox" class="btn btn-info set_state" id="warningModalBtn">
+            Not available for 7 days
+        </label>
+    </div>
+</div>
+</div>';
 $lang['alert_1'] = 'There is no media you have requested.';
 $lang['confirm_1'] = 'Please, attach Image';
 $lang['alert_message_modify'] = 'Modifications completed';
@@ -184,4 +207,3 @@ $lang[] = '';
 $lang[] = '';
 $lang[] = '';
 $lang[] = '';
-?>

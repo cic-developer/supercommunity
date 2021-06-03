@@ -1,16 +1,16 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 $lang[0] = '내 미디어';   //상단 문자
 $lang[1] = '미션신청';   //미디어 리스트 테이블 위 글자
-$lang[2] = '미디어네임';//미디어 리스트 테이블 시작
+$lang[2] = '미디어네임'; //미디어 리스트 테이블 시작
 $lang[3] = '관리자명';
 $lang[4] = '입장링크';
 $lang[5] = '슈퍼포인트';
 $lang[6] = '정책확인';
-$lang[7] ='게시인증';
-$lang[8] ='인증 사진';
-$lang[9] ='인증자동체크';
-$lang[10] ='파일은 최대 10MB까지 업로드 가능합니다.';
+$lang[7] = '게시인증';
+$lang[8] = '인증 사진';
+$lang[9] = '인증자동체크';
+$lang[10] = '파일은 최대 10MB까지 업로드 가능합니다.';
 $lang[11] = '이미지 파일만 업로드 가능합니다.';           //이미지 업로드시 validation 메시지
 $lang[12] = '지원하지 않는 이미지 파일입니다.';           //이미지 업로드시 validation 메시지
 $lang[13] = '*게시링크나 게시인증 이미지가 올바르지 않을시 미션 심사에 대해 불이익이 있을 수 있습니다.';
@@ -77,13 +77,36 @@ $lang['modalContent'] = '
 <div class="modal-footer">
     <div class="btn-group">
         <label>
-            <input type="checkbox" class="btn btn-info set_state" data-dismiss="modal">
+        <input type="checkbox" class="btn btn-info set_state" id="infoModalBtn">
             위의 내용에 동의합니다.
         </label>
     </div>
 </div>
 </div>
 ';
+
+$lang['modalContentWarning'] = '
+<div class="modal-content">
+<div class="modal-header">
+    <h4 class="modal-title">주의사항</h4>
+    <button type="button" class="close" id="warningModalXBtn">×</button>
+</div>
+<div class="modal-body">
+<p>슈퍼커뮤니티는 자율참여 보상형 인플루언서 광고 플랫폼으로써</p><br>
+<p>광고주-인플루언서 간의 최대한 자동화된 매칭을 지원하고 있습니다.</p><br>
+<p>슈퍼커뮤니티는 해당 프로젝트에 대한 성과, 안정성 등에 대한</p><br>
+<span style="font-weight:bold; color:#f40315;">법적책임</span>을 지지 않습니다.<br>
+</div>
+<div class="modal-footer">
+    <div class="btn-group" >
+        <label>
+            <input type="checkbox" class="btn btn-info set_state" id="warningModalBtn">
+            일주일간 보지 않기
+        </label>
+    </div>
+</div>
+</div>';
+
 $lang['alert_1'] = '신청한 미디어가 없습니다.';
 $lang['confirm_1'] = '이미지를 첨부해주세요';
 $lang['paymentPolicy_popup'] = '정책 확인';
@@ -182,4 +205,3 @@ $lang[] = '';
 $lang[] = '';
 $lang[] = '';
 $lang[] = '';
-?>

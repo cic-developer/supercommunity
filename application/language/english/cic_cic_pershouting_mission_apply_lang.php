@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 // PER 광고 컨설팅 문의
 $lang[0] = 'Media';   //상단 문자
 $lang[1] = 'Application for mission';   //미디어 리스트 테이블 위 글자
@@ -11,9 +11,9 @@ $lang[2] = '<tr>
 <th>Post Confirmation</th>
 <th>Policy check</th>
 <th>Applicable<br>Automatic check </th>
-</tr>';// 미션 테이블 헤드 th
+</tr>'; // 미션 테이블 헤드 th
 $lang[3] = 'Mission View'; //미션 더보기 버튼
-$lang[4] = "Mission Thumbnail" ; //이미지 로드 실패시 메시지
+$lang[4] = "Mission Thumbnail"; //이미지 로드 실패시 메시지
 $lang[5] = 'Up to 10MB of files can be uploaded';    //이미지 업로드시 validation 메시지
 $lang[6] = 'Only image files can be uploaded';           //이미지 업로드시 validation 메시지
 $lang[7] = 'Unsupported image file format';           //이미지 업로드시 validation 메시지
@@ -80,13 +80,36 @@ $lang['modalContent'] = '
 <div class="modal-footer">
     <div class="btn-group">
         <label>
-            <input type="checkbox" class="btn btn-info set_state" data-dismiss="modal">
+            <input type="checkbox" class="btn btn-info set_state" id="infoModalBtn">
             I agree to the above.
         </label>
     </div>
 </div>
 </div>
 ';
+
+$lang['modalContentWarning'] = '
+<div class="modal-content">
+<div class="modal-header">
+    <h4 class="modal-title">Precautions</h4>
+    <button type="button" class="close" id="warningModalXBtn">×</button>
+</div>
+<div class="modal-body">
+<p>Since the Super Community is a self-participation rewarding</p><br>
+<p>influencer advertising platform, it supports automated matching</p><br>
+<p>between advertisers and influencers as much as possible. The Super</p><br>
+<p>Community is responsible for the performance, stability, etc. of the </p><br>
+<p><span style="font-weight:bold; color:#f40315;">project and does not take any legal responsibilities found.</span></p><br>
+</div>
+<div class="modal-footer">
+    <div class="btn-group" >
+        <label>
+            <input type="checkbox" class="btn btn-info set_state" id="warningModalBtn">
+            Not available for 7 days
+        </label>
+    </div>
+</div>
+</div>';
 $lang['c_11'] = 'Worng Media link.\nplease check your Media link';
 $lang['alert_1'] = 'There is no media you have requested.';
 $lang['confirm_1'] = 'Please, attach Image';
