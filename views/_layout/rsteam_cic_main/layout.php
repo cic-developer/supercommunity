@@ -284,7 +284,7 @@ var rs_lang = "<?php echo $this->session->userdata('lang'); ?>";
 					<?=$this->lang->line('cic_23')?>  
 				</div>
 				<div class="footer_right">
-					<img src="<?php echo base_url('assets/images/perperman.png');?>" style="float: left;" alt="<?=$this->lang->line('cic_24')?>"/>
+					<img src="<?php echo base_url('assets/images/perwallet.png');?>" style="float: left; padding-right: 7px;" alt="<?=$this->lang->line('cic_24')?>"/>
 					<dl class="bt_all">
 						<dt><?=$this->lang->line('cic_25')?></dt>
 						<dd>

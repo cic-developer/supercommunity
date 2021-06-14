@@ -263,7 +263,7 @@ switch(element('menu',$header)){
 	<div id="footer">
 		<!--footer_wrap-->
 			<div class="footer_top">
-				<img src="<?php echo base_url('assets/images/perperman.png');?>" alt="<?php echo $this->lang->line('cic_24')?>"/>
+				<img src="<?php echo base_url('assets/images/perwallet.png');?>" alt="<?php echo $this->lang->line('cic_24')?>"/>
 				<dl class="bt_all">
 					<dt><?php echo $this->lang->line('cic_25')?></dt>
 					<dd>
