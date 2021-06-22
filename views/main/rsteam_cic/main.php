@@ -72,10 +72,7 @@ shuffle($message_rows);
 </style>
 <script>
     $(document).ready(function() {
-        // let checkCookie = getCookie("ModalWarning");
-        // if (checkCookie != 'check') {
         $('#element_to_pop_up').bPopup({});
-    // };
     })
 </script>
 
@@ -147,23 +144,4 @@ shuffle($message_rows);
             }
         });
     })
-
-
-    // 쿠키 설정 함수(modalWarning)
-        var setCookie = function(name, value, exp) {
-        var date = new Date();
-        date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
-        document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
-    };
-
-    // 쿠키 가져오기 함수(modalWarning)
-        var getCookie = function(name) {
-        var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-        return value ? value[2] : null;
-    };
-
-    // $('#warningModalBtn').on('click', function() {
-    //     $('#element_to_pop_up').modal('hide');
-    //     setCookie("ModalWarning", "check", "7");
-    // });
 </script>
