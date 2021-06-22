@@ -63,7 +63,6 @@ class Scheduler extends CB_Controller
             ));
         }
         $this->CI->db->delete('member_delete_warn',array('mdw_ddate <=' => $_now));
-		
 	}
 }
 ?>
